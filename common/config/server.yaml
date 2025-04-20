@@ -1,0 +1,18 @@
+NaCos:
+  NameSpace: "6aeaab18-de35-4479-8bb5-53af4f3dca02"
+  DataId: "retailers"
+  Group: "retailers"
+  Host: "14.103.150.223"
+  Port: 8848
+UserSrv:
+  Host: "127.0.0.1"
+  Port: 8081
+ProductSrv:
+  Host: "127.0.0.1"
+  Port: 8082
+OrderSrv:
+  Host: "127.0.0.1"
+  Port: 8083
+UserEnterSrv:
+  Host: "127.0.0.1"
+  Port: 8084

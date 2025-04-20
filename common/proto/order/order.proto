@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package order;
+option go_package = ".;order";
+
+message AddOrderRequest {
+  string name = 1;
+}
+
+message AddOrderResponse {
+  string PayUrl = 1;
+}
+
+service Order {
+  rpc AddOrder(AddOrderRequest) returns (AddOrderResponse);
+}

@@ -1,0 +1,9 @@
+go 1.23
+use (
+	api
+	common
+	srv/order_srv
+	srv/product_srv
+	srv/user_enter_srv
+	srv/user_srv
+)

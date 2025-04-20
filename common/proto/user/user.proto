@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package user;
+option go_package = ".;user";
+
+
+service User {
+  rpc UserLogin(UserLoginRequest) returns (UserLoginResponse); //
+  rpc UserRegister(UserRegisterRequest) returns (UserRegisterResponse);
+  rpc SendSms(SendSmsRequest) returns (SendSmsResponse);
+//  rpc UserUpdate(UserUpdateRequest) returns (UserUpdateResponse);
+//  rpc UserForgotPassword(UserForgotPasswordRequest) returns (UserForgotPasswordResponse);
+//  rpc UserDetail(UserDetailRequest) returns (UserDetailResponse);
+//  rpc UserImprove(UserImproveRequest) returns (UserImproveResponse);
+}
+
+message UserLoginRequest {
+  string Account = 1;
+  string PassWord = 2;
+}
+
+message UserLoginResponse {
+  uint64 UserId = 1;
+}
+
+message UserRegisterRequest {
+  string Account = 1;
+  string PassWord = 2;
+  string Pass = 3;
+}
+
+message UserRegisterResponse {
+  uint64 UserId = 1;
+}
+
+message SendSmsRequest {
+  string Mobile = 1;
+  string Source = 2;
+}
+
+message SendSmsResponse {
+  bool   Success = 1;
+}
