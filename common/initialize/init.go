@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"common/global"
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/elastic/go-elasticsearch/v7"
@@ -10,6 +11,8 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	"github.com/spf13/viper"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -22,6 +25,8 @@ func init() {
 	InitMysql()
 	InitRedis()
 	InitElasticsearch()
+	MongoDbInit()
+
 }
 
 func InitViper() {
@@ -138,4 +143,26 @@ func InitElasticsearch() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func MongoDbInit() {
+	var err error
+	Conf := global.NaCos.Mongodb
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	global.MDB, err = mongo.Connect(options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s:%d", Conf.User, Conf.Pass, Conf.Host, Conf.Port)))
+	if err != nil {
+		return
+	}
+	err = global.MDB.Ping(ctx, nil)
+	if err != nil {
+		err = global.MDB.Disconnect(ctx)
+		if err != nil {
+			panic(err)
+		}
+		return
+	}
+	fmt.Println("mongodb --- success")
+
 }
