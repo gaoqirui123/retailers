@@ -8,11 +8,27 @@ service User {
   rpc UserLogin(UserLoginRequest) returns (UserLoginResponse); //
   rpc UserRegister(UserRegisterRequest) returns (UserRegisterResponse);
   rpc SendSms(SendSmsRequest) returns (SendSmsResponse);
-//  rpc UserUpdate(UserUpdateRequest) returns (UserUpdateResponse);
-//  rpc UserForgotPassword(UserForgotPasswordRequest) returns (UserForgotPasswordResponse);
-//  rpc UserDetail(UserDetailRequest) returns (UserDetailResponse);
-//  rpc UserImprove(UserImproveRequest) returns (UserImproveResponse);
+  rpc UserDetail(UserDetailRequest) returns (UserDetailResponse);//展示个人资料
 }
+
+message UserDetailRequest {
+  int32 Uid = 1;
+}
+message UserDetailResponse {
+  repeated UserDetail detail = 1;
+}
+message UserDetail{
+  string Account = 1;//用户账号
+  string RealName = 2;//真实姓名
+  int32 Birthday = 3;//生日
+  string Nickname = 4;//用户昵称
+  string Avatar = 5;//用户头像
+  string Phone = 6;//手机号码
+  float NowMoney = 7;//用户余额
+  float BrokeragePrice = 8;//佣金金额
+  float Integral = 9;//用户剩余积分
+}
+
 
 message UserLoginRequest {
   string Account = 1;

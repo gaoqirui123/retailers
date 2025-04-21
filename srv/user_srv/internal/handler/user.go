@@ -58,3 +58,27 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 	//}
 	return &user.UserRegisterResponse{UserId: uint64(users.Uid)}, nil
 }
+
+func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
+	u := model.User{}
+	detail, err := u.Detail(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	var list []*user.UserDetail
+	for _, u := range detail {
+		list = append(list, &user.UserDetail{
+			Account:        u.Account,
+			RealName:       u.RealName,
+			Birthday:       u.Birthday,
+			Nickname:       u.Nickname,
+			Avatar:         u.Avatar,
+			Phone:          u.Phone,
+			NowMoney:       float32(u.NowMoney),
+			BrokeragePrice: float32(u.BrokeragePrice),
+			Integral:       float32(u.Integral),
+		})
+	}
+
+	return &user.UserDetailResponse{Detail: list}, nil
+}

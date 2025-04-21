@@ -54,3 +54,13 @@ func UserRegister(c *gin.Context) {
 	}
 	response.RespSuccess(c, "注册成功", register.UserId)
 }
+
+func UserDetail(c *gin.Context) {
+	userId := c.GetUint("userId")
+	detail, err := client.UserDetail(c, &user.UserDetailRequest{Uid: int32(userId)})
+	if err != nil {
+		response.RespError(c, "查看失败")
+		return
+	}
+	response.RespSuccess(c, "个人资料显示成功", detail)
+}
