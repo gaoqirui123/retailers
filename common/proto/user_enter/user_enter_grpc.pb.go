@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	UserEnter_UserEnterRegister_FullMethodName = "/user_enter.UserEnter/UserEnterRegister"
+	UserEnter_Register_FullMethodName = "/user_enter.UserEnter/Register"
 )
 
 // UserEnterClient is the client API for UserEnter service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserEnterClient interface {
-	UserEnterRegister(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error)
+	Register(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error)
 }
 
 type userEnterClient struct {
@@ -37,10 +37,10 @@ func NewUserEnterClient(cc grpc.ClientConnInterface) UserEnterClient {
 	return &userEnterClient{cc}
 }
 
-func (c *userEnterClient) UserEnterRegister(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error) {
+func (c *userEnterClient) Register(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserEnterRegisterResponse)
-	err := c.cc.Invoke(ctx, UserEnter_UserEnterRegister_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, UserEnter_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *userEnterClient) UserEnterRegister(ctx context.Context, in *UserEnterRe
 // All implementations must embed UnimplementedUserEnterServer
 // for forward compatibility
 type UserEnterServer interface {
-	UserEnterRegister(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error)
+	Register(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error)
 	mustEmbedUnimplementedUserEnterServer()
 }
 
@@ -59,8 +59,8 @@ type UserEnterServer interface {
 type UnimplementedUserEnterServer struct {
 }
 
-func (UnimplementedUserEnterServer) UserEnterRegister(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UserEnterRegister not implemented")
+func (UnimplementedUserEnterServer) Register(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedUserEnterServer) mustEmbedUnimplementedUserEnterServer() {}
 
@@ -75,20 +75,20 @@ func RegisterUserEnterServer(s grpc.ServiceRegistrar, srv UserEnterServer) {
 	s.RegisterService(&UserEnter_ServiceDesc, srv)
 }
 
-func _UserEnter_UserEnterRegister_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserEnter_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserEnterRegisterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserEnterServer).UserEnterRegister(ctx, in)
+		return srv.(UserEnterServer).Register(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserEnter_UserEnterRegister_FullMethodName,
+		FullMethod: UserEnter_Register_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserEnterServer).UserEnterRegister(ctx, req.(*UserEnterRegisterRequest))
+		return srv.(UserEnterServer).Register(ctx, req.(*UserEnterRegisterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -101,8 +101,8 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserEnterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "UserEnterRegister",
-			Handler:    _UserEnter_UserEnterRegister_Handler,
+			MethodName: "Register",
+			Handler:    _UserEnter_Register_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

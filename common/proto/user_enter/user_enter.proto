@@ -4,13 +4,20 @@ package user_enter;
 option go_package = ".;user_enter";
 
 message UserEnterRegisterRequest {
-  string name = 1;
+  int64 Uid =1;// 用户ID
+  string Province =2; // 商户所在省
+  string City =3; // 商户所在市
+  string District =4; // 商户所在区
+  string Address =5; // 商户详细地址
+  string MerchantName =6; // 商户名称
+  string LinkTel =7; // 商户电话
+  string Charter =8;  // 商户证书
 }
 
 message UserEnterRegisterResponse {
-  int64  UserEnterId = 1;
+  string greet = 1;
 }
 
 service UserEnter {
-  rpc UserEnterRegister(UserEnterRegisterRequest) returns (UserEnterRegisterResponse);
+  rpc Register(UserEnterRegisterRequest) returns (UserEnterRegisterResponse);//商户申请
 }
