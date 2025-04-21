@@ -10,6 +10,7 @@ func RegisterRouter(r *gin.Engine) {
 		UserRouter(c)
 		ProductRouter(c)
 		OrderRouter(c)
+		ArticleRouter(c)
 	}
 	b := r.Group("/api/b")
 	{
