@@ -26,7 +26,7 @@ type User struct {
 	PayCount       uint32  `gorm:"column:pay_count;type:int UNSIGNED;comment:用户购买次数;default:0;" json:"pay_count"`                        // 用户购买次数
 	SpreadCount    int32   `gorm:"column:spread_count;type:int;comment:下级人数;default:0;" json:"spread_count"`                             // 下级人数
 	CleanTime      int32   `gorm:"column:clean_time;type:int;comment:清理会员时间;default:0;" json:"clean_time"`                               // 清理会员时间
-	Addres         string  `gorm:"column:addres;type:varchar(255);comment:详细地址;not null;" json:"addres"`                                 // 详细地址
+	Address        string  `gorm:"column:address;type:varchar(255);comment:详细地址;not null;" json:"address"`                               // 详细地址
 	Adminid        uint32  `gorm:"column:adminid;type:int UNSIGNED;comment:管理员编号 ;default:0;" json:"adminid"`                            // 管理员编号
 	LoginType      string  `gorm:"column:login_type;type:varchar(36);comment:用户登陆类型，h5,wechat,routine;not null;" json:"login_type"`      // 用户登陆类型，h5,wechat,routine
 }
@@ -49,4 +49,20 @@ func (u *User) Detail(uid int) (result []User, err error) {
 		return nil, err
 	}
 	return result, nil
+}
+
+func (u *User) FindId(id int) (result User, err error) {
+	err = global.DB.Where("uid=?", id).Find(&result).Error
+	if err != nil {
+		return User{}, err
+	}
+	return result, nil
+}
+
+func (u *User) Updated(id int, users User) bool {
+	err := global.DB.Where("uid=?", id).Updates(users).Error
+	if err != nil {
+		return false
+	}
+	return true
 }

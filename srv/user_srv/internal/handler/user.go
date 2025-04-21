@@ -59,6 +59,7 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 	return &user.UserRegisterResponse{UserId: uint64(users.Uid)}, nil
 }
 
+// 个人资料显示
 func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 	u := model.User{}
 	detail, err := u.Detail(int(in.Uid))
@@ -81,4 +82,32 @@ func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 	}
 
 	return &user.UserDetailResponse{Detail: list}, nil
+}
+
+// 完善用户信息
+func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
+	u := model.User{
+		RealName: in.RealName, //真实姓名
+		Birthday: in.Birthday, //生日
+		CardId:   in.CardId,   //身份证号码
+		Mark:     in.Mark,     //用户备注
+		Nickname: in.Nickname, //用户昵称
+		Avatar:   in.Avatar,   //用户头像
+		Phone:    in.Phone,    //手机号码
+		Address:  in.Address,  //地址
+	}
+	Id, err := u.FindId(int(in.Id))
+	if err != nil {
+		return nil, err
+	}
+	if Id.Uid == 0 {
+		return &user.ImproveUserResponse{Success: "没有这个用户"}, nil
+	}
+
+	updated := u.Updated(int(Id.Uid), u)
+	if !updated {
+		return &user.ImproveUserResponse{Success: "完善用户信息失败"}, nil
+	}
+
+	return &user.ImproveUserResponse{Success: "完善用户信息成功"}, nil
 }

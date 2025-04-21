@@ -34,3 +34,11 @@ func (u UserServer) UserDetail(ctx context.Context, in *user.UserDetailRequest) 
 	}
 	return userDetail, nil
 }
+
+func (u UserServer) ImproveUser(ctx context.Context, in *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
+	improveUser, err := handler.ImproveUser(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return improveUser, nil
+}

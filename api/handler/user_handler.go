@@ -64,3 +64,29 @@ func UserDetail(c *gin.Context) {
 	}
 	response.RespSuccess(c, "个人资料显示成功", detail)
 }
+
+func ImproveUser(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.ImproveUser
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+
+	improveUser, err := client.ImproveUser(c, &user.ImproveUserRequest{
+		RealName: data.RealName,
+		Birthday: int32(data.Birthday),
+		CardId:   data.CardId,
+		Mark:     data.Mark,
+		Nickname: data.Nickname,
+		Avatar:   data.Avatar,
+		Phone:    data.Phone,
+		Address:  data.Address,
+		Id:       int32(userId),
+	})
+	if err != nil {
+		response.RespError(c, "用户完善信息失败")
+		return
+	}
+	response.RespSuccess(c, "用户完善信息成功", improveUser)
+}
