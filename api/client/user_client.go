@@ -18,7 +18,6 @@ func UserLogin(ctx context.Context, in *user.UserLoginRequest) (*user.UserLoginR
 	}
 	return client.(*user.UserLoginResponse), nil
 }
-
 func UserRegister(ctx context.Context, req *user.UserRegisterRequest) (*user.UserRegisterResponse, error) {
 	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
 		register, err := client.UserRegister(ctx, req)
