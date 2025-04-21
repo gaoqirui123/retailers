@@ -29,3 +29,23 @@ func Register(in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterReg
 	}
 	return &user_enter.UserEnterRegisterResponse{Greet: "申请成功，等待平台审核"}, nil
 }
+
+func AddProduct(in *user_enter.AddProductRequest) (*user_enter.AddProductResponse, error) {
+	p := model.Product{
+		MerId:     int(in.MerId),
+		Image:     in.Image,
+		StoreName: in.StoreName,
+		StoreInfo: in.StoreInfo,
+		BarCode:   in.BarCode,
+		CateId:    in.CateId,
+		Price:     float64(in.Price),
+		Postage:   float64(in.Postage),
+		UnitName:  in.UnitName,
+		Activity:  in.Activity,
+	}
+	err := p.Add()
+	if err != nil {
+		return nil, err
+	}
+	return &user_enter.AddProductResponse{Greet: "申请发布商品成功，等待平台审核"}, nil
+}

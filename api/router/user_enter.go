@@ -7,10 +7,11 @@ import (
 )
 
 func UserEnter(r *gin.RouterGroup) {
-	ue := r.Group("/user")
+	ue := r.Group("/merchant")
 	{
 		ue.Use(pkg.JWTAuth("retailers"))
 		ue.POST("./register", handler.Register)
+		ue.POST("./add/product", handler.AddProduct)
 	}
 
 }

@@ -17,7 +17,25 @@ message UserEnterRegisterRequest {
 message UserEnterRegisterResponse {
   string greet = 1;
 }
+message AddProductRequest {
+  int64   MerId         =1; // 商户Id(0为总后台管理员创建,不为0的时候是商户后台创建)
+  string Image =2;    //商品图片
+  string StoreName =3;   //商品名称
+  string StoreInfo =4;   //商品简介
+  string  BarCode =5;  //商品条码（一维码）
+  string CateId =6;//分类id
+  float Price =7;//商品价格
+  float Postage =8;//邮费
+  string UnitName =9;//单位名
+  string Activity =10;//活动显示排序1=秒杀，2=砍价，3=拼团
+}
+
+message AddProductResponse {
+  string greet = 1;
+}
+
 
 service UserEnter {
   rpc Register(UserEnterRegisterRequest) returns (UserEnterRegisterResponse);//商户申请
+  rpc AddProduct(AddProductRequest) returns (AddProductResponse);//商户发布商品
 }

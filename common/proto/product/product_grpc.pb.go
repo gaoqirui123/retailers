@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Product_AddProduct_FullMethodName = "/product.Product/AddProduct"
+	Product_CombinationList_FullMethodName = "/product.Product/CombinationList"
 )
 
 // ProductClient is the client API for Product service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductClient interface {
-	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
+	CombinationList(ctx context.Context, in *CombinationListRequest, opts ...grpc.CallOption) (*CombinationListResponse, error)
 }
 
 type productClient struct {
@@ -37,10 +37,10 @@ func NewProductClient(cc grpc.ClientConnInterface) ProductClient {
 	return &productClient{cc}
 }
 
-func (c *productClient) AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error) {
+func (c *productClient) CombinationList(ctx context.Context, in *CombinationListRequest, opts ...grpc.CallOption) (*CombinationListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddProductResponse)
-	err := c.cc.Invoke(ctx, Product_AddProduct_FullMethodName, in, out, cOpts...)
+	out := new(CombinationListResponse)
+	err := c.cc.Invoke(ctx, Product_CombinationList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *productClient) AddProduct(ctx context.Context, in *AddProductRequest, o
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
 type ProductServer interface {
-	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
+	CombinationList(context.Context, *CombinationListRequest) (*CombinationListResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -59,8 +59,8 @@ type ProductServer interface {
 type UnimplementedProductServer struct {
 }
 
-func (UnimplementedProductServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
+func (UnimplementedProductServer) CombinationList(context.Context, *CombinationListRequest) (*CombinationListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CombinationList not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -75,20 +75,20 @@ func RegisterProductServer(s grpc.ServiceRegistrar, srv ProductServer) {
 	s.RegisterService(&Product_ServiceDesc, srv)
 }
 
-func _Product_AddProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddProductRequest)
+func _Product_CombinationList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CombinationListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).AddProduct(ctx, in)
+		return srv.(ProductServer).CombinationList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Product_AddProduct_FullMethodName,
+		FullMethod: Product_CombinationList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).AddProduct(ctx, req.(*AddProductRequest))
+		return srv.(ProductServer).CombinationList(ctx, req.(*CombinationListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -101,8 +101,8 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ProductServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AddProduct",
-			Handler:    _Product_AddProduct_Handler,
+			MethodName: "CombinationList",
+			Handler:    _Product_CombinationList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

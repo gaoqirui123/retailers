@@ -3,14 +3,20 @@ syntax = "proto3";
 package product;
 option go_package = ".;product";
 
-message AddProductRequest {
-  string name = 1;
+message CombinationListRequest {
 }
 
-message AddProductResponse {
-  string ProductId = 1;
+message CombinationListResponse {
+  repeated CombinationList list =1;
+}
+message CombinationList{
+  string  Image =1;//图片
+  string Title =2;//活动标题
+  int64 People =3;//参团人数
+  float Price =4;//价格
+  int64  Stock =5;//库存
 }
 
 service Product {
-  rpc AddProduct(AddProductRequest) returns (AddProductResponse);
+  rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);//拼团商品列表展示
 }

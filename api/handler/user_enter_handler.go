@@ -32,3 +32,30 @@ func Register(c *gin.Context) {
 	}
 	response.RespSuccess(c, "申请成功，等待平台审核", register)
 }
+
+func AddProduct(c *gin.Context) {
+	var data request.AddProduct
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	uid := c.GetUint("userId")
+	register, err := client.AddProduct(c, &user_enter.AddProductRequest{
+		MerId:     int64(uid),
+		Image:     data.Image,
+		StoreName: data.StoreName,
+		StoreInfo: data.StoreInfo,
+		BarCode:   data.BarCode,
+		CateId:    data.CateId,
+		Price:     float32(data.Price),
+		Postage:   float32(data.Postage),
+		UnitName:  data.UnitName,
+		Activity:  data.Activity,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "申请成功，等待平台审核", register)
+}
