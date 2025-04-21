@@ -14,9 +14,9 @@ func UserRouter(r *gin.RouterGroup) {
 		//u.POST("/send", handler.SendSms)
 		//u.POST("/forgot", handler.UserForgotPassWord)
 		u.Use(pkg.JWTAuth("retailers"))
+		u.GET("/detail", handler.UserDetail)    //显示个人资料
+		u.POST("/improve", handler.ImproveUser) //完善用户信息
 		//u.POST("/update", handler.UserUpdatePassWord)
-		//u.POST("/detail", handler.UserDetail)
-		//u.POST("/improve", handler.UserImprove)
 		//u.POST("/sign", handler.UserSign)
 		//u.POST("/repair/sign", handler.UserRepairSign)
 		//u.POST("/add/cart", handler.AddCart)
