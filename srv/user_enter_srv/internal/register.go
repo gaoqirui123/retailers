@@ -7,5 +7,5 @@ import (
 )
 
 func RegisterUserEnterServer(server *grpc.Server) {
-	user_enter.RegisterUserEnterServer(server, logic.UserEnterServer{})
+	user_enter.RegisterUserEnterServer(server, &logic.UserEnterServer{})
 }
