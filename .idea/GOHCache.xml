@@ -59,6 +59,13 @@
             </set>
           </value>
         </entry>
+        <entry key="Combination">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/combination.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="CombinationList">
           <value>
             <set>
@@ -84,6 +91,27 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/consul/consul.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Coupon">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/coupon.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CouponIssue">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/coupon_issue.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CouponUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/coupon_user.go" />
             </set>
           </value>
         </entry>
@@ -115,6 +143,13 @@
             </set>
           </value>
         </entry>
+        <entry key="OrderCartInfo">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/order_cart_info.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="OrderList">
           <value>
             <set>
@@ -134,6 +169,13 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/proto/order/order.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OrderProduct">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/order_product.go" />
             </set>
           </value>
         </entry>
@@ -204,6 +246,20 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Store">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/store.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="StoreStaff">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/store_staff.go" />
             </set>
           </value>
         </entry>
@@ -392,77 +448,77 @@
         <entry key="file://$PROJECT_DIR$/api/client/client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729208" />
+              <option name="lastModified" value="1745240651557" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/client/order_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311821" />
+              <option name="lastModified" value="1745240651558" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/client/product_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729209" />
+              <option name="lastModified" value="1745240651558" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289785" />
+              <option name="lastModified" value="1745240535888" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/client/user_enter_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729209" />
+              <option name="lastModified" value="1745240651558" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/cmd/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289785" />
+              <option name="lastModified" value="1745240535888" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/handler/order_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311821" />
+              <option name="lastModified" value="1745240651559" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/handler/product_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729209" />
+              <option name="lastModified" value="1745240651559" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/handler/user_enter_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729210" />
+              <option name="lastModified" value="1745240651560" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289788" />
+              <option name="lastModified" value="1745240535892" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/request/order_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311822" />
+              <option name="lastModified" value="1745240651560" />
               <option name="schema">
                 <list>
                   <option value="AddOrder" />
@@ -475,14 +531,14 @@
         <entry key="file://$PROJECT_DIR$/api/request/product_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289788" />
+              <option name="lastModified" value="1745240535892" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/request/user_enter_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729210" />
+              <option name="lastModified" value="1745240651561" />
               <option name="schema">
                 <list>
                   <option value="Register" />
@@ -495,7 +551,7 @@
         <entry key="file://$PROJECT_DIR$/api/request/user_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289789" />
+              <option name="lastModified" value="1745240535892" />
               <option name="schema">
                 <list>
                   <option value="UserLogin" />
@@ -508,42 +564,49 @@
         <entry key="file://$PROJECT_DIR$/api/response/response.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289789" />
+              <option name="lastModified" value="1745240535894" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/router/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311823" />
+              <option name="lastModified" value="1745240651561" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/router/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729211" />
+              <option name="lastModified" value="1745240651561" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/router/router.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729211" />
+              <option name="lastModified" value="1745240651561" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/router/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289791" />
+              <option name="lastModified" value="1745240535895" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/user_enter.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651562" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/config/config.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289791" />
+              <option name="lastModified" value="1745240535896" />
               <option name="schema">
                 <list>
                   <option value="AppViper" />
@@ -561,7 +624,7 @@
         <entry key="file://$PROJECT_DIR$/common/consul/consul.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289793" />
+              <option name="lastModified" value="1745240535897" />
               <option name="schema">
                 <list>
                   <option value="Consul" />
@@ -573,28 +636,83 @@
         <entry key="file://$PROJECT_DIR$/common/global/global.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289793" />
+              <option name="lastModified" value="1745240535898" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/grpc/grpc.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289794" />
+              <option name="lastModified" value="1745240535899" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/initialize/init.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289794" />
+              <option name="lastModified" value="1745240535900" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/cart.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651562" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/combination.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651563" />
+              <option name="schema">
+                <list>
+                  <option value="Combination" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/coupon.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651564" />
+              <option name="schema">
+                <list>
+                  <option value="Coupon" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/coupon_issue.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651564" />
+              <option name="schema">
+                <list>
+                  <option value="CouponIssue" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/coupon_user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651564" />
+              <option name="schema">
+                <list>
+                  <option value="CouponUser" />
+                </list>
+              </option>
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/model/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311825" />
+              <option name="lastModified" value="1745240651565" />
               <option name="schema">
                 <list>
                   <option value="Order" />
@@ -603,10 +721,34 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/order_cart_info.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651565" />
+              <option name="schema">
+                <list>
+                  <option value="OrderCartInfo" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/order_product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651565" />
+              <option name="schema">
+                <list>
+                  <option value="OrderProduct" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/model/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745240971690" />
+              <option name="lastModified" value="1745241035435" />
               <option name="schema">
                 <list>
                   <option value="Product" />
@@ -615,10 +757,34 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/store.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651566" />
+              <option name="schema">
+                <list>
+                  <option value="Store" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/store_staff.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745240651566" />
+              <option name="schema">
+                <list>
+                  <option value="StoreStaff" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/model/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745156827676" />
+              <option name="lastModified" value="1745240651566" />
               <option name="schema">
                 <list>
                   <option value="User" />
@@ -630,7 +796,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/user_address.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289796" />
+              <option name="lastModified" value="1745240535901" />
               <option name="schema">
                 <list>
                   <option value="UserAddress" />
@@ -642,7 +808,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/user_enter.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729213" />
+              <option name="lastModified" value="1745240651567" />
               <option name="schema">
                 <list>
                   <option value="UserEnter" />
@@ -654,7 +820,7 @@
         <entry key="file://$PROJECT_DIR$/common/pkg/alipay.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289797" />
+              <option name="lastModified" value="1745240535902" />
               <option name="schema">
                 <list>
                   <option value="Alipay" />
@@ -666,7 +832,7 @@
         <entry key="file://$PROJECT_DIR$/common/pkg/jwt.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289797" />
+              <option name="lastModified" value="1745240535903" />
               <option name="schema">
                 <list>
                   <option value="CustomClaims" />
@@ -679,21 +845,21 @@
         <entry key="file://$PROJECT_DIR$/common/pkg/oss.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289797" />
+              <option name="lastModified" value="1745240535903" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/pkg/sendsms.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289797" />
+              <option name="lastModified" value="1745240535903" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/proto/order/order.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311829" />
+              <option name="lastModified" value="1745240651567" />
               <option name="schema">
                 <list>
                   <option value="AddOrderRequest" />
@@ -712,7 +878,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/order/order_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311829" />
+              <option name="lastModified" value="1745240651568" />
               <option name="schema">
                 <list>
                   <option value="orderClient" />
@@ -725,7 +891,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/product/product.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729213" />
+              <option name="lastModified" value="1745240651569" />
               <option name="schema">
                 <list>
                   <option value="CombinationListRequest" />
@@ -740,7 +906,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/product/product_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729214" />
+              <option name="lastModified" value="1745240651570" />
               <option name="schema">
                 <list>
                   <option value="productClient" />
@@ -753,7 +919,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745156827683" />
+              <option name="lastModified" value="1745240535907" />
               <option name="schema">
                 <list>
                   <option value="UserLoginRequest" />
@@ -771,7 +937,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745156827684" />
+              <option name="lastModified" value="1745240535907" />
               <option name="schema">
                 <list>
                   <option value="userClient" />
@@ -784,7 +950,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729215" />
+              <option name="lastModified" value="1745240651571" />
               <option name="schema">
                 <list>
                   <option value="UserEnterRegisterRequest" />
@@ -800,7 +966,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729216" />
+              <option name="lastModified" value="1745240651572" />
               <option name="schema">
                 <list>
                   <option value="userEnterClient" />
@@ -813,28 +979,28 @@
         <entry key="file://$PROJECT_DIR$/common/utlis/encryption.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289803" />
+              <option name="lastModified" value="1745240535909" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/utlis/md5.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289804" />
+              <option name="lastModified" value="1745240535909" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311831" />
+              <option name="lastModified" value="1745240651573" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/logic/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239311831" />
+              <option name="lastModified" value="1745240651574" />
               <option name="schema">
                 <list>
                   <option value="OrderServer" />
@@ -846,28 +1012,28 @@
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/register.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289807" />
+              <option name="lastModified" value="1745240535913" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/order_srv/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289807" />
+              <option name="lastModified" value="1745240535913" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729216" />
+              <option name="lastModified" value="1745240651574" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/logic/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729217" />
+              <option name="lastModified" value="1745240651574" />
               <option name="schema">
                 <list>
                   <option value="ProductServer" />
@@ -879,28 +1045,28 @@
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/register.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289809" />
+              <option name="lastModified" value="1745240535916" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/product_srv/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289809" />
+              <option name="lastModified" value="1745240535916" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/internal/handler/user_enter.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729217" />
+              <option name="lastModified" value="1745240651575" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/internal/logic/user_enter_srv.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729218" />
+              <option name="lastModified" value="1745240651575" />
               <option name="schema">
                 <list>
                   <option value="UserEnterServer" />
@@ -912,28 +1078,28 @@
         <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/internal/register.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239729218" />
+              <option name="lastModified" value="1745240651575" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289811" />
+              <option name="lastModified" value="1745240535918" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289813" />
+              <option name="lastModified" value="1745240535919" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745156827697" />
+              <option name="lastModified" value="1745240535920" />
               <option name="schema">
                 <list>
                   <option value="UserServer" />
@@ -945,14 +1111,14 @@
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/register.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289813" />
+              <option name="lastModified" value="1745240535920" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745239289813" />
+              <option name="lastModified" value="1745240535920" />
             </ScannedPath>
           </value>
         </entry>
@@ -968,18 +1134,24 @@
         <entry key="add_product_response" value="AddProductResponse" />
         <entry key="alipay" value="Alipay" />
         <entry key="app_viper" value="AppViper" />
+        <entry key="combination" value="Combination" />
         <entry key="combination_list" value="CombinationList" />
         <entry key="combination_list_request" value="CombinationListRequest" />
         <entry key="combination_list_response" value="CombinationListResponse" />
         <entry key="consul" value="Consul" />
+        <entry key="coupon" value="Coupon" />
+        <entry key="coupon_issue" value="CouponIssue" />
+        <entry key="coupon_user" value="CouponUser" />
         <entry key="custom_claims" value="CustomClaims" />
         <entry key="jwt" value="JWT" />
         <entry key="na_cos" value="NaCos" />
         <entry key="order" value="Order" />
+        <entry key="order_cart_info" value="OrderCartInfo" />
         <entry key="order_client" value="orderClient" />
         <entry key="order_list" value="OrderList" />
         <entry key="order_list_request" value="OrderListRequest" />
         <entry key="order_list_response" value="OrderListResponse" />
+        <entry key="order_product" value="OrderProduct" />
         <entry key="order_server" value="OrderServer" />
         <entry key="order_srv" value="OrderSrv" />
         <entry key="pay_callback_request" value="PayCallbackRequest" />
@@ -991,6 +1163,8 @@
         <entry key="register" value="Register" />
         <entry key="send_sms_request" value="SendSmsRequest" />
         <entry key="send_sms_response" value="SendSmsResponse" />
+        <entry key="store" value="Store" />
+        <entry key="store_staff" value="StoreStaff" />
         <entry key="t" value="T" />
         <entry key="unimplemented_order_server" value="UnimplementedOrderServer" />
         <entry key="unimplemented_product_server" value="UnimplementedProductServer" />
