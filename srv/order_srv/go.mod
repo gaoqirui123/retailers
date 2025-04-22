@@ -5,10 +5,7 @@ go 1.23
 require google.golang.org/grpc v1.71.1
 
 require (
-<<<<<<< HEAD
 	github.com/google/uuid v1.6.0 // indirect
-=======
->>>>>>> 9e60308846ae976fe6f7babf0c0898d279d3536b
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
