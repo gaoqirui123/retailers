@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="GoORMHelperCache">
+<<<<<<< HEAD
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745302229300" />
+            </ScannedPath>
+          </value>
+        </entry>
+=======
     <option name="schemaMapping">
       <map>
+<<<<<<< HEAD
         <entry key="AddOrder">
+=======
+        <entry key="Article">
+>>>>>>> origin/develop
           <value>
             <set>
-              <option value="file://$PROJECT_DIR$/api/request/order_request.go" />
+              <option value="file://$PROJECT_DIR$/common/model/article.go" />
             </set>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="AddOrderRequest">
+=======
+        <entry key="ArticleCategory">
+>>>>>>> origin/develop
           <value>
             <set>
-              <option value="file://$PROJECT_DIR$/common/proto/order/order.pb.go" />
+              <option value="file://$PROJECT_DIR$/common/model/article_category.go" />
             </set>
           </value>
         </entry>
-        <entry key="AddOrderResponse">
+        <entry key="ArticleContent">
           <value>
             <set>
+<<<<<<< HEAD
               <option value="file://$PROJECT_DIR$/common/proto/order/order.pb.go" />
             </set>
           </value>
@@ -593,6 +613,9 @@
               <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
+=======
+              <option value="file://$PROJECT_DIR$/common/model/article_content.go" />
+>>>>>>> origin/develop
             </set>
           </value>
         </entry>
@@ -600,6 +623,7 @@
     </option>
     <option name="scannedPathMapping">
       <map>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/api/client/article_client.go">
           <value>
             <ScannedPath>
@@ -739,14 +763,24 @@
                   <option value="UserLogin" />
                   <option value="UserRegister" />
                   <option value="ImproveUser" />
+=======
+        <entry key="file://$PROJECT_DIR$/common/model/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745301198386" />
+              <option name="schema">
+                <list>
+                  <option value="Article" />
+>>>>>>> origin/develop
                 </list>
               </option>
             </ScannedPath>
           </value>
         </entry>
-        <entry key="file://$PROJECT_DIR$/api/response/response.go">
+        <entry key="file://$PROJECT_DIR$/common/model/article_category.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1745294914284" />
             </ScannedPath>
           </value>
@@ -797,42 +831,48 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745295044747" />
+=======
+              <option name="lastModified" value="1745301198381" />
+>>>>>>> origin/develop
               <option name="schema">
                 <list>
-                  <option value="AppViper" />
-                  <option value="NaCos" />
-                  <option value="UserSrv" />
-                  <option value="ProductSrv" />
-                  <option value="OrderSrv" />
-                  <option value="UserEnterSrv" />
-                  <option value="T" />
+                  <option value="ArticleCategory" />
                 </list>
               </option>
             </ScannedPath>
           </value>
         </entry>
-        <entry key="file://$PROJECT_DIR$/common/consul/consul.go">
+        <entry key="file://$PROJECT_DIR$/common/model/article_content.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1745294914288" />
+=======
+              <option name="lastModified" value="1745301198391" />
+>>>>>>> origin/develop
               <option name="schema">
                 <list>
-                  <option value="Consul" />
+                  <option value="ArticleContent" />
                 </list>
               </option>
             </ScannedPath>
           </value>
         </entry>
-        <entry key="file://$PROJECT_DIR$/common/global/global.go">
+        <entry key="file://$PROJECT_DIR$/common/mongoDB/mongodb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1745295044748" />
+=======
+              <option name="lastModified" value="1745301197597" />
+>>>>>>> origin/develop
             </ScannedPath>
           </value>
         </entry>
-        <entry key="file://$PROJECT_DIR$/common/grpc/grpc.go">
+        <entry key="file://$PROJECT_DIR$/srv/article_srv/internal/handler/article.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1745294914289" />
             </ScannedPath>
           </value>
@@ -1290,12 +1330,16 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745290660342" />
+=======
+              <option name="lastModified" value="1745301197632" />
+>>>>>>> origin/develop
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1745295668930" />
             </ScannedPath>
           </value>
@@ -1422,6 +1466,9 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745294914320" />
+=======
+              <option name="lastModified" value="1745301468159" />
+>>>>>>> origin/develop
             </ScannedPath>
           </value>
         </entry>
@@ -1429,6 +1476,7 @@
     </option>
     <option name="tableStructMapping">
       <map>
+<<<<<<< HEAD
         <entry key="add_order" value="AddOrder" />
         <entry key="add_order_request" value="AddOrderRequest" />
         <entry key="add_order_response" value="AddOrderResponse" />
@@ -1516,5 +1564,13 @@
       </map>
     </option>
     <option name="lastTimeChecked" value="1745290693170" />
+=======
+        <entry key="article" value="Article" />
+        <entry key="article_category" value="ArticleCategory" />
+        <entry key="article_content" value="ArticleContent" />
+>>>>>>> origin/dev
+      </map>
+    </option>
+>>>>>>> origin/develop
   </component>
 </project>
