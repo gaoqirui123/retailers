@@ -31,3 +31,29 @@ func UserRegister(ctx context.Context, req *user.UserRegisterRequest) (*user.Use
 	}
 	return client.(*user.UserRegisterResponse), nil
 }
+func UserDetail(ctx context.Context, req *user.UserDetailRequest) (*user.UserDetailResponse, error) {
+	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
+		register, err := client.UserDetail(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return register, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client.(*user.UserDetailResponse), nil
+}
+func ImproveUser(ctx context.Context, req *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
+	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
+		register, err := client.ImproveUser(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return register, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client.(*user.ImproveUserResponse), nil
+}

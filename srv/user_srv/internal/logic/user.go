@@ -26,3 +26,19 @@ func (u UserServer) UserRegister(ctx context.Context, in *user.UserRegisterReque
 	}
 	return register, nil
 }
+
+func (u UserServer) UserDetail(ctx context.Context, in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
+	userDetail, err := handler.UserDetail(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userDetail, nil
+}
+
+func (u UserServer) ImproveUser(ctx context.Context, in *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
+	improveUser, err := handler.ImproveUser(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return improveUser, nil
+}
