@@ -58,3 +58,11 @@ func (u UserServer) UserLevelList(ctx context.Context, in *user.UserLevelListReq
 	}
 	return userLevelList, nil
 }
+
+func (u UserServer) UserLevelPowerList(ctx context.Context, in *user.UserLevelPowerListRequest) (*user.UserLevelPowerListResponse, error) {
+	userLevelPowerList, err := handler.UserLevelPowerList(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userLevelPowerList, nil
+}

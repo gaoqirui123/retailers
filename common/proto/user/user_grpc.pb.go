@@ -19,13 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	User_UserLogin_FullMethodName       = "/user.User/UserLogin"
-	User_UserRegister_FullMethodName    = "/user.User/UserRegister"
-	User_SendSms_FullMethodName         = "/user.User/SendSms"
-	User_UserDetail_FullMethodName      = "/user.User/UserDetail"
-	User_ImproveUser_FullMethodName     = "/user.User/ImproveUser"
-	User_UpdatedPassword_FullMethodName = "/user.User/UpdatedPassword"
-	User_UserLevelList_FullMethodName   = "/user.User/UserLevelList"
+	User_UserLogin_FullMethodName          = "/user.User/UserLogin"
+	User_UserRegister_FullMethodName       = "/user.User/UserRegister"
+	User_SendSms_FullMethodName            = "/user.User/SendSms"
+	User_UserDetail_FullMethodName         = "/user.User/UserDetail"
+	User_ImproveUser_FullMethodName        = "/user.User/ImproveUser"
+	User_UpdatedPassword_FullMethodName    = "/user.User/UpdatedPassword"
+	User_UserLevelList_FullMethodName      = "/user.User/UserLevelList"
+	User_UserLevelPowerList_FullMethodName = "/user.User/UserLevelPowerList"
 )
 
 // UserClient is the client API for User service.
@@ -39,6 +40,7 @@ type UserClient interface {
 	ImproveUser(ctx context.Context, in *ImproveUserRequest, opts ...grpc.CallOption) (*ImproveUserResponse, error)
 	UpdatedPassword(ctx context.Context, in *UpdatedPasswordRequest, opts ...grpc.CallOption) (*UpdatedPasswordResponse, error)
 	UserLevelList(ctx context.Context, in *UserLevelListRequest, opts ...grpc.CallOption) (*UserLevelListResponse, error)
+	UserLevelPowerList(ctx context.Context, in *UserLevelPowerListRequest, opts ...grpc.CallOption) (*UserLevelPowerListResponse, error)
 }
 
 type userClient struct {
@@ -119,6 +121,16 @@ func (c *userClient) UserLevelList(ctx context.Context, in *UserLevelListRequest
 	return out, nil
 }
 
+func (c *userClient) UserLevelPowerList(ctx context.Context, in *UserLevelPowerListRequest, opts ...grpc.CallOption) (*UserLevelPowerListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserLevelPowerListResponse)
+	err := c.cc.Invoke(ctx, User_UserLevelPowerList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -130,6 +142,7 @@ type UserServer interface {
 	ImproveUser(context.Context, *ImproveUserRequest) (*ImproveUserResponse, error)
 	UpdatedPassword(context.Context, *UpdatedPasswordRequest) (*UpdatedPasswordResponse, error)
 	UserLevelList(context.Context, *UserLevelListRequest) (*UserLevelListResponse, error)
+	UserLevelPowerList(context.Context, *UserLevelPowerListRequest) (*UserLevelPowerListResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -157,6 +170,9 @@ func (UnimplementedUserServer) UpdatedPassword(context.Context, *UpdatedPassword
 }
 func (UnimplementedUserServer) UserLevelList(context.Context, *UserLevelListRequest) (*UserLevelListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLevelList not implemented")
+}
+func (UnimplementedUserServer) UserLevelPowerList(context.Context, *UserLevelPowerListRequest) (*UserLevelPowerListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserLevelPowerList not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -297,6 +313,24 @@ func _User_UserLevelList_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_UserLevelPowerList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserLevelPowerListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserLevelPowerList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserLevelPowerList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserLevelPowerList(ctx, req.(*UserLevelPowerListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -331,6 +365,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserLevelList",
 			Handler:    _User_UserLevelList_Handler,
+		},
+		{
+			MethodName: "UserLevelPowerList",
+			Handler:    _User_UserLevelPowerList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

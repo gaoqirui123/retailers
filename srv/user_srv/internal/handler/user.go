@@ -150,3 +150,21 @@ func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, 
 	}
 	return &user.UserLevelListResponse{List: list}, nil
 }
+
+// TODO:会员权益页面展示
+func UserLevelPowerList(in *user.UserLevelPowerListRequest) (*user.UserLevelPowerListResponse, error) {
+	ulp := model.EbSystemUserPower{}
+	power, err := ulp.FindUserLevelPower()
+	if err != nil {
+		return nil, errors.New("查询失败")
+	}
+	var list []*user.UserLevelPowerList
+	for _, i := range power {
+		list = append(list, &user.UserLevelPowerList{
+			Name:    i.Name,
+			Grade:   int32(i.Grade),
+			Explain: i.Explain,
+		})
+	}
+	return &user.UserLevelPowerListResponse{List: list}, nil
+}

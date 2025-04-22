@@ -1,7 +1,7 @@
 package model
 
 // 会员等级记录表
-type EbUserLevel struct {
+type EbSystemUserLevelRecord struct {
 	Id        int32  `gorm:"column:id;type:int;primaryKey;not null;" json:"id"`
 	Uid       int32  `gorm:"column:uid;type:int;comment:用户uid;not null;default:0;" json:"uid"`                        // 用户uid
 	LevelId   int32  `gorm:"column:level_id;type:int;comment:等级vip;not null;default:0;" json:"level_id"`              // 等级vip

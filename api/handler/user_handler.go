@@ -118,3 +118,12 @@ func UserLevelList(c *gin.Context) {
 	}
 	response.RespSuccess(c, "会员页面展示成功", list)
 }
+
+func UserLevelPowerList(c *gin.Context) {
+	list, err := client.UserLevelPowerList(c, &user.UserLevelPowerListRequest{})
+	if err != nil {
+		response.RespError(c, "会员权益页面展示失败")
+		return
+	}
+	response.RespSuccess(c, "会员页面展示成功", list)
+}

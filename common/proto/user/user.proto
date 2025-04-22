@@ -12,6 +12,19 @@ service User {
   rpc ImproveUser(ImproveUserRequest) returns (ImproveUserResponse);//TODO:完善用户信息
   rpc UpdatedPassword(UpdatedPasswordRequest) returns (UpdatedPasswordResponse);//TODO:修改密码
   rpc UserLevelList(UserLevelListRequest) returns (UserLevelListResponse);//TODO:会员页面展示
+  rpc UserLevelPowerList(UserLevelPowerListRequest) returns (UserLevelPowerListResponse);//TODO:会员权益页面展示
+}
+
+//TODO:会员权益页面展示
+message UserLevelPowerListRequest {
+}
+message UserLevelPowerListResponse {
+  repeated UserLevelPowerList list = 1;
+}
+message UserLevelPowerList{
+  string Name = 1;//权益名称
+  int32 Grade = 2;//会员等级
+  string Explain = 3;//说明
 }
 
 //TODO:会员页面展示
