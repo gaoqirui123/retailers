@@ -62,7 +62,7 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 // 个人资料显示
 
 func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
-	u := &model.User{}
+	u := model.User{}
 	detail, err := u.Detail(int(in.Uid))
 	if err != nil {
 		return nil, err

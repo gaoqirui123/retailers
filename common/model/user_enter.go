@@ -23,6 +23,10 @@ type UserEnter struct {
 	IsDel        int    `gorm:"column:is_del;type:tinyint UNSIGNED;comment:是否删除;not null;default:0;" json:"is_del"`           // 是否删除
 }
 
+func (ue *UserEnter) TableName() string {
+	return "user_enter"
+}
+
 func (ue *UserEnter) Add() error {
-	return global.DB.Debug().Table("user_enter").Create(&ue).Error
+	return global.DB.Create(&ue).Error
 }

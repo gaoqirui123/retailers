@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-// 文章管理表
-type EbArticle struct {
+// Article 文章管理表
+type Article struct {
 	Id            uint32    `gorm:"column:id;type:int UNSIGNED;comment:文章管理ID;primaryKey;not null;" json:"id"`                            // 文章管理ID
 	Cid           int32     `gorm:"column:cid;type:int;comment:分类id;default:1;" json:"cid"`                                               // 分类id
 	Title         string    `gorm:"column:title;type:varchar(255);comment:文章标题;not null;" json:"title"`                                   // 文章标题
@@ -27,14 +27,10 @@ type EbArticle struct {
 	UpdatedAt     time.Time `gorm:"column:updated_at;type:datetime(3);not null;default:CURRENT_TIMESTAMP(3);" json:"updated_at"`
 }
 
-func (ab *EbArticle) Table() string {
-	return "eb_article"
-}
-func (ab *EbArticle) CreateEbArticle() bool {
-	err := global.DB.Table("eb_article").Create(&ab).Error
+func (ab *Article) CreateEbArticle() bool {
+	err := global.DB.Debug().Table("article").Create(&ab).Error
 	if err != nil {
 		return false
 	}
-
 	return true
 }

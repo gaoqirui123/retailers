@@ -55,6 +55,7 @@ func (p *Product) GetProductIdBy(id int64) error {
 func (p *Product) UpdateProductStock(id, num int64) error {
 	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
 }
+
 func (p *Product) Add() error {
 	return global.DB.Debug().Table("product").Create(&p).Error
 }

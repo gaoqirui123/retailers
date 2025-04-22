@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-// 文章分类表
-type EbArticleCategory struct {
+// ArticleCategory 文章分类表
+type ArticleCategory struct {
 	Id      uint32    `gorm:"column:id;type:int UNSIGNED;comment:文章分类id;primaryKey;not null;" json:"id"`                            // 文章分类id
 	Pid     int32     `gorm:"column:pid;type:int;comment:父级ID;not null;default:0;" json:"pid"`                                      // 父级ID
 	Title   string    `gorm:"column:title;type:varchar(255);comment:文章分类标题;not null;" json:"title"`                                 // 文章分类标题
@@ -19,15 +19,10 @@ type EbArticleCategory struct {
 	Hidden  string    `gorm:"column:hidden;type:enum('隐藏', '未隐藏');comment:是否隐藏;not null;default:未隐藏;" json:"hidden"`                // 是否隐藏
 }
 
-func (a *EbArticleCategory) Table() string {
-	return "eb_article_category"
-}
-
-func (a *EbArticleCategory) CreateEbArticleCategory() bool {
-	err := global.DB.Table("eb_article_category").Create(&a).Error
+func (a *ArticleCategory) CreateArticleCategory() bool {
+	err := global.DB.Debug().Table("article_category").Create(&a).Error
 	if err != nil {
 		return false
 	}
-
 	return true
 }

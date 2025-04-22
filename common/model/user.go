@@ -42,7 +42,7 @@ func (u *User) UserRegister() error {
 func (u *User) GetUserIdBy(uid int64) error {
 	return global.DB.Debug().Table("user").Where("uid = ?", uid).Limit(1).Find(&u).Error
 }
-func (u *User) Detail(uid int) (result []*User, err error) {
+func (u *User) Detail(uid int) (result []User, err error) {
 	err = global.DB.Debug().Table("user").Where("uid=?", uid).Find(&result).Error
 	if err != nil {
 		return nil, err
