@@ -5,9 +5,9 @@ import (
 	"context"
 )
 
-func ArticleRelease(ctx context.Context, in *article.ArticleAddReq) (*article.ArticleAddResp, error) {
+func ArticleAdd(ctx context.Context, in *article.ArticleAddRequest) (*article.ArticleAddResponse, error) {
 	clients, err := NewArticleClients(ctx, func(ctx context.Context, server article.ArticleClient) (interface{}, error) {
-		release, err := server.ArticleRelease(ctx, in)
+		release, err := server.ArticleAdd(ctx, in)
 		if err != nil {
 			return nil, err
 		}
@@ -16,11 +16,11 @@ func ArticleRelease(ctx context.Context, in *article.ArticleAddReq) (*article.Ar
 	if err != nil {
 		return nil, err
 	}
-	return clients.(*article.ArticleAddResp), err
+	return clients.(*article.ArticleAddResponse), err
 }
 
 // 文章分类添加
-func CategoryAdd(ctx context.Context, in *article.CategoryAddReq) (*article.CategoryAddResp, error) {
+func CategoryAdd(ctx context.Context, in *article.CategoryAddRequest) (*article.CategoryAddResponse, error) {
 	clients, err := NewArticleClients(ctx, func(ctx context.Context, server article.ArticleClient) (interface{}, error) {
 		release, err := server.CategoryAdd(ctx, in)
 		if err != nil {
@@ -31,11 +31,11 @@ func CategoryAdd(ctx context.Context, in *article.CategoryAddReq) (*article.Cate
 	if err != nil {
 		return nil, err
 	}
-	return clients.(*article.CategoryAddResp), err
+	return clients.(*article.CategoryAddResponse), err
 }
 
 // 查询文章管理列表
-func ArticleList(ctx context.Context, in *article.ArticleListReq) (*article.ArticleListResp, error) {
+func ArticleList(ctx context.Context, in *article.ArticleListRequest) (*article.ArticleListResponse, error) {
 	clients, err := NewArticleClients(ctx, func(ctx context.Context, server article.ArticleClient) (interface{}, error) {
 		release, err := server.ArticleList(ctx, in)
 		if err != nil {
@@ -46,5 +46,5 @@ func ArticleList(ctx context.Context, in *article.ArticleListReq) (*article.Arti
 	if err != nil {
 		return nil, err
 	}
-	return clients.(*article.ArticleListResp), err
+	return clients.(*article.ArticleListResponse), err
 }
