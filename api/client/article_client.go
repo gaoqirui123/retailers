@@ -5,7 +5,7 @@ import (
 	"context"
 )
 
-func ArticleRelease(ctx context.Context, in *article.ArticleAddRequest) (*article.ArticleAddResponse, error) {
+func ArticleAdd(ctx context.Context, in *article.ArticleAddRequest) (*article.ArticleAddResponse, error) {
 	clients, err := NewArticleClients(ctx, func(ctx context.Context, server article.ArticleClient) (interface{}, error) {
 		release, err := server.ArticleAdd(ctx, in)
 		if err != nil {
