@@ -19,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Article_ArticleRelease_FullMethodName = "/stream.article/ArticleRelease"
-	Article_CategoryAdd_FullMethodName    = "/stream.article/CategoryAdd"
-	Article_ArticleList_FullMethodName    = "/stream.article/ArticleList"
+	Article_ArticleAdd_FullMethodName  = "/article.Article/ArticleAdd"
+	Article_CategoryAdd_FullMethodName = "/article.Article/CategoryAdd"
+	Article_ArticleList_FullMethodName = "/article.Article/ArticleList"
 )
 
 // ArticleClient is the client API for Article service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ArticleClient interface {
-	ArticleRelease(ctx context.Context, in *ArticleAddReq, opts ...grpc.CallOption) (*ArticleAddResp, error)
-	CategoryAdd(ctx context.Context, in *CategoryAddReq, opts ...grpc.CallOption) (*CategoryAddResp, error)
-	ArticleList(ctx context.Context, in *ArticleListReq, opts ...grpc.CallOption) (*ArticleListResp, error)
+	ArticleAdd(ctx context.Context, in *ArticleAddRequest, opts ...grpc.CallOption) (*ArticleAddResponse, error)
+	CategoryAdd(ctx context.Context, in *CategoryAddRequest, opts ...grpc.CallOption) (*CategoryAddResponse, error)
+	ArticleList(ctx context.Context, in *ArticleListRequest, opts ...grpc.CallOption) (*ArticleListResponse, error)
 }
 
 type articleClient struct {
@@ -41,19 +41,19 @@ func NewArticleClient(cc grpc.ClientConnInterface) ArticleClient {
 	return &articleClient{cc}
 }
 
-func (c *articleClient) ArticleRelease(ctx context.Context, in *ArticleAddReq, opts ...grpc.CallOption) (*ArticleAddResp, error) {
+func (c *articleClient) ArticleAdd(ctx context.Context, in *ArticleAddRequest, opts ...grpc.CallOption) (*ArticleAddResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ArticleAddResp)
-	err := c.cc.Invoke(ctx, Article_ArticleRelease_FullMethodName, in, out, cOpts...)
+	out := new(ArticleAddResponse)
+	err := c.cc.Invoke(ctx, Article_ArticleAdd_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *articleClient) CategoryAdd(ctx context.Context, in *CategoryAddReq, opts ...grpc.CallOption) (*CategoryAddResp, error) {
+func (c *articleClient) CategoryAdd(ctx context.Context, in *CategoryAddRequest, opts ...grpc.CallOption) (*CategoryAddResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CategoryAddResp)
+	out := new(CategoryAddResponse)
 	err := c.cc.Invoke(ctx, Article_CategoryAdd_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -61,9 +61,9 @@ func (c *articleClient) CategoryAdd(ctx context.Context, in *CategoryAddReq, opt
 	return out, nil
 }
 
-func (c *articleClient) ArticleList(ctx context.Context, in *ArticleListReq, opts ...grpc.CallOption) (*ArticleListResp, error) {
+func (c *articleClient) ArticleList(ctx context.Context, in *ArticleListRequest, opts ...grpc.CallOption) (*ArticleListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ArticleListResp)
+	out := new(ArticleListResponse)
 	err := c.cc.Invoke(ctx, Article_ArticleList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -75,9 +75,9 @@ func (c *articleClient) ArticleList(ctx context.Context, in *ArticleListReq, opt
 // All implementations must embed UnimplementedArticleServer
 // for forward compatibility
 type ArticleServer interface {
-	ArticleRelease(context.Context, *ArticleAddReq) (*ArticleAddResp, error)
-	CategoryAdd(context.Context, *CategoryAddReq) (*CategoryAddResp, error)
-	ArticleList(context.Context, *ArticleListReq) (*ArticleListResp, error)
+	ArticleAdd(context.Context, *ArticleAddRequest) (*ArticleAddResponse, error)
+	CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error)
+	ArticleList(context.Context, *ArticleListRequest) (*ArticleListResponse, error)
 	mustEmbedUnimplementedArticleServer()
 }
 
@@ -85,13 +85,13 @@ type ArticleServer interface {
 type UnimplementedArticleServer struct {
 }
 
-func (UnimplementedArticleServer) ArticleRelease(context.Context, *ArticleAddReq) (*ArticleAddResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ArticleRelease not implemented")
+func (UnimplementedArticleServer) ArticleAdd(context.Context, *ArticleAddRequest) (*ArticleAddResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ArticleAdd not implemented")
 }
-func (UnimplementedArticleServer) CategoryAdd(context.Context, *CategoryAddReq) (*CategoryAddResp, error) {
+func (UnimplementedArticleServer) CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CategoryAdd not implemented")
 }
-func (UnimplementedArticleServer) ArticleList(context.Context, *ArticleListReq) (*ArticleListResp, error) {
+func (UnimplementedArticleServer) ArticleList(context.Context, *ArticleListRequest) (*ArticleListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArticleList not implemented")
 }
 func (UnimplementedArticleServer) mustEmbedUnimplementedArticleServer() {}
@@ -107,26 +107,26 @@ func RegisterArticleServer(s grpc.ServiceRegistrar, srv ArticleServer) {
 	s.RegisterService(&Article_ServiceDesc, srv)
 }
 
-func _Article_ArticleRelease_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ArticleAddReq)
+func _Article_ArticleAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ArticleAddRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ArticleServer).ArticleRelease(ctx, in)
+		return srv.(ArticleServer).ArticleAdd(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Article_ArticleRelease_FullMethodName,
+		FullMethod: Article_ArticleAdd_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArticleServer).ArticleRelease(ctx, req.(*ArticleAddReq))
+		return srv.(ArticleServer).ArticleAdd(ctx, req.(*ArticleAddRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Article_CategoryAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryAddReq)
+	in := new(CategoryAddRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -138,13 +138,13 @@ func _Article_CategoryAdd_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: Article_CategoryAdd_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArticleServer).CategoryAdd(ctx, req.(*CategoryAddReq))
+		return srv.(ArticleServer).CategoryAdd(ctx, req.(*CategoryAddRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Article_ArticleList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ArticleListReq)
+	in := new(ArticleListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func _Article_ArticleList_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: Article_ArticleList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArticleServer).ArticleList(ctx, req.(*ArticleListReq))
+		return srv.(ArticleServer).ArticleList(ctx, req.(*ArticleListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -165,12 +165,12 @@ func _Article_ArticleList_Handler(srv interface{}, ctx context.Context, dec func
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Article_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "stream.article",
+	ServiceName: "article.Article",
 	HandlerType: (*ArticleServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ArticleRelease",
-			Handler:    _Article_ArticleRelease_Handler,
+			MethodName: "ArticleAdd",
+			Handler:    _Article_ArticleAdd_Handler,
 		},
 		{
 			MethodName: "CategoryAdd",

@@ -6,12 +6,12 @@ import (
 	"context"
 )
 
-type Article struct {
+type ArticleServer struct {
 	article.UnimplementedArticleServer
 }
 
 // 文章发布
-func (a Article) ArticleRelease(ctx context.Context, in *article.ArticleAddReq) (*article.ArticleAddResp, error) {
+func (a ArticleServer) ArticleAdd(ctx context.Context, in *article.ArticleAddRequest) (*article.ArticleAddResponse, error) {
 	add, err := handler.ArticleAdd(in)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func (a Article) ArticleRelease(ctx context.Context, in *article.ArticleAddReq) 
 }
 
 // 文章分类添加
-func (a Article) CategoryAdd(ctx context.Context, in *article.CategoryAddReq) (*article.CategoryAddResp, error) {
+func (a ArticleServer) CategoryAdd(ctx context.Context, in *article.CategoryAddRequest) (*article.CategoryAddResponse, error) {
 	add, err := handler.CategoryAdd(in)
 	if err != nil {
 		return nil, err
@@ -29,10 +29,10 @@ func (a Article) CategoryAdd(ctx context.Context, in *article.CategoryAddReq) (*
 }
 
 // 查询文章管理列表
-func (a Article) ArticleList(ctx context.Context, in *article.ArticleListReq) (*article.ArticleListResp, error) {
-	add, err := handler.ArticleList(in)
+func (a ArticleServer) ArticleList(ctx context.Context, in *article.ArticleListRequest) (*article.ArticleListResponse, error) {
+	list, err := handler.ArticleList(in)
 	if err != nil {
 		return nil, err
 	}
-	return add, nil
+	return list, nil
 }

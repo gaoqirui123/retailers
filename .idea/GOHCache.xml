@@ -1,6 +1,1284 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="GoORMHelperCache">
-    <option name="lastTimeChecked" value="1745156656851" />
+    <option name="schemaMapping">
+      <map>
+        <entry key="AddOrderRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/order/order.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AddOrderResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/order/order.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AddProductRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AddProductResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Alipay">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/pkg/alipay.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AppViper">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Article">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/article.go" />
+              <option value="file://$PROJECT_DIR$/common/mongoDB/article.go" />
+              <option value="file://$PROJECT_DIR$/srv/article_srv/internal/logic/article.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleAddReq">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleAddResp">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleCategory">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/article_category.go" />
+              <option value="file://$PROJECT_DIR$/common/mongoDB/article_category.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleContent">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/article_content.go" />
+              <option value="file://$PROJECT_DIR$/common/mongoDB/article_content.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleListReq">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleListResp">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleRelease">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/srv/article_srv/internal/logic/article.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CategoryAdd">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CategoryAddReq">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CategoryAddResp">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Consul">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/consul/consul.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CustomClaims">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/pkg/jwt.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EbArticle">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/eb_article.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EbArticleCategory">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/eb_article_category.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EbArticleContent">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/eb_article_content.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="JWT">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/pkg/jwt.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="List">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NaCos">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Order">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/order.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OrderServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/srv/order_srv/internal/logic/order.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OrderSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Product">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/product.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProductServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/srv/product_srv/internal/logic/product.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProductSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SendSmsRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SendSmsResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="T">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UnimplementedArticleServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UnimplementedOrderServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/order/order_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UnimplementedProductServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UnimplementedUserEnterServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UnimplementedUserServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserAddress">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/user_address.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserEnter">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/user_enter.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserEnterRegisterRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserEnterRegisterResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserEnterServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/srv/user_enter_srv/internal/logic/user_enter_srv.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserEnterSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserLogin">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserLoginRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserLoginResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserRegister">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserRegisterRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserRegisterResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="articleClient">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="orderClient">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/order/order_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="productClient">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="userClient">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="userEnterClient">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="x">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/article/article.pb.go" />
+              <option value="file://$PROJECT_DIR$/common/proto/order/order.pb.go" />
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$PROJECT_DIR$/api/client/article_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703907" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/client/client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770398" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/client/order_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770398" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/client/product_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770398" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770398" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/client/user_enter_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770400" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/cmd/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703909" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/article_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703909" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/order_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770400" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/product_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770401" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/user_enter_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770401" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770401" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/article_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703910" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleRelease" />
+                  <option value="CategoryAdd" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/order_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770402" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/product_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703911" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/user_enter_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770403" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/user_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770403" />
+              <option name="schema">
+                <list>
+                  <option value="UserLogin" />
+                  <option value="UserRegister" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/response/response.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703912" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703912" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770403" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770404" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/router.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770404" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770405" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/config/config.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703914" />
+              <option name="schema">
+                <list>
+                  <option value="AppViper" />
+                  <option value="NaCos" />
+                  <option value="UserSrv" />
+                  <option value="ProductSrv" />
+                  <option value="OrderSrv" />
+                  <option value="UserEnterSrv" />
+                  <option value="ArticleSrv" />
+                  <option value="T" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/consul/consul.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703915" />
+              <option name="schema">
+                <list>
+                  <option value="Consul" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/global/global.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703915" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/grpc/grpc.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703917" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/initialize/init.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703917" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745299034586" />
+              <option name="schema">
+                <list>
+                  <option value="Article" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/article_category.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745299067902" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleCategory" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/article_content.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745299124608" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleContent" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/eb_article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703919" />
+              <option name="schema">
+                <list>
+                  <option value="EbArticle" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/eb_article_category.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703919" />
+              <option name="schema">
+                <list>
+                  <option value="EbArticleCategory" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/eb_article_content.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703919" />
+              <option name="schema">
+                <list>
+                  <option value="EbArticleContent" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770405" />
+              <option name="schema">
+                <list>
+                  <option value="Order" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770405" />
+              <option name="schema">
+                <list>
+                  <option value="Product" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770406" />
+              <option name="schema">
+                <list>
+                  <option value="User" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_address.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703922" />
+              <option name="schema">
+                <list>
+                  <option value="UserAddress" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_enter.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770406" />
+              <option name="schema">
+                <list>
+                  <option value="UserEnter" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/mongoDB/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745300078568" />
+              <option name="schema">
+                <list>
+                  <option value="Article" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/mongoDB/article_category.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745300014704" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleCategory" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/mongoDB/article_content.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745300014709" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleContent" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/mongoDB/mongodb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745300014310" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/pkg/alipay.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703923" />
+              <option name="schema">
+                <list>
+                  <option value="Alipay" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/pkg/jwt.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703923" />
+              <option name="schema">
+                <list>
+                  <option value="CustomClaims" />
+                  <option value="JWT" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/pkg/oss.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703923" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/pkg/sendsms.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703924" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/article/article.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703925" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleAddReq" />
+                  <option value="ArticleAddResp" />
+                  <option value="CategoryAddReq" />
+                  <option value="CategoryAddResp" />
+                  <option value="ArticleListReq" />
+                  <option value="ArticleListResp" />
+                  <option value="List" />
+                  <option value="x" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/article/article_grpc.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703925" />
+              <option name="schema">
+                <list>
+                  <option value="articleClient" />
+                  <option value="UnimplementedArticleServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/order/order.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770406" />
+              <option name="schema">
+                <list>
+                  <option value="AddOrderRequest" />
+                  <option value="AddOrderResponse" />
+                  <option value="x" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/order/order_grpc.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770408" />
+              <option name="schema">
+                <list>
+                  <option value="orderClient" />
+                  <option value="UnimplementedOrderServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/product/product.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770408" />
+              <option name="schema">
+                <list>
+                  <option value="AddProductRequest" />
+                  <option value="AddProductResponse" />
+                  <option value="x" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/product/product_grpc.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770409" />
+              <option name="schema">
+                <list>
+                  <option value="productClient" />
+                  <option value="UnimplementedProductServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/user/user.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770410" />
+              <option name="schema">
+                <list>
+                  <option value="UserLoginRequest" />
+                  <option value="UserLoginResponse" />
+                  <option value="UserRegisterRequest" />
+                  <option value="UserRegisterResponse" />
+                  <option value="SendSmsRequest" />
+                  <option value="SendSmsResponse" />
+                  <option value="x" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770411" />
+              <option name="schema">
+                <list>
+                  <option value="userClient" />
+                  <option value="UnimplementedUserServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770411" />
+              <option name="schema">
+                <list>
+                  <option value="UserEnterRegisterRequest" />
+                  <option value="UserEnterRegisterResponse" />
+                  <option value="x" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770412" />
+              <option name="schema">
+                <list>
+                  <option value="userEnterClient" />
+                  <option value="UnimplementedUserEnterServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/utlis/encryption.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703932" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/utlis/md5.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703932" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/article_srv/internal/handler/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745300014317" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/article_srv/internal/logic/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745299357242" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/article_srv/internal/register.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745299133023" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/article_srv/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703936" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770413" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/logic/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770414" />
+              <option name="schema">
+                <list>
+                  <option value="OrderServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/register.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703938" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/order_srv/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703938" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770415" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/logic/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770415" />
+              <option name="schema">
+                <list>
+                  <option value="ProductServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/register.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703940" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703940" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/internal/handler/user_enter.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770416" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/internal/logic/user_enter_srv.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770416" />
+              <option name="schema">
+                <list>
+                  <option value="UserEnterServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/internal/register.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770416" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_enter_srv/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703942" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770416" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298770416" />
+              <option name="schema">
+                <list>
+                  <option value="UserServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/register.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703944" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298703944" />
+            </ScannedPath>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="tableStructMapping">
+      <map>
+        <entry key="add_order_request" value="AddOrderRequest" />
+        <entry key="add_order_response" value="AddOrderResponse" />
+        <entry key="add_product_request" value="AddProductRequest" />
+        <entry key="add_product_response" value="AddProductResponse" />
+        <entry key="alipay" value="Alipay" />
+        <entry key="app_viper" value="AppViper" />
+        <entry key="article" value="Article" />
+        <entry key="article_add_req" value="ArticleAddReq" />
+        <entry key="article_add_resp" value="ArticleAddResp" />
+        <entry key="article_category" value="ArticleCategory" />
+        <entry key="article_client" value="articleClient" />
+        <entry key="article_content" value="ArticleContent" />
+        <entry key="article_list_req" value="ArticleListReq" />
+        <entry key="article_list_resp" value="ArticleListResp" />
+        <entry key="article_release" value="ArticleRelease" />
+        <entry key="article_server" value="ArticleServer" />
+        <entry key="article_srv" value="ArticleSrv" />
+        <entry key="category_add" value="CategoryAdd" />
+        <entry key="category_add_req" value="CategoryAddReq" />
+        <entry key="category_add_resp" value="CategoryAddResp" />
+        <entry key="consul" value="Consul" />
+        <entry key="custom_claims" value="CustomClaims" />
+        <entry key="eb_article" value="EbArticle" />
+        <entry key="eb_article_category" value="EbArticleCategory" />
+        <entry key="eb_article_content" value="EbArticleContent" />
+        <entry key="jwt" value="JWT" />
+        <entry key="list" value="List" />
+        <entry key="na_cos" value="NaCos" />
+        <entry key="order" value="Order" />
+        <entry key="order_client" value="orderClient" />
+        <entry key="order_server" value="OrderServer" />
+        <entry key="order_srv" value="OrderSrv" />
+        <entry key="product" value="Product" />
+        <entry key="product_client" value="productClient" />
+        <entry key="product_server" value="ProductServer" />
+        <entry key="product_srv" value="ProductSrv" />
+        <entry key="send_sms_request" value="SendSmsRequest" />
+        <entry key="send_sms_response" value="SendSmsResponse" />
+        <entry key="t" value="T" />
+        <entry key="unimplemented_article_server" value="UnimplementedArticleServer" />
+        <entry key="unimplemented_order_server" value="UnimplementedOrderServer" />
+        <entry key="unimplemented_product_server" value="UnimplementedProductServer" />
+        <entry key="unimplemented_user_enter_server" value="UnimplementedUserEnterServer" />
+        <entry key="unimplemented_user_server" value="UnimplementedUserServer" />
+        <entry key="user" value="User" />
+        <entry key="user_address" value="UserAddress" />
+        <entry key="user_client" value="userClient" />
+        <entry key="user_enter" value="UserEnter" />
+        <entry key="user_enter_client" value="userEnterClient" />
+        <entry key="user_enter_register_request" value="UserEnterRegisterRequest" />
+        <entry key="user_enter_register_response" value="UserEnterRegisterResponse" />
+        <entry key="user_enter_server" value="UserEnterServer" />
+        <entry key="user_enter_srv" value="UserEnterSrv" />
+        <entry key="user_login" value="UserLogin" />
+        <entry key="user_login_request" value="UserLoginRequest" />
+        <entry key="user_login_response" value="UserLoginResponse" />
+        <entry key="user_register" value="UserRegister" />
+        <entry key="user_register_request" value="UserRegisterRequest" />
+        <entry key="user_register_response" value="UserRegisterResponse" />
+        <entry key="user_server" value="UserServer" />
+        <entry key="user_srv" value="UserSrv" />
+        <entry key="x" value="x" />
+      </map>
+    </option>
+    <option name="lastTimeChecked" value="1745298855523" />
   </component>
 </project>

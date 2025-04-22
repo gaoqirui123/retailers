@@ -2,7 +2,6 @@ package mongoDB
 
 import (
 	"common/global"
-	"common/model"
 	"context"
 	"errors"
 	"fmt"
@@ -12,7 +11,7 @@ import (
 )
 
 // 添加
-func CreateEbArticleContent(dateBase, collectionName string, doc interface{}) error {
+func CreateArticleContent(dateBase, collectionName string, doc interface{}) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
@@ -21,7 +20,7 @@ func CreateEbArticleContent(dateBase, collectionName string, doc interface{}) er
 }
 
 // 查询文章管理列表
-func FindEbArticleCategory(dateBase, collectionName string) ([]model.EbArticle, error) {
+func FindArticleCategory(dateBase, collectionName string) ([]Article, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
@@ -33,11 +32,11 @@ func FindEbArticleCategory(dateBase, collectionName string) ([]model.EbArticle, 
 	// 文章分类表
 	defer cur.Close(ctx)
 
-	var res []model.EbArticle
+	var res []Article
 
 	for cur.Next(ctx) {
 
-		var result model.EbArticle
+		var result Article
 
 		err = cur.Decode(&result)
 
@@ -58,8 +57,8 @@ func FindEbArticleCategory(dateBase, collectionName string) ([]model.EbArticle, 
 }
 
 // 查询文章分类表的类型id
-func FindEbArticleCategoryPid(dateBase, collectionName string, pid int) (model.EbArticleCategory, error) {
-	var date model.EbArticleCategory
+func FindArticleCategoryPid(dateBase, collectionName string, pid int) (ArticleCategory, error) {
+	var date ArticleCategory
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 
@@ -72,12 +71,12 @@ func FindEbArticleCategoryPid(dateBase, collectionName string, pid int) (model.E
 	err := collection.FindOne(ctx, fist).Decode(&date)
 
 	if err != nil {
-		return model.EbArticleCategory{}, nil
+		return ArticleCategory{}, nil
 	}
 	if errors.Is(err, mongo.ErrNoDocuments) {
-		return model.EbArticleCategory{}, nil
+		return ArticleCategory{}, nil
 	} else if err != nil {
-		return model.EbArticleCategory{}, nil
+		return ArticleCategory{}, nil
 	}
 
 	return date, err

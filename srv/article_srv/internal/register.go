@@ -7,5 +7,5 @@ import (
 )
 
 func RegisterArticleServer(server *grpc.Server) {
-	article.RegisterArticleServer(server, logic.Article{})
+	article.RegisterArticleServer(server, logic.ArticleServer{})
 }

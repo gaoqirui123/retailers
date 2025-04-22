@@ -1,9 +1,16 @@
 syntax = "proto3";
+
+package article;
 option go_package=".;article";
-package stream;
+
+service Article {
+  rpc ArticleAdd(ArticleAddRequest) returns (ArticleAddResponse);//文章管理添加
+  rpc CategoryAdd(CategoryAddRequest) returns (CategoryAddResponse);//文章分类添加
+  rpc ArticleList(ArticleListRequest) returns (ArticleListResponse);// 查询文章管理列表
+}
 
 //文章管理添加
-message ArticleAddReq {
+message ArticleAddRequest {
   string content=1;//文章内容
   uint32 cid=2;//分类id
   string title=3;//文章标题
@@ -13,12 +20,12 @@ message ArticleAddReq {
   string hide=7;//是否隐藏
 
 }
-message ArticleAddResp {
+message ArticleAddResponse {
   string success = 1;
 }
 //文章分类添加
 
-message CategoryAddReq {
+message CategoryAddRequest {
   uint32 pid=1;//分类id
   string title=3;//分类名称
   string intr=4;//分类简介
@@ -27,19 +34,19 @@ message CategoryAddReq {
   uint32 status=2;//状态
 
 }
-message CategoryAddResp {
+message CategoryAddResponse {
   string success = 1;
 }
 
 // 查询文章管理列表
-message ArticleListReq {
+message ArticleListRequest {
 
 }
-message ArticleListResp {
+message ArticleListResponse {
 
-  repeated List list = 1;
+  repeated ArticleList List = 1;
 }
-message List{
+message ArticleList{
   string content=1;//文章内容
   uint32 cid=2;//分类id
   string title=3;//文章标题
@@ -47,9 +54,4 @@ message List{
   string imageInput=5;//文章图片
   string synopsis=6;//文章简介
   string hide=7;//是否隐藏
-}
-service article {
-  rpc ArticleRelease(ArticleAddReq) returns (ArticleAddResp);//文章管理添加
-  rpc CategoryAdd(CategoryAddReq) returns (CategoryAddResp);//文章分类添加
-  rpc ArticleList(ArticleListReq) returns (ArticleListResp);// 查询文章管理列表
 }
