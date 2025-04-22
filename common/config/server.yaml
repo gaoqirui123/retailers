@@ -16,3 +16,6 @@ OrderSrv:
 UserEnterSrv:
   Host: "127.0.0.1"
   Port: 8084
+ArticleSrv:
+  Host: "127.0.0.1"
+  Port: 8085

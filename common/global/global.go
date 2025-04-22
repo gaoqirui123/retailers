@@ -5,6 +5,7 @@ import (
 	"context"
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/go-redis/redis/v8"
+	"go.mongodb.org/mongo-driver/v2/mongo"
 	"gorm.io/gorm"
 )
 
@@ -15,4 +16,5 @@ var (
 	Rdb    *redis.Client
 	Ctx    = context.Background()
 	ES     *elasticsearch.Client
+	MDB    *mongo.Client
 )
