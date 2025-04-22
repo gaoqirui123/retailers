@@ -60,6 +60,7 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 }
 
 // 个人资料显示
+
 func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 	u := model.User{}
 	detail, err := u.Detail(int(in.Uid))
@@ -85,6 +86,7 @@ func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 }
 
 // 完善用户信息
+
 func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
 	u := model.User{
 		RealName: in.RealName, //真实姓名

@@ -26,6 +26,13 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745298624402" />
+            </ScannedPath>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="tableStructMapping">
