@@ -2,6 +2,7 @@ package handler
 
 import (
 	"common/global"
+	"common/model"
 	"common/mongoDB"
 	"common/proto/article"
 	"log"
@@ -9,7 +10,7 @@ import (
 
 // 文章管理添加
 func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, error) {
-	ab := mongoDB.Article{
+	ab := model.Article{
 		Cid:        int32(in.Cid),
 		Title:      in.Title,
 		Author:     in.Author,
@@ -18,7 +19,7 @@ func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, err
 		Hide:       in.Hide,
 	}
 
-	c := mongoDB.ArticleContent{
+	c := model.ArticleContent{
 		Content: in.Content,
 	}
 
@@ -64,7 +65,7 @@ func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, err
 
 // 文章分类添加
 func CategoryAdd(in *article.CategoryAddRequest) (*article.CategoryAddResponse, error) {
-	a := mongoDB.ArticleCategory{
+	a := model.ArticleCategory{
 		Pid:    int32(in.Pid),
 		Title:  in.Title,
 		Intr:   in.Intr,

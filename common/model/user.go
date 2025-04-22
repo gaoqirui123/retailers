@@ -10,15 +10,9 @@ type User struct {
 	Birthday       int32   `gorm:"column:birthday;type:int;comment:生日;not null;default:0;" json:"birthday"`                              // 生日
 	CardId         string  `gorm:"column:card_id;type:varchar(20);comment:身份证号码;not null;" json:"card_id"`                               // 身份证号码
 	Mark           string  `gorm:"column:mark;type:varchar(255);comment:用户备注;not null;" json:"mark"`                                     // 用户备注
-	PartnerId      int32   `gorm:"column:partner_id;type:int;comment:合伙人id;not null;default:0;" json:"partner_id"`                       // 合伙人id
-	GroupId        int32   `gorm:"column:group_id;type:int;comment:用户分组id;not null;default:0;" json:"group_id"`                          // 用户分组id
 	Nickname       string  `gorm:"column:nickname;type:varchar(60);comment:用户昵称;not null;" json:"nickname"`                              // 用户昵称
 	Avatar         string  `gorm:"column:avatar;type:varchar(256);comment:用户头像;not null;" json:"avatar"`                                 // 用户头像
 	Phone          string  `gorm:"column:phone;type:char(15);comment:手机号码;default:NULL;" json:"phone"`                                   // 手机号码
-	AddTime        uint32  `gorm:"column:add_time;type:int UNSIGNED;comment:添加时间;not null;default:0;" json:"add_time"`                   // 添加时间
-	AddIp          string  `gorm:"column:add_ip;type:varchar(16);comment:添加ip;not null;" json:"add_ip"`                                  // 添加ip
-	LastTime       uint32  `gorm:"column:last_time;type:int UNSIGNED;comment:最后一次登录时间;not null;default:0;" json:"last_time"`             // 最后一次登录时间
-	LastIp         string  `gorm:"column:last_ip;type:varchar(16);comment:最后一次登录ip;not null;" json:"last_ip"`                            // 最后一次登录ip
 	NowMoney       float64 `gorm:"column:now_money;type:decimal(8, 2) UNSIGNED;comment:用户余额;not null;default:0.00;" json:"now_money"`    // 用户余额
 	BrokeragePrice float64 `gorm:"column:brokerage_price;type:decimal(8, 2);comment:佣金金额;not null;default:0.00;" json:"brokerage_price"` // 佣金金额
 	Integral       float64 `gorm:"column:integral;type:decimal(8, 2) UNSIGNED;comment:用户剩余积分;not null;default:0.00;" json:"integral"`    // 用户剩余积分
@@ -32,7 +26,7 @@ type User struct {
 	PayCount       uint32  `gorm:"column:pay_count;type:int UNSIGNED;comment:用户购买次数;default:0;" json:"pay_count"`                        // 用户购买次数
 	SpreadCount    int32   `gorm:"column:spread_count;type:int;comment:下级人数;default:0;" json:"spread_count"`                             // 下级人数
 	CleanTime      int32   `gorm:"column:clean_time;type:int;comment:清理会员时间;default:0;" json:"clean_time"`                               // 清理会员时间
-	Addres         string  `gorm:"column:addres;type:varchar(255);comment:详细地址;not null;" json:"addres"`                                 // 详细地址
+	Address        string  `gorm:"column:address;type:varchar(255);comment:详细地址;not null;" json:"address"`                               // 详细地址
 	Adminid        uint32  `gorm:"column:adminid;type:int UNSIGNED;comment:管理员编号 ;default:0;" json:"adminid"`                            // 管理员编号
 	LoginType      string  `gorm:"column:login_type;type:varchar(36);comment:用户登陆类型，h5,wechat,routine;not null;" json:"login_type"`      // 用户登陆类型，h5,wechat,routine
 }
@@ -43,4 +37,31 @@ func (u *User) UserLogin(account string) error {
 
 func (u *User) UserRegister() error {
 	return global.DB.Debug().Table("user").Create(&u).Error
+}
+
+func (u *User) GetUserIdBy(uid int64) error {
+	return global.DB.Debug().Table("user").Where("uid = ?", uid).Limit(1).Find(&u).Error
+}
+func (u *User) Detail(uid int) (result []User, err error) {
+	err = global.DB.Debug().Table("user").Where("uid=?", uid).Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (u *User) FindId(id int) (result User, err error) {
+	err = global.DB.Debug().Table("user").Where("uid=?", id).Find(&result).Error
+	if err != nil {
+		return User{}, err
+	}
+	return result, nil
+}
+
+func (u *User) Updated(id int, users User) bool {
+	err := global.DB.Debug().Table("user").Where("uid=?", id).Updates(users).Error
+	if err != nil {
+		return false
+	}
+	return true
 }

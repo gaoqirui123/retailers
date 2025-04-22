@@ -1,13 +1,15 @@
 package model
 
+import "common/global"
+
 type Order struct {
 	Id                     uint32  `gorm:"column:id;type:int UNSIGNED;comment:订单ID;primaryKey;not null;" json:"id"`                                                          // 订单ID
-	OrderId                string  `gorm:"column:order_id;type:varchar(32);comment:订单号;not null;" json:"order_id"`                                                           // 订单号
+	OrderSn                string  `gorm:"column:order_sn;type:varchar(32);comment:订单号;not null;" json:"order_sn"`                                                           // 订单号
 	Uid                    uint32  `gorm:"column:uid;type:int UNSIGNED;comment:用户id;not null;" json:"uid"`                                                                   // 用户id
 	RealName               string  `gorm:"column:real_name;type:varchar(32);comment:用户姓名;not null;" json:"real_name"`                                                        // 用户姓名
 	UserPhone              string  `gorm:"column:user_phone;type:varchar(18);comment:用户电话;not null;" json:"user_phone"`                                                      // 用户电话
 	UserAddress            string  `gorm:"column:user_address;type:varchar(100);comment:详细地址;not null;" json:"user_address"`                                                 // 详细地址
-	CartId                 string  `gorm:"column:cart_id;type:varchar(256);comment:购物车id;not null;default:[];" json:"cart_id"`                                               // 购物车id
+	CartId                 uint32  `gorm:"column:cart_id;type:int;comment:购物车id;not null;default:[];" json:"cart_id"`                                                        // 购物车id
 	FreightPrice           float64 `gorm:"column:freight_price;type:decimal(8, 2);comment:运费金额;not null;default:0.00;" json:"freight_price"`                                 // 运费金额
 	TotalNum               uint32  `gorm:"column:total_num;type:int UNSIGNED;comment:订单商品总数;not null;default:0;" json:"total_num"`                                           // 订单商品总数
 	TotalPrice             float64 `gorm:"column:total_price;type:decimal(8, 2) UNSIGNED;comment:订单总价;not null;default:0.00;" json:"total_price"`                            // 订单总价
@@ -17,9 +19,9 @@ type Order struct {
 	DeductionPrice         float64 `gorm:"column:deduction_price;type:decimal(8, 2) UNSIGNED;comment:抵扣金额;not null;default:0.00;" json:"deduction_price"`                    // 抵扣金额
 	CouponId               uint32  `gorm:"column:coupon_id;type:int UNSIGNED;comment:优惠券id;not null;default:0;" json:"coupon_id"`                                            // 优惠券id
 	CouponPrice            float64 `gorm:"column:coupon_price;type:decimal(8, 2) UNSIGNED;comment:优惠券金额;not null;default:0.00;" json:"coupon_price"`                         // 优惠券金额
-	Paid                   uint8   `gorm:"column:paid;type:tinyint UNSIGNED;comment:支付状态;not null;default:0;" json:"paid"`                                                   // 支付状态
+	Paid                   uint8   `gorm:"column:paid;type:tinyint UNSIGNED;comment:支付状态（0：未支付；1：已支付）;not null;default:0;" json:"paid"`                                      // 支付状态
 	PayTime                uint32  `gorm:"column:pay_time;type:int UNSIGNED;comment:支付时间;default:NULL;" json:"pay_time"`                                                     // 支付时间
-	PayType                string  `gorm:"column:pay_type;type:varchar(32);comment:支付方式;not null;" json:"pay_type"`                                                          // 支付方式
+	PayType                uint32  `gorm:"column:pay_type;type:int;comment:支付方式(0-微信,1-支付宝,2-银行卡);not null;" json:"pay_type"`                                                // 支付方式
 	AddTime                uint32  `gorm:"column:add_time;type:int UNSIGNED;comment:创建时间;not null;" json:"add_time"`                                                         // 创建时间
 	Status                 int8    `gorm:"column:status;type:tinyint(1);comment:订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：待评价；-1：已退款）;not null;default:0;" json:"status"` // 订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：待评价；-1：已退款）
 	RefundStatus           uint8   `gorm:"column:refund_status;type:tinyint UNSIGNED;comment:0 未退款 1 申请中 2 已退款;not null;default:0;" json:"refund_status"`                    // 0 未退款 1 申请中 2 已退款
@@ -53,4 +55,24 @@ type Order struct {
 	IsChannel              uint8   `gorm:"column:is_channel;type:tinyint UNSIGNED;comment:支付渠道(0微信公众号1微信小程序);default:0;" json:"is_channel"`         // 支付渠道(0微信公众号1微信小程序)
 	IsRemind               uint8   `gorm:"column:is_remind;type:tinyint UNSIGNED;comment:消息提醒;default:0;" json:"is_remind"`                         // 消息提醒
 	IsSystemDel            int8    `gorm:"column:is_system_del;type:tinyint(1);comment:后台是否删除;default:0;" json:"is_system_del"`                     // 后台是否删除
+}
+
+func (o *Order) AddOrder() error {
+	return global.DB.Debug().Table("order").Create(&o).Error
+}
+
+func (o *Order) GetOrderSn(sn string) error {
+	return global.DB.Debug().Table("order").Where("order_sn = ?", sn).Limit(1).Find(&o).Error
+}
+
+func (o *Order) UpdateOrderStatus(orderSn string, status int) error {
+	return global.DB.Debug().Table("order").Where("order_sn = ?", orderSn).Limit(1).Update("status", status).Error
+}
+
+func (o *Order) OrderList(userId, status int64) (list []*Order, err error) {
+	err = global.DB.Debug().Table("order").Where("user_id = ? and status = ?", userId, status).Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
 }

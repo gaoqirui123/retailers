@@ -5,30 +5,63 @@ option go_package = ".;user";
 
 
 service User {
-  rpc UserLogin(UserLoginRequest) returns (UserLoginResponse); //
-  rpc UserRegister(UserRegisterRequest) returns (UserRegisterResponse);
+  rpc UserLogin(UserLoginRequest) returns (UserLoginResponse);//TODO:用户登录
+  rpc UserRegister(UserRegisterRequest) returns (UserRegisterResponse);//TODO:用户注册
   rpc SendSms(SendSmsRequest) returns (SendSmsResponse);
-//  rpc UserUpdate(UserUpdateRequest) returns (UserUpdateResponse);
-//  rpc UserForgotPassword(UserForgotPasswordRequest) returns (UserForgotPasswordResponse);
-//  rpc UserDetail(UserDetailRequest) returns (UserDetailResponse);
-//  rpc UserImprove(UserImproveRequest) returns (UserImproveResponse);
+  rpc UserDetail(UserDetailRequest) returns (UserDetailResponse);//TODO:展示个人资料
+  rpc ImproveUser(ImproveUserRequest) returns (ImproveUserResponse);//TODO:完善用户信息
 }
 
+//TODO:完善用户信息
+message ImproveUserRequest {
+  string RealName = 1;//真实姓名
+  int32 Birthday = 2;//生日
+  string CardId = 3;//身份证号码
+  string Mark = 4;//用户备注
+  string Nickname = 5;//用户昵称
+  string Avatar = 6;//用户头像
+  string Phone = 7;//手机号码
+  string Address = 8;//地址
+  int32 Id = 9;//根据用户id查询到要完善的用户
+}
+message ImproveUserResponse {
+  string Success = 1;
+}
+
+//TODO:展示个人资料
+message UserDetailRequest {
+  int32 Uid = 1;
+}
+message UserDetailResponse {
+  repeated UserDetail detail = 1;
+}
+message UserDetail{
+  string Account = 1;//用户账号
+  string RealName = 2;//真实姓名
+  int32 Birthday = 3;//生日
+  string Nickname = 4;//用户昵称
+  string Avatar = 5;//用户头像
+  string Phone = 6;//手机号码
+  float NowMoney = 7;//用户余额
+  float BrokeragePrice = 8;//佣金金额
+  float Integral = 9;//用户剩余积分
+}
+
+//TODO:用户登录
 message UserLoginRequest {
   string Account = 1;
   string PassWord = 2;
 }
-
 message UserLoginResponse {
   uint64 UserId = 1;
 }
 
+//TODO:用户注册
 message UserRegisterRequest {
   string Account = 1;
   string PassWord = 2;
   string Pass = 3;
 }
-
 message UserRegisterResponse {
   uint64 UserId = 1;
 }
@@ -37,7 +70,6 @@ message SendSmsRequest {
   string Mobile = 1;
   string Source = 2;
 }
-
 message SendSmsResponse {
   bool   Success = 1;
 }

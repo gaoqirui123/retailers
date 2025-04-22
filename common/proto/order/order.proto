@@ -3,14 +3,67 @@ syntax = "proto3";
 package order;
 option go_package = ".;order";
 
+service Order {
+  rpc AddOrder(AddOrderRequest) returns (AddOrderResponse);
+  rpc PayCallback(PayCallbackRequest) returns (PayCallbackResponse);
+  rpc OrderList(OrderListRequest) returns (OrderListResponse);
+}
+
 message AddOrderRequest {
-  string name = 1;
+  int64  Uid = 1; // 用户ID
+  int64  ProductId = 2; // 商品ID/秒杀商品ID
+  int64  Num = 3; // 购买数量
+  int64  PayType = 4; // 支付方式
+  int64  CartId = 5; // 购物车ID
+  int64  FreightPrice = 6; // 运费金额
+  int64  CouponId = 7; // 优惠券ID
+  float  UseIntegral = 8; // 使用积分
+  string Mark = 9; // 备注
+  int64  StoreId = 10; // 门店ID
+  int64  MerId = 11; // 商户ID
+  int64  BargainId = 12; // 砍价ID
+  int64  ShippingType = 13; // 配送方式 1=快递 ，2=门店自提
+  int64  IsChannel = 14; // 支付渠道
+  int64  CombinationId = 15; // 拼团商品ID
+  int64  PinkId = 16; // 拼团ID
 }
 
 message AddOrderResponse {
   string PayUrl = 1;
 }
 
-service Order {
-  rpc AddOrder(AddOrderRequest) returns (AddOrderResponse);
+message PayCallbackRequest {
+  string OrderSn = 1;
+  string Status = 2;
 }
+
+message PayCallbackResponse {
+  bool  Success = 1;
+}
+
+message OrderListRequest {
+  int64  UserId = 1;
+  int64  OrderStatus = 2;
+}
+
+message OrderListResponse {
+  repeated  OrderList List = 1;
+}
+
+message OrderList {
+  int64  OrderId = 1;
+  string OrderSn = 2;
+  int64  ProductId = 3;
+  string ProductName = 4;
+  string ProductImage = 5;
+  string ProductSpecifications = 6;
+  int64  UserId = 7;
+  string Account = 8;
+  string UserPhone = 9;
+  float  PayPrice = 10;
+  int64  PayType = 11;
+  int64  PayTime = 12;
+  int64  Paid = 13;
+  int64  Status = 14;
+}
+

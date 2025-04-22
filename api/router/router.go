@@ -12,4 +12,8 @@ func RegisterRouter(r *gin.Engine) {
 		OrderRouter(c)
 		ArticleRouter(c)
 	}
+	b := r.Group("/api/b")
+	{
+		UserEnter(b)
+	}
 }

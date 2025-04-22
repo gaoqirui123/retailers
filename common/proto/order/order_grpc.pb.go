@@ -19,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Order_AddOrder_FullMethodName = "/order.Order/AddOrder"
+	Order_AddOrder_FullMethodName    = "/order.Order/AddOrder"
+	Order_PayCallback_FullMethodName = "/order.Order/PayCallback"
+	Order_OrderList_FullMethodName   = "/order.Order/OrderList"
 )
 
 // OrderClient is the client API for Order service.
@@ -27,6 +29,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderClient interface {
 	AddOrder(ctx context.Context, in *AddOrderRequest, opts ...grpc.CallOption) (*AddOrderResponse, error)
+	PayCallback(ctx context.Context, in *PayCallbackRequest, opts ...grpc.CallOption) (*PayCallbackResponse, error)
+	OrderList(ctx context.Context, in *OrderListRequest, opts ...grpc.CallOption) (*OrderListResponse, error)
 }
 
 type orderClient struct {
@@ -47,11 +51,33 @@ func (c *orderClient) AddOrder(ctx context.Context, in *AddOrderRequest, opts ..
 	return out, nil
 }
 
+func (c *orderClient) PayCallback(ctx context.Context, in *PayCallbackRequest, opts ...grpc.CallOption) (*PayCallbackResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PayCallbackResponse)
+	err := c.cc.Invoke(ctx, Order_PayCallback_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderClient) OrderList(ctx context.Context, in *OrderListRequest, opts ...grpc.CallOption) (*OrderListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OrderListResponse)
+	err := c.cc.Invoke(ctx, Order_OrderList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderServer is the server API for Order service.
 // All implementations must embed UnimplementedOrderServer
 // for forward compatibility
 type OrderServer interface {
 	AddOrder(context.Context, *AddOrderRequest) (*AddOrderResponse, error)
+	PayCallback(context.Context, *PayCallbackRequest) (*PayCallbackResponse, error)
+	OrderList(context.Context, *OrderListRequest) (*OrderListResponse, error)
 	mustEmbedUnimplementedOrderServer()
 }
 
@@ -61,6 +87,12 @@ type UnimplementedOrderServer struct {
 
 func (UnimplementedOrderServer) AddOrder(context.Context, *AddOrderRequest) (*AddOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddOrder not implemented")
+}
+func (UnimplementedOrderServer) PayCallback(context.Context, *PayCallbackRequest) (*PayCallbackResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PayCallback not implemented")
+}
+func (UnimplementedOrderServer) OrderList(context.Context, *OrderListRequest) (*OrderListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OrderList not implemented")
 }
 func (UnimplementedOrderServer) mustEmbedUnimplementedOrderServer() {}
 
@@ -93,6 +125,42 @@ func _Order_AddOrder_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Order_PayCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PayCallbackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).PayCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Order_PayCallback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).PayCallback(ctx, req.(*PayCallbackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Order_OrderList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).OrderList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Order_OrderList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).OrderList(ctx, req.(*OrderListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Order_ServiceDesc is the grpc.ServiceDesc for Order service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -103,6 +171,14 @@ var Order_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddOrder",
 			Handler:    _Order_AddOrder_Handler,
+		},
+		{
+			MethodName: "PayCallback",
+			Handler:    _Order_PayCallback_Handler,
+		},
+		{
+			MethodName: "OrderList",
+			Handler:    _Order_OrderList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

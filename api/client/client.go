@@ -67,7 +67,7 @@ func OrderClients(ctx context.Context, handler func(ctx context.Context, server 
 	return GenericClient(ctx, "127.0.0.1:8083", NewOrderClient, handler)
 }
 
-// UserEnterClients 封装的购物车服务客户端处理函数
+// UserEnterClients 封装的商户服务客户端处理函数
 func UserEnterClients(ctx context.Context, handler func(ctx context.Context, server user_enter.UserEnterClient) (interface{}, error)) (interface{}, error) {
 	return GenericClient(ctx, "127.0.0.1:8084", NewUserEnterClient, handler)
 }
