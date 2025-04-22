@@ -33,9 +33,31 @@ message AddProductRequest {
 message AddProductResponse {
   string greet = 1;
 }
+message AddCombinationProductRequest {
+  int64 MerId = 1; // 商户ID
+  int64 ProductId = 2; // 商品ID
+  string Title = 3; // 活动标题
+  string Attr = 4; // 活动属性
+  int32 People = 5; // 参团人数
+  float Price = 6; // 价格
+  int32 Sort = 7; // 排序
+  int32 Stock = 8; // 库存
+  int32 StartTime = 9; // 拼团开始时间
+  int32 StopTime = 10; // 拼团结束时间
+  int32 EffectiveTime = 11; // 拼团订单有效时间
+  int32 TempId = 12; // 运费模板ID
+  int32 Num = 13; // 单次购买数量
+  int32 Quota = 14; // 限购总数
+  int32 QuotaShow = 15; // 限量总数显示
+}
+
+message AddCombinationProductResponse {
+  string greet = 1;
+}
 
 
 service UserEnter {
   rpc Register(UserEnterRegisterRequest) returns (UserEnterRegisterResponse);//商户申请
   rpc AddProduct(AddProductRequest) returns (AddProductResponse);//商户发布商品
+  rpc AddCombinationProduct(AddCombinationProductRequest) returns (AddCombinationProductResponse); // 发布拼团商品
 }

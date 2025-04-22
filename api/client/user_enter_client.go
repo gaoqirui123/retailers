@@ -31,3 +31,16 @@ func AddProduct(ctx context.Context, in *user_enter.AddProductRequest) (*user_en
 	}
 	return clients.(*user_enter.AddProductResponse), nil
 }
+func AddCombinationProduct(ctx context.Context, in *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
+	clients, err := UserEnterClients(ctx, func(ctx context.Context, server user_enter.UserEnterClient) (interface{}, error) {
+		register, err := server.AddCombinationProduct(ctx, in)
+		if err != nil {
+			return nil, err
+		}
+		return register, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return clients.(*user_enter.AddCombinationProductResponse), nil
+}

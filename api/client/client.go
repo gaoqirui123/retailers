@@ -1,6 +1,7 @@
 package client
 
 import (
+	administrators "common/proto/admin"
 	"common/proto/article"
 	"common/proto/order"
 	"common/proto/product"
@@ -51,6 +52,9 @@ func NewUserEnterClient(cc grpc.ClientConnInterface) user_enter.UserEnterClient 
 func NewArticleClient(cc grpc.ClientConnInterface) article.ArticleClient {
 	return article.NewArticleClient(cc)
 }
+func NewAdministratorsClient(cc grpc.ClientConnInterface) administrators.AdministratorsClient {
+	return administrators.NewAdministratorsClient(cc)
+}
 
 // UserClients 封装的用户服务客户端处理函数
 func UserClients(ctx context.Context, handler func(ctx context.Context, server user.UserClient) (interface{}, error)) (interface{}, error) {
@@ -75,4 +79,9 @@ func UserEnterClients(ctx context.Context, handler func(ctx context.Context, ser
 // NewArticleClients 封装的文章服务客户端处理函数
 func NewArticleClients(ctx context.Context, handler func(ctx context.Context, server article.ArticleClient) (interface{}, error)) (interface{}, error) {
 	return GenericClient(ctx, "127.0.0.1:8085", NewArticleClient, handler)
+}
+
+// NewAdministratorsClient 封装的管理员客户端处理函数
+func NewAdministratorsClients(ctx context.Context, handler func(ctx context.Context, server administrators.AdministratorsClient) (interface{}, error)) (interface{}, error) {
+	return GenericClient(ctx, "127.0.0.1:8086", NewAdministratorsClient, handler)
 }

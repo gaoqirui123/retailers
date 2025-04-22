@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	UserEnter_Register_FullMethodName   = "/user_enter.UserEnter/Register"
-	UserEnter_AddProduct_FullMethodName = "/user_enter.UserEnter/AddProduct"
+	UserEnter_Register_FullMethodName              = "/user_enter.UserEnter/Register"
+	UserEnter_AddProduct_FullMethodName            = "/user_enter.UserEnter/AddProduct"
+	UserEnter_AddCombinationProduct_FullMethodName = "/user_enter.UserEnter/AddCombinationProduct"
 )
 
 // UserEnterClient is the client API for UserEnter service.
@@ -29,6 +30,7 @@ const (
 type UserEnterClient interface {
 	Register(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error)
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
+	AddCombinationProduct(ctx context.Context, in *AddCombinationProductRequest, opts ...grpc.CallOption) (*AddCombinationProductResponse, error)
 }
 
 type userEnterClient struct {
@@ -59,12 +61,23 @@ func (c *userEnterClient) AddProduct(ctx context.Context, in *AddProductRequest,
 	return out, nil
 }
 
+func (c *userEnterClient) AddCombinationProduct(ctx context.Context, in *AddCombinationProductRequest, opts ...grpc.CallOption) (*AddCombinationProductResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddCombinationProductResponse)
+	err := c.cc.Invoke(ctx, UserEnter_AddCombinationProduct_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserEnterServer is the server API for UserEnter service.
 // All implementations must embed UnimplementedUserEnterServer
 // for forward compatibility
 type UserEnterServer interface {
 	Register(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error)
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
+	AddCombinationProduct(context.Context, *AddCombinationProductRequest) (*AddCombinationProductResponse, error)
 	mustEmbedUnimplementedUserEnterServer()
 }
 
@@ -77,6 +90,9 @@ func (UnimplementedUserEnterServer) Register(context.Context, *UserEnterRegister
 }
 func (UnimplementedUserEnterServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
+}
+func (UnimplementedUserEnterServer) AddCombinationProduct(context.Context, *AddCombinationProductRequest) (*AddCombinationProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddCombinationProduct not implemented")
 }
 func (UnimplementedUserEnterServer) mustEmbedUnimplementedUserEnterServer() {}
 
@@ -127,6 +143,24 @@ func _UserEnter_AddProduct_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserEnter_AddCombinationProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddCombinationProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).AddCombinationProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_AddCombinationProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).AddCombinationProduct(ctx, req.(*AddCombinationProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserEnter_ServiceDesc is the grpc.ServiceDesc for UserEnter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -141,6 +175,10 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddProduct",
 			Handler:    _UserEnter_AddProduct_Handler,
+		},
+		{
+			MethodName: "AddCombinationProduct",
+			Handler:    _UserEnter_AddCombinationProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
