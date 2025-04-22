@@ -6,6 +6,7 @@ type AppViper struct {
 	ProductSrv
 	OrderSrv
 	UserEnterSrv
+	ArticleSrv
 }
 type NaCos struct {
 	NameSpace string
@@ -27,6 +28,10 @@ type OrderSrv struct {
 	Port int
 }
 type UserEnterSrv struct {
+	Host string
+	Port int
+}
+type ArticleSrv struct {
 	Host string
 	Port int
 }
