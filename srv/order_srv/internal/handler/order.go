@@ -22,7 +22,7 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	if pro.IsShow == 0 {
 		return nil, errors.New("商品下架")
 	}
-	if pro.Stock < uint32(in.Num) {
+	if pro.Stock < int(in.Num) {
 		return nil, errors.New("商品库存不足")
 	}
 	users := &model.User{}
