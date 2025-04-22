@@ -59,8 +59,7 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 	return &user.UserRegisterResponse{UserId: uint64(users.Uid)}, nil
 }
 
-// 个人资料显示
-
+// TODO: 个人资料显示
 func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 	u := model.User{}
 	detail, err := u.Detail(int(in.Uid))
@@ -85,8 +84,7 @@ func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 	return &user.UserDetailResponse{Detail: list}, nil
 }
 
-// 完善用户信息
-
+// TODO： 完善用户信息
 func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
 	u := model.User{
 		RealName: in.RealName, //真实姓名
@@ -112,4 +110,61 @@ func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error)
 	}
 
 	return &user.ImproveUserResponse{Success: "完善用户信息成功"}, nil
+}
+
+// TODO： 修改密码
+func UpdatedPassword(in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResponse, error) {
+	u := model.User{}
+	Id, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	if Id.Pwd == utlis.Encryption(in.NewPassword) {
+		return nil, errors.New("旧密码和新密码一样，修改失败")
+	}
+	newPassword := u.UpdatedPassword(int(Id.Uid), utlis.Encryption(in.NewPassword))
+	if !newPassword {
+		return nil, errors.New("密码修改失败")
+	}
+	return &user.UpdatedPasswordResponse{Success: "密码修改成功"}, nil
+}
+
+// TODO:会员页面展示
+func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, error) {
+	ul := model.EbSystemUserLevel{}
+	level, err := ul.FindUsersLevel()
+	if err != nil {
+		return nil, errors.New("查询失败")
+	}
+	var list []*user.UserLevelList
+	for _, i := range level {
+		list = append(list, &user.UserLevelList{
+			Name:         i.Name,
+			MemberPoints: i.MemberPoints,
+			IsShow:       int32(i.IsShow),
+			Grade:        i.Grade,
+			Image:        i.Image,
+			Icon:         i.Icon,
+			Explain:      i.Explain,
+		})
+	}
+	return &user.UserLevelListResponse{List: list}, nil
+}
+
+// TODO:会员权益页面展示
+func UserLevelPowerList(in *user.UserLevelPowerListRequest) (*user.UserLevelPowerListResponse, error) {
+	ulp := model.EbSystemUserPower{}
+	power, err := ulp.FindUserLevelPower()
+	if err != nil {
+		return nil, errors.New("查询失败")
+	}
+	var list []*user.UserLevelPowerList
+	for _, i := range power {
+		list = append(list, &user.UserLevelPowerList{
+			Name:    i.Name,
+			Grade:   int32(i.Grade),
+			Explain: i.Explain,
+		})
+	}
+	return &user.UserLevelPowerListResponse{List: list}, nil
 }
