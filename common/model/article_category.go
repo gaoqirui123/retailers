@@ -1,4 +1,4 @@
-package mongoDB
+package model
 
 import (
 	"common/global"

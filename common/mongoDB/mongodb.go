@@ -2,6 +2,7 @@ package mongoDB
 
 import (
 	"common/global"
+	"common/model"
 	"context"
 	"errors"
 	"fmt"
@@ -20,7 +21,7 @@ func CreateArticleContent(dateBase, collectionName string, doc interface{}) erro
 }
 
 // 查询文章管理列表
-func FindArticleCategory(dateBase, collectionName string) ([]Article, error) {
+func FindArticleCategory(dateBase, collectionName string) ([]model.Article, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
@@ -32,11 +33,11 @@ func FindArticleCategory(dateBase, collectionName string) ([]Article, error) {
 	// 文章分类表
 	defer cur.Close(ctx)
 
-	var res []Article
+	var res []model.Article
 
 	for cur.Next(ctx) {
 
-		var result Article
+		var result model.Article
 
 		err = cur.Decode(&result)
 
@@ -57,8 +58,8 @@ func FindArticleCategory(dateBase, collectionName string) ([]Article, error) {
 }
 
 // 查询文章分类表的类型id
-func FindArticleCategoryPid(dateBase, collectionName string, pid int) (ArticleCategory, error) {
-	var date ArticleCategory
+func FindArticleCategoryPid(dateBase, collectionName string, pid int) (model.ArticleCategory, error) {
+	var date model.ArticleCategory
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 
@@ -71,12 +72,12 @@ func FindArticleCategoryPid(dateBase, collectionName string, pid int) (ArticleCa
 	err := collection.FindOne(ctx, fist).Decode(&date)
 
 	if err != nil {
-		return ArticleCategory{}, nil
+		return model.ArticleCategory{}, nil
 	}
 	if errors.Is(err, mongo.ErrNoDocuments) {
-		return ArticleCategory{}, nil
+		return model.ArticleCategory{}, nil
 	} else if err != nil {
-		return ArticleCategory{}, nil
+		return model.ArticleCategory{}, nil
 	}
 
 	return date, err
