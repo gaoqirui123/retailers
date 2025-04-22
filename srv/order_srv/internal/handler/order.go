@@ -70,7 +70,7 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 		Uid:            uint32(in.Uid),
 		RealName:       users.RealName,
 		UserPhone:      users.Phone,
-		UserAddress:    users.Addres,
+		UserAddress:    users.Address,
 		CartId:         uint32(in.CartId),
 		FreightPrice:   float64(in.FreightPrice),
 		TotalNum:       uint32(in.Num),
