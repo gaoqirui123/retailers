@@ -21,3 +21,7 @@ type ImproveUser struct {
 	Phone    string `form:"phone" json:"phone"  binding:"required"`
 	Address  string `form:"address" json:"address"  binding:"required"`
 }
+
+type UpdatePassWord struct {
+	NewPassword string `form:"new_password" json:"new_password"  binding:"required"`
+}

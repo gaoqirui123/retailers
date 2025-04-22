@@ -65,3 +65,11 @@ func (u *User) Updated(id int, users User) bool {
 	}
 	return true
 }
+
+func (u *User) UpdatedPassword(uid int, password string) bool {
+	err := global.DB.Debug().Table("user").Where("uid=?", uid).Limit(1).First(&u).Update("pwd", password).Error
+	if err != nil {
+		return false
+	}
+	return true
+}

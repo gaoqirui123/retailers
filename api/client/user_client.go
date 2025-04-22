@@ -57,3 +57,16 @@ func ImproveUser(ctx context.Context, req *user.ImproveUserRequest) (*user.Impro
 	}
 	return client.(*user.ImproveUserResponse), nil
 }
+func UpdatedPassword(ctx context.Context, req *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResponse, error) {
+	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
+		updatedPassword, err := client.UpdatedPassword(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return updatedPassword, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client.(*user.UpdatedPasswordResponse), nil
+}

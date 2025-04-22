@@ -42,3 +42,11 @@ func (u UserServer) ImproveUser(ctx context.Context, in *user.ImproveUserRequest
 	}
 	return improveUser, nil
 }
+
+func (u UserServer) UpdatedPassword(ctx context.Context, in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResponse, error) {
+	updatedPassword, err := handler.UpdatedPassword(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return updatedPassword, nil
+}

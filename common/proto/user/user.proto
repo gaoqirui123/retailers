@@ -10,6 +10,16 @@ service User {
   rpc SendSms(SendSmsRequest) returns (SendSmsResponse);
   rpc UserDetail(UserDetailRequest) returns (UserDetailResponse);//TODO:展示个人资料
   rpc ImproveUser(ImproveUserRequest) returns (ImproveUserResponse);//TODO:完善用户信息
+  rpc UpdatedPassword(UpdatedPasswordRequest) returns (UpdatedPasswordResponse);//TODO:修改密码
+}
+
+//TODO:修改密码
+message UpdatedPasswordRequest {
+  int32 Uid = 1;
+  string NewPassword = 2;
+}
+message UpdatedPasswordResponse {
+  string Success = 1;
 }
 
 //TODO:完善用户信息

@@ -90,3 +90,22 @@ func ImproveUser(c *gin.Context) {
 	}
 	response.RespSuccess(c, "用户完善信息成功", improveUser)
 }
+
+func UpdatePassWord(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UpdatePassWord
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+
+	password, err := client.UpdatedPassword(c, &user.UpdatedPasswordRequest{
+		Uid:         int32(userId),
+		NewPassword: data.NewPassword,
+	})
+	if err != nil {
+		response.RespError(c, "用户完善信息失败")
+		return
+	}
+	response.RespSuccess(c, "用户完善信息成功", password)
+}
