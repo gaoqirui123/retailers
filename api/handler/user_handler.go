@@ -104,8 +104,17 @@ func UpdatePassWord(c *gin.Context) {
 		NewPassword: data.NewPassword,
 	})
 	if err != nil {
-		response.RespError(c, "用户完善信息失败")
+		response.RespError(c, "用户修改密码失败")
 		return
 	}
-	response.RespSuccess(c, "用户完善信息成功", password)
+	response.RespSuccess(c, "用户修改密码成功", password)
+}
+
+func UserLevelList(c *gin.Context) {
+	list, err := client.UserLevelList(c, &user.UserLevelListRequest{})
+	if err != nil {
+		response.RespError(c, "会员页面展示失败")
+		return
+	}
+	response.RespSuccess(c, "会员页面展示成功", list)
 }

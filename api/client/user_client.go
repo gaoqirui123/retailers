@@ -70,3 +70,16 @@ func UpdatedPassword(ctx context.Context, req *user.UpdatedPasswordRequest) (*us
 	}
 	return client.(*user.UpdatedPasswordResponse), nil
 }
+func UserLevelList(ctx context.Context, req *user.UserLevelListRequest) (*user.UserLevelListResponse, error) {
+	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
+		userLevelList, err := client.UserLevelList(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return userLevelList, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client.(*user.UserLevelListResponse), nil
+}

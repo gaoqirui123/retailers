@@ -50,3 +50,11 @@ func (u UserServer) UpdatedPassword(ctx context.Context, in *user.UpdatedPasswor
 	}
 	return updatedPassword, nil
 }
+
+func (u UserServer) UserLevelList(ctx context.Context, in *user.UserLevelListRequest) (*user.UserLevelListResponse, error) {
+	userLevelList, err := handler.UserLevelList(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userLevelList, nil
+}

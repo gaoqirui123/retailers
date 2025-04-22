@@ -128,3 +128,25 @@ func UpdatedPassword(in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResp
 	}
 	return &user.UpdatedPasswordResponse{Success: "密码修改成功"}, nil
 }
+
+// TODO:会员页面展示
+func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, error) {
+	ul := model.EbSystemUserLevel{}
+	level, err := ul.FindUsersLevel()
+	if err != nil {
+		return nil, errors.New("查询失败")
+	}
+	var list []*user.UserLevelList
+	for _, i := range level {
+		list = append(list, &user.UserLevelList{
+			Name:         i.Name,
+			MemberPoints: i.MemberPoints,
+			IsShow:       int32(i.IsShow),
+			Grade:        i.Grade,
+			Image:        i.Image,
+			Icon:         i.Icon,
+			Explain:      i.Explain,
+		})
+	}
+	return &user.UserLevelListResponse{List: list}, nil
+}

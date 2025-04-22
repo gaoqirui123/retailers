@@ -11,6 +11,23 @@ service User {
   rpc UserDetail(UserDetailRequest) returns (UserDetailResponse);//TODO:展示个人资料
   rpc ImproveUser(ImproveUserRequest) returns (ImproveUserResponse);//TODO:完善用户信息
   rpc UpdatedPassword(UpdatedPasswordRequest) returns (UpdatedPasswordResponse);//TODO:修改密码
+  rpc UserLevelList(UserLevelListRequest) returns (UserLevelListResponse);//TODO:会员页面展示
+}
+
+//TODO:会员页面展示
+message UserLevelListRequest {
+}
+message UserLevelListResponse {
+  repeated UserLevelList list = 1;
+}
+message UserLevelList{
+  string Name = 1;//会员名称
+  string MemberPoints = 2;//会员积分
+  int32 IsShow = 3;//是否显示会员等级
+  int32 Grade = 4;//会员等级
+  string Image = 5;//会员卡背景
+  string Icon = 6;//会员图标
+  string Explain = 7;//说明
 }
 
 //TODO:修改密码
