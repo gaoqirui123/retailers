@@ -3,6 +3,27 @@
   <component name="GoORMHelperCache">
     <option name="schemaMapping">
       <map>
+        <entry key="Article">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../../../../../GoWork/retailers/common/model/article.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleCategory">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../../../../../GoWork/retailers/common/model/article_category.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleContent">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../../../../../GoWork/retailers/common/model/article_content.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="User">
           <value>
             <set>
@@ -14,6 +35,56 @@
     </option>
     <option name="scannedPathMapping">
       <map>
+        <entry key="file://$PROJECT_DIR$/../../../../../GoWork/retailers/common/model/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745301198386" />
+              <option name="schema">
+                <list>
+                  <option value="Article" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../../../../GoWork/retailers/common/model/article_category.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745301198381" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleCategory" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../../../../GoWork/retailers/common/model/article_content.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745301198391" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleContent" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../../../../GoWork/retailers/common/mongoDB/mongodb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745301197597" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../../../../GoWork/retailers/srv/article_srv/internal/handler/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745301197632" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/model/user.go">
           <value>
             <ScannedPath>
@@ -37,6 +108,9 @@
     </option>
     <option name="tableStructMapping">
       <map>
+        <entry key="article" value="Article" />
+        <entry key="article_category" value="ArticleCategory" />
+        <entry key="article_content" value="ArticleContent" />
         <entry key="user" value="User" />
       </map>
     </option>
