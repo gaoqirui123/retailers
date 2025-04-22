@@ -15,7 +15,7 @@ func ArticleRelease(c *gin.Context) {
 		return
 	}
 
-	release, err := client.ArticleRelease(c, &article.ArticleAddReq{
+	release, err := client.ArticleRelease(c, &article.ArticleAddRequest{
 		Content:    data.Content,
 		Cid:        data.Cid,
 		Title:      data.Title,
@@ -38,7 +38,7 @@ func CategoryAdd(c *gin.Context) {
 		response.RespError(c, "参数错误")
 		return
 	}
-	release, err := client.CategoryAdd(c, &article.CategoryAddReq{
+	release, err := client.CategoryAdd(c, &article.CategoryAddRequest{
 		Pid:        data.Pid,
 		Title:      data.Title,
 		Intr:       data.Intr,
@@ -55,7 +55,7 @@ func CategoryAdd(c *gin.Context) {
 }
 
 func ArticleList(c *gin.Context) {
-	release, err := client.ArticleList(c, &article.ArticleListReq{})
+	release, err := client.ArticleList(c, &article.ArticleListRequest{})
 	if err != nil {
 		response.RespError(c, err.Error())
 		return

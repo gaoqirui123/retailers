@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Article_ArticleAdd_FullMethodName  = "/article.Article/ArticleAdd"
-	Article_CategoryAdd_FullMethodName = "/article.Article/CategoryAdd"
-	Article_ArticleList_FullMethodName = "/article.Article/ArticleList"
+	Article_ArticleAdd_FullMethodName   = "/article.Article/ArticleAdd"
+	Article_CategoryAdd_FullMethodName  = "/article.Article/CategoryAdd"
+	Article_ArticleList_FullMethodName  = "/article.Article/ArticleList"
+	Article_CategoryList_FullMethodName = "/article.Article/CategoryList"
 )
 
 // ArticleClient is the client API for Article service.
@@ -31,6 +32,7 @@ type ArticleClient interface {
 	ArticleAdd(ctx context.Context, in *ArticleAddRequest, opts ...grpc.CallOption) (*ArticleAddResponse, error)
 	CategoryAdd(ctx context.Context, in *CategoryAddRequest, opts ...grpc.CallOption) (*CategoryAddResponse, error)
 	ArticleList(ctx context.Context, in *ArticleListRequest, opts ...grpc.CallOption) (*ArticleListResponse, error)
+	CategoryList(ctx context.Context, in *CategoryListRequest, opts ...grpc.CallOption) (*CategoryListResponse, error)
 }
 
 type articleClient struct {
@@ -71,6 +73,16 @@ func (c *articleClient) ArticleList(ctx context.Context, in *ArticleListRequest,
 	return out, nil
 }
 
+func (c *articleClient) CategoryList(ctx context.Context, in *CategoryListRequest, opts ...grpc.CallOption) (*CategoryListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CategoryListResponse)
+	err := c.cc.Invoke(ctx, Article_CategoryList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ArticleServer is the server API for Article service.
 // All implementations must embed UnimplementedArticleServer
 // for forward compatibility
@@ -78,6 +90,7 @@ type ArticleServer interface {
 	ArticleAdd(context.Context, *ArticleAddRequest) (*ArticleAddResponse, error)
 	CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error)
 	ArticleList(context.Context, *ArticleListRequest) (*ArticleListResponse, error)
+	CategoryList(context.Context, *CategoryListRequest) (*CategoryListResponse, error)
 	mustEmbedUnimplementedArticleServer()
 }
 
@@ -93,6 +106,9 @@ func (UnimplementedArticleServer) CategoryAdd(context.Context, *CategoryAddReque
 }
 func (UnimplementedArticleServer) ArticleList(context.Context, *ArticleListRequest) (*ArticleListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArticleList not implemented")
+}
+func (UnimplementedArticleServer) CategoryList(context.Context, *CategoryListRequest) (*CategoryListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryList not implemented")
 }
 func (UnimplementedArticleServer) mustEmbedUnimplementedArticleServer() {}
 
@@ -161,6 +177,24 @@ func _Article_ArticleList_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Article_CategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_CategoryList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryList(ctx, req.(*CategoryListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Article_ServiceDesc is the grpc.ServiceDesc for Article service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -179,6 +213,10 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ArticleList",
 			Handler:    _Article_ArticleList_Handler,
+		},
+		{
+			MethodName: "CategoryList",
+			Handler:    _Article_CategoryList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

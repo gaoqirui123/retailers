@@ -7,6 +7,7 @@ service Article {
   rpc ArticleAdd(ArticleAddRequest) returns (ArticleAddResponse);//文章管理添加
   rpc CategoryAdd(CategoryAddRequest) returns (CategoryAddResponse);//文章分类添加
   rpc ArticleList(ArticleListRequest) returns (ArticleListResponse);// 查询文章管理列表
+  rpc CategoryList(CategoryListRequest) returns (CategoryListResponse);// 查询文章管理分类列表
 }
 
 //文章管理添加
@@ -54,4 +55,11 @@ message ArticleList{
   string imageInput=5;//文章图片
   string synopsis=6;//文章简介
   string hide=7;//是否隐藏
+}
+// 查询文章管理分类列表
+message CategoryListRequest {
+  uint32 cid=1;//分类id
+}
+message CategoryListResponse {
+  repeated ArticleList list = 1;
 }
