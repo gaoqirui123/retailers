@@ -168,3 +168,13 @@ func AddUsePower(c *gin.Context) {
 	}
 	response.RespSuccess(c, "用户使用权益成功", power)
 }
+
+// TODO: 用户使用权益表展示
+func UsePowerList(c *gin.Context) {
+	list, err := client.UsePowerList(c, &user.UsePowerListRequest{})
+	if err != nil {
+		response.RespError(c, "用户使用权益表展示失败")
+		return
+	}
+	response.RespSuccess(c, "用户使用权益表展示成功", list)
+}

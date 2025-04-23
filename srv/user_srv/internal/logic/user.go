@@ -80,3 +80,10 @@ func (u UserServer) AddUsePower(ctx context.Context, in *user.AddUsePowerRequest
 	}
 	return addUsePower, nil
 }
+func (u UserServer) UsePowerList(ctx context.Context, in *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
+	usePowerList, err := handler.UsePowerList(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return usePowerList, nil
+}

@@ -1,4 +1,4 @@
-package model
+package user_level
 
 import (
 	"common/global"

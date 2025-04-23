@@ -687,12 +687,14 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/model/user_level.go" />
+              <option value="file://$PROJECT_DIR$/common/model/user_level/user_level.go" />
             </set>
           </value>
         </entry>
         <entry key="UserLevelAddText">
           <value>
             <set>
+              <option value="file://$PROJECT_DIR$/common/model/user_level/user_level_add_text.go" />
               <option value="file://$PROJECT_DIR$/common/model/user_level_add_text.go" />
             </set>
           </value>
@@ -721,6 +723,8 @@
         <entry key="UserLevelPower">
           <value>
             <set>
+              <option value="file://$PROJECT_DIR$/common/model/user_level/user_level_power.go" />
+              <option value="file://$PROJECT_DIR$/common/model/user_level_power.go" />
               <option value="file://$PROJECT_DIR$/common/model/user_power.go" />
             </set>
           </value>
@@ -749,6 +753,7 @@
         <entry key="UserLevelRecord">
           <value>
             <set>
+              <option value="file://$PROJECT_DIR$/common/model/user_level/user_level_record.go" />
               <option value="file://$PROJECT_DIR$/common/model/user_level_notice.go" />
               <option value="file://$PROJECT_DIR$/common/model/user_level_record.go" />
             </set>
@@ -771,6 +776,7 @@
         <entry key="UserLevelUsePower">
           <value>
             <set>
+              <option value="file://$PROJECT_DIR$/common/model/user_level/user_level_use_power.go" />
               <option value="file://$PROJECT_DIR$/common/model/user_level_use_power.go" />
             </set>
           </value>
@@ -935,7 +941,7 @@
         <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745395818754" />
+              <option name="lastModified" value="1745400100170" />
             </ScannedPath>
           </value>
         </entry>
@@ -991,7 +997,7 @@
         <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745397079321" />
+              <option name="lastModified" value="1745400152131" />
             </ScannedPath>
           </value>
         </entry>
@@ -1116,7 +1122,7 @@
         <entry key="file://$PROJECT_DIR$/api/router/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745396099822" />
+              <option name="lastModified" value="1745400110302" />
             </ScannedPath>
           </value>
         </entry>
@@ -1427,6 +1433,66 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_level/user_level.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745399785209" />
+              <option name="schema">
+                <list>
+                  <option value="UserLevel" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_level/user_level_add_text.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745399561826" />
+              <option name="schema">
+                <list>
+                  <option value="UserLevelAddText" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_level/user_level_power.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745400211481" />
+              <option name="schema">
+                <list>
+                  <option value="UserLevelPower" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_level/user_level_record.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745399561814" />
+              <option name="schema">
+                <list>
+                  <option value="UserLevelRecord" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_level/user_level_use_power.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745399715966" />
+              <option name="schema">
+                <list>
+                  <option value="UserLevelUsePower" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/model/user_level_add_text.go">
           <value>
             <ScannedPath>
@@ -1446,6 +1512,18 @@
               <option name="schema">
                 <list>
                   <option value="UserLevelRecord" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user_level_power.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745374756610" />
+              <option name="schema">
+                <list>
+                  <option value="UserLevelPower" />
                 </list>
               </option>
             </ScannedPath>
@@ -1657,7 +1735,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745376147986" />
+              <option name="lastModified" value="1745397084221" />
               <option name="schema">
                 <list>
                   <option value="AddUsePowerRequest" />
@@ -1692,7 +1770,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745376147987" />
+              <option name="lastModified" value="1745397084221" />
               <option name="schema">
                 <list>
                   <option value="userClient" />
@@ -1948,14 +2026,14 @@
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745398003279" />
+              <option name="lastModified" value="1745399927496" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745393731206" />
+              <option name="lastModified" value="1745399437222" />
               <option name="schema">
                 <list>
                   <option value="UserServer" />

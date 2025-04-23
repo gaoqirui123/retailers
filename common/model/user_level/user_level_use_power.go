@@ -1,4 +1,4 @@
-package model
+package user_level
 
 import (
 	"common/global"
@@ -15,4 +15,12 @@ type UserLevelUsePower struct {
 
 func (p *UserLevelUsePower) AddUserPower() error {
 	return global.DB.Debug().Table("user_level_use_power").Create(&p).Error
+}
+
+func (p *UserLevelUsePower) Finds() (result []UserLevelUsePower, err error) {
+	err = global.DB.Debug().Table("user_level_use_power").Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }

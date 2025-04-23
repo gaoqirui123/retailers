@@ -122,3 +122,16 @@ func AddUsePower(ctx context.Context, req *user.AddUsePowerRequest) (*user.AddUs
 	}
 	return client.(*user.AddUsePowerResponse), nil
 }
+func UsePowerList(ctx context.Context, req *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
+	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
+		usePowerList, err := client.UsePowerList(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return usePowerList, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client.(*user.UsePowerListResponse), nil
+}
