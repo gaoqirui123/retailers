@@ -19,3 +19,6 @@ UserEnterSrv:
 ArticleSrv:
   Host: "127.0.0.1"
   Port: 8085
+CartSrv:
+  Host: "127.0.0.1"
+  Port: 8086

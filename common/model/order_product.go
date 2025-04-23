@@ -16,3 +16,7 @@ type OrderProduct struct {
 func (p *OrderProduct) GetOrderProductIdBy(orderId int64) error {
 	return global.DB.Debug().Table("order_product").Where("order_id = ?", orderId).Limit(1).Find(&p).Error
 }
+
+func (p *OrderProduct) AddOrderProduct() {
+
+}

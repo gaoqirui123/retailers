@@ -3,7 +3,17 @@ package client
 import (
 	"common/proto/user"
 	"context"
+	"google.golang.org/grpc"
 )
+
+func NewUserClient(cc grpc.ClientConnInterface) user.UserClient {
+	return user.NewUserClient(cc)
+}
+
+// UserClients 封装的用户服务客户端处理函数
+func UserClients(ctx context.Context, handler func(ctx context.Context, server user.UserClient) (interface{}, error)) (interface{}, error) {
+	return GenericClient(ctx, "127.0.0.1:8081", NewUserClient, handler)
+}
 
 func UserLogin(ctx context.Context, in *user.UserLoginRequest) (*user.UserLoginResponse, error) {
 	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
