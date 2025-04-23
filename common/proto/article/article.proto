@@ -8,6 +8,11 @@ service Article {
   rpc CategoryAdd(CategoryAddRequest) returns (CategoryAddResponse);//文章分类添加
   rpc ArticleList(ArticleListRequest) returns (ArticleListResponse);// 查询文章管理列表
   rpc CategoryList(CategoryListRequest) returns (CategoryListResponse);// 查询文章管理分类列表
+  rpc ArticleSearch(ArticleSearchRequest) returns (ArticleSearchResponse); //文章标题搜索
+  rpc EditArticle(EditArticleRequest) returns (EditArticleResponse); //编辑文章
+  rpc DeleteArticle(DeleteRequest) returns (DeleteResponse); //删除文章管理
+  //  rpc DeleteArticleContent(DeleteRequest) returns (DeleteResponse); //删除文章类容
+  rpc DeleteArticleCategory(DeleteRequest) returns (DeleteResponse); //删除文章分类
 }
 
 //文章管理添加
@@ -48,7 +53,7 @@ message ArticleListResponse {
   repeated ArticleList List = 1;
 }
 message ArticleList{
-  string content=1;//文章内容
+  uint32 id=1;//id
   uint32 cid=2;//分类id
   string title=3;//文章标题
   string author=4;//文章作者
@@ -62,4 +67,34 @@ message CategoryListRequest {
 }
 message CategoryListResponse {
   repeated ArticleList list = 1;
+}
+//文章标题搜索
+message ArticleSearchRequest {
+  string title=1;//文章标题
+}
+message ArticleSearchResponse {
+  repeated ArticleList list = 1;
+}
+
+//编辑文章
+message EditArticleRequest {
+  uint32 id=1;//id
+  uint32 cid=2;//分类id
+  string title=3;//文章标题
+  string author=4;//文章作者
+  string imageInput=5;//文章图片
+  string synopsis=6;//文章简介
+  string hide=7;//是否隐藏
+}
+message EditArticleResponse {
+  string success = 1;
+}
+
+//删除文章
+message DeleteRequest {
+  int64 ids=1;//文章id
+
+}
+message DeleteResponse {
+  string success = 1;
 }

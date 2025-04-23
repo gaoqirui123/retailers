@@ -20,3 +20,29 @@ type CategoryAdd struct {
 	Sort       uint32 `json:"sort" form:"sort" binding:"required"`
 	Status     uint32 `json:"status" form:"status" binding:"required"`
 }
+
+// 查询文章管理分类列表
+type CategoryList struct {
+	Cid uint32 `json:"cid" form:"cid"` //分类id为0查询所有，可以为空
+}
+
+// 文章标题搜索
+type ArticleSearch struct {
+	Title string `json:"title" form:"title"` //文章标题搜索，可以为空
+}
+
+// 编辑文章
+type EditArticle struct {
+	Id         uint32 `json:"id" form:"id" binding:"required"`
+	Cid        uint32 `json:"cid" form:"cid" binding:"required"`
+	Title      string `json:"title" form:"title" binding:"required"`
+	Author     string `json:"author" form:"author" binding:"required"`
+	ImageInput string `json:"imageInput" form:"imageInput" binding:"required"`
+	Synopsis   string `json:"synopsis" form:"synopsis" binding:"required"`
+	Hide       string `json:"hide" form:"hide" binding:"required"`
+}
+
+// 删除文章
+type DeleteArticle struct {
+	Id uint32 `json:"id" form:"id" binding:"required"`
+}
