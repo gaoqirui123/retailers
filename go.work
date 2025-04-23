@@ -8,4 +8,5 @@ use (
 	srv/product_srv
 	srv/user_enter_srv
 	srv/user_srv
+	srv/admin_srv
 )

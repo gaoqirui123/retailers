@@ -16,5 +16,6 @@ func RegisterRouter(r *gin.Engine) {
 	b := r.Group("/api/b")
 	{
 		UserEnter(b)
+		Administrators(b)
 	}
 }

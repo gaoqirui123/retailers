@@ -2,6 +2,7 @@ package model
 
 import "common/global"
 
+// Combination 拼团商品表
 type Combination struct {
 	Id            int     `gorm:"column:id;type:int UNSIGNED;primaryKey;not null;" json:"id"`
 	ProductId     int     `gorm:"column:product_id;type:int UNSIGNED;comment:商品id;not null;" json:"product_id"`       // 商品id
@@ -44,6 +45,17 @@ func (c *Combination) TableName() string {
 
 func (c *Combination) GetCombinationList() (result []*Combination, err error) {
 	err = global.DB.Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+func (c *Combination) Add() error {
+	return global.DB.Create(&c).Error
+}
+
+func (c *Combination) GetCombinationById(pid int64) (result *Combination, err error) {
+	err = global.DB.Table("combination").Where("id = ?", pid).Find(&result).Error
 	if err != nil {
 		return nil, err
 	}

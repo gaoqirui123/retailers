@@ -21,3 +21,11 @@ type ImproveUser struct {
 	Phone    string `form:"phone" json:"phone"  binding:"required"`
 	Address  string `form:"address" json:"address"  binding:"required"`
 }
+
+type UpdatePassWord struct {
+	NewPassword string `form:"new_password" json:"new_password"  binding:"required"`
+}
+type GroupBuy struct {
+	Pid int64 `json:"pid" xml:"pid" form:"pid"`
+	Num int64 `json:"num" xml:"num" form:"num"`
+}

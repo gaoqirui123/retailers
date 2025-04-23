@@ -2,6 +2,7 @@ package model
 
 import "common/global"
 
+// UserEnter 商户申请表
 type UserEnter struct {
 	Id           int    `gorm:"column:id;type:int UNSIGNED;comment:商户申请ID;primaryKey;not null;" json:"id"`          // 商户申请ID
 	Uid          int    `gorm:"column:uid;type:int UNSIGNED;comment:用户ID;not null;default:0;" json:"uid"`           // 用户ID
@@ -29,4 +30,16 @@ func (ue *UserEnter) TableName() string {
 
 func (ue *UserEnter) Add() error {
 	return global.DB.Create(&ue).Error
+}
+
+func (ue *UserEnter) UpdateStatus(Id int64, status int64) error {
+	return global.DB.Table("user_enter").Where("id = ?", Id).Update("status", status).Error
+}
+
+func (ue *UserEnter) GetStatusById(id int64) (result *UserEnter, err error) {
+	err = global.DB.Table("user_enter").Where("id = ?", id).Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return
 }

@@ -12,7 +12,7 @@ func NewCartClient(cc grpc.ClientConnInterface) cart.CartClient {
 
 // CartClients 封装购物车操作的逻辑
 func CartClients[TRequest, TResponse any](ctx context.Context, request TRequest, operation func(ctx context.Context, client cart.CartClient, req TRequest) (TResponse, error)) (TResponse, error) {
-	return ExecuteGRPCOperation(ctx, "127.0.0.1:8086", NewCartClient, request, operation)
+	return ExecuteGRPCOperation(ctx, "127.0.0.1:8087", NewCartClient, request, operation)
 }
 
 // AddCart 向购物车添加商品

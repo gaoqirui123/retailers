@@ -57,5 +57,35 @@ func AddProduct(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
-	response.RespSuccess(c, "申请成功，等待平台审核", register)
+	response.RespSuccess(c, "发布商品成功", register)
+}
+func AddCombinationProduct(c *gin.Context) {
+	var data request.AddCombinationProduct
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	uid := c.GetUint("userId")
+	product, err := client.AddCombinationProduct(c, &user_enter.AddCombinationProductRequest{
+		MerId:         int64(uid),
+		ProductId:     data.ProductId,
+		Title:         data.Title,
+		Attr:          data.Attr,
+		People:        int32(data.People),
+		Price:         float32(data.Price),
+		Sort:          data.Sort,
+		Stock:         data.Stock,
+		StartTime:     data.StartTime,
+		StopTime:      data.StopTime,
+		EffectiveTime: data.EffectiveTime,
+		TempId:        data.TempId,
+		Num:           data.Num,
+		Quota:         data.Quota,
+		QuotaShow:     data.QuotaShow,
+	})
+	if err != nil {
+		return
+	}
+	response.RespSuccess(c, "发布拼团商品成功", product)
 }

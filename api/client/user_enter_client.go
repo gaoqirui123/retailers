@@ -11,33 +11,27 @@ func NewUserEnterClient(cc grpc.ClientConnInterface) user_enter.UserEnterClient 
 }
 
 // UserEnterClients 封装的商户服务客户端处理函数
-func UserEnterClients(ctx context.Context, handler func(ctx context.Context, server user_enter.UserEnterClient) (interface{}, error)) (interface{}, error) {
-	return GenericClient(ctx, "127.0.0.1:8084", NewUserEnterClient, handler)
+func UserEnterClients[TRequest, TResponse any](ctx context.Context, request TRequest, operation func(ctx context.Context, client user_enter.UserEnterClient, req TRequest) (TResponse, error)) (TResponse, error) {
+	return ExecuteGRPCOperation(ctx, "127.0.0.1:8084", NewUserEnterClient, request, operation)
 }
 
+// Register 商户注册
 func Register(ctx context.Context, in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
-	clients, err := UserEnterClients(ctx, func(ctx context.Context, server user_enter.UserEnterClient) (interface{}, error) {
-		register, err := server.Register(ctx, in)
-		if err != nil {
-			return nil, err
-		}
-		return register, nil
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
+		return client.Register(ctx, req)
 	})
-	if err != nil {
-		return nil, err
-	}
-	return clients.(*user_enter.UserEnterRegisterResponse), nil
 }
+
+// AddProduct 添加商品
 func AddProduct(ctx context.Context, in *user_enter.AddProductRequest) (*user_enter.AddProductResponse, error) {
-	clients, err := UserEnterClients(ctx, func(ctx context.Context, server user_enter.UserEnterClient) (interface{}, error) {
-		register, err := server.AddProduct(ctx, in)
-		if err != nil {
-			return nil, err
-		}
-		return register, nil
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.AddProductRequest) (*user_enter.AddProductResponse, error) {
+		return client.AddProduct(ctx, req)
 	})
-	if err != nil {
-		return nil, err
-	}
-	return clients.(*user_enter.AddProductResponse), nil
+}
+
+// AddCombinationProduct 添加组合商品
+func AddCombinationProduct(ctx context.Context, in *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
+		return client.AddCombinationProduct(ctx, req)
+	})
 }

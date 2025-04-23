@@ -5,6 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Product 商品表
 type Product struct {
 	Id           int     `gorm:"column:id;type:mediumint;comment:商品id;primaryKey;not null;" json:"id"`                                     // 商品id
 	MerId        int     `gorm:"column:mer_id;type:int UNSIGNED;comment:商户Id(0为总后台管理员创建,不为0的时候是商户后台创建);not null;default:0;" json:"mer_id"` // 商户Id(0为总后台管理员创建,不为0的时候是商户后台创建)
@@ -58,4 +59,11 @@ func (p *Product) UpdateProductStock(id, num int64) error {
 
 func (p *Product) Add() error {
 	return global.DB.Debug().Table("product").Create(&p).Error
+}
+func (p *Product) GetProductById(productId int64) (result *Product, err error) {
+	err = global.DB.Debug().Table("product").Where("id = ?", productId).Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return
 }

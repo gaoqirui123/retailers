@@ -42,3 +42,34 @@ func (u UserServer) ImproveUser(ctx context.Context, in *user.ImproveUserRequest
 	}
 	return improveUser, nil
 }
+
+func (u UserServer) UpdatedPassword(ctx context.Context, in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResponse, error) {
+	updatedPassword, err := handler.UpdatedPassword(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return updatedPassword, nil
+}
+
+func (u UserServer) UserLevelList(ctx context.Context, in *user.UserLevelListRequest) (*user.UserLevelListResponse, error) {
+	userLevelList, err := handler.UserLevelList(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userLevelList, nil
+}
+
+func (u UserServer) UserLevelPowerList(ctx context.Context, in *user.UserLevelPowerListRequest) (*user.UserLevelPowerListResponse, error) {
+	userLevelPowerList, err := handler.UserLevelPowerList(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userLevelPowerList, nil
+}
+func (u UserServer) GroupBuying(ctx context.Context, in *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
+	userLevelPowerList, err := handler.GroupBuying(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userLevelPowerList, nil
+}

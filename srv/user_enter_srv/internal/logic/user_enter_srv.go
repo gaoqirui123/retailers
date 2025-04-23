@@ -27,3 +27,12 @@ func (es UserEnterServer) AddProduct(ctx context.Context, in *user_enter.AddProd
 	}
 	return register, nil
 }
+
+// AddCombinationProduct TODO:添加拼团商品
+func (es UserEnterServer) AddCombinationProduct(ctx context.Context, in *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
+	product, err := handler.AddCombinationProduct(in)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
