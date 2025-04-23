@@ -2,7 +2,8 @@ package request
 
 // 文章管理添加
 type ArticleRelease struct {
-	Content    string `json:"content" form:"content" binding:"required"`
+	Content string `json:"content" form:"content" binding:"required"`
+	//	Uid        uint32 `json:"uid" form:"uid" binding:"required"`
 	Cid        uint32 `json:"cid" form:"cid" binding:"required"`
 	Title      string `json:"title" form:"title" binding:"required"`
 	Author     string `json:"author" form:"author" binding:"required"`
@@ -13,6 +14,7 @@ type ArticleRelease struct {
 
 // 文章分类添加
 type CategoryAdd struct {
+	//Cid        uint32 `json:"cid" form:"cid" binding:"required"`
 	Pid        uint32 `json:"pid" form:"pid" binding:"required"`
 	Title      string `json:"title" form:"title" binding:"required"`
 	Intr       string `json:"intr" form:"intr" binding:"required"`

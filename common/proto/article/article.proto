@@ -24,6 +24,8 @@ message ArticleAddRequest {
   string imageInput=5;//文章图片
   string synopsis=6;//文章简介
   string hide=7;//是否隐藏
+  uint32 uid=8;//用户id
+
 
 }
 message ArticleAddResponse {
@@ -38,6 +40,7 @@ message CategoryAddRequest {
   string imageInput=5;//分类图片
   uint32 sort=6;//排序
   uint32 status=2;//状态
+  uint32 uid=7;//用户id
 
 }
 message CategoryAddResponse {

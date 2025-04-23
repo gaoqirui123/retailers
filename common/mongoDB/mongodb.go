@@ -25,7 +25,7 @@ func FindArticleCategory(dateBase, collectionName string) ([]model.Article, erro
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
-	cur, err := collection.Find(ctx, bson.D{})
+	cur, err := collection.Find(ctx, bson.D{{"isdel", 1}})
 	if err != nil {
 		return nil, fmt.Errorf("%w", err)
 
@@ -67,16 +67,23 @@ func FindArticleCategoryPid(dateBase, collectionName string, pid int) (model.Art
 
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
 
-	fist := bson.D{{"pid", pid}}
+	fist := bson.D{
+		{"pid", pid},
+		{"isdel", 1},
+	}
 
 	err := collection.FindOne(ctx, fist).Decode(&date)
 
 	if err != nil {
+
 		return model.ArticleCategory{}, nil
 	}
 	if errors.Is(err, mongo.ErrNoDocuments) {
+
 		return model.ArticleCategory{}, nil
+
 	} else if err != nil {
+
 		return model.ArticleCategory{}, nil
 	}
 
@@ -98,14 +105,18 @@ func FindArticleCid(dateBase, collectionName string, cid int) ([]model.Article, 
 	var filter bson.D
 	if cid == 0 {
 		// 如果 cid 为 0，查询全部数据
-		filter = bson.D{}
+		filter = bson.D{{"isdel", 1}}
 	} else {
 		// 如果 cid 不为 0，按 cid 查询
-		filter = bson.D{{"cid", cid}}
+		filter = bson.D{
+			{"cid", cid},
+			{"isdel", 1},
+		}
 	}
 
 	// 执行查询
 	cursor, err := collection.Find(ctx, filter)
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to query articles: %w", err)
 	}
@@ -130,6 +141,7 @@ func FindArticleCid(dateBase, collectionName string, cid int) ([]model.Article, 
 
 // 文章标题搜索
 func FindArticleTitle(dateBase, collectionName string, title string) ([]model.Article, error) {
+
 	var articles []model.Article
 
 	// 设置上下文超时
@@ -141,10 +153,10 @@ func FindArticleTitle(dateBase, collectionName string, title string) ([]model.Ar
 	var filter bson.D
 	if title == "" {
 		// 如果 title 为 空，查询全部数据
-		filter = bson.D{}
+		filter = bson.D{{"isdel", 1}}
 	} else {
 		// 如果 title 不为 0，按 title 查询
-		filter = bson.D{{"title", title}}
+		filter = bson.D{{"title", title}, {"isdel", 1}}
 	}
 
 	// 执行查询
@@ -181,7 +193,10 @@ func EditArticle(dateBase, collectionName string, id int, date model.Article) er
 	// 获取集合
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
 
-	filter := bson.D{{"id", id}}
+	filter := bson.D{
+		{"id", id},
+		{"isdel", 2},
+	}
 	update := bson.D{{"$set", date}}
 
 	_, err := collection.UpdateOne(ctx, filter, update)
@@ -202,7 +217,10 @@ func FindArticle(dateBase, collectionName string, id int) (model.Article, error)
 
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
 
-	fist := bson.D{{"id", id}}
+	fist := bson.D{
+		{"id", id},
+		{"isdel", 1},
+	}
 
 	err := collection.FindOne(ctx, fist).Decode(&date)
 
@@ -225,20 +243,14 @@ func DeleteArticle(dateBase, collectionName string, id int) error {
 	defer cancel()
 
 	// 获取集合
-	coll := global.MDB.Database(dateBase).Collection(collectionName)
+	collection := global.MDB.Database(dateBase).Collection(collectionName)
 
-	// 构造查询条件
 	filter := bson.D{{"id", id}}
+	update := bson.D{{"isdel", 2}}
 
-	// 执行删除操作
-	result, err := coll.DeleteOne(ctx, filter)
+	_, err := collection.UpdateOne(ctx, filter, update)
 	if err != nil {
-		return fmt.Errorf("failed to delete articles: %w", err)
-	}
-
-	// 检查是否有文档被删除
-	if result.DeletedCount == 0 {
-		return fmt.Errorf("no documents found with cid %d", id)
+		return nil
 	}
 
 	return nil
@@ -251,20 +263,14 @@ func DeleteArticleContent(dateBase, collectionName string, id int) error {
 	defer cancel()
 
 	// 获取集合
-	coll := global.MDB.Database(dateBase).Collection(collectionName)
+	collection := global.MDB.Database(dateBase).Collection(collectionName)
 
-	// 构造查询条件
 	filter := bson.D{{"nid", id}}
+	update := bson.D{{"$set", bson.D{{"isdel", 2}}}}
 
-	// 执行删除操作
-	result, err := coll.DeleteOne(ctx, filter)
+	_, err := collection.UpdateOne(ctx, filter, update)
 	if err != nil {
-		return fmt.Errorf("failed to delete articles: %w", err)
-	}
-
-	// 检查是否有文档被删除
-	if result.DeletedCount == 0 {
-		return fmt.Errorf("no documents found with cid %d", id)
+		return nil
 	}
 
 	return nil

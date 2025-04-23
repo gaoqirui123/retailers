@@ -14,9 +14,8 @@ func ArticleRelease(c *gin.Context) {
 		response.RespError(c, "参数错误")
 		return
 	}
-
+	userId := c.GetUint("userId")
 	release, err := client.ArticleAdd(c, &article.ArticleAddRequest{
-
 		Content:    data.Content,
 		Cid:        data.Cid,
 		Title:      data.Title,
@@ -24,6 +23,7 @@ func ArticleRelease(c *gin.Context) {
 		ImageInput: data.ImageInput,
 		Synopsis:   data.Synopsis,
 		Hide:       data.Hide,
+		Uid:        uint32(userId),
 	})
 
 	if err != nil {
@@ -34,11 +34,13 @@ func ArticleRelease(c *gin.Context) {
 }
 
 func CategoryAdd(c *gin.Context) {
+
 	var data request.CategoryAdd
 	if err := c.ShouldBind(&data); err != nil {
 		response.RespError(c, "参数错误")
 		return
 	}
+	userId := c.GetUint("userId")
 	release, err := client.CategoryAdd(c, &article.CategoryAddRequest{
 		Pid:        data.Pid,
 		Title:      data.Title,
@@ -46,6 +48,7 @@ func CategoryAdd(c *gin.Context) {
 		ImageInput: data.ImageInput,
 		Sort:       data.Sort,
 		Status:     data.Status,
+		Uid:        uint32(userId),
 	})
 
 	if err != nil {

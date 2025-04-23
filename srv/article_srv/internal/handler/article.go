@@ -5,16 +5,27 @@ import (
 	"common/model"
 	"common/mongoDB"
 	"common/proto/article"
+	"context"
 	"fmt"
 	"log"
 )
 
 // 文章管理添加
 func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, error) {
+
+	u := model.User{}
+	id, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return &article.ArticleAddResponse{Success: fmt.Sprintf("用户登录故障%v", err)}, nil
+	}
+	if id.Uid == 0 {
+		return &article.ArticleAddResponse{Success: "用户未登录"}, nil
+	}
+
 	ab := model.Article{
 		Cid:        int32(in.Cid),
 		Title:      in.Title,
-		Author:     in.Author,
+		Author:     id.Account,
 		ImageInput: in.ImageInput,
 		Synopsis:   in.Synopsis,
 		Hide:       in.Hide,
@@ -23,6 +34,13 @@ func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, err
 	c := model.ArticleContent{
 		Content: in.Content,
 	}
+
+	// 创建 MongoDB 会话
+	session, err := global.MDB.StartSession()
+	if err != nil {
+		return &article.ArticleAddResponse{Success: "启动会话失败"}, nil
+	}
+	defer session.EndSession(context.Background())
 
 	//查询分类是否存在
 	pid, err := mongoDB.FindArticleCategoryPid(global.NaCos.Mongodb.Database, "article_category", int(in.Cid))
@@ -33,8 +51,6 @@ func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, err
 	if pid.Id == 0 {
 		return &article.ArticleAddResponse{Success: "此分类不存在"}, nil
 	}
-
-	//文章类容添加
 
 	if !c.CreateEbArticleContent() {
 		return &article.ArticleAddResponse{Success: "文章类容添加失败"}, nil
@@ -50,22 +66,36 @@ func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, err
 	err = mongoDB.CreateArticleContent(global.NaCos.Mongodb.Database, "article", ab)
 
 	if err != nil {
-		log.Println(err)
+
 		return &article.ArticleAddResponse{Success: "文章类容添加失败"}, nil
 	}
 
 	err = mongoDB.CreateArticleContent(global.NaCos.Mongodb.Database, "article_content", c)
+
 	if err != nil {
-		log.Println(err)
+
 		return &article.ArticleAddResponse{Success: "文章管理添加失败"}, nil
 
 	}
 
 	return &article.ArticleAddResponse{Success: "文章添加成功"}, nil
+
 }
 
 // 文章分类添加
 func CategoryAdd(in *article.CategoryAddRequest) (*article.CategoryAddResponse, error) {
+
+	//查询用户表
+	u := model.User{}
+	id, err := u.FindId(int(in.Uid))
+
+	if err != nil {
+		return &article.CategoryAddResponse{Success: "用户登录故障，请从新登录"}, nil
+	}
+	if id.Uid == 0 {
+		return &article.CategoryAddResponse{Success: "用户未登录"}, nil
+	}
+
 	a := model.ArticleCategory{
 		Pid:    int32(in.Pid),
 		Title:  in.Title,
@@ -78,7 +108,7 @@ func CategoryAdd(in *article.CategoryAddRequest) (*article.CategoryAddResponse, 
 		return &article.CategoryAddResponse{Success: "分类添加失败"}, nil
 	}
 
-	err := mongoDB.CreateArticleContent(global.NaCos.Mongodb.Database, "article_category", a)
+	err = mongoDB.CreateArticleContent(global.NaCos.Mongodb.Database, "article_category", a)
 
 	if err != nil {
 		log.Println(err)
@@ -91,7 +121,8 @@ func CategoryAdd(in *article.CategoryAddRequest) (*article.CategoryAddResponse, 
 
 // 查询文章管理列表
 func ArticleList(in *article.ArticleListRequest) (*article.ArticleListResponse, error) {
-	category, err := mongoDB.FindArticleCategory("db", "article")
+
+	category, err := mongoDB.FindArticleCategory(global.NaCos.Mongodb.Database, "article")
 	var sli []*article.ArticleList
 	for _, e := range category {
 		sli = append(sli, &article.ArticleList{
@@ -211,6 +242,7 @@ func EditArticle(in *article.EditArticleRequest) (*article.EditArticleResponse, 
 
 }
 
+// 删除文章管理
 func DeleteArticle(in *article.DeleteRequest) (*article.DeleteResponse, error) {
 
 	//判断文章是否存在
@@ -230,12 +262,15 @@ func DeleteArticle(in *article.DeleteRequest) (*article.DeleteResponse, error) {
 	err = mongoDB.DeleteArticleContent(global.NaCos.Mongodb.Database, "article_content", int(in.Ids))
 
 	if err != nil {
+
 		return &article.DeleteResponse{Success: "文章管理删除失败"}, nil
+
 	}
 
 	return &article.DeleteResponse{Success: "文章管理删除成功"}, nil
 }
 
+// 删除文章分类
 func DeleteArticleCategory(in *article.DeleteRequest) (*article.DeleteResponse, error) {
 
 	err := mongoDB.DeleteArticle(global.NaCos.Mongodb.Database, "article_category", int(in.Ids))
