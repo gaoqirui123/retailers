@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package administrators;
+option go_package=".;administrators";
+
+message AdminLoginReq {
+  string account = 1;
+  string password = 2;
+}
+
+message AdminLoginResp {
+  string greet = 1;
+}
+
+message ProcessEnterReq {
+  int64 AdminId = 1;//管理员id
+  int64 MerchantId = 2;//商户id
+  int64 Status =3;//审核状态
+}
+
+message ProcessEnterResp {
+  string greet = 1;
+}
+
+service Administrators {
+  rpc AdminLogin(AdminLoginReq) returns (AdminLoginResp);//管理员登录
+  rpc ProcessEnter(ProcessEnterReq) returns (ProcessEnterResp); //审核商户申请
+
+}

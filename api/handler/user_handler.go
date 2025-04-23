@@ -127,3 +127,21 @@ func UserLevelPowerList(c *gin.Context) {
 	}
 	response.RespSuccess(c, "会员页面展示成功", list)
 }
+func GroupBuying(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.GroupBuy
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	list, err := client.GroupBuying(c, &user.GroupBuyingRequest{
+		Uid: int64(userId),
+		Pid: data.Pid,
+		Num: data.Num,
+	})
+	if err != nil {
+		response.RespError(c, "拼团失败")
+		return
+	}
+	response.RespSuccess(c, "拼团成功", list)
+}

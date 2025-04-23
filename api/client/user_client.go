@@ -96,3 +96,16 @@ func UserLevelPowerList(ctx context.Context, req *user.UserLevelPowerListRequest
 	}
 	return client.(*user.UserLevelPowerListResponse), nil
 }
+func GroupBuying(ctx context.Context, req *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
+	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
+		userLevelPowerList, err := client.GroupBuying(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return userLevelPowerList, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client.(*user.GroupBuyingResponse), nil
+}

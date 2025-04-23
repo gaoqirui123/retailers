@@ -13,7 +13,18 @@ service User {
   rpc UpdatedPassword(UpdatedPasswordRequest) returns (UpdatedPasswordResponse);//TODO:修改密码
   rpc UserLevelList(UserLevelListRequest) returns (UserLevelListResponse);//TODO:会员页面展示
   rpc UserLevelPowerList(UserLevelPowerListRequest) returns (UserLevelPowerListResponse);//TODO:会员权益页面展示
+  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
 }
+//TODO:用户发起拼团
+message GroupBuyingRequest {
+  int64 uid =1;
+  int64 pid =2;
+  int64 num =3;
+}
+message GroupBuyingResponse {
+  string Success = 1;
+}
+
 
 //TODO:会员权益页面展示
 message UserLevelPowerListRequest {

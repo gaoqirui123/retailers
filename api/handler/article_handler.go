@@ -15,7 +15,7 @@ func ArticleRelease(c *gin.Context) {
 		return
 	}
 
-	release, err := client.ArticleAdd(c, &article.ArticleAddRequest{
+	release, err := client.ArticleRelease(c, &article.ArticleAddRequest{
 		Content:    data.Content,
 		Cid:        data.Cid,
 		Title:      data.Title,
