@@ -37,3 +37,5 @@ type AddCombinationProduct struct {
 	Quota         int32   `json:"quota" xml:"quota" form:"quota"`
 	QuotaShow     int32   `json:"quotaShow" xml:"quotaShow" form:"quotaShow"`
 }
+type ProcessInvoice struct {
+}

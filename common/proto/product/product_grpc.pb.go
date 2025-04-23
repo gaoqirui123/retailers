@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Product_CombinationList_FullMethodName = "/product.Product/CombinationList"
+	Product_GroupBuying_FullMethodName     = "/product.Product/GroupBuying"
+	Product_JoinGroupBuying_FullMethodName = "/product.Product/JoinGroupBuying"
 )
 
 // ProductClient is the client API for Product service.
@@ -27,6 +29,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductClient interface {
 	CombinationList(ctx context.Context, in *CombinationListRequest, opts ...grpc.CallOption) (*CombinationListResponse, error)
+	GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error)
+	JoinGroupBuying(ctx context.Context, in *JoinGroupBuyingRequest, opts ...grpc.CallOption) (*JoinGroupBuyingResponse, error)
 }
 
 type productClient struct {
@@ -47,11 +51,33 @@ func (c *productClient) CombinationList(ctx context.Context, in *CombinationList
 	return out, nil
 }
 
+func (c *productClient) GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GroupBuyingResponse)
+	err := c.cc.Invoke(ctx, Product_GroupBuying_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) JoinGroupBuying(ctx context.Context, in *JoinGroupBuyingRequest, opts ...grpc.CallOption) (*JoinGroupBuyingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(JoinGroupBuyingResponse)
+	err := c.cc.Invoke(ctx, Product_JoinGroupBuying_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
 type ProductServer interface {
 	CombinationList(context.Context, *CombinationListRequest) (*CombinationListResponse, error)
+	GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error)
+	JoinGroupBuying(context.Context, *JoinGroupBuyingRequest) (*JoinGroupBuyingResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -61,6 +87,12 @@ type UnimplementedProductServer struct {
 
 func (UnimplementedProductServer) CombinationList(context.Context, *CombinationListRequest) (*CombinationListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CombinationList not implemented")
+}
+func (UnimplementedProductServer) GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GroupBuying not implemented")
+}
+func (UnimplementedProductServer) JoinGroupBuying(context.Context, *JoinGroupBuyingRequest) (*JoinGroupBuyingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JoinGroupBuying not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -93,6 +125,42 @@ func _Product_CombinationList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_GroupBuying_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GroupBuyingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).GroupBuying(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_GroupBuying_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).GroupBuying(ctx, req.(*GroupBuyingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_JoinGroupBuying_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JoinGroupBuyingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).JoinGroupBuying(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_JoinGroupBuying_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).JoinGroupBuying(ctx, req.(*JoinGroupBuyingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -103,6 +171,14 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CombinationList",
 			Handler:    _Product_CombinationList_Handler,
+		},
+		{
+			MethodName: "GroupBuying",
+			Handler:    _Product_GroupBuying_Handler,
+		},
+		{
+			MethodName: "JoinGroupBuying",
+			Handler:    _Product_JoinGroupBuying_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

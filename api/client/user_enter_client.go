@@ -44,3 +44,16 @@ func AddCombinationProduct(ctx context.Context, in *user_enter.AddCombinationPro
 	}
 	return clients.(*user_enter.AddCombinationProductResponse), nil
 }
+func ProcessInvoice(ctx context.Context, in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
+	clients, err := UserEnterClients(ctx, func(ctx context.Context, server user_enter.UserEnterClient) (interface{}, error) {
+		register, err := server.ProcessInvoice(ctx, in)
+		if err != nil {
+			return nil, err
+		}
+		return register, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return clients.(*user_enter.ProcessInvoiceResponse), nil
+}

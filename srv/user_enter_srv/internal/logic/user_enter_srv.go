@@ -36,3 +36,12 @@ func (es UserEnterServer) AddCombinationProduct(ctx context.Context, in *user_en
 	}
 	return product, nil
 }
+
+// ProcessInvoice TODO:商家审核用户的发票invoice申请
+func (es UserEnterServer) ProcessInvoice(ctx context.Context, in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
+	product, err := handler.ProcessInvoice(in)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
