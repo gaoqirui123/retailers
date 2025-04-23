@@ -1,22 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="GoORMHelperCache">
+    <option name="schemaMapping">
+      <map>
+        <entry key="ArticleRelease">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleSearch">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/srv/article_srv/internal/logic/article.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CategoryAdd">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CategoryList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="DeleteArticle">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EditArticle">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="scannedPathMapping">
       <map>
         <entry key="file://$PROJECT_DIR$/api/client/article_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745305944649" />
+              <option name="lastModified" value="1745375794788" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/handler/article_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745305964337" />
+              <option name="lastModified" value="1745375794942" />
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/article_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745375673345" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleRelease" />
+                  <option value="CategoryAdd" />
+                  <option value="CategoryList" />
+                  <option value="ArticleSearch" />
+                  <option value="EditArticle" />
+                  <option value="DeleteArticle" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745375829803" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/mongoDB/mongodb.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745375294762" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/article_srv/internal/handler/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745376043720" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/article_srv/internal/logic/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745375203273" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="tableStructMapping">
+      <map>
+        <entry key="article_release" value="ArticleRelease" />
+        <entry key="article_search" value="ArticleSearch" />
+        <entry key="article_server" value="ArticleServer" />
+        <entry key="category_add" value="CategoryAdd" />
+        <entry key="category_list" value="CategoryList" />
+        <entry key="delete_article" value="DeleteArticle" />
+        <entry key="edit_article" value="EditArticle" />
       </map>
     </option>
   </component>

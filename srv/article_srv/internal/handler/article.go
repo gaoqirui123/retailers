@@ -78,7 +78,7 @@ func CategoryAdd(in *article.CategoryAddRequest) (*article.CategoryAddResponse, 
 		return &article.CategoryAddResponse{Success: "分类添加失败"}, nil
 	}
 
-	err := mongoDB.CreateArticleContent(global.NaCos.Mongodb.Database, "eb_article_category", a)
+	err := mongoDB.CreateArticleContent(global.NaCos.Mongodb.Database, "article_category", a)
 
 	if err != nil {
 		log.Println(err)
