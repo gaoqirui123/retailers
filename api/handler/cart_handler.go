@@ -5,7 +5,6 @@ import (
 	"api/request"
 	"api/response"
 	"common/proto/cart"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -82,7 +81,6 @@ func GetCartList(c *gin.Context) {
 	list, err := client.GetCartList(c, &cart.GetCartListRequest{
 		Uid: int64(Uid),
 	})
-	fmt.Println(list, "22222222222222")
 	if err != nil {
 		response.RespError(c, err.Error())
 		return

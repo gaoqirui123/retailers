@@ -52,6 +52,13 @@
             </set>
           </value>
         </entry>
+        <entry key="Sign">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/sign.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="T">
           <value>
             <set>
@@ -63,6 +70,13 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go" />
             </set>
           </value>
         </entry>
@@ -80,14 +94,14 @@
         <entry key="file://$PROJECT_DIR$/api/client/admin_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745413857058" />
+              <option name="lastModified" value="1745415268772" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/client/article_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745413136358" />
+              <option name="lastModified" value="1745415699375" />
             </ScannedPath>
           </value>
         </entry>
@@ -126,6 +140,13 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/cart_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745416452176" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/config/config.go">
           <value>
             <ScannedPath>
@@ -147,6 +168,44 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/sign.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745417561246" />
+              <option name="schema">
+                <list>
+                  <option value="Sign" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/cart_srv/internal/handler/cart.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745416242546" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745418038092" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745417972623" />
+              <option name="schema">
+                <list>
+                  <option value="UserServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="tableStructMapping">
@@ -158,8 +217,10 @@
         <entry key="na_cos" value="NaCos" />
         <entry key="order_srv" value="OrderSrv" />
         <entry key="product_srv" value="ProductSrv" />
+        <entry key="sign" value="Sign" />
         <entry key="t" value="T" />
         <entry key="user_enter_srv" value="UserEnterSrv" />
+        <entry key="user_server" value="UserServer" />
         <entry key="user_srv" value="UserSrv" />
       </map>
     </option>
