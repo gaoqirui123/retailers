@@ -6,7 +6,7 @@ import (
 )
 
 // 会员表
-type EbSystemUserLevel struct {
+type UserLevel struct {
 	Id           int32     `gorm:"column:id;type:int;primaryKey;not null;" json:"id"`
 	MerId        int32     `gorm:"column:mer_id;type:int;comment:商户id;not null;default:0;" json:"mer_id"`                          // 商户id
 	Name         string    `gorm:"column:name;type:varchar(255);comment:会员名称;not null;" json:"name"`                               // 会员名称
@@ -19,8 +19,8 @@ type EbSystemUserLevel struct {
 	AddTime      time.Time `gorm:"column:add_time;type:datetime;comment:添加时间;not null;default:CURRENT_TIMESTAMP;" json:"add_time"` // 添加时间
 }
 
-func (l *EbSystemUserLevel) FindUsersLevel() (result []EbSystemUserLevel, err error) {
-	err = global.DB.Debug().Table("eb_system_user_level").Find(&result).Error
+func (l *UserLevel) FindUsersLevel() (result []UserLevel, err error) {
+	err = global.DB.Debug().Table("user_level").Find(&result).Error
 	if err != nil {
 		return nil, err
 	}

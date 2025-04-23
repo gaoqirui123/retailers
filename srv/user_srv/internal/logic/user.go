@@ -73,3 +73,10 @@ func (u UserServer) GroupBuying(ctx context.Context, in *user.GroupBuyingRequest
 	}
 	return userLevelPowerList, nil
 }
+func (u UserServer) AddUsePower(ctx context.Context, in *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+	addUsePower, err := handler.AddUsePower(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return addUsePower, nil
+}

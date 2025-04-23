@@ -133,7 +133,7 @@ func UpdatedPassword(in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResp
 
 // TODO:会员页面展示
 func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, error) {
-	ul := model.EbSystemUserLevel{}
+	ul := model.UserLevel{}
 	level, err := ul.FindUsersLevel()
 	if err != nil {
 		return nil, errors.New("查询失败")
@@ -155,7 +155,7 @@ func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, 
 
 // TODO:会员权益页面展示
 func UserLevelPowerList(in *user.UserLevelPowerListRequest) (*user.UserLevelPowerListResponse, error) {
-	ulp := model.EbSystemUserPower{}
+	ulp := model.UserLevelPower{}
 	power, err := ulp.FindUserLevelPower()
 	if err != nil {
 		return nil, errors.New("查询失败")
@@ -201,4 +201,22 @@ func GroupBuying(in *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error)
 		return nil, err
 	}
 	return &user.GroupBuyingResponse{Success: "发起拼团成功"}, nil
+}
+
+// TODO:用户使用权益
+func AddUsePower(in *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+	ulr := model.UserLevelRecord{}
+	userRecords, err := ulr.FindRecords(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	ulup := model.UserLevelUsePower{
+		Uid: uint32(userRecords.Uid),
+		Qid: uint32(userRecords.Grade),
+	}
+	err = ulup.AddUserPower()
+	if err != nil {
+		return nil, errors.New("权益使用失败")
+	}
+	return &user.AddUsePowerResponse{Success: "用户使用权益成功"}, nil
 }

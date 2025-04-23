@@ -98,14 +98,27 @@ func UserLevelPowerList(ctx context.Context, req *user.UserLevelPowerListRequest
 }
 func GroupBuying(ctx context.Context, req *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
 	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
-		userLevelPowerList, err := client.GroupBuying(ctx, req)
+		groupBuying, err := client.GroupBuying(ctx, req)
 		if err != nil {
 			return nil, err
 		}
-		return userLevelPowerList, nil
+		return groupBuying, nil
 	})
 	if err != nil {
 		return nil, err
 	}
 	return client.(*user.GroupBuyingResponse), nil
+}
+func AddUsePower(ctx context.Context, req *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
+		addUsePower, err := client.AddUsePower(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return addUsePower, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return client.(*user.AddUsePowerResponse), nil
 }
