@@ -18,9 +18,8 @@ message CombinationList{
 }
 //TODO:用户参与拼团
 message JoinGroupBuyingRequest {
-  int64 uid =1;
-  int64 pid =2;
-  int64 num =3;
+  int64 Uid =1;
+  string PinkId =2;
 }
 message JoinGroupBuyingResponse {
   string Success = 1;
@@ -28,9 +27,9 @@ message JoinGroupBuyingResponse {
 
 //TODO:用户发起拼团
 message GroupBuyingRequest {
-  int64 uid =1;
-  int64 pid =2;
-  int64 num =3;
+  int64 Uid =1;
+  int64 Pid =2;
+  int64 Num =3;
 }
 message GroupBuyingResponse {
   string Success = 1;

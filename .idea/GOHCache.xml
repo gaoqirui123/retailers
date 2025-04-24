@@ -14,6 +14,20 @@
     </option>
     <option name="scannedPathMapping">
       <map>
+        <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745495612054" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745495600725" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
