@@ -1,7 +1,7 @@
 package request
 
 // 文章管理添加
-type ArticleRelease struct {
+type ArticleAdd struct {
 	Content string `json:"content" form:"content" binding:"required"`
 	//	Uid        uint32 `json:"uid" form:"uid" binding:"required"`
 	Cid        uint32 `json:"cid" form:"cid" binding:"required"`

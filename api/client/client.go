@@ -24,7 +24,6 @@ func GenericClient[T any](ctx context.Context, addr string, newClient func(cc gr
 	if err != nil {
 		return nil, err
 	}
-
 	return res, nil
 }
 

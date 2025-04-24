@@ -47,7 +47,6 @@ type CartSrv struct {
 	Host string
 	Port int
 }
-
 type DistributionSrv struct {
 	Host string
 	Port int

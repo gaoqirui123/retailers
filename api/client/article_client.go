@@ -30,41 +30,41 @@ func CategoryAdd(ctx context.Context, in *article.CategoryAddRequest) (*article.
 }
 
 // ArticleList 查询文章管理列表
-func CategoryList(ctx context.Context, in *article.CategoryListRequest) (*article.CategoryListResponse, error) {
-	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.CategoryListRequest) (*article.CategoryListResponse, error) {
-		return client.CategoryList(ctx, req)
-	})
-}
-
-// 查询文章管理分类列表
-func ArticleSearch(ctx context.Context, in *article.ArticleSearchRequest) (*article.ArticleSearchResponse, error) {
-	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.ArticleSearchRequest) (*article.ArticleSearchResponse, error) {
-		return client.ArticleSearch(ctx, req)
-	})
-}
-
-// 查询文章管理分类列表
 func ArticleList(ctx context.Context, in *article.ArticleListRequest) (*article.ArticleListResponse, error) {
 	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.ArticleListRequest) (*article.ArticleListResponse, error) {
 		return client.ArticleList(ctx, req)
 	})
 }
 
-// 编辑文章
+// CategoryList 查询文章管理分类列表
+func CategoryList(ctx context.Context, in *article.CategoryListRequest) (*article.CategoryListResponse, error) {
+	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.CategoryListRequest) (*article.CategoryListResponse, error) {
+		return client.CategoryList(ctx, req)
+	})
+}
+
+// ArticleSearch 查询文章管理分类列表
+func ArticleSearch(ctx context.Context, in *article.ArticleSearchRequest) (*article.ArticleSearchResponse, error) {
+	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.ArticleSearchRequest) (*article.ArticleSearchResponse, error) {
+		return client.ArticleSearch(ctx, req)
+	})
+}
+
+// EditArticle 编辑文章
 func EditArticle(ctx context.Context, in *article.EditArticleRequest) (*article.EditArticleResponse, error) {
 	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.EditArticleRequest) (*article.EditArticleResponse, error) {
 		return client.EditArticle(ctx, req)
 	})
 }
 
-// 删除文章管理
+// DeleteArticle 删除文章管理
 func DeleteArticle(ctx context.Context, in *article.DeleteRequest) (*article.DeleteResponse, error) {
 	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.DeleteRequest) (*article.DeleteResponse, error) {
 		return client.DeleteArticle(ctx, req)
 	})
 }
 
-// 删除文章分类
+// DeleteArticleCategory 删除文章分类
 func DeleteArticleCategory(ctx context.Context, in *article.DeleteRequest) (*article.DeleteResponse, error) {
 	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.DeleteRequest) (*article.DeleteResponse, error) {
 		return client.DeleteArticleCategory(ctx, req)
