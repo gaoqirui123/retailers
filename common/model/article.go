@@ -23,7 +23,7 @@ type Article struct {
 	AdminId       uint64    `gorm:"column:admin_id;type:bigint UNSIGNED;comment:管理员id;not null;default:0;" json:"admin_id"`               // 管理员id
 	MerId         uint32    `gorm:"column:mer_id;type:int UNSIGNED;comment:商户id;default:0;" json:"mer_id"`                                // 商户id
 	ProductId     int32     `gorm:"column:product_id;type:int;comment:商品关联id;default:0;" json:"product_id"`                               // 商品关联id
-	DeletedAt     time.Time `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
+	IsDel         int64     `gorm:"column:is_del;type:bigint;comment:1未删除2已删除;default:1;" json:"is_del"`                                  // 1未删除2已删除
 	UpdatedAt     time.Time `gorm:"column:updated_at;type:datetime(3);not null;default:CURRENT_TIMESTAMP(3);" json:"updated_at"`
 }
 

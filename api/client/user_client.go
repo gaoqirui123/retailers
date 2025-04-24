@@ -63,3 +63,17 @@ func UserLevelPowerList(ctx context.Context, req *user.UserLevelPowerListRequest
 		return client.UserLevelPowerList(ctx, req)
 	})
 }
+
+// AddUsePower 用户使用权益
+func AddUsePower(ctx context.Context, req *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+		return client.AddUsePower(ctx, req)
+	})
+}
+
+// UsePowerList 用户使用权益表展示
+func UsePowerList(ctx context.Context, req *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
+		return client.UsePowerList(ctx, req)
+	})
+}

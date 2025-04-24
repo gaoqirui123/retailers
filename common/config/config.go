@@ -9,6 +9,8 @@ type AppViper struct {
 	ArticleSrv
 	AdministratorsSrv
 	CartSrv
+	DistributionSrv
+	RandomString
 }
 type NaCos struct {
 	NameSpace string
@@ -44,6 +46,15 @@ type AdministratorsSrv struct {
 type CartSrv struct {
 	Host string
 	Port int
+}
+type DistributionSrv struct {
+	Host string
+	Port int
+}
+
+// 邀请码长度
+type RandomString struct {
+	Log int
 }
 type T struct {
 	Mysql struct {

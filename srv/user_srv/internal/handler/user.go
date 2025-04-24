@@ -2,9 +2,11 @@ package handler
 
 import (
 	"common/model"
+	"common/model/user_level"
 	"common/proto/user"
 	"common/utlis"
 	"errors"
+	"time"
 )
 
 // UserLogin  TODO: 用户登录
@@ -132,7 +134,7 @@ func UpdatedPassword(in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResp
 
 // UserLevelList TODO:会员页面展示
 func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, error) {
-	ul := model.EbSystemUserLevel{}
+	ul := user_level.UserLevel{}
 	level, err := ul.FindUsersLevel()
 	if err != nil {
 		return nil, errors.New("查询失败")
@@ -154,7 +156,7 @@ func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, 
 
 // UserLevelPowerList TODO:会员权益页面展示
 func UserLevelPowerList(in *user.UserLevelPowerListRequest) (*user.UserLevelPowerListResponse, error) {
-	ulp := model.EbSystemUserPower{}
+	ulp := user_level.UserLevelPower{}
 	power, err := ulp.FindUserLevelPower()
 	if err != nil {
 		return nil, errors.New("查询失败")
@@ -170,14 +172,38 @@ func UserLevelPowerList(in *user.UserLevelPowerListRequest) (*user.UserLevelPowe
 	return &user.UserLevelPowerListResponse{List: list}, nil
 }
 
-// UserSignIn TODO:用户签到
-func UserSignIn(in *user.UserSignInRequest) (*user.UserSignInResponse, error) {
-
-	return &user.UserSignInResponse{Success: true}, nil
+// AddUsePower TODO:用户使用权益
+func AddUsePower(in *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+	ulr := user_level.UserLevelRecord{}
+	userRecords, err := ulr.FindRecords(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	ulup := user_level.UserLevelUsePower{
+		Uid: uint32(userRecords.Uid),
+		Qid: uint32(userRecords.Grade),
+	}
+	err = ulup.AddUserPower()
+	if err != nil {
+		return nil, errors.New("权益使用失败")
+	}
+	return &user.AddUsePowerResponse{Success: true}, nil
 }
 
-// UserMakeupSignIn TODO:用户补签
-func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
-
-	return &user.UserMakeupSignInResponse{Success: true}, nil
+// UsePowerList TODO: 用户使用权益表展示
+func UsePowerList(in *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
+	ulup := user_level.UserLevelUsePower{}
+	levelUsePowers, err := ulup.Finds()
+	if err != nil {
+		return nil, err
+	}
+	var list []*user.UsePowerList
+	for _, i := range levelUsePowers {
+		list = append(list, &user.UsePowerList{
+			Uid:     int32(i.Uid),
+			Qid:     int32(i.Qid),
+			AddTime: i.AddTime.Format(time.DateTime),
+		})
+	}
+	return &user.UsePowerListResponse{List: list}, nil
 }

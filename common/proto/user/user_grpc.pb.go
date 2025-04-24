@@ -29,6 +29,8 @@ const (
 	User_UserLevelPowerList_FullMethodName = "/user.User/UserLevelPowerList"
 	User_UserSignIn_FullMethodName         = "/user.User/UserSignIn"
 	User_UserMakeupSignIn_FullMethodName   = "/user.User/UserMakeupSignIn"
+	User_AddUsePower_FullMethodName        = "/user.User/AddUsePower"
+	User_UsePowerList_FullMethodName       = "/user.User/UsePowerList"
 )
 
 // UserClient is the client API for User service.
@@ -45,6 +47,8 @@ type UserClient interface {
 	UserLevelPowerList(ctx context.Context, in *UserLevelPowerListRequest, opts ...grpc.CallOption) (*UserLevelPowerListResponse, error)
 	UserSignIn(ctx context.Context, in *UserSignInRequest, opts ...grpc.CallOption) (*UserSignInResponse, error)
 	UserMakeupSignIn(ctx context.Context, in *UserMakeupSignInRequest, opts ...grpc.CallOption) (*UserMakeupSignInResponse, error)
+	AddUsePower(ctx context.Context, in *AddUsePowerRequest, opts ...grpc.CallOption) (*AddUsePowerResponse, error)
+	UsePowerList(ctx context.Context, in *UsePowerListRequest, opts ...grpc.CallOption) (*UsePowerListResponse, error)
 }
 
 type userClient struct {
@@ -155,6 +159,26 @@ func (c *userClient) UserMakeupSignIn(ctx context.Context, in *UserMakeupSignInR
 	return out, nil
 }
 
+func (c *userClient) AddUsePower(ctx context.Context, in *AddUsePowerRequest, opts ...grpc.CallOption) (*AddUsePowerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddUsePowerResponse)
+	err := c.cc.Invoke(ctx, User_AddUsePower_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) UsePowerList(ctx context.Context, in *UsePowerListRequest, opts ...grpc.CallOption) (*UsePowerListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UsePowerListResponse)
+	err := c.cc.Invoke(ctx, User_UsePowerList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -169,6 +193,8 @@ type UserServer interface {
 	UserLevelPowerList(context.Context, *UserLevelPowerListRequest) (*UserLevelPowerListResponse, error)
 	UserSignIn(context.Context, *UserSignInRequest) (*UserSignInResponse, error)
 	UserMakeupSignIn(context.Context, *UserMakeupSignInRequest) (*UserMakeupSignInResponse, error)
+	AddUsePower(context.Context, *AddUsePowerRequest) (*AddUsePowerResponse, error)
+	UsePowerList(context.Context, *UsePowerListRequest) (*UsePowerListResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -205,6 +231,12 @@ func (UnimplementedUserServer) UserSignIn(context.Context, *UserSignInRequest) (
 }
 func (UnimplementedUserServer) UserMakeupSignIn(context.Context, *UserMakeupSignInRequest) (*UserMakeupSignInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserMakeupSignIn not implemented")
+}
+func (UnimplementedUserServer) AddUsePower(context.Context, *AddUsePowerRequest) (*AddUsePowerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUsePower not implemented")
+}
+func (UnimplementedUserServer) UsePowerList(context.Context, *UsePowerListRequest) (*UsePowerListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UsePowerList not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -399,6 +431,42 @@ func _User_UserMakeupSignIn_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_AddUsePower_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUsePowerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).AddUsePower(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_AddUsePower_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).AddUsePower(ctx, req.(*AddUsePowerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_UsePowerList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UsePowerListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UsePowerList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UsePowerList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UsePowerList(ctx, req.(*UsePowerListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -445,6 +513,14 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserMakeupSignIn",
 			Handler:    _User_UserMakeupSignIn_Handler,
+		},
+		{
+			MethodName: "AddUsePower",
+			Handler:    _User_AddUsePower_Handler,
+		},
+		{
+			MethodName: "UsePowerList",
+			Handler:    _User_UsePowerList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

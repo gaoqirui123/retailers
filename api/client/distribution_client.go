@@ -1,0 +1,24 @@
+package client
+
+import (
+	"common/proto/distribution"
+	"context"
+	"google.golang.org/grpc"
+)
+
+// NewDistributionClient 创建一个新的 Distribution 服务客户端
+func NewDistributionClient(cc grpc.ClientConnInterface) distribution.DistributionClient {
+	return distribution.NewDistributionClient(cc)
+}
+
+// DistributionClients 封装 Distribution 服务客户端操作逻辑
+func DistributionClients[TRequest, TResponse any](ctx context.Context, request TRequest, operation func(ctx context.Context, client distribution.DistributionClient, req TRequest) (TResponse, error)) (TResponse, error) {
+	return ExecuteGRPCOperation(ctx, "127.0.0.1:8088", NewDistributionClient, request, operation)
+}
+
+// GenerateInvitationCode 生成邀请码
+func GenerateInvitationCode(ctx context.Context, in *distribution.GenerateInvitationCodeRequest) (*distribution.GenerateInvitationCodeResponse, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.GenerateInvitationCodeRequest) (*distribution.GenerateInvitationCodeResponse, error) {
+		return client.GenerateInvitationCode(ctx, req)
+	})
+}
