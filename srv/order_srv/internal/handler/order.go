@@ -5,9 +5,7 @@ import (
 	"common/model"
 	"common/pkg"
 	"common/proto/order"
-	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/google/uuid"
 	"strconv"
 )
@@ -24,7 +22,7 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	if pro.IsShow == 0 {
 		return nil, errors.New("商品下架")
 	}
-	if pro.Stock < int(in.Num) {
+	if pro.Stock < in.Num {
 		return nil, errors.New("商品库存不足")
 	}
 	users := &model.User{}
@@ -44,7 +42,7 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 		return nil, err
 	}
 	if cou.Id == 0 {
-		return nil, errors.New("该优惠券已下架")
+		return nil, errors.New("该优惠券已过期")
 	}
 	// 计算实际金额
 	var couponPrice float64
@@ -64,36 +62,34 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	tx := global.DB.Begin()
 	err = pro.UpdateProductStock(in.ProductId, in.Num)
 	if err != nil {
+		tx.Rollback()
 		return nil, errors.New("商品库存扣减失败")
 	}
 	orderSn := uuid.New().String() + strconv.Itoa(int(in.ProductId))
 	orders := &model.Order{
 		OrderSn:        orderSn,
-		Uid:            uint32(in.Uid),
+		Uid:            in.Uid,
 		RealName:       users.RealName,
 		UserPhone:      users.Phone,
 		UserAddress:    users.Address,
-		CartId:         uint32(in.CartId),
-		FreightPrice:   float64(in.FreightPrice),
-		TotalNum:       uint32(in.Num),
+		FreightPrice:   pro.Postage,
+		TotalNum:       in.Num,
 		TotalPrice:     totalPrice,
 		PayPrice:       payPrice,
 		DeductionPrice: deductionPrice,
-		CouponId:       uint32(in.CouponId),
+		CouponId:       in.CouponId,
 		CouponPrice:    couponPrice,
 		Paid:           0,
-		PayType:        uint32(in.PayType),
+		PayType:        in.PayType,
 		GainIntegral:   gainIntegral,
-		UseIntegral:    float64(in.UseIntegral),
 		Mark:           in.Mark,
-		MerId:          uint32(in.MerId),
-		CombinationId:  uint32(in.CombinationId),
-		PinkId:         uint32(in.PinkId),
-		SeckillId:      uint32(in.ProductId),
-		BargainId:      uint32(in.BargainId),
-		StoreId:        uint32(in.StoreId),
-		ShippingType:   uint32(in.ShippingType),
-		IsChannel:      uint32(in.IsChannel),
+		MerId:          in.MerId,
+		PinkId:         in.PinkId,
+		SeckillId:      in.ProductId,
+		BargainId:      in.BargainId,
+		StoreId:        in.StoreId,
+		ShippingType:   in.ShippingType,
+		IsChannel:      in.IsChannel,
 	}
 	err = orders.AddOrder()
 	if err != nil {
@@ -102,28 +98,18 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	}
 	op := &model.OrderProduct{
 		OrderId:               orders.Id,
-		ProductId:             uint32(in.ProductId),
+		ProductId:             in.ProductId,
 		ProductName:           pro.StoreName,
 		ProductImage:          pro.Image,
 		ProductSpecifications: in.ProductSpecifications,
 		ProductPrice:          pro.Price,
-		ProductNum:            int32(in.Num),
+		ProductNum:            in.Num,
+		ProductStatus:         pro.IsShow,
 	}
-	op.AddOrderProduct()
-	if in.CartId != 0 {
-		marshal, _ := json.Marshal(op)
-		car := &model.OrderCartInfo{
-			Oid:       orders.Id,
-			CartId:    orders.CartId,
-			ProductId: uint32(in.ProductId),
-			CartInfo:  string(marshal),
-			Unique:    orderSn,
-		}
-		err = car.AddOrderCartInfo()
-		if err != nil {
-			tx.Rollback()
-			return nil, err
-		}
+	err = op.AddOrderProduct()
+	if err != nil {
+		tx.Rollback()
+		return nil, err
 	}
 	err = tx.Commit().Error
 	if err != nil {
@@ -145,34 +131,26 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 }
 
 func OrderList(in *order.OrderListRequest) (*order.OrderListResponse, error) {
-	fmt.Println("1111111111111")
 	orders := &model.Order{}
 	if in.OrderStatus != 10 {
-		fmt.Println("00000000000000000000")
 		list, err := orders.GetOrderList(in.UserId, in.OrderStatus)
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println(list, "222222222222222")
-
 		orderList, err := OrderLists(list)
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println(orderList, "4444444444")
 		return &order.OrderListResponse{List: orderList}, nil
 	} else {
-		fmt.Println("99999999999999999999")
 		list, err := orders.AllOrderList(in.UserId)
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println(list, "333333333")
 		orderList, err := OrderLists(list)
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println(orderList, "55555555555")
 		return &order.OrderListResponse{List: orderList}, nil
 	}
 }
@@ -181,30 +159,30 @@ func OrderLists(list []*model.Order) ([]*order.OrderList, error) {
 	var orderList []*order.OrderList
 	for _, i := range list {
 		op := &model.OrderProduct{}
-		err := op.GetOrderProductIdBy(int64(i.Id))
+		err := op.GetOrderProductIdBy(i.Id)
 		if err != nil {
 			return nil, err
 		}
 		users := &model.User{}
-		err = users.GetUserIdBy(int64(i.Uid))
+		err = users.GetUserIdBy(i.Uid)
 		if err != nil {
 			return nil, err
 		}
 		orderList = append(orderList, &order.OrderList{
-			OrderId:               int64(i.Id),
+			OrderId:               i.Id,
 			OrderSn:               i.OrderSn,
-			ProductId:             int64(op.ProductId),
+			ProductId:             op.ProductId,
 			ProductName:           op.ProductName,
 			ProductImage:          op.ProductImage,
 			ProductSpecifications: op.ProductSpecifications,
-			UserId:                int64(users.Uid),
+			UserId:                users.Uid,
 			Account:               users.Account,
 			UserPhone:             users.Phone,
 			PayPrice:              float32(i.PayPrice),
-			PayType:               int64(i.PayType),
-			PayTime:               int64(i.PayTime),
-			Paid:                  int64(i.Paid),
-			Status:                int64(i.Status),
+			PayType:               i.PayType,
+			PayTime:               i.PayTime,
+			Paid:                  i.Paid,
+			Status:                i.Status,
 		})
 	}
 	return orderList, nil

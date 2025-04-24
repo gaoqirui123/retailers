@@ -3,6 +3,55 @@
   <component name="GoORMHelperCache">
     <option name="schemaMapping">
       <map>
+        <entry key="ImproveUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OrderCartInfo">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/order_cart_info.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OrderProduct">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/order_product.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UpdatePassWord">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserLogin">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserRegister">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="UserServer">
           <value>
             <set>
@@ -24,7 +73,22 @@
         <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745496665534" />
+              <option name="lastModified" value="1745502261595" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/user_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745502149385" />
+              <option name="schema">
+                <list>
+                  <option value="UserLogin" />
+                  <option value="UserRegister" />
+                  <option value="ImproveUser" />
+                  <option value="UpdatePassWord" />
+                </list>
+              </option>
             </ScannedPath>
           </value>
         </entry>
@@ -49,10 +113,53 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/order_cart_info.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745499369074" />
+              <option name="schema">
+                <list>
+                  <option value="OrderCartInfo" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/order_product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745504570362" />
+              <option name="schema">
+                <list>
+                  <option value="OrderProduct" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745502762410" />
+              <option name="schema">
+                <list>
+                  <option value="User" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/srv/distribution_srv/internal/handler/distribution.go">
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745498156710" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745505130549" />
             </ScannedPath>
           </value>
         </entry>
@@ -66,7 +173,7 @@
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745497555886" />
+              <option name="lastModified" value="1745502032549" />
             </ScannedPath>
           </value>
         </entry>
@@ -86,6 +193,13 @@
     </option>
     <option name="tableStructMapping">
       <map>
+        <entry key="improve_user" value="ImproveUser" />
+        <entry key="order_cart_info" value="OrderCartInfo" />
+        <entry key="order_product" value="OrderProduct" />
+        <entry key="update_pass_word" value="UpdatePassWord" />
+        <entry key="user" value="User" />
+        <entry key="user_login" value="UserLogin" />
+        <entry key="user_register" value="UserRegister" />
         <entry key="user_server" value="UserServer" />
       </map>
     </option>

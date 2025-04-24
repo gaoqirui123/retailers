@@ -13,7 +13,7 @@ type UserRegister struct {
 
 type ImproveUser struct {
 	RealName string `form:"real_name" json:"real_name"  binding:"required"`
-	Birthday int    `form:"birthday" json:"birthday"  binding:"required"`
+	Birthday int64  `form:"birthday" json:"birthday"  binding:"required"`
 	CardId   string `form:"card_id" json:"card_id"  binding:"required"`
 	Mark     string `form:"mark" json:"mark"`
 	Nickname string `form:"nickname" json:"nickname"  binding:"required"`

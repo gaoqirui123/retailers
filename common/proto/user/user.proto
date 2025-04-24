@@ -39,9 +39,9 @@ message UserSignInResponse {
 
 //TODO:用户发起拼团
 message GroupBuyingRequest {
-  int64 Uid =1;
-  int64 Pid =2;
-  int64 Num =3;
+  int64  Uid =1;
+  int64  Pid =2;
+  int64  Num =3;
 }
 message GroupBuyingResponse {
   bool  Success = 1;
@@ -54,14 +54,14 @@ message UsePowerListResponse {
   repeated UsePowerList list = 1;
 }
 message UsePowerList{
-  int32 Uid = 1;
-  int32 Qid = 2;
+  int64  Uid = 1;
+  int64  Qid = 2;
   string AddTime = 3;
 }
 
 //TODO:用户使用权益
 message AddUsePowerRequest {
-  int32 uid = 1;
+  int64  Uid = 1;
 }
 message AddUsePowerResponse {
   bool Success = 1;
@@ -75,7 +75,7 @@ message UserLevelPowerListResponse {
 }
 message UserLevelPowerList{
   string Name = 1;//权益名称
-  int32 Grade = 2;//会员等级
+  int64  Grade = 2;//会员等级
   string Explain = 3;//说明
 }
 
@@ -88,8 +88,8 @@ message UserLevelListResponse {
 message UserLevelList{
   string Name = 1;//会员名称
   string MemberPoints = 2;//会员积分
-  int32 IsShow = 3;//是否显示会员等级
-  int32 Grade = 4;//会员等级
+  int64  IsShow = 3;//是否显示会员等级
+  int64  Grade = 4;//会员等级
   string Image = 5;//会员卡背景
   string Icon = 6;//会员图标
   string Explain = 7;//说明
@@ -97,7 +97,7 @@ message UserLevelList{
 
 //TODO:修改密码
 message UpdatedPasswordRequest {
-  int32 Uid = 1;
+  int64  Uid = 1;
   string NewPassword = 2;
 }
 message UpdatedPasswordResponse {
@@ -107,14 +107,14 @@ message UpdatedPasswordResponse {
 //TODO:完善用户信息
 message ImproveUserRequest {
   string RealName = 1;//真实姓名
-  int32 Birthday = 2;//生日
+  int64  Birthday = 2;//生日
   string CardId = 3;//身份证号码
   string Mark = 4;//用户备注
   string Nickname = 5;//用户昵称
   string Avatar = 6;//用户头像
   string Phone = 7;//手机号码
   string Address = 8;//地址
-  int32 Id = 9;//根据用户id查询到要完善的用户
+  int64  Uid = 9;//根据用户id查询到要完善的用户
 }
 message ImproveUserResponse {
   bool  Success = 1;
@@ -122,7 +122,7 @@ message ImproveUserResponse {
 
 //TODO:展示个人资料
 message UserDetailRequest {
-  int32 Uid = 1;
+  int64 Uid = 1;
 }
 message UserDetailResponse {
   repeated UserDetail detail = 1;
@@ -130,7 +130,7 @@ message UserDetailResponse {
 message UserDetail{
   string Account = 1;//用户账号
   string RealName = 2;//真实姓名
-  int32 Birthday = 3;//生日
+  int64 Birthday = 3;//生日
   string Nickname = 4;//用户昵称
   string Avatar = 5;//用户头像
   string Phone = 6;//手机号码
@@ -145,7 +145,7 @@ message UserLoginRequest {
   string PassWord = 2;
 }
 message UserLoginResponse {
-  uint64 UserId = 1;
+  int64  UserId = 1;
 }
 
 //TODO:用户注册
@@ -155,7 +155,7 @@ message UserRegisterRequest {
   string Pass = 3;
 }
 message UserRegisterResponse {
-  uint64 UserId = 1;
+  int64  UserId = 1;
 }
 
 message SendSmsRequest {
