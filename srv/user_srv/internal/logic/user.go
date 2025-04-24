@@ -67,26 +67,17 @@ func (u UserServer) UserLevelPowerList(ctx context.Context, in *user.UserLevelPo
 	return userLevelPowerList, nil
 }
 
-func (u UserServer) GroupBuying(ctx context.Context, in *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
-	userLevelPowerList, err := handler.GroupBuying(in)
+func (u UserServer) AddUsePower(ctx context.Context, in *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+	addUsePower, err := handler.AddUsePower(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
-	return userLevelPowerList, nil
+	return addUsePower, nil
 }
-
-func (u UserServer) UserSignIn(ctx context.Context, in *user.UserSignInRequest) (*user.UserSignInResponse, error) {
-	signs, err := handler.UserSignIn(in)
+func (u UserServer) UsePowerList(ctx context.Context, in *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
+	usePowerList, err := handler.UsePowerList(in)
 	if err != nil {
-		return nil, err
+		return nil, errors.New(err.Error())
 	}
-	return signs, nil
-}
-
-func (u UserServer) UserMakeupSignIn(ctx context.Context, in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
-	signs, err := handler.UserMakeupSignIn(in)
-	if err != nil {
-		return nil, err
-	}
-	return signs, nil
+	return usePowerList, nil
 }

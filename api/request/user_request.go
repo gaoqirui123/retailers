@@ -25,7 +25,3 @@ type ImproveUser struct {
 type UpdatePassWord struct {
 	NewPassword string `form:"new_password" json:"new_password"  binding:"required"`
 }
-type GroupBuy struct {
-	Pid int64 `json:"pid" xml:"pid" form:"pid"`
-	Num int64 `json:"num" xml:"num" form:"num"`
-}

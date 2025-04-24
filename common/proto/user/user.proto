@@ -16,6 +16,8 @@ service User {
   rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
   rpc UserSignIn(UserSignInRequest) returns (UserSignInResponse);//TODO:用户发起拼团
   rpc UserMakeupSignIn(UserMakeupSignInRequest) returns (UserMakeupSignInResponse);//TODO:用户发起拼团
+  rpc AddUsePower(AddUsePowerRequest) returns (AddUsePowerResponse);//TODO:用户使用权益
+  rpc UsePowerList(UsePowerListRequest) returns (UsePowerListResponse);//TODO:用户使用权益表展示
 }
 
 //TODO:用户补签
@@ -46,6 +48,25 @@ message GroupBuyingResponse {
   bool  Success = 1;
 }
 
+//TODO:用户使用权益表展示
+message UsePowerListRequest {
+}
+message UsePowerListResponse {
+  repeated UsePowerList list = 1;
+}
+message UsePowerList{
+  int32 Uid = 1;
+  int32 Qid = 2;
+  string AddTime = 3;
+}
+
+//TODO:用户使用权益
+message AddUsePowerRequest {
+  int32 uid = 1;
+}
+message AddUsePowerResponse {
+  bool Success = 1;
+}
 
 //TODO:会员权益页面展示
 message UserLevelPowerListRequest {
