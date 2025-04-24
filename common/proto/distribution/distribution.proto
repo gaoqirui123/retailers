@@ -5,16 +5,28 @@ option go_package=".;distribution";
 
 service Distribution {
   rpc  GenerateInvitationCode(GenerateInvitationCodeRequest) returns (GenerateInvitationCodeResponse);//生成邀请码
+  rpc  UserFillsInInvitationCode(UserFillsInInvitationCodeRequest) returns (UserFillsInInvitationCodeResponse);//用户填写邀请码
 }
 
 //生成邀请码
 message GenerateInvitationCodeRequest{
   int64 UserId = 1;//用户id，中间件获取
-  int64 type=2;//邀请码类型in.
+  int64 type=2;//邀请码类型
 
 }
 
 message GenerateInvitationCodeResponse{
   string Url = 1;
+}
+
+//用户填写邀请码
+message UserFillsInInvitationCodeRequest{
+  uint32 UserId = 1;//用户id，中间件获取
+  string Str = 2;//邀请码
+
+}
+
+message UserFillsInInvitationCodeResponse{
+  string success = 1;
 }
 
