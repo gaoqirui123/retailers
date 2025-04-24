@@ -5,7 +5,9 @@ import (
 	"common/model"
 	"common/pkg"
 	"common/proto/order"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/google/uuid"
 	"strconv"
 )
@@ -89,15 +91,39 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 		PinkId:         uint32(in.PinkId),
 		SeckillId:      uint32(in.ProductId),
 		BargainId:      uint32(in.BargainId),
-		StoreId:        int32(in.StoreId),
-		ShippingType:   int8(in.ShippingType),
-		IsChannel:      uint8(in.IsChannel),
+		StoreId:        uint32(in.StoreId),
+		ShippingType:   uint32(in.ShippingType),
+		IsChannel:      uint32(in.IsChannel),
 	}
-
 	err = orders.AddOrder()
 	if err != nil {
 		tx.Rollback()
 		return nil, err
+	}
+	op := &model.OrderProduct{
+		OrderId:               orders.Id,
+		ProductId:             uint32(in.ProductId),
+		ProductName:           pro.StoreName,
+		ProductImage:          pro.Image,
+		ProductSpecifications: in.ProductSpecifications,
+		ProductPrice:          pro.Price,
+		ProductNum:            int32(in.Num),
+	}
+	op.AddOrderProduct()
+	if in.CartId != 0 {
+		marshal, _ := json.Marshal(op)
+		car := &model.OrderCartInfo{
+			Oid:       orders.Id,
+			CartId:    orders.CartId,
+			ProductId: uint32(in.ProductId),
+			CartInfo:  string(marshal),
+			Unique:    orderSn,
+		}
+		err = car.AddOrderCartInfo()
+		if err != nil {
+			tx.Rollback()
+			return nil, err
+		}
 	}
 	err = tx.Commit().Error
 	if err != nil {
@@ -119,15 +145,43 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 }
 
 func OrderList(in *order.OrderListRequest) (*order.OrderListResponse, error) {
+	fmt.Println("1111111111111")
 	orders := &model.Order{}
-	list, err := orders.OrderList(in.UserId, in.OrderStatus)
-	if err != nil {
-		return nil, err
+	if in.OrderStatus != 10 {
+		fmt.Println("00000000000000000000")
+		list, err := orders.GetOrderList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Println(list, "222222222222222")
+
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Println(orderList, "4444444444")
+		return &order.OrderListResponse{List: orderList}, nil
+	} else {
+		fmt.Println("99999999999999999999")
+		list, err := orders.AllOrderList(in.UserId)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Println(list, "333333333")
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Println(orderList, "55555555555")
+		return &order.OrderListResponse{List: orderList}, nil
 	}
+}
+
+func OrderLists(list []*model.Order) ([]*order.OrderList, error) {
 	var orderList []*order.OrderList
 	for _, i := range list {
 		op := &model.OrderProduct{}
-		err = op.GetOrderProductIdBy(int64(i.Id))
+		err := op.GetOrderProductIdBy(int64(i.Id))
 		if err != nil {
 			return nil, err
 		}
@@ -153,5 +207,5 @@ func OrderList(in *order.OrderListRequest) (*order.OrderListResponse, error) {
 			Status:                int64(i.Status),
 		})
 	}
-	return &order.OrderListResponse{List: orderList}, nil
+	return orderList, nil
 }
