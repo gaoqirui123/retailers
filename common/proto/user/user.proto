@@ -13,7 +13,39 @@ service User {
   rpc UpdatedPassword(UpdatedPasswordRequest) returns (UpdatedPasswordResponse);//TODO:修改密码
   rpc UserLevelList(UserLevelListRequest) returns (UserLevelListResponse);//TODO:会员页面展示
   rpc UserLevelPowerList(UserLevelPowerListRequest) returns (UserLevelPowerListResponse);//TODO:会员权益页面展示
+  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
+  rpc UserSignIn(UserSignInRequest) returns (UserSignInResponse);//TODO:用户发起拼团
+  rpc UserMakeupSignIn(UserMakeupSignInRequest) returns (UserMakeupSignInResponse);//TODO:用户发起拼团
 }
+
+//TODO:用户补签
+message UserMakeupSignInRequest {
+  int64  UserId = 1; //是谁补签
+  string SignDate = 2; //补签日期
+}
+message UserMakeupSignInResponse {
+  bool  Success = 1;
+}
+
+//TODO:用户签到
+message UserSignInRequest {
+  int64  UserId = 1; //是谁签到
+  string SignDate = 2; //签到日期
+}
+message UserSignInResponse {
+  bool  Success = 1;
+}
+
+//TODO:用户发起拼团
+message GroupBuyingRequest {
+  int64 Uid =1;
+  int64 Pid =2;
+  int64 Num =3;
+}
+message GroupBuyingResponse {
+  bool  Success = 1;
+}
+
 
 //TODO:会员权益页面展示
 message UserLevelPowerListRequest {
@@ -49,7 +81,7 @@ message UpdatedPasswordRequest {
   string NewPassword = 2;
 }
 message UpdatedPasswordResponse {
-  string Success = 1;
+  bool Success = 1;
 }
 
 //TODO:完善用户信息
@@ -65,7 +97,7 @@ message ImproveUserRequest {
   int32 Id = 9;//根据用户id查询到要完善的用户
 }
 message ImproveUserResponse {
-  string Success = 1;
+  bool  Success = 1;
 }
 
 //TODO:展示个人资料

@@ -27,6 +27,9 @@ const (
 	User_UpdatedPassword_FullMethodName    = "/user.User/UpdatedPassword"
 	User_UserLevelList_FullMethodName      = "/user.User/UserLevelList"
 	User_UserLevelPowerList_FullMethodName = "/user.User/UserLevelPowerList"
+	User_GroupBuying_FullMethodName        = "/user.User/GroupBuying"
+	User_UserSignIn_FullMethodName         = "/user.User/UserSignIn"
+	User_UserMakeupSignIn_FullMethodName   = "/user.User/UserMakeupSignIn"
 )
 
 // UserClient is the client API for User service.
@@ -41,6 +44,9 @@ type UserClient interface {
 	UpdatedPassword(ctx context.Context, in *UpdatedPasswordRequest, opts ...grpc.CallOption) (*UpdatedPasswordResponse, error)
 	UserLevelList(ctx context.Context, in *UserLevelListRequest, opts ...grpc.CallOption) (*UserLevelListResponse, error)
 	UserLevelPowerList(ctx context.Context, in *UserLevelPowerListRequest, opts ...grpc.CallOption) (*UserLevelPowerListResponse, error)
+	GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error)
+	UserSignIn(ctx context.Context, in *UserSignInRequest, opts ...grpc.CallOption) (*UserSignInResponse, error)
+	UserMakeupSignIn(ctx context.Context, in *UserMakeupSignInRequest, opts ...grpc.CallOption) (*UserMakeupSignInResponse, error)
 }
 
 type userClient struct {
@@ -131,6 +137,36 @@ func (c *userClient) UserLevelPowerList(ctx context.Context, in *UserLevelPowerL
 	return out, nil
 }
 
+func (c *userClient) GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GroupBuyingResponse)
+	err := c.cc.Invoke(ctx, User_GroupBuying_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) UserSignIn(ctx context.Context, in *UserSignInRequest, opts ...grpc.CallOption) (*UserSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserSignInResponse)
+	err := c.cc.Invoke(ctx, User_UserSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) UserMakeupSignIn(ctx context.Context, in *UserMakeupSignInRequest, opts ...grpc.CallOption) (*UserMakeupSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserMakeupSignInResponse)
+	err := c.cc.Invoke(ctx, User_UserMakeupSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -143,6 +179,9 @@ type UserServer interface {
 	UpdatedPassword(context.Context, *UpdatedPasswordRequest) (*UpdatedPasswordResponse, error)
 	UserLevelList(context.Context, *UserLevelListRequest) (*UserLevelListResponse, error)
 	UserLevelPowerList(context.Context, *UserLevelPowerListRequest) (*UserLevelPowerListResponse, error)
+	GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error)
+	UserSignIn(context.Context, *UserSignInRequest) (*UserSignInResponse, error)
+	UserMakeupSignIn(context.Context, *UserMakeupSignInRequest) (*UserMakeupSignInResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -173,6 +212,15 @@ func (UnimplementedUserServer) UserLevelList(context.Context, *UserLevelListRequ
 }
 func (UnimplementedUserServer) UserLevelPowerList(context.Context, *UserLevelPowerListRequest) (*UserLevelPowerListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLevelPowerList not implemented")
+}
+func (UnimplementedUserServer) GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GroupBuying not implemented")
+}
+func (UnimplementedUserServer) UserSignIn(context.Context, *UserSignInRequest) (*UserSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserSignIn not implemented")
+}
+func (UnimplementedUserServer) UserMakeupSignIn(context.Context, *UserMakeupSignInRequest) (*UserMakeupSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserMakeupSignIn not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -331,6 +379,60 @@ func _User_UserLevelPowerList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GroupBuying_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GroupBuyingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GroupBuying(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GroupBuying_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GroupBuying(ctx, req.(*GroupBuyingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_UserSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserSignIn(ctx, req.(*UserSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_UserMakeupSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserMakeupSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserMakeupSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserMakeupSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserMakeupSignIn(ctx, req.(*UserMakeupSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -369,6 +471,18 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserLevelPowerList",
 			Handler:    _User_UserLevelPowerList_Handler,
+		},
+		{
+			MethodName: "GroupBuying",
+			Handler:    _User_GroupBuying_Handler,
+		},
+		{
+			MethodName: "UserSignIn",
+			Handler:    _User_UserSignIn_Handler,
+		},
+		{
+			MethodName: "UserMakeupSignIn",
+			Handler:    _User_UserMakeupSignIn_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

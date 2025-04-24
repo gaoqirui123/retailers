@@ -4,7 +4,6 @@ import (
 	"common/model"
 	"common/proto/cart"
 	"errors"
-	"fmt"
 )
 
 func AddCart(in *cart.AddCartRequest) (*cart.AddCartResponse, error) {
@@ -105,7 +104,5 @@ func GetCartList(in *cart.GetCartListRequest) (*cart.GetCartListResponse, error)
 			AddTime:           int64(c.AddTime),
 		})
 	}
-	fmt.Println(list, "222222")
-	fmt.Println(cartList, "3333333333")
 	return &cart.GetCartListResponse{List: cartList}, nil
 }
