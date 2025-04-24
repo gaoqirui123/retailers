@@ -3,7 +3,6 @@ package logic
 import (
 	"common/proto/product"
 	"context"
-	"errors"
 	"product_srv/internal/handler"
 )
 
@@ -24,7 +23,16 @@ func (p ProductServer) CombinationList(ctx context.Context, in *product.Combinat
 func (p ProductServer) GroupBuying(ctx context.Context, in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, error) {
 	userLevelPowerList, err := handler.GroupBuying(in)
 	if err != nil {
-		return nil, errors.New(err.Error())
+		return nil, err
+	}
+	return userLevelPowerList, nil
+}
+
+// JoinGroupBuying  用户发起拼团
+func (p ProductServer) JoinGroupBuying(ctx context.Context, in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyingResponse, error) {
+	userLevelPowerList, err := handler.JoinGroupBuying(in)
+	if err != nil {
+		return nil, err
 	}
 	return userLevelPowerList, nil
 }

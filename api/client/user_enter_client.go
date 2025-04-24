@@ -36,15 +36,7 @@ func AddCombinationProduct(ctx context.Context, in *user_enter.AddCombinationPro
 	})
 }
 func ProcessInvoice(ctx context.Context, in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
-	clients, err := UserEnterClients(ctx, func(ctx context.Context, server user_enter.UserEnterClient) (interface{}, error) {
-		register, err := server.ProcessInvoice(ctx, in)
-		if err != nil {
-			return nil, err
-		}
-		return register, nil
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
+		return client.ProcessInvoice(ctx, req)
 	})
-	if err != nil {
-		return nil, err
-	}
-	return clients.(*user_enter.ProcessInvoiceResponse), nil
 }

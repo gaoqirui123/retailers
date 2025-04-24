@@ -63,10 +63,3 @@ func UserLevelPowerList(ctx context.Context, req *user.UserLevelPowerListRequest
 		return client.UserLevelPowerList(ctx, req)
 	})
 }
-
-// GroupBuying 团购操作
-func GroupBuying(ctx context.Context, req *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
-	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
-		return client.GroupBuying(ctx, req)
-	})
-}
