@@ -104,6 +104,34 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://D:/gopath/src/retailers/api/client/distribution_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745482040878" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://D:/gopath/src/retailers/api/handler/distribution_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745482507038" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://D:/gopath/src/retailers/api/router/distribution.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745482298631" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://D:/gopath/src/retailers/api/router/router.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745482298670" />
+            </ScannedPath>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="tableStructMapping">
