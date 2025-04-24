@@ -19,9 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Article_ArticleAdd_FullMethodName  = "/article.Article/ArticleAdd"
-	Article_CategoryAdd_FullMethodName = "/article.Article/CategoryAdd"
-	Article_ArticleList_FullMethodName = "/article.Article/ArticleList"
+	Article_ArticleAdd_FullMethodName            = "/article.Article/ArticleAdd"
+	Article_CategoryAdd_FullMethodName           = "/article.Article/CategoryAdd"
+	Article_ArticleList_FullMethodName           = "/article.Article/ArticleList"
+	Article_CategoryList_FullMethodName          = "/article.Article/CategoryList"
+	Article_ArticleSearch_FullMethodName         = "/article.Article/ArticleSearch"
+	Article_EditArticle_FullMethodName           = "/article.Article/EditArticle"
+	Article_DeleteArticle_FullMethodName         = "/article.Article/DeleteArticle"
+	Article_DeleteArticleCategory_FullMethodName = "/article.Article/DeleteArticleCategory"
 )
 
 // ArticleClient is the client API for Article service.
@@ -31,6 +36,12 @@ type ArticleClient interface {
 	ArticleAdd(ctx context.Context, in *ArticleAddRequest, opts ...grpc.CallOption) (*ArticleAddResponse, error)
 	CategoryAdd(ctx context.Context, in *CategoryAddRequest, opts ...grpc.CallOption) (*CategoryAddResponse, error)
 	ArticleList(ctx context.Context, in *ArticleListRequest, opts ...grpc.CallOption) (*ArticleListResponse, error)
+	CategoryList(ctx context.Context, in *CategoryListRequest, opts ...grpc.CallOption) (*CategoryListResponse, error)
+	ArticleSearch(ctx context.Context, in *ArticleSearchRequest, opts ...grpc.CallOption) (*ArticleSearchResponse, error)
+	EditArticle(ctx context.Context, in *EditArticleRequest, opts ...grpc.CallOption) (*EditArticleResponse, error)
+	DeleteArticle(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	// rpc DeleteArticleContent(DeleteRequest) returns (DeleteResponse); //删除文章类容
+	DeleteArticleCategory(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 }
 
 type articleClient struct {
@@ -71,6 +82,56 @@ func (c *articleClient) ArticleList(ctx context.Context, in *ArticleListRequest,
 	return out, nil
 }
 
+func (c *articleClient) CategoryList(ctx context.Context, in *CategoryListRequest, opts ...grpc.CallOption) (*CategoryListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CategoryListResponse)
+	err := c.cc.Invoke(ctx, Article_CategoryList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) ArticleSearch(ctx context.Context, in *ArticleSearchRequest, opts ...grpc.CallOption) (*ArticleSearchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ArticleSearchResponse)
+	err := c.cc.Invoke(ctx, Article_ArticleSearch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) EditArticle(ctx context.Context, in *EditArticleRequest, opts ...grpc.CallOption) (*EditArticleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EditArticleResponse)
+	err := c.cc.Invoke(ctx, Article_EditArticle_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) DeleteArticle(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteResponse)
+	err := c.cc.Invoke(ctx, Article_DeleteArticle_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) DeleteArticleCategory(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteResponse)
+	err := c.cc.Invoke(ctx, Article_DeleteArticleCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ArticleServer is the server API for Article service.
 // All implementations must embed UnimplementedArticleServer
 // for forward compatibility
@@ -78,6 +139,12 @@ type ArticleServer interface {
 	ArticleAdd(context.Context, *ArticleAddRequest) (*ArticleAddResponse, error)
 	CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error)
 	ArticleList(context.Context, *ArticleListRequest) (*ArticleListResponse, error)
+	CategoryList(context.Context, *CategoryListRequest) (*CategoryListResponse, error)
+	ArticleSearch(context.Context, *ArticleSearchRequest) (*ArticleSearchResponse, error)
+	EditArticle(context.Context, *EditArticleRequest) (*EditArticleResponse, error)
+	DeleteArticle(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	// rpc DeleteArticleContent(DeleteRequest) returns (DeleteResponse); //删除文章类容
+	DeleteArticleCategory(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	mustEmbedUnimplementedArticleServer()
 }
 
@@ -93,6 +160,21 @@ func (UnimplementedArticleServer) CategoryAdd(context.Context, *CategoryAddReque
 }
 func (UnimplementedArticleServer) ArticleList(context.Context, *ArticleListRequest) (*ArticleListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArticleList not implemented")
+}
+func (UnimplementedArticleServer) CategoryList(context.Context, *CategoryListRequest) (*CategoryListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryList not implemented")
+}
+func (UnimplementedArticleServer) ArticleSearch(context.Context, *ArticleSearchRequest) (*ArticleSearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ArticleSearch not implemented")
+}
+func (UnimplementedArticleServer) EditArticle(context.Context, *EditArticleRequest) (*EditArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditArticle not implemented")
+}
+func (UnimplementedArticleServer) DeleteArticle(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteArticle not implemented")
+}
+func (UnimplementedArticleServer) DeleteArticleCategory(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteArticleCategory not implemented")
 }
 func (UnimplementedArticleServer) mustEmbedUnimplementedArticleServer() {}
 
@@ -161,6 +243,96 @@ func _Article_ArticleList_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Article_CategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_CategoryList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryList(ctx, req.(*CategoryListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_ArticleSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ArticleSearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).ArticleSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_ArticleSearch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).ArticleSearch(ctx, req.(*ArticleSearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_EditArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).EditArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_EditArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).EditArticle(ctx, req.(*EditArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_DeleteArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).DeleteArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_DeleteArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).DeleteArticle(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_DeleteArticleCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).DeleteArticleCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_DeleteArticleCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).DeleteArticleCategory(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Article_ServiceDesc is the grpc.ServiceDesc for Article service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -179,6 +351,26 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ArticleList",
 			Handler:    _Article_ArticleList_Handler,
+		},
+		{
+			MethodName: "CategoryList",
+			Handler:    _Article_CategoryList_Handler,
+		},
+		{
+			MethodName: "ArticleSearch",
+			Handler:    _Article_ArticleSearch_Handler,
+		},
+		{
+			MethodName: "EditArticle",
+			Handler:    _Article_EditArticle_Handler,
+		},
+		{
+			MethodName: "DeleteArticle",
+			Handler:    _Article_DeleteArticle_Handler,
+		},
+		{
+			MethodName: "DeleteArticleCategory",
+			Handler:    _Article_DeleteArticleCategory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
