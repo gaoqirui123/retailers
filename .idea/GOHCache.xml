@@ -1116,7 +1116,7 @@
         <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474912047" />
+              <option name="lastModified" value="1745475565527" />
             </ScannedPath>
           </value>
         </entry>
@@ -1196,14 +1196,13 @@
         <entry key="file://$PROJECT_DIR$/api/request/user_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474901798" />
+              <option name="lastModified" value="1745475565672" />
               <option name="schema">
                 <list>
                   <option value="UserLogin" />
                   <option value="UserRegister" />
                   <option value="ImproveUser" />
                   <option value="UpdatePassWord" />
-                  <option value="GroupBuy" />
                 </list>
               </option>
             </ScannedPath>
@@ -1261,7 +1260,7 @@
         <entry key="file://$PROJECT_DIR$/api/router/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474912057" />
+              <option name="lastModified" value="1745475565536" />
             </ScannedPath>
           </value>
         </entry>
@@ -1581,7 +1580,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474901819" />
+              <option name="lastModified" value="1745485535412" />
               <option name="schema">
                 <list>
                   <option value="User" />
@@ -1878,7 +1877,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474912067" />
+              <option name="lastModified" value="1745475350973" />
               <option name="schema">
                 <list>
                   <option value="UsePowerListRequest" />
@@ -1886,8 +1885,6 @@
                   <option value="UsePowerList" />
                   <option value="AddUsePowerRequest" />
                   <option value="AddUsePowerResponse" />
-                  <option value="GroupBuyingRequest" />
-                  <option value="GroupBuyingResponse" />
                   <option value="UserLevelPowerListRequest" />
                   <option value="UserLevelPowerListResponse" />
                   <option value="UserLevelPowerList" />
@@ -1916,7 +1913,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474912067" />
+              <option name="lastModified" value="1745475350974" />
               <option name="schema">
                 <list>
                   <option value="userClient" />
@@ -2172,7 +2169,7 @@
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745475249071" />
+              <option name="lastModified" value="1745485638920" />
             </ScannedPath>
           </value>
         </entry>
