@@ -12,6 +12,7 @@ func RegisterRouter(r *gin.Engine) {
 		OrderRouter(c)
 		ArticleRouter(c)
 		CartRouter(c)
+		Distribution(c)
 	}
 	b := r.Group("/api/b")
 	{

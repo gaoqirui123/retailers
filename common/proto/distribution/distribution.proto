@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package article;
+option go_package=".;distribution";
+
+service Distribution {
+  rpc  GenerateInvitationCode(GenerateInvitationCodeRequest) returns (GenerateInvitationCodeResponse);//生成邀请码
+}
+
+//生成邀请码
+message GenerateInvitationCodeRequest{
+  int64 UserId = 1;//用户id，中间件获取
+  int64 type=2;//邀请码类型in.
+
+}
+
+message GenerateInvitationCodeResponse{
+  string success = 1;
+}
+

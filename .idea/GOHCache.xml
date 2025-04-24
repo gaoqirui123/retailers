@@ -6,7 +6,130 @@
         <entry key="UserServer">
           <value>
             <set>
+<<<<<<< HEAD
               <option value="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go" />
+=======
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AppViper">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleAdd">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleSearch">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ArticleSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CartSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CategoryAdd">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CategoryList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="DeleteArticle">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="DistributionSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EditArticle">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/article_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="NaCos">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OrderSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProductSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="RandomString">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="T">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserEnterSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserSrv">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/config/config.go" />
+>>>>>>> origin/cm
             </set>
           </value>
         </entry>
@@ -14,6 +137,7 @@
     </option>
     <option name="scannedPathMapping">
       <map>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
           <value>
             <ScannedPath>
@@ -25,23 +149,110 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745495600725" />
+=======
+        <entry key="file://$PROJECT_DIR$/api/client/article_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745484817526" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/client/client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745484424119" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/client/distribution_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745484366876" />
+>>>>>>> origin/cm
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1745495454427" />
+=======
+              <option name="lastModified" value="1745484716840" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/distribution_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745484051127" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/article_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745484620442" />
+              <option name="schema">
+                <list>
+                  <option value="ArticleAdd" />
+                  <option value="CategoryAdd" />
+                  <option value="CategoryList" />
+                  <option value="ArticleSearch" />
+                  <option value="EditArticle" />
+                  <option value="DeleteArticle" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/article.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745484620455" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/distribution.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745483545069" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/router.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745483554848" />
+>>>>>>> origin/cm
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1745495356908" />
               <option name="schema">
                 <list>
                   <option value="UserServer" />
+=======
+              <option name="lastModified" value="1745483834589" />
+              <option name="schema">
+                <list>
+                  <option value="AppViper" />
+                  <option value="NaCos" />
+                  <option value="UserSrv" />
+                  <option value="ProductSrv" />
+                  <option value="OrderSrv" />
+                  <option value="UserEnterSrv" />
+                  <option value="ArticleSrv" />
+                  <option value="AdministratorsSrv" />
+                  <option value="CartSrv" />
+                  <option value="DistributionSrv" />
+                  <option value="RandomString" />
+                  <option value="T" />
+>>>>>>> origin/cm
                 </list>
               </option>
             </ScannedPath>
@@ -51,7 +262,28 @@
     </option>
     <option name="tableStructMapping">
       <map>
+<<<<<<< HEAD
         <entry key="user_server" value="UserServer" />
+=======
+        <entry key="administrators_srv" value="AdministratorsSrv" />
+        <entry key="app_viper" value="AppViper" />
+        <entry key="article_add" value="ArticleAdd" />
+        <entry key="article_search" value="ArticleSearch" />
+        <entry key="article_srv" value="ArticleSrv" />
+        <entry key="cart_srv" value="CartSrv" />
+        <entry key="category_add" value="CategoryAdd" />
+        <entry key="category_list" value="CategoryList" />
+        <entry key="delete_article" value="DeleteArticle" />
+        <entry key="distribution_srv" value="DistributionSrv" />
+        <entry key="edit_article" value="EditArticle" />
+        <entry key="na_cos" value="NaCos" />
+        <entry key="order_srv" value="OrderSrv" />
+        <entry key="product_srv" value="ProductSrv" />
+        <entry key="random_string" value="RandomString" />
+        <entry key="t" value="T" />
+        <entry key="user_enter_srv" value="UserEnterSrv" />
+        <entry key="user_srv" value="UserSrv" />
+>>>>>>> origin/cm
       </map>
     </option>
   </component>
