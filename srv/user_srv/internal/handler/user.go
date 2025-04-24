@@ -75,7 +75,7 @@ func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 		list = append(list, &user.UserDetail{
 			Account:        u.Account,
 			RealName:       u.RealName,
-			Birthday:       u.Birthday,
+			Birthday:       int32(u.Birthday),
 			Nickname:       u.Nickname,
 			Avatar:         u.Avatar,
 			Phone:          u.Phone,
@@ -91,14 +91,14 @@ func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 // ImproveUser TODO： 完善用户信息
 func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
 	u := model.User{
-		RealName: in.RealName, //真实姓名
-		Birthday: in.Birthday, //生日
-		CardId:   in.CardId,   //身份证号码
-		Mark:     in.Mark,     //用户备注
-		Nickname: in.Nickname, //用户昵称
-		Avatar:   in.Avatar,   //用户头像
-		Phone:    in.Phone,    //手机号码
-		Address:  in.Address,  //地址
+		RealName: in.RealName,        //真实姓名
+		Birthday: int64(in.Birthday), //生日
+		CardId:   in.CardId,          //身份证号码
+		Mark:     in.Mark,            //用户备注
+		Nickname: in.Nickname,        //用户昵称
+		Avatar:   in.Avatar,          //用户头像
+		Phone:    in.Phone,           //手机号码
+		Address:  in.Address,         //地址
 	}
 	Id, err := u.FindId(int(in.Id))
 	if err != nil {

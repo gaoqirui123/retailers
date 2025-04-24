@@ -143,6 +143,10 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 
 	// 更新拼团的当前人数
 	pink.CurrentNum++
+	err = pink.UpdateGroupNum(in.PinkId, 1)
+	if err != nil {
+		return nil, err
+	}
 	pinkJSON, err := json.Marshal(pink)
 	if err != nil {
 		return nil, fmt.Errorf("序列化更新后的拼团信息失败: %w", err)
@@ -151,14 +155,13 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 		return nil, fmt.Errorf("更新拼团信息到 Redis 失败: %w", err)
 	}
 
-	// 检查拼团是否完成
+	// 检查拼团是否完成1进行中2已完成3未完成
 	if pink.CurrentNum >= pink.People {
-
-		err = pink.UpdateGroupStatus(key, 3)
+		err = pink.UpdateGroupStatus(key, 2)
 		if err != nil {
 			return nil, err
 		}
-		return nil, fmt.Errorf("更新拼团状态失败: %w", err)
+		return nil, fmt.Errorf("更新拼团状态失败:%w", err)
 	}
 	return &product.JoinGroupBuyingResponse{Success: true}, nil
 }
