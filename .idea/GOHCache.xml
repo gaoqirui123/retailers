@@ -3,6 +3,34 @@
   <component name="GoORMHelperCache">
     <option name="schemaMapping">
       <map>
+        <entry key="ImproveUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UpdatePassWord">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserLogin">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserRegister">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="UserServer">
           <value>
             <set>
@@ -14,17 +42,60 @@
     </option>
     <option name="scannedPathMapping">
       <map>
+        <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745476285239" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745476285315" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/user_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745476285268" />
+              <option name="schema">
+                <list>
+                  <option value="UserLogin" />
+                  <option value="UserRegister" />
+                  <option value="ImproveUser" />
+                  <option value="UpdatePassWord" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745476313203" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745476092885" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474303169" />
+              <option name="lastModified" value="1745479877809" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745473754983" />
+              <option name="lastModified" value="1745476157882" />
               <option name="schema">
                 <list>
                   <option value="UserServer" />
@@ -37,6 +108,10 @@
     </option>
     <option name="tableStructMapping">
       <map>
+        <entry key="improve_user" value="ImproveUser" />
+        <entry key="update_pass_word" value="UpdatePassWord" />
+        <entry key="user_login" value="UserLogin" />
+        <entry key="user_register" value="UserRegister" />
         <entry key="user_server" value="UserServer" />
       </map>
     </option>

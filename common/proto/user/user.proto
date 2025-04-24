@@ -13,9 +13,8 @@ service User {
   rpc UpdatedPassword(UpdatedPasswordRequest) returns (UpdatedPasswordResponse);//TODO:修改密码
   rpc UserLevelList(UserLevelListRequest) returns (UserLevelListResponse);//TODO:会员页面展示
   rpc UserLevelPowerList(UserLevelPowerListRequest) returns (UserLevelPowerListResponse);//TODO:会员权益页面展示
-  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
-  rpc UserSignIn(UserSignInRequest) returns (UserSignInResponse);//TODO:用户发起拼团
-  rpc UserMakeupSignIn(UserMakeupSignInRequest) returns (UserMakeupSignInResponse);//TODO:用户发起拼团
+  rpc UserSignIn(UserSignInRequest) returns (UserSignInResponse);//TODO:用户签到
+  rpc UserMakeupSignIn(UserMakeupSignInRequest) returns (UserMakeupSignInResponse);//TODO:用户补签
 }
 
 //TODO:用户补签
@@ -35,17 +34,6 @@ message UserSignInRequest {
 message UserSignInResponse {
   bool  Success = 1;
 }
-
-//TODO:用户发起拼团
-message GroupBuyingRequest {
-  int64 Uid =1;
-  int64 Pid =2;
-  int64 Num =3;
-}
-message GroupBuyingResponse {
-  bool  Success = 1;
-}
-
 
 //TODO:会员权益页面展示
 message UserLevelPowerListRequest {

@@ -98,5 +98,5 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	itoa := strconv.Itoa(p.Pid)
 	key := "group_buy:" + itoa
 	global.Rdb.Set(context.Background(), key, p, time.Hour)
-	return &product.GroupBuyingResponse{Success: "发起拼团成功"}, nil
+	return &product.GroupBuyingResponse{Success: true}, nil
 }

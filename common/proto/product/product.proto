@@ -3,41 +3,43 @@ syntax = "proto3";
 package product;
 option go_package = ".;product";
 
-message CombinationListRequest {
+service Product {
+  rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);//TODO:拼团商品列表展示
+  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
+  rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO:用户参与拼团
 }
 
+//TODO:拼团商品列表展示
+message CombinationListRequest {
+}
 message CombinationListResponse {
   repeated CombinationList list =1;
 }
 message CombinationList{
-  string  Image =1;//图片
+  string Image =1;//图片
   string Title =2;//活动标题
-  int64 People =3;//参团人数
-  float Price =4;//价格
+  int64  People =3;//参团人数
+  float  Price =4;//价格
   int64  Stock =5;//库存
 }
+
 //TODO:用户参与拼团
 message JoinGroupBuyingRequest {
-  int64 uid =1;
-  int64 pid =2;
-  int64 num =3;
+  int64 Uid =1;
+  int64 Pid =2;
+  int64 Num =3;
 }
 message JoinGroupBuyingResponse {
-  string Success = 1;
+  bool  Success = 1;
 }
 
 //TODO:用户发起拼团
 message GroupBuyingRequest {
-  int64 uid =1;
-  int64 pid =2;
-  int64 num =3;
+  int64 Uid =1;
+  int64 Pid =2;
+  int64 Num =3;
 }
 message GroupBuyingResponse {
-  string Success = 1;
+  bool  Success = 1;
 }
 
-service Product {
-  rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);//拼团商品列表展示
-  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
-  rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO:用户参与拼团
-}
