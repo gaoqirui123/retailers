@@ -20,7 +20,6 @@ func UserRouter(r *gin.RouterGroup) {
 		u.GET("/detail", handler.UserDetail)              //todo: 显示个人资料
 		u.POST("/improve", handler.ImproveUser)           //todo: 完善用户信息
 		u.POST("/updatePassword", handler.UpdatePassWord) //todo: 修改密码
-		u.POST("/group/buy", handler.GroupBuying)         //todo: 用户发起拼团
 		u.POST("/add/usePower", handler.AddUsePower)      //todo: 用户使用权益
 	}
 }

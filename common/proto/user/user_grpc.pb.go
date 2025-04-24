@@ -27,7 +27,6 @@ const (
 	User_UpdatedPassword_FullMethodName    = "/user.User/UpdatedPassword"
 	User_UserLevelList_FullMethodName      = "/user.User/UserLevelList"
 	User_UserLevelPowerList_FullMethodName = "/user.User/UserLevelPowerList"
-	User_GroupBuying_FullMethodName        = "/user.User/GroupBuying"
 	User_AddUsePower_FullMethodName        = "/user.User/AddUsePower"
 	User_UsePowerList_FullMethodName       = "/user.User/UsePowerList"
 )
@@ -44,7 +43,6 @@ type UserClient interface {
 	UpdatedPassword(ctx context.Context, in *UpdatedPasswordRequest, opts ...grpc.CallOption) (*UpdatedPasswordResponse, error)
 	UserLevelList(ctx context.Context, in *UserLevelListRequest, opts ...grpc.CallOption) (*UserLevelListResponse, error)
 	UserLevelPowerList(ctx context.Context, in *UserLevelPowerListRequest, opts ...grpc.CallOption) (*UserLevelPowerListResponse, error)
-	GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error)
 	AddUsePower(ctx context.Context, in *AddUsePowerRequest, opts ...grpc.CallOption) (*AddUsePowerResponse, error)
 	UsePowerList(ctx context.Context, in *UsePowerListRequest, opts ...grpc.CallOption) (*UsePowerListResponse, error)
 }
@@ -137,16 +135,6 @@ func (c *userClient) UserLevelPowerList(ctx context.Context, in *UserLevelPowerL
 	return out, nil
 }
 
-func (c *userClient) GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GroupBuyingResponse)
-	err := c.cc.Invoke(ctx, User_GroupBuying_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *userClient) AddUsePower(ctx context.Context, in *AddUsePowerRequest, opts ...grpc.CallOption) (*AddUsePowerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AddUsePowerResponse)
@@ -179,7 +167,6 @@ type UserServer interface {
 	UpdatedPassword(context.Context, *UpdatedPasswordRequest) (*UpdatedPasswordResponse, error)
 	UserLevelList(context.Context, *UserLevelListRequest) (*UserLevelListResponse, error)
 	UserLevelPowerList(context.Context, *UserLevelPowerListRequest) (*UserLevelPowerListResponse, error)
-	GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error)
 	AddUsePower(context.Context, *AddUsePowerRequest) (*AddUsePowerResponse, error)
 	UsePowerList(context.Context, *UsePowerListRequest) (*UsePowerListResponse, error)
 	mustEmbedUnimplementedUserServer()
@@ -212,9 +199,6 @@ func (UnimplementedUserServer) UserLevelList(context.Context, *UserLevelListRequ
 }
 func (UnimplementedUserServer) UserLevelPowerList(context.Context, *UserLevelPowerListRequest) (*UserLevelPowerListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLevelPowerList not implemented")
-}
-func (UnimplementedUserServer) GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GroupBuying not implemented")
 }
 func (UnimplementedUserServer) AddUsePower(context.Context, *AddUsePowerRequest) (*AddUsePowerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUsePower not implemented")
@@ -379,24 +363,6 @@ func _User_UserLevelPowerList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_GroupBuying_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GroupBuyingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServer).GroupBuying(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: User_GroupBuying_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GroupBuying(ctx, req.(*GroupBuyingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _User_AddUsePower_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddUsePowerRequest)
 	if err := dec(in); err != nil {
@@ -471,10 +437,6 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UserLevelPowerList",
 			Handler:    _User_UserLevelPowerList_Handler,
-		},
-		{
-			MethodName: "GroupBuying",
-			Handler:    _User_GroupBuying_Handler,
 		},
 		{
 			MethodName: "AddUsePower",

@@ -64,44 +64,16 @@ func UserLevelPowerList(ctx context.Context, req *user.UserLevelPowerListRequest
 	})
 }
 
-// GroupBuying 团购操作
-func GroupBuying(ctx context.Context, req *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
-<<<<<<< HEAD
-	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
-		groupBuying, err := client.GroupBuying(ctx, req)
-		if err != nil {
-			return nil, err
-		}
-		return groupBuying, nil
-=======
-	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
-		return client.GroupBuying(ctx, req)
->>>>>>> 5e2fbf2b22ebacbf4ffd75a056b1b3979d0fe71e
-	})
-}
+// AddUsePower 用户使用权益
 func AddUsePower(ctx context.Context, req *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
-	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
-		addUsePower, err := client.AddUsePower(ctx, req)
-		if err != nil {
-			return nil, err
-		}
-		return addUsePower, nil
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.AddUsePowerRequest) (*user.AddUsePowerResponse, error) {
+		return client.AddUsePower(ctx, req)
 	})
-	if err != nil {
-		return nil, err
-	}
-	return client.(*user.AddUsePowerResponse), nil
 }
+
+// UsePowerList 用户使用权益表展示
 func UsePowerList(ctx context.Context, req *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
-	client, err := UserClients(ctx, func(ctx context.Context, client user.UserClient) (interface{}, error) {
-		usePowerList, err := client.UsePowerList(ctx, req)
-		if err != nil {
-			return nil, err
-		}
-		return usePowerList, nil
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
+		return client.UsePowerList(ctx, req)
 	})
-	if err != nil {
-		return nil, err
-	}
-	return client.(*user.UsePowerListResponse), nil
 }

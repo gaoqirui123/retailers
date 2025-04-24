@@ -1053,7 +1053,7 @@
         <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474916447" />
+              <option name="lastModified" value="1745475446463" />
             </ScannedPath>
           </value>
         </entry>
@@ -2172,14 +2172,14 @@
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474912067" />
+              <option name="lastModified" value="1745475249071" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745474912067" />
+              <option name="lastModified" value="1745475249078" />
               <option name="schema">
                 <list>
                   <option value="UserServer" />

@@ -6,7 +6,6 @@ import (
 	"common/proto/user"
 	"common/utlis"
 	"errors"
-	"github.com/google/uuid"
 	"time"
 )
 
@@ -170,38 +169,6 @@ func UserLevelPowerList(in *user.UserLevelPowerListRequest) (*user.UserLevelPowe
 		})
 	}
 	return &user.UserLevelPowerListResponse{List: list}, nil
-}
-
-// GroupBuying TODO:用户发起拼团
-func GroupBuying(in *user.GroupBuyingRequest) (*user.GroupBuyingResponse, error) {
-	// 假设拼团时长为 1 小时，计算结束时间
-	addtime := time.Now().Add(0).Format("2006-01-02 15:04:05")
-	stopTime := time.Now().Add(time.Hour).Format("2006-01-02 15:04:05")
-	c := model.Combination{}
-	combination, err := c.GetCombinationById(in.Pid)
-	if err != nil {
-		return nil, err
-	}
-	orderId := uuid.New().String()
-	totalPrice := float64(in.Num) * combination.Price
-	p := model.Pink{
-		Uid:        int(in.Uid),
-		OrderId:    orderId,
-		OrderIdKey: 0,
-		TotalNum:   int(in.Num),
-		TotalPrice: totalPrice,
-		Cid:        int(in.Pid),
-		Pid:        combination.ProductId,
-		People:     combination.People,
-		Price:      combination.Price,
-		AddTime:    addtime,
-		StopTime:   stopTime,
-	}
-	err = p.Create()
-	if err != nil {
-		return nil, err
-	}
-	return &user.GroupBuyingResponse{Success: "发起拼团成功"}, nil
 }
 
 // TODO:用户使用权益
