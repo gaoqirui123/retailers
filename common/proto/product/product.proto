@@ -16,7 +16,28 @@ message CombinationList{
   float Price =4;//价格
   int64  Stock =5;//库存
 }
+//TODO:用户参与拼团
+message JoinGroupBuyingRequest {
+  int64 uid =1;
+  int64 pid =2;
+  int64 num =3;
+}
+message JoinGroupBuyingResponse {
+  string Success = 1;
+}
+
+//TODO:用户发起拼团
+message GroupBuyingRequest {
+  int64 uid =1;
+  int64 pid =2;
+  int64 num =3;
+}
+message GroupBuyingResponse {
+  string Success = 1;
+}
 
 service Product {
   rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);//拼团商品列表展示
+  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
+  rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO:用户参与拼团
 }

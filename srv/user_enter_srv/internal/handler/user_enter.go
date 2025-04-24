@@ -32,7 +32,7 @@ func Register(in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterReg
 
 func AddProduct(in *user_enter.AddProductRequest) (*user_enter.AddProductResponse, error) {
 	p := model.Product{
-		MerId:     int(in.MerId),
+		MerId:     in.MerId,
 		Image:     in.Image,
 		StoreName: in.StoreName,
 		StoreInfo: in.StoreInfo,
@@ -84,4 +84,15 @@ func AddCombinationProduct(in *user_enter.AddCombinationProductRequest) (*user_e
 		return nil, err
 	}
 	return &user_enter.AddCombinationProductResponse{Greet: "发布拼团商品成功"}, nil
+}
+
+// ProcessInvoice 商家审核用户的发票invoice申请
+func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
+	/*
+		申请审核：商家收到用户的发票申请后，对申请信息进行审核。审核内容包括用户消费记录、申请信息与系统内存储信息的一致性等。若信息无误，审核通过；若存在问题，会联系用户补充或修改信息。
+	*/
+	//1.判断用户的订单是否正常，是否付款
+	//2.判断信息是否正确，价格，地址
+	//3.同意申请/不同意申请，给出理由
+	return nil, nil
 }

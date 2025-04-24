@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package cart;
+option go_package = ".;cart";
+
+service Cart {
+  rpc AddCart(AddCartRequest) returns (AddCartResponse);
+  rpc DeleteCart(DeleteCartRequest) returns (DeleteCartResponse);
+  rpc ClearCart(ClearCartRequest) returns (ClearCartResponse);
+  rpc GetCartList(GetCartListRequest) returns (GetCartListResponse);
+}
+
+message GetCartListRequest {
+  int64  Uid = 1;
+}
+
+message GetCartListResponse {
+  repeated GetCartList List = 1;
+}
+
+message GetCartList {
+  int64  Uid = 1; // 用户ID
+  string Type = 2; // 商品类型
+  int64  ProductId = 3; // 商品ID
+  string ProductAttrUnique = 4; // 商品属性
+  int64  CartNum = 5; // 商品数量
+  int64  IsPay = 6; // 0 = 未购买 1 = 已购买
+  int64  IsNew = 7; // 是否为立即购买
+  int64  CombinationId = 8; // 拼团ID
+  int64  SeckillId = 9; // 秒杀商品ID
+  int64  BargainId = 10; // 砍价Id
+  int64  CartId = 11; // 购物车Id
+  int64  AddTime = 12; // 添加时间
+}
+
+message DeleteCartRequest {
+  int64  Uid = 1;
+  int64  ProductId = 2;
+}
+
+message DeleteCartResponse {
+  bool Success = 1;
+}
+
+message ClearCartRequest {
+  uint64 Uid = 1;
+}
+
+message ClearCartResponse {
+  bool Success = 1;
+}
+
+message AddCartRequest {
+  int64  Uid = 1; // 用户ID
+  string Type = 2; // 商品类型
+  int64  ProductId = 3; // 商品ID
+  string ProductAttrUnique = 4; // 商品属性
+  int64  CartNum = 5; // 商品数量
+  int64  IsPay = 6; // 0 = 未购买 1 = 已购买
+  int64  IsNew = 7; // 是否为立即购买
+  int64  CombinationId = 8; // 拼团ID
+  int64  SeckillId = 9; // 秒杀商品ID
+  int64  BargainId = 10; // 砍价Id
+}
+
+message AddCartResponse {
+  int64 CartId = 1;
+}
+

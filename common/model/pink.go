@@ -6,8 +6,8 @@ import "common/global"
 type Pink struct {
 	Id         int     `gorm:"column:id;type:int UNSIGNED;primaryKey;not null;" json:"id"`
 	Uid        int     `gorm:"column:uid;type:int UNSIGNED;comment:用户id;not null;" json:"uid"`                             // 用户id
-	OrderId    string  `gorm:"column:order_id;type:varchar(32);comment:订单id 生成;not null;" json:"order_id"`                 // 订单id 生成
-	OrderIdKey int     `gorm:"column:order_id_key;type:int UNSIGNED;comment:订单id  数据库;not null;" json:"order_id_key"`      // 订单id  数据库
+	OrderId    string  `gorm:"column:order_id;type:varchar(64);comment:订单id 生成;not null;" json:"order_id"`                 // 订单id 生成
+	OrderIdKey string  `gorm:"column:order_id_key;type:varchar(64);comment:订单id  数据库;not null;" json:"order_id_key"`       // 订单id  数据库
 	TotalNum   int     `gorm:"column:total_num;type:int UNSIGNED;comment:购买商品个数;not null;" json:"total_num"`               // 购买商品个数
 	TotalPrice float64 `gorm:"column:total_price;type:decimal(10, 2) UNSIGNED;comment:购买总金额;not null;" json:"total_price"` // 购买总金额
 	Cid        int     `gorm:"column:cid;type:int UNSIGNED;comment:拼团商品id;not null;" json:"cid"`                           // 拼团商品id

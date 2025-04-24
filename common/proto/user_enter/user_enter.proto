@@ -55,9 +55,20 @@ message AddCombinationProductResponse {
   string greet = 1;
 }
 
+message ProcessInvoiceRequest {
+  int64 UeId =1;
+  int64  Uid =2;
+  int64 Status =3;
+  string Dis =4;
+}
+
+message ProcessInvoiceResponse {
+  string greet = 1;
+}
 
 service UserEnter {
   rpc Register(UserEnterRegisterRequest) returns (UserEnterRegisterResponse);//商户申请
   rpc AddProduct(AddProductRequest) returns (AddProductResponse);//商户发布商品
   rpc AddCombinationProduct(AddCombinationProductRequest) returns (AddCombinationProductResponse); // 发布拼团商品
+  rpc ProcessInvoice(ProcessInvoiceRequest) returns (ProcessInvoiceResponse); //商家审核用户的发票invoice申请
 }

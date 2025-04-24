@@ -22,6 +22,7 @@ const (
 	UserEnter_Register_FullMethodName              = "/user_enter.UserEnter/Register"
 	UserEnter_AddProduct_FullMethodName            = "/user_enter.UserEnter/AddProduct"
 	UserEnter_AddCombinationProduct_FullMethodName = "/user_enter.UserEnter/AddCombinationProduct"
+	UserEnter_ProcessInvoice_FullMethodName        = "/user_enter.UserEnter/ProcessInvoice"
 )
 
 // UserEnterClient is the client API for UserEnter service.
@@ -31,6 +32,7 @@ type UserEnterClient interface {
 	Register(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error)
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
 	AddCombinationProduct(ctx context.Context, in *AddCombinationProductRequest, opts ...grpc.CallOption) (*AddCombinationProductResponse, error)
+	ProcessInvoice(ctx context.Context, in *ProcessInvoiceRequest, opts ...grpc.CallOption) (*ProcessInvoiceResponse, error)
 }
 
 type userEnterClient struct {
@@ -71,6 +73,16 @@ func (c *userEnterClient) AddCombinationProduct(ctx context.Context, in *AddComb
 	return out, nil
 }
 
+func (c *userEnterClient) ProcessInvoice(ctx context.Context, in *ProcessInvoiceRequest, opts ...grpc.CallOption) (*ProcessInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcessInvoiceResponse)
+	err := c.cc.Invoke(ctx, UserEnter_ProcessInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserEnterServer is the server API for UserEnter service.
 // All implementations must embed UnimplementedUserEnterServer
 // for forward compatibility
@@ -78,6 +90,7 @@ type UserEnterServer interface {
 	Register(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error)
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
 	AddCombinationProduct(context.Context, *AddCombinationProductRequest) (*AddCombinationProductResponse, error)
+	ProcessInvoice(context.Context, *ProcessInvoiceRequest) (*ProcessInvoiceResponse, error)
 	mustEmbedUnimplementedUserEnterServer()
 }
 
@@ -93,6 +106,9 @@ func (UnimplementedUserEnterServer) AddProduct(context.Context, *AddProductReque
 }
 func (UnimplementedUserEnterServer) AddCombinationProduct(context.Context, *AddCombinationProductRequest) (*AddCombinationProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCombinationProduct not implemented")
+}
+func (UnimplementedUserEnterServer) ProcessInvoice(context.Context, *ProcessInvoiceRequest) (*ProcessInvoiceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessInvoice not implemented")
 }
 func (UnimplementedUserEnterServer) mustEmbedUnimplementedUserEnterServer() {}
 
@@ -161,6 +177,24 @@ func _UserEnter_AddCombinationProduct_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserEnter_ProcessInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).ProcessInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_ProcessInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).ProcessInvoice(ctx, req.(*ProcessInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserEnter_ServiceDesc is the grpc.ServiceDesc for UserEnter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -179,6 +213,10 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddCombinationProduct",
 			Handler:    _UserEnter_AddCombinationProduct_Handler,
+		},
+		{
+			MethodName: "ProcessInvoice",
+			Handler:    _UserEnter_ProcessInvoice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

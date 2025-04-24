@@ -42,9 +42,7 @@ func InitViper() {
 }
 
 func InitNaCos() {
-
 	Conf := global.Config.NaCos
-
 	// 配置与 NaCos 服务的连接
 	clientConfig := constant.ClientConfig{
 		NamespaceId:         Conf.NameSpace, //we can create multiple clients with different namespaceId to support multiple namespace.When namespace is public, fill in the blank string here.
@@ -121,7 +119,6 @@ func InitRedis() {
 		Password: Conf.Pass, // no password set
 		DB:       Conf.Db,   // use default DB
 	})
-
 	pong, err := global.Rdb.Ping(global.Ctx).Result()
 	if err != nil {
 		panic(err)
@@ -137,20 +134,17 @@ func InitElasticsearch() {
 		Addresses: []string{
 			Conf.Addr,
 		},
-		// ...
 	}
 	global.ES, err = elasticsearch.NewClient(cfg)
 	if err != nil {
 		panic(err)
 	}
 }
-
 func MongoDbInit() {
 	var err error
 	Conf := global.NaCos.Mongodb
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-
 	global.MDB, err = mongo.Connect(options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s:%d", Conf.User, Conf.Pass, Conf.Host, Conf.Port)))
 	if err != nil {
 		return
@@ -164,5 +158,4 @@ func MongoDbInit() {
 		return
 	}
 	fmt.Println("mongodb --- success")
-
 }

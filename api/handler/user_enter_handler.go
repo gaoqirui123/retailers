@@ -89,3 +89,11 @@ func AddCombinationProduct(c *gin.Context) {
 	}
 	response.RespSuccess(c, "发布拼团商品成功", product)
 }
+func ProcessInvoice(c *gin.Context) {
+	var data request.ProcessInvoice
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+}
