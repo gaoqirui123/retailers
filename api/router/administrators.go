@@ -11,7 +11,7 @@ func Administrators(r *gin.RouterGroup) {
 	{
 		ad.POST("/login", handler.AdminLogin)
 		ad.Use(pkg.JWTAuth("2209A"))
-		ad.POST("/ProcessEnter", handler.ProcessEnter)
+		ad.POST("/processEnter", handler.ProcessEnter)
 	}
 
 }

@@ -28,10 +28,24 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/administrators.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745498363265" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/api/router/user.go">
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745496621648" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/user_enter.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745498345303" />
             </ScannedPath>
           </value>
         </entry>
