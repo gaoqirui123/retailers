@@ -3,7 +3,11 @@
   <component name="GoORMHelperCache">
     <option name="scannedPathMapping">
       <map>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/api/handler/order_handler.go">
+=======
+        <entry key="file://$PROJECT_DIR$/../../retailers/api/handler/order_handler.go">
+>>>>>>> 877c6867412f9a939423bc15d1f4a5d7de5a5bac
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745589337400" />
