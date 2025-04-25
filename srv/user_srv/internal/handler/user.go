@@ -22,7 +22,7 @@ func UserLogin(in *user.UserLoginRequest) (*user.UserLoginResponse, error) {
 	if utlis.Encryption(in.PassWord) != users.Pwd {
 		return nil, errors.New("密码错误，请重新输入")
 	}
-	return &user.UserLoginResponse{UserId: uint64(users.Uid)}, nil
+	return &user.UserLoginResponse{UserId: users.Uid}, nil
 }
 
 // UserRegister TODO: 用户注册
@@ -60,7 +60,7 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 	//if err != nil {
 	//	return nil, errors.New("验证码销毁失败")
 	//}
-	return &user.UserRegisterResponse{UserId: uint64(users.Uid)}, nil
+	return &user.UserRegisterResponse{UserId: users.Uid}, nil
 }
 
 // UserDetail TODO: 个人资料显示
@@ -100,7 +100,7 @@ func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error)
 		Phone:    in.Phone,    //手机号码
 		Address:  in.Address,  //地址
 	}
-	Id, err := u.FindId(int(in.Id))
+	Id, err := u.FindId(int(in.Uid))
 	if err != nil {
 		return nil, err
 	}
@@ -144,8 +144,8 @@ func UserLevelList(in *user.UserLevelListRequest) (*user.UserLevelListResponse, 
 		list = append(list, &user.UserLevelList{
 			Name:         i.Name,
 			MemberPoints: i.MemberPoints,
-			IsShow:       int32(i.IsShow),
-			Grade:        i.Grade,
+			IsShow:       int64(i.IsShow),
+			Grade:        int64(i.Grade),
 			Image:        i.Image,
 			Icon:         i.Icon,
 			Explain:      i.Explain,
@@ -165,7 +165,7 @@ func UserLevelPowerList(in *user.UserLevelPowerListRequest) (*user.UserLevelPowe
 	for _, i := range power {
 		list = append(list, &user.UserLevelPowerList{
 			Name:    i.Name,
-			Grade:   int32(i.Grade),
+			Grade:   int64(i.Grade),
 			Explain: i.Explain,
 		})
 	}
@@ -200,8 +200,8 @@ func UsePowerList(in *user.UsePowerListRequest) (*user.UsePowerListResponse, err
 	var list []*user.UsePowerList
 	for _, i := range levelUsePowers {
 		list = append(list, &user.UsePowerList{
-			Uid:     int32(i.Uid),
-			Qid:     int32(i.Qid),
+			Uid:     int64(i.Uid),
+			Qid:     int64(i.Qid),
 			AddTime: i.AddTime.Format(time.DateTime),
 		})
 	}

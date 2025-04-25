@@ -14,19 +14,15 @@ message AddOrderRequest {
   int64  ProductId = 2; // 商品ID/秒杀商品ID
   int64  Num = 3; // 购买数量
   int64  PayType = 4; // 支付方式
-  int64  CartId = 5; // 购物车ID
-  int64  FreightPrice = 6; // 运费金额
-  int64  CouponId = 7; // 优惠券ID
-  float  UseIntegral = 8; // 使用积分
-  string Mark = 9; // 备注
-  int64  StoreId = 10; // 门店ID
-  int64  MerId = 11; // 商户ID
-  int64  BargainId = 12; // 砍价ID
-  int64  ShippingType = 13; // 配送方式 1=快递 ，2=门店自提
-  int64  IsChannel = 14; // 支付渠道
-  int64  CombinationId = 15; // 拼团商品ID
-  int64  PinkId = 16; // 拼团ID
-  string ProductSpecifications = 17; // 商品属性
+  int64  CouponId = 5; // 优惠券ID
+  string Mark = 6; // 备注
+  int64  StoreId = 7; // 门店ID
+  int64  MerId = 8; // 门店ID
+  int64  BargainId = 9; // 砍价ID
+  int64  ShippingType = 10; // 配送方式 1=快递 ，2=门店自提
+  int64  IsChannel = 11; // 支付渠道
+  int64  PinkId = 12; // 拼团ID
+  string ProductSpecifications = 13; // 商品属性
 }
 
 message AddOrderResponse {

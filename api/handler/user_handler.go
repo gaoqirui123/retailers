@@ -60,7 +60,7 @@ func UserRegister(c *gin.Context) {
 // TODO:展示个人资料
 func UserDetail(c *gin.Context) {
 	userId := c.GetUint("userId")
-	detail, err := client.UserDetail(c, &user.UserDetailRequest{Uid: int32(userId)})
+	detail, err := client.UserDetail(c, &user.UserDetailRequest{Uid: int64(userId)})
 	if err != nil {
 		response.RespError(c, "查看失败")
 		return
@@ -79,14 +79,14 @@ func ImproveUser(c *gin.Context) {
 
 	improveUser, err := client.ImproveUser(c, &user.ImproveUserRequest{
 		RealName: data.RealName,
-		Birthday: int32(data.Birthday),
+		Birthday: data.Birthday,
 		CardId:   data.CardId,
 		Mark:     data.Mark,
 		Nickname: data.Nickname,
 		Avatar:   data.Avatar,
 		Phone:    data.Phone,
 		Address:  data.Address,
-		Id:       int32(userId),
+		Uid:      int64(userId),
 	})
 	if err != nil {
 		response.RespError(c, "用户完善信息失败")
@@ -103,9 +103,8 @@ func UpdatePassWord(c *gin.Context) {
 		response.RespError(c, "参数错误")
 		return
 	}
-
 	password, err := client.UpdatedPassword(c, &user.UpdatedPasswordRequest{
-		Uid:         int32(userId),
+		Uid:         int64(userId),
 		NewPassword: data.NewPassword,
 	})
 	if err != nil {
@@ -138,9 +137,8 @@ func UserLevelPowerList(c *gin.Context) {
 // TODO:用户使用权益
 func AddUsePower(c *gin.Context) {
 	userId := c.GetUint("userId")
-
 	power, err := client.AddUsePower(c, &user.AddUsePowerRequest{
-		Uid: int32(userId),
+		Uid: int64(userId),
 	})
 	if err != nil {
 		response.RespError(c, "用户使用权益失败")
