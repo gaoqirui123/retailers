@@ -140,7 +140,6 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 	if pink.CurrentNum >= pink.People {
 		return nil, fmt.Errorf("拼团 %s 已完成，无法参与", in.PinkId)
 	}
-
 	// 更新拼团的当前人数
 	pink.CurrentNum++
 	err = pink.UpdateGroupNum(in.PinkId, 1)
@@ -155,8 +154,9 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 		return nil, fmt.Errorf("更新拼团信息到 Redis 失败: %w", err)
 	}
 
-	// 检查拼团是否完成1进行中2已完成3未完成
+	// 更新拼团的状态，检查拼团是否完成1进行中2已完成3未完成
 	if pink.CurrentNum >= pink.People {
+		pink.UpdateStatus(in.PinkId, 2)
 		err = pink.UpdateGroupStatus(key, 2)
 		if err != nil {
 			return nil, err

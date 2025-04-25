@@ -9,10 +9,13 @@ import (
 func UserEnter(r *gin.RouterGroup) {
 	ue := r.Group("/userEnter")
 	{
-		ue.Use(pkg.JWTAuth("retailers"))
-		ue.POST("/register", handler.Register)                     //商户申请注册
+		ue.POST("/register", handler.Register) //商户注册
+		ue.POST("/login", handler.Login)       //商户注册
+		ue.Use(pkg.JWTAuth("merchant"))
+		ue.POST("/apply", handler.Apply)                           //商户申请
 		ue.POST("/add/product", handler.AddProduct)                //商户发布商品
 		ue.POST("/add/combination", handler.AddCombinationProduct) //发布拼团商品
+		ue.POST("/update/status", handler.UpdateStatus)            //发布下架商品
 	}
 
 }

@@ -10,9 +10,9 @@ type UserEnterServer struct {
 	user_enter.UnimplementedUserEnterServer
 }
 
-// Register TODO:商户申请注册
-func (es UserEnterServer) Register(ctx context.Context, in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
-	register, err := handler.Register(in)
+// Apply TODO:商户申请注册
+func (es UserEnterServer) Apply(ctx context.Context, in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
+	register, err := handler.Apply(in)
 	if err != nil {
 		return nil, err
 	}
@@ -44,4 +44,31 @@ func (es UserEnterServer) ProcessInvoice(ctx context.Context, in *user_enter.Pro
 		return nil, err
 	}
 	return product, nil
+}
+
+// DelProduct TODO:商户下架商品
+func (es UserEnterServer) DelProduct(ctx context.Context, in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
+	register, err := handler.DelProduct(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// Register TODO:商户申请注册
+func (es UserEnterServer) Register(ctx context.Context, in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
+	register, err := handler.Register(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// Login TODO:商户申请注册
+func (es UserEnterServer) Login(ctx context.Context, in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResponse, error) {
+	register, err := handler.Login(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
 }

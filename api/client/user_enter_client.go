@@ -15,6 +15,20 @@ func UserEnterClients[TRequest, TResponse any](ctx context.Context, request TReq
 	return ExecuteGRPCOperation(ctx, "127.0.0.1:8084", NewUserEnterClient, request, operation)
 }
 
+// Apply 商户申请
+func Apply(ctx context.Context, in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
+		return client.Apply(ctx, req)
+	})
+}
+
+// Login 商户登录
+func Login(ctx context.Context, in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResponse, error) {
+		return client.Login(ctx, req)
+	})
+}
+
 // Register 商户注册
 func Register(ctx context.Context, in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
 	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
@@ -33,6 +47,13 @@ func AddProduct(ctx context.Context, in *user_enter.AddProductRequest) (*user_en
 func AddCombinationProduct(ctx context.Context, in *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
 	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
 		return client.AddCombinationProduct(ctx, req)
+	})
+}
+
+// DelProduct 添加组合商品
+func DelProduct(ctx context.Context, in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
+		return client.DelProduct(ctx, req)
 	})
 }
 func ProcessInvoice(ctx context.Context, in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {

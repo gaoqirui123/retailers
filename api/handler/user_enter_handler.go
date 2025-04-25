@@ -8,15 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Register(c *gin.Context) {
-	var data request.Register
+func Apply(c *gin.Context) {
+	var data request.Apply
 	err := c.ShouldBind(&data)
 	if err != nil {
 		response.RespError(c, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
-	register, err := client.Register(c, &user_enter.UserEnterRegisterRequest{
+	register, err := client.Apply(c, &user_enter.UserEnterApplyRequest{
 		Uid:          int64(uid),
 		Province:     data.Province,
 		City:         data.City,
@@ -32,7 +32,42 @@ func Register(c *gin.Context) {
 	}
 	response.RespSuccess(c, "申请成功，等待平台审核", register)
 }
-
+func Register(c *gin.Context) {
+	var data request.Register
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	register, err := client.Register(c, &user_enter.UserEnterRegisterRequest{
+		Account:  data.Account,
+		Password: data.Password,
+		Phone:    data.Phone,
+		Email:    data.Email,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "注册成功", register)
+}
+func Login(c *gin.Context) {
+	var data request.Login
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	register, err := client.Login(c, &user_enter.UserEnterLoginRequest{
+		Account:  data.Account,
+		Password: data.Password,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "登录成功", register)
+}
 func AddProduct(c *gin.Context) {
 	var data request.AddProduct
 	err := c.ShouldBind(&data)
@@ -96,4 +131,23 @@ func ProcessInvoice(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
+}
+func UpdateStatus(c *gin.Context) {
+	var data request.DelProduct
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	uid := c.GetUint("userId")
+	product, err := client.DelProduct(c, &user_enter.DelProductRequest{
+		MerId:  int64(uid),
+		Pid:    data.Pid,
+		Status: data.Status,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "下架商品成功", product)
 }

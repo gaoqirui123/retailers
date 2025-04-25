@@ -75,7 +75,7 @@ func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 		list = append(list, &user.UserDetail{
 			Account:        u.Account,
 			RealName:       u.RealName,
-			Birthday:       int32(u.Birthday),
+			Birthday:       u.Birthday,
 			Nickname:       u.Nickname,
 			Avatar:         u.Avatar,
 			Phone:          u.Phone,
