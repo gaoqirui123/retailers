@@ -7,8 +7,11 @@ import (
 	"common/proto/article"
 	"context"
 	"fmt"
-	"log"
+	"time"
 )
+
+const KeyArticleDID = "key_article_DID"
+const KeyArticleCategoryDID = "key_ArticleCategory_DID"
 
 // 文章管理添加
 func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, error) {
@@ -22,17 +25,43 @@ func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, err
 		return &article.ArticleAddResponse{Success: "用户未登录"}, nil
 	}
 
+	err = global.Rdb.Incr(context.Background(), KeyArticleDID).Err()
+
+	if err != nil {
+		return &article.ArticleAddResponse{Success: "自增失败"}, nil
+	}
+
+	ID, err := global.Rdb.Get(context.Background(), KeyArticleDID).Int()
+
+	if err != nil {
+		return &article.ArticleAddResponse{Success: "获取自增id失败"}, nil
+	}
+
 	ab := model.Article{
-		Cid:        int32(in.Cid),
-		Title:      in.Title,
-		Author:     id.Account,
-		ImageInput: in.ImageInput,
-		Synopsis:   in.Synopsis,
-		Hide:       in.Hide,
+		IntID:         int64(ID),
+		Cid:           int64(in.Cid),
+		Title:         in.Title,
+		Author:        in.Author,
+		ImageInput:    in.ImageInput,
+		Synopsis:      in.Synopsis,
+		ShareTitle:    " ",
+		ShareSynopsis: " ",
+		Visit:         1,
+		Url:           " ",
+		Status:        "关闭",
+		AddTime:       time.Now(),
+		Hide:          "未隐藏",
+		AdminId:       1,
+		MerId:         1,
+		ProductId:     1,
+		IsDel:         1,
+		UpdatedAt:     time.Now(),
 	}
 
 	c := model.ArticleContent{
+		Nid:     ab.IntID,
 		Content: in.Content,
+		IsDel:   1,
 	}
 
 	// 创建 MongoDB 会话
@@ -43,22 +72,14 @@ func ArticleAdd(in *article.ArticleAddRequest) (*article.ArticleAddResponse, err
 	defer session.EndSession(context.Background())
 
 	//查询分类是否存在
-	pid, err := mongoDB.FindArticleCategoryPid(global.NaCos.Mongodb.Database, "article_category", int(in.Cid))
+	pid, err := mongoDB.FindArticleCategoryPid(global.NaCos.Mongodb.Database, "article_category", int64(in.Cid))
+
 	if err != nil {
-		return &article.ArticleAddResponse{Success: "分类查询失败"}, nil
+		return &article.ArticleAddResponse{Success: fmt.Sprintf("%v", err)}, nil
 	}
 
-	if pid.Id == 0 {
+	if pid.ID.IsZero() {
 		return &article.ArticleAddResponse{Success: "此分类不存在"}, nil
-	}
-
-	if !c.CreateEbArticleContent() {
-		return &article.ArticleAddResponse{Success: "文章类容添加失败"}, nil
-	}
-
-	//文章管理添加
-	if !ab.CreateEbArticle() {
-		return &article.ArticleAddResponse{Success: "文章管理添加失败"}, nil
 	}
 
 	//同步mongodb
@@ -96,22 +117,32 @@ func CategoryAdd(in *article.CategoryAddRequest) (*article.CategoryAddResponse, 
 		return &article.CategoryAddResponse{Success: "用户未登录"}, nil
 	}
 
+	err = global.Rdb.Incr(context.Background(), KeyArticleCategoryDID).Err()
+
+	if err != nil {
+		return &article.CategoryAddResponse{Success: "自增失败"}, nil
+	}
+
+	ID, err := global.Rdb.Get(context.Background(), KeyArticleCategoryDID).Int()
+
+	if err != nil {
+		return &article.CategoryAddResponse{Success: "获取自增id失败"}, nil
+	}
+
 	a := model.ArticleCategory{
-		Pid:    int32(in.Pid),
+		IntID:  int64(ID),
+		Pid:    int64(in.Pid),
 		Title:  in.Title,
 		Intr:   in.Intr,
 		Image:  in.ImageInput,
-		Status: uint8(in.Status),
-		Sort:   in.Sort,
-	}
-	if !a.CreateArticleCategory() {
-		return &article.CategoryAddResponse{Success: "分类添加失败"}, nil
+		Status: int64(uint8(in.Status)),
+		Sort:   int64(in.Sort),
+		IsDel:  1,
 	}
 
 	err = mongoDB.CreateArticleContent(global.NaCos.Mongodb.Database, "article_category", a)
 
 	if err != nil {
-		log.Println(err)
 
 		return &article.CategoryAddResponse{Success: "分类添加失败"}, nil
 
@@ -144,16 +175,16 @@ func ArticleList(in *article.ArticleListRequest) (*article.ArticleListResponse, 
 func CategoryList(in *article.CategoryListRequest) (*article.CategoryListResponse, error) {
 
 	//查询分类是否存在
-	pid, err := mongoDB.FindArticleCategoryPid(global.NaCos.Mongodb.Database, "article_category", int(in.Cid))
+	pid, err := mongoDB.FindArticleCategoryPid(global.NaCos.Mongodb.Database, "article_category", int64(in.Cid))
 	if err != nil {
 		return nil, fmt.Errorf(err.Error())
 	}
 
-	if pid.Id == 0 {
+	if pid.ID.IsZero() {
 		return nil, fmt.Errorf("此分类不存在")
 	}
 
-	cid, err := mongoDB.FindArticleCid(global.NaCos.Mongodb.Database, "article", int(in.Cid))
+	cid, err := mongoDB.FindArticleCid(global.NaCos.Mongodb.Database, "article", int64(in.Cid))
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +198,7 @@ func CategoryList(in *article.CategoryListRequest) (*article.CategoryListRespons
 			ImageInput: e.ImageInput,
 			Synopsis:   e.Synopsis,
 			Hide:       e.Hide,
-			Id:         e.Id,
+			Id:         uint32(e.ID),
 		})
 	}
 	if err != nil {
@@ -193,7 +224,7 @@ func ArticleSearch(in *article.ArticleSearchRequest) (*article.ArticleSearchResp
 			ImageInput: e.ImageInput,
 			Synopsis:   e.Synopsis,
 			Hide:       e.Hide,
-			Id:         e.Id,
+			Id:         uint32(e.ID),
 		})
 	}
 	if err != nil {
@@ -206,36 +237,39 @@ func ArticleSearch(in *article.ArticleSearchRequest) (*article.ArticleSearchResp
 // 编辑文章
 func EditArticle(in *article.EditArticleRequest) (*article.EditArticleResponse, error) {
 
-	find, _ := mongoDB.FindArticle(global.NaCos.Mongodb.Database, "article", int(in.Id))
+	find, err := mongoDB.FindArticle(global.NaCos.Mongodb.Database, "article", int64(in.Id))
+	if err != nil {
+		return &article.EditArticleResponse{Success: fmt.Sprintf("%v", err)}, nil
+	}
 
-	if find.Id == 0 {
+	if find.IntID == 0 {
 		return &article.EditArticleResponse{Success: "文章不存在"}, nil
 	}
 
 	//查询分类是否存在
-	pid, err := mongoDB.FindArticleCategoryPid(global.NaCos.Mongodb.Database, "article_category", int(in.Cid))
+	pid, err := mongoDB.FindArticleCategoryPid(global.NaCos.Mongodb.Database, "article_category", int64(int(in.Cid)))
 	if err != nil {
-		return &article.EditArticleResponse{Success: "分类查询失败"}, nil
+		return &article.EditArticleResponse{Success: fmt.Sprintf("%v", err)}, nil
 	}
 
-	if pid.Id == 0 {
+	if pid.ID.IsZero() {
 		return &article.EditArticleResponse{Success: "此分类不存在"}, nil
 	}
 
 	date := model.Article{
-		Id:         in.Id,
 		Title:      in.Title,
 		Author:     in.Author,
 		ImageInput: in.ImageInput,
 		Synopsis:   in.Synopsis,
 		Hide:       in.Hide,
-		Cid:        int32(in.Cid),
+		Cid:        int64(in.Cid),
+		UpdatedAt:  time.Now(),
 	}
 
-	err = mongoDB.EditArticle(global.NaCos.Mongodb.Database, "article", int(in.Id), date)
+	err = mongoDB.EditArticle(global.NaCos.Mongodb.Database, "article", int64(in.Id), date)
 
 	if err != nil {
-		return &article.EditArticleResponse{Success: "文章编辑失败"}, nil
+		return &article.EditArticleResponse{Success: fmt.Sprintf("%v", err)}, nil
 	}
 
 	return &article.EditArticleResponse{Success: "文章编辑成功"}, nil
@@ -246,20 +280,20 @@ func EditArticle(in *article.EditArticleRequest) (*article.EditArticleResponse, 
 func DeleteArticle(in *article.DeleteRequest) (*article.DeleteResponse, error) {
 
 	//判断文章是否存在
-	find, _ := mongoDB.FindArticle(global.NaCos.Mongodb.Database, "article", int(in.Ids))
+	find, _ := mongoDB.FindArticle(global.NaCos.Mongodb.Database, "article", int64(in.Ids))
 
-	if find.Id == 0 {
+	if find.ID == 0 {
 		return &article.DeleteResponse{Success: "文章不存在"}, nil
 	}
 
 	//删除文章管理表
-	err := mongoDB.DeleteArticle(global.NaCos.Mongodb.Database, "article", int(in.Ids))
+	err := mongoDB.DeleteArticle(global.NaCos.Mongodb.Database, "article", int64(in.Ids))
 	if err != nil {
 		return &article.DeleteResponse{Success: "文章管理删除失败"}, nil
 	}
 
 	//同步删除文章类容表
-	err = mongoDB.DeleteArticleContent(global.NaCos.Mongodb.Database, "article_content", int(in.Ids))
+	err = mongoDB.DeleteArticleContent(global.NaCos.Mongodb.Database, "article_content", int64(in.Ids))
 
 	if err != nil {
 
@@ -273,7 +307,7 @@ func DeleteArticle(in *article.DeleteRequest) (*article.DeleteResponse, error) {
 // 删除文章分类
 func DeleteArticleCategory(in *article.DeleteRequest) (*article.DeleteResponse, error) {
 
-	err := mongoDB.DeleteArticle(global.NaCos.Mongodb.Database, "article_category", int(in.Ids))
+	err := mongoDB.DeleteArticle(global.NaCos.Mongodb.Database, "article_category", int64(in.Ids))
 
 	if err != nil {
 		return &article.DeleteResponse{Success: "文章管理删除失败"}, nil
