@@ -4,11 +4,23 @@ package order;
 option go_package = ".;order";
 
 service Order {
-  rpc AddOrder(AddOrderRequest) returns (AddOrderResponse);
-  rpc PayCallback(PayCallbackRequest) returns (PayCallbackResponse);
-  rpc OrderList(OrderListRequest) returns (OrderListResponse);
+  rpc AddOrder(AddOrderRequest) returns (AddOrderResponse); // TODO:创建订单
+  rpc PayCallback(PayCallbackRequest) returns (PayCallbackResponse); // TODO:支付回调
+  rpc OrderList(OrderListRequest) returns (OrderListResponse); // TODO:订单列表查询
+  rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO:用户领取优惠券
 }
 
+// TODO:用户领取优惠券
+message UserReceiveCouponRequest {
+  string OrderSn = 1;
+  string Status = 2;
+}
+
+message UserReceiveCouponResponse {
+  bool  Success = 1;
+}
+
+// TODO:创建订单
 message AddOrderRequest {
   int64  Uid = 1; // 用户ID
   int64  ProductId = 2; // 商品ID/秒杀商品ID
@@ -29,6 +41,7 @@ message AddOrderResponse {
   string PayUrl = 1;
 }
 
+// TODO:支付回调
 message PayCallbackRequest {
   string OrderSn = 1;
   string Status = 2;
@@ -38,6 +51,7 @@ message PayCallbackResponse {
   bool  Success = 1;
 }
 
+// TODO:订单列表查询
 message OrderListRequest {
   int64  UserId = 1;
   int64  OrderStatus = 2;
@@ -59,7 +73,7 @@ message OrderList {
   string UserPhone = 9;
   float  PayPrice = 10;
   int64  PayType = 11;
-  int64  PayTime = 12;
+  string PayTime = 12;
   int64  Paid = 13;
   int64  Status = 14;
 }

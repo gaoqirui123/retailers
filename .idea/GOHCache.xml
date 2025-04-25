@@ -933,6 +933,7 @@
         <entry key="User">
           <value>
             <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/common/model/user.go" />
               <option value="file://$PROJECT_DIR$/common/model/user.go" />
             </set>
           </value>
@@ -1256,6 +1257,25 @@
     </option>
     <option name="scannedPathMapping">
       <map>
+        <entry key="file://$PROJECT_DIR$/../../../../GoWork/zg5/C/api/aaaaa/main2.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745587281085" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/common/model/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745589015878" />
+              <option name="schema">
+                <list>
+                  <option value="User" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/api/client/admin_client.go">
           <value>
             <ScannedPath>
@@ -1357,7 +1377,7 @@
         <entry key="file://$PROJECT_DIR$/api/handler/order_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745494777219" />
+              <option name="lastModified" value="1745507355361" />
             </ScannedPath>
           </value>
         </entry>
@@ -1441,7 +1461,7 @@
         <entry key="file://$PROJECT_DIR$/api/request/order_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745494777221" />
+              <option name="lastModified" value="1745585514922" />
               <option name="schema">
                 <list>
                   <option value="AddOrder" />
@@ -1731,7 +1751,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/coupon_user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745494777231" />
+              <option name="lastModified" value="1745586011530" />
               <option name="schema">
                 <list>
                   <option value="CouponUser" />
@@ -1755,7 +1775,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745494777232" />
+              <option name="lastModified" value="1745586847717" />
               <option name="schema">
                 <list>
                   <option value="Order" />
@@ -2485,7 +2505,7 @@
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745505734999" />
+              <option name="lastModified" value="1745588036181" />
             </ScannedPath>
           </value>
         </entry>
