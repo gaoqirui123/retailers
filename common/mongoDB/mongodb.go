@@ -6,123 +6,115 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"go.mongodb.org/mongo-driver/v2/bson"
-	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"time"
 )
 
-// 添加
-func CreateArticleContent(dateBase, collectionName string, doc interface{}) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
+// getCollection 封装获取集合和设置上下文超时的逻辑
+func getCollection(ctx context.Context, dateBase, collectionName string) (*mongo.Collection, context.Context, context.CancelFunc, error) {
+	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
 	collection := global.MDB.Database(dateBase).Collection(collectionName)
-	_, err := collection.InsertOne(ctx, doc)
+	return collection, ctx, cancel, nil
+}
+
+// CreateArticleContent 向指定集合插入一条文章内容文档
+func CreateArticleContent(dateBase, collectionName string, doc interface{}) error {
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return err
+	}
+	defer cancel()
+
+	_, err = collection.InsertOne(ctx, doc)
 	return err
 }
 
-// 查询文章管理列表
+// FindArticleCategory 查询文章管理列表
 func FindArticleCategory(dateBase, collectionName string) ([]model.Article, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel()
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
-	cur, err := collection.Find(ctx, bson.D{{"isdel", 1}})
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
 	if err != nil {
-		return nil, fmt.Errorf("%w", err)
-
+		return nil, err
 	}
-	// 文章分类表
+	defer cancel()
+
+	cur, err := collection.Find(ctx, bson.D{{"is_del", 1}})
+	if err != nil {
+		return nil, fmt.Errorf("failed to find articles: %w", err)
+	}
 	defer cur.Close(ctx)
 
 	var res []model.Article
-
 	for cur.Next(ctx) {
-
 		var result model.Article
-
 		err = cur.Decode(&result)
-
 		if err != nil {
-			return nil, fmt.Errorf("%w", err)
+			return nil, fmt.Errorf("failed to decode article: %w", err)
 		}
-
 		res = append(res, result)
 	}
 
-	err = cur.Err()
-
-	if err != nil {
-		return nil, fmt.Errorf("%w", err)
+	if err = cur.Err(); err != nil {
+		return nil, fmt.Errorf("cursor error: %w", err)
 	}
 
 	return res, nil
 }
 
-// 查询文章分类表的类型id
-func FindArticleCategoryPid(dateBase, collectionName string, pid int) (model.ArticleCategory, error) {
-	var date model.ArticleCategory
-
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-
+// FindArticleCategoryPid 根据 pid 查询文章分类
+func FindArticleCategoryPid(dateBase, collectionName string, pid int64) (model.ArticleCategory, error) {
+	var category model.ArticleCategory
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return category, err
+	}
 	defer cancel()
 
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
-
-	fist := bson.D{
+	filter := bson.D{
 		{"pid", pid},
-		{"isdel", 1},
+		{"is_del", 1},
 	}
 
-	err := collection.FindOne(ctx, fist).Decode(&date)
-
+	err = collection.FindOne(ctx, filter).Decode(&category)
 	if err != nil {
-
-		return model.ArticleCategory{}, nil
-	}
-	if errors.Is(err, mongo.ErrNoDocuments) {
-
-		return model.ArticleCategory{}, nil
-
-	} else if err != nil {
-
-		return model.ArticleCategory{}, nil
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			return category, fmt.Errorf("no document found with pid %d", pid)
+		}
+		return category, fmt.Errorf("failed to find article category: %w", err)
 	}
 
-	return date, err
+	return category, nil
 }
 
-// 查询文章管理分类列表
-func FindArticleCid(dateBase, collectionName string, cid int) ([]model.Article, error) {
-	var articles []model.Article
-
-	// 设置上下文超时
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+// FindArticleCid 根据 cid 查询文章管理分类列表
+func FindArticleCid(dateBase, collectionName string, cid int64) ([]model.Article, error) {
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return nil, err
+	}
 	defer cancel()
 
-	// 获取集合
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
-
-	// 构造查询条件
 	var filter bson.D
 	if cid == 0 {
-		// 如果 cid 为 0，查询全部数据
-		filter = bson.D{{"isdel", 1}}
+		filter = bson.D{{"is_del", 1}}
 	} else {
-		// 如果 cid 不为 0，按 cid 查询
 		filter = bson.D{
 			{"cid", cid},
-			{"isdel", 1},
+			{"is_del", 1},
 		}
 	}
 
-	// 执行查询
 	cursor, err := collection.Find(ctx, filter)
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to query articles: %w", err)
 	}
 	defer cursor.Close(ctx)
 
-	// 遍历游标并解码文档
+	var articles []model.Article
 	for cursor.Next(ctx) {
 		var article model.Article
 		if err := cursor.Decode(&article); err != nil {
@@ -131,7 +123,6 @@ func FindArticleCid(dateBase, collectionName string, cid int) ([]model.Article, 
 		articles = append(articles, article)
 	}
 
-	// 检查游标操作是否有错误
 	if err := cursor.Err(); err != nil {
 		return nil, fmt.Errorf("cursor error: %w", err)
 	}
@@ -139,34 +130,29 @@ func FindArticleCid(dateBase, collectionName string, cid int) ([]model.Article, 
 	return articles, nil
 }
 
-// 文章标题搜索
+// FindArticleTitle 根据标题搜索文章
 func FindArticleTitle(dateBase, collectionName string, title string) ([]model.Article, error) {
-
-	var articles []model.Article
-
-	// 设置上下文超时
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return nil, err
+	}
 	defer cancel()
 
-	// 获取集合
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
 	var filter bson.D
 	if title == "" {
-		// 如果 title 为 空，查询全部数据
-		filter = bson.D{{"isdel", 1}}
+		filter = bson.D{{"is_del", 1}}
 	} else {
-		// 如果 title 不为 0，按 title 查询
-		filter = bson.D{{"title", title}, {"isdel", 1}}
+		filter = bson.D{{"title", title}, {"is_del", 1}}
 	}
 
-	// 执行查询
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query articles: %w", err)
 	}
 	defer cursor.Close(ctx)
 
-	// 遍历游标并解码文档
+	var articles []model.Article
 	for cursor.Next(ctx) {
 		var article model.Article
 		if err = cursor.Decode(&article); err != nil {
@@ -175,7 +161,6 @@ func FindArticleTitle(dateBase, collectionName string, title string) ([]model.Ar
 		articles = append(articles, article)
 	}
 
-	// 检查游标操作是否有错误
 	if err = cursor.Err(); err != nil {
 		return nil, fmt.Errorf("cursor error: %w", err)
 	}
@@ -183,95 +168,99 @@ func FindArticleTitle(dateBase, collectionName string, title string) ([]model.Ar
 	return articles, nil
 }
 
-// 编辑文章
-func EditArticle(dateBase, collectionName string, id int, date model.Article) error {
-	// 设置上下文超时
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-
+// EditArticle 编辑文章
+func EditArticle(dateBase, collectionName string, id int64, data model.Article) error {
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return err
+	}
 	defer cancel()
-
-	// 获取集合
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
 
 	filter := bson.D{
-		{"id", id},
-		{"isdel", 2},
+		{"int_id", id},
+		{"is_del", 1},
 	}
-	update := bson.D{{"$set", date}}
+	update := bson.D{{"$set", data}}
 
-	_, err := collection.UpdateOne(ctx, filter, update)
+	result, err := collection.UpdateOne(ctx, filter, update)
 	if err != nil {
-		return nil
+		return fmt.Errorf("failed to update article: %w", err)
 	}
-	return nil
-
-}
-
-// 查询文章管理的id
-func FindArticle(dateBase, collectionName string, id int) (model.Article, error) {
-	var date model.Article
-
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-
-	defer cancel()
-
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
-
-	fist := bson.D{
-		{"id", id},
-		{"isdel", 1},
+	if result.MatchedCount == 0 {
+		return fmt.Errorf("article with id %d not found", id)
 	}
-
-	err := collection.FindOne(ctx, fist).Decode(&date)
-
-	if err != nil {
-		return model.Article{}, nil
-	}
-	if errors.Is(err, mongo.ErrNoDocuments) {
-		return model.Article{}, nil
-	} else if err != nil {
-		return model.Article{}, nil
-	}
-
-	return date, err
-}
-
-// 删除文章管理
-func DeleteArticle(dateBase, collectionName string, id int) error {
-	// 设置上下文超时
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel()
-
-	// 获取集合
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
-
-	filter := bson.D{{"id", id}}
-	update := bson.D{{"isdel", 2}}
-
-	_, err := collection.UpdateOne(ctx, filter, update)
-	if err != nil {
-		return nil
-	}
-
 	return nil
 }
 
-// 删除文章类容
-func DeleteArticleContent(dateBase, collectionName string, id int) error {
-	// 设置上下文超时
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+// FindArticle 根据 id 查询文章
+func FindArticle(dateBase, collectionName string, id int64) (model.Article, error) {
+	var category model.Article
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return category, err
+	}
 	defer cancel()
 
-	// 获取集合
-	collection := global.MDB.Database(dateBase).Collection(collectionName)
+	// 使用传入的 id 参数构建查询条件
+	filter := bson.D{
+		{"int_id", id},
+		{"is_del", 1},
+	}
+
+	err = collection.FindOne(ctx, filter).Decode(&category)
+
+	if err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			return category, fmt.Errorf("no document found with int_id %d", id)
+		}
+		return category, fmt.Errorf("failed to find article category: %w", err)
+	}
+
+	return category, nil
+}
+
+// DeleteArticle 删除文章管理
+func DeleteArticle(dateBase, collectionName string, id int64) error {
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return err
+	}
+	defer cancel()
+
+	filter := bson.D{{"int_id", id}}
+	update := bson.D{{"$set", bson.D{{"is_del", 2}}}}
+
+	result, err := collection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return fmt.Errorf("failed to update article for deletion: %w", err)
+	}
+	if result.MatchedCount == 0 {
+		return fmt.Errorf("article with id %d not found", id)
+	}
+	return nil
+}
+
+// DeleteArticleContent 删除文章内容
+func DeleteArticleContent(dateBase, collectionName string, id int64) error {
+	ctx := context.Background()
+	collection, ctx, cancel, err := getCollection(ctx, dateBase, collectionName)
+	if err != nil {
+		return err
+	}
+	defer cancel()
 
 	filter := bson.D{{"nid", id}}
-	update := bson.D{{"$set", bson.D{{"isdel", 2}}}}
+	update := bson.D{{"$set", bson.D{{"is_del", 2}}}}
 
-	_, err := collection.UpdateOne(ctx, filter, update)
+	result, err := collection.UpdateOne(ctx, filter, update)
 	if err != nil {
-		return nil
+		return fmt.Errorf("failed to update article content for deletion: %w", err)
 	}
-
+	if result.MatchedCount == 0 {
+		return fmt.Errorf("article content with nid %d not found", id)
+	}
 	return nil
 }

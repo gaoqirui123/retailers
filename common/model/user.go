@@ -1,6 +1,8 @@
 package model
 
-import "common/global"
+import (
+	"common/global"
+)
 
 type User struct {
 	Uid            int64   `gorm:"column:uid;type:int UNSIGNED;comment:用户id;primaryKey;not null;" json:"uid"`                            // 用户id
@@ -69,6 +71,19 @@ func (u *User) Updated(id int, users User) bool {
 
 func (u *User) UpdatedPassword(uid int, password string) bool {
 	err := global.DB.Debug().Table("user").Where("uid=?", uid).Limit(1).First(&u).Update("pwd", password).Error
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+func (u *User) AddScore(score float64, uid int64) error {
+	return global.DB.Debug().Table("user").Where("uid=?", uid).Update("integral", score).Error
+}
+
+// UpdatedSpreadUid 确认上级用户
+func (u *User) UpdatedSpreadUid(uid int, sId string) bool {
+	err := global.DB.Debug().Table("user").Where("uid=?", uid).Limit(1).First(&u).Update("spread_uid", sId).Error
 	if err != nil {
 		return false
 	}

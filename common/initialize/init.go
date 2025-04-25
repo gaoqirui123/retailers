@@ -11,8 +11,8 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 	"github.com/spf13/viper"
-	"go.mongodb.org/mongo-driver/v2/mongo"
-	"go.mongodb.org/mongo-driver/v2/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -142,20 +142,28 @@ func InitElasticsearch() {
 }
 func MongoDbInit() {
 	var err error
+
 	Conf := global.NaCos.Mongodb
+
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+
 	defer cancel()
-	global.MDB, err = mongo.Connect(options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s:%d", Conf.User, Conf.Pass, Conf.Host, Conf.Port)))
+	clientOptions := options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s:%d", Conf.User, Conf.Pass, Conf.Host, Conf.Port))
+	global.MDB, err = mongo.Connect(ctx, clientOptions)
+
 	if err != nil {
+		// 处理连接错误
 		return
 	}
+
 	err = global.MDB.Ping(ctx, nil)
+
 	if err != nil {
+		// 处理 ping 错误
 		err = global.MDB.Disconnect(ctx)
 		if err != nil {
-			panic(err)
+			// 处理断开连接错误
 		}
 		return
 	}
-	fmt.Println("mongodb --- success")
 }

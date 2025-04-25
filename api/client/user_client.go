@@ -77,3 +77,10 @@ func UsePowerList(ctx context.Context, req *user.UsePowerListRequest) (*user.Use
 		return client.UsePowerList(ctx, req)
 	})
 }
+
+// AddText 用户使用权益表展示
+func AddText(ctx context.Context, req *user.AddTextRequest) (*user.AddTextResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.AddTextRequest) (*user.AddTextResponse, error) {
+		return client.AddText(ctx, req)
+	})
+}
