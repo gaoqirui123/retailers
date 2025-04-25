@@ -32,7 +32,7 @@ func (p *Pink) Create() error {
 	return global.DB.Table("pink").Create(&p).Error
 }
 
-// updateGroupStatus 更新拼团状态
+// UpdateGroupStatus 更新拼团状态
 func (p *Pink) UpdateGroupStatus(key string, status int) error {
 	var pink Pink
 	groupInfoJSON, err := global.Rdb.Get(context.Background(), key).Result()
@@ -48,4 +48,12 @@ func (p *Pink) UpdateGroupStatus(key string, status int) error {
 		return err
 	}
 	return global.Rdb.Set(context.Background(), key, pinkJSON, time.Hour).Err()
+}
+
+func (p *Pink) UpdateGroupNum(pinkId string, num int64) error {
+	err := global.DB.Table("pink").Where("order_id = ?", pinkId).Update("current_num", p.CurrentNum+num).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
