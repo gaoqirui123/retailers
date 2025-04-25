@@ -208,7 +208,7 @@ func UsePowerList(in *user.UsePowerListRequest) (*user.UsePowerListResponse, err
 	return &user.UsePowerListResponse{List: list}, nil
 }
 
-// TODO:会员分添加记录
+// AddText TODO:会员分添加记录
 func AddText(in *user.AddTextRequest) (*user.AddTextResponse, error) {
 	ulss := user_level.UserLevelScoreSource{}
 	scoreSource, err := ulss.Find()
@@ -248,4 +248,27 @@ func AddText(in *user.AddTextRequest) (*user.AddTextResponse, error) {
 	}
 
 	return &user.AddTextResponse{Success: "会员分添加成功"}, nil
+}
+
+// AddUserAddress TODO:用户添加地址
+func AddUserAddress(in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+	u := model.User{}
+	FindUser, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	ua := model.UserAddress{
+		Uid:      FindUser.Uid,
+		RealName: FindUser.RealName,
+		Phone:    FindUser.Phone,
+		Province: in.Province, //收货人所在省
+		City:     in.City,     //收货人所在市
+		District: in.District, //收货人所在区
+		Detail:   in.Detail,   //收货人详细地址
+	}
+	err = ua.Created()
+	if err != nil {
+		return nil, errors.New("地址添加失败")
+	}
+	return &user.AddUserAddressResponse{Success: "地址添加成功"}, nil
 }

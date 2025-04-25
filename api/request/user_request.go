@@ -25,3 +25,10 @@ type ImproveUser struct {
 type UpdatePassWord struct {
 	NewPassword string `form:"new_password" json:"new_password"  binding:"required"`
 }
+
+type AddUserAddress struct {
+	Province string `form:"province" xml:"province" json:"province"  binding:"required"`
+	City     string `form:"city" xml:"city" json:"city"  binding:"required"`
+	District string `form:"district" xml:"district" json:"district"  binding:"required"`
+	Detail   string `form:"detail" xml:"detail" json:"detail"  binding:"required"`
+}
