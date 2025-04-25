@@ -17,22 +17,19 @@ func AddOrder(c *gin.Context) {
 	}
 	Uid := c.GetUint("userId")
 	add, err := client.AddOrder(c, &order.AddOrderRequest{
-		Uid:           int64(Uid),
-		ProductId:     data.ProductId,
-		Num:           data.Num,
-		PayType:       data.PayType,
-		CartId:        data.CartId,
-		FreightPrice:  data.FreightPrice,
-		CouponId:      data.CouponId,
-		UseIntegral:   float32(data.UseIntegral),
-		Mark:          data.Mark,
-		StoreId:       data.StoreId,
-		MerId:         data.MerId,
-		BargainId:     data.BargainId,
-		ShippingType:  data.ShippingType,
-		IsChannel:     data.IsChannel,
-		CombinationId: data.CombinationId,
-		PinkId:        data.PinkId,
+		Uid:          int64(Uid),
+		ProductId:    data.ProductId,
+		Num:          data.Num,
+		PayType:      data.PayType,
+		CouponId:     data.CouponId,
+		Mark:         data.Mark,
+		StoreId:      data.StoreId,
+		MerId:        data.MerId,
+		BargainId:    data.BargainId,
+		ShippingType: data.ShippingType,
+		IsChannel:    data.IsChannel,
+
+		PinkId: data.PinkId,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())

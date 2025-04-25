@@ -74,3 +74,12 @@ func (u *User) UpdatedPassword(uid int, password string) bool {
 	}
 	return true
 }
+
+// 确认上级用户
+func (u *User) UpdatedSpreadUid(uid int, sId string) bool {
+	err := global.DB.Debug().Table("user").Where("uid=?", uid).Limit(1).First(&u).Update("spread_uid", sId).Error
+	if err != nil {
+		return false
+	}
+	return true
+}
