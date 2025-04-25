@@ -84,3 +84,10 @@ func AddText(ctx context.Context, req *user.AddTextRequest) (*user.AddTextRespon
 		return client.AddText(ctx, req)
 	})
 }
+
+// AddUserAddress 用户添加地址
+func AddUserAddress(ctx context.Context, req *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+		return client.AddUserAddress(ctx, req)
+	})
+}

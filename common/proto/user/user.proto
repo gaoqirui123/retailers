@@ -18,6 +18,19 @@ service User {
   rpc AddUsePower(AddUsePowerRequest) returns (AddUsePowerResponse);//TODO:用户使用权益
   rpc UsePowerList(UsePowerListRequest) returns (UsePowerListResponse);//TODO:用户使用权益表展示
   rpc AddText(AddTextRequest) returns (AddTextResponse);//TODO:会员分添加记录
+  rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse);//TODO:用户添加地址
+}
+
+//TODO:用户添加地址
+message AddUserAddressRequest {
+  int64 Uid = 1;//用户id
+  string Province = 2;//收货人所在省
+  string City = 3;//收货人所在市
+  string District = 4;//收货人所在区
+  string Detail = 5;//收货人详细地址
+}
+message AddUserAddressResponse {
+  string Success = 1;
 }
 
 //TODO:会员分添加记录
