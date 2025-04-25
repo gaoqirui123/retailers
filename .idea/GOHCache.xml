@@ -10,6 +10,13 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/../../retailers/srv/cart_srv/internal/handler/cart.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745590156673" />
+            </ScannedPath>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
