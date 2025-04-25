@@ -22,3 +22,10 @@ func GenerateInvitationCode(ctx context.Context, in *distribution.GenerateInvita
 		return client.GenerateInvitationCode(ctx, req)
 	})
 }
+
+// GenerateInvitationCode 生成邀请码
+func UserFillsInInvitationCode(ctx context.Context, in *distribution.UserFillsInInvitationCodeRequest) (*distribution.UserFillsInInvitationCodeResponse, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.UserFillsInInvitationCodeRequest) (*distribution.UserFillsInInvitationCodeResponse, error) {
+		return client.UserFillsInInvitationCode(ctx, req)
+	})
+}
