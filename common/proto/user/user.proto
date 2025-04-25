@@ -17,6 +17,16 @@ service User {
   rpc UserMakeupSignIn(UserMakeupSignInRequest) returns (UserMakeupSignInResponse);//TODO:用户补签
   rpc AddUsePower(AddUsePowerRequest) returns (AddUsePowerResponse);//TODO:用户使用权益
   rpc UsePowerList(UsePowerListRequest) returns (UsePowerListResponse);//TODO:用户使用权益表展示
+  rpc AddText(AddTextRequest) returns (AddTextResponse);//TODO:会员分添加记录
+}
+
+//TODO:会员分添加记录
+message AddTextRequest {
+  int64 Uid = 1;
+  int64 Score = 2;
+}
+message AddTextResponse {
+  string Success = 1;
 }
 
 //TODO:用户补签

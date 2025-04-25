@@ -156,3 +156,14 @@ func UsePowerList(c *gin.Context) {
 	}
 	response.RespSuccess(c, "用户使用权益表展示成功", list)
 }
+
+// TODO: 会员分添加记录
+func AddText(c *gin.Context) {
+	userId := c.GetUint("userId")
+	text, err := client.AddText(c, &user.AddTextRequest{Uid: int64(userId)})
+	if err != nil {
+		response.RespError(c, "会员分添加记录失败")
+		return
+	}
+	response.RespSuccess(c, "会员分添加记录成功", text)
+}

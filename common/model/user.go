@@ -1,6 +1,8 @@
 package model
 
-import "common/global"
+import (
+	"common/global"
+)
 
 type User struct {
 	Uid            int64   `gorm:"column:uid;type:int UNSIGNED;comment:用户id;primaryKey;not null;" json:"uid"`                            // 用户id
@@ -73,4 +75,8 @@ func (u *User) UpdatedPassword(uid int, password string) bool {
 		return false
 	}
 	return true
+}
+
+func (u *User) AddScore(score float64, uid int64) error {
+	return global.DB.Debug().Table("user").Where("uid=?", uid).Update("integral", score).Error
 }

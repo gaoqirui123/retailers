@@ -21,5 +21,6 @@ func UserRouter(r *gin.RouterGroup) {
 		u.POST("/improve", handler.ImproveUser)           //todo: 完善用户信息
 		u.POST("/updatePassword", handler.UpdatePassWord) //todo: 修改密码
 		u.POST("/add/usePower", handler.AddUsePower)      //todo: 用户使用权益
+		u.POST("/add/text", handler.AddText)              //todo: 会员分添加记录
 	}
 }
