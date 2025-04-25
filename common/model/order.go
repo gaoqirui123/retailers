@@ -18,7 +18,7 @@ type Order struct {
 	CouponId               int64   `gorm:"column:coupon_id;type:int UNSIGNED;comment:优惠券id;default:0;" json:"coupon_id"`                                            // 优惠券id
 	CouponPrice            float64 `gorm:"column:coupon_price;type:decimal(8, 2) UNSIGNED;comment:优惠券金额;default:0.00;" json:"coupon_price"`                         // 优惠券金额
 	Paid                   int64   `gorm:"column:paid;type:tinyint UNSIGNED;comment:支付状态（0：未支付；1：已支付）;default:0;" json:"paid"`                                      // 支付状态（0：未支付；1：已支付）
-	PayTime                int64   `gorm:"column:pay_time;type:int UNSIGNED;comment:支付时间;default:NULL;" json:"pay_time"`                                            // 支付时间
+	PayTime                string  `gorm:"column:pay_time;type:varchar(20);comment:支付时间;default:NULL;" json:"pay_time"`                                             // 支付时间
 	PayType                int64   `gorm:"column:pay_type;type:int;comment:''支付方式(0-微信,1-支付宝,2-银行卡)'';default:NULL;" json:"pay_type"`                               // ''支付方式(0-微信,1-支付宝,2-银行卡)''
 	AddTime                int64   `gorm:"column:add_time;type:int UNSIGNED;comment:创建时间;default:NULL;" json:"add_time"`                                            // 创建时间
 	Status                 int64   `gorm:"column:status;type:tinyint(1);comment:订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：待评价；-1：已退款）;default:0;" json:"status"` // 订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：待评价；-1：已退款）
@@ -32,7 +32,7 @@ type Order struct {
 	DeliveryName           string  `gorm:"column:delivery_name;type:varchar(64);comment:快递名称/送货人姓名;default:NULL;" json:"delivery_name"`                             // 快递名称/送货人姓名
 	DeliveryType           string  `gorm:"column:delivery_type;type:varchar(32);comment:发货类型;default:NULL;" json:"delivery_type"`                                   // 发货类型
 	DeliveryId             string  `gorm:"column:delivery_id;type:varchar(64);comment:快递单号/手机号;default:NULL;" json:"delivery_id"`                                   // 快递单号/手机号
-	GainIntegral           float64 `gorm:"column:gain_integral;type:decimal(8, 2) UNSIGNED;comment:消费赚取积分;default:0.00;" json:"gain_integral"`                      // 消费赚取积分
+	GainIntegral           int64   `gorm:"column:gain_integral;type:int UNSIGNED;comment:消费赚取积分;default:0.00;" json:"gain_integral"`                                // 消费赚取积分
 	UseIntegral            float64 `gorm:"column:use_integral;type:decimal(8, 2) UNSIGNED;comment:使用积分;default:0.00;" json:"use_integral"`                          // 使用积分
 	BackIntegral           float64 `gorm:"column:back_integral;type:decimal(8, 2) UNSIGNED;comment:给用户退了多少积分;default:NULL;" json:"back_integral"`                   // 给用户退了多少积分
 	Mark                   string  `gorm:"column:mark;type:varchar(512);comment:备注;default:NULL;" json:"mark"`                                                      // 备注
@@ -67,8 +67,20 @@ func (o *Order) UpdateOrderStatus(orderSn string, status int) error {
 	return global.DB.Debug().Table("order").Where("order_sn = ?", orderSn).Limit(1).Update("status", status).Error
 }
 
-func (o *Order) GetOrderList(userId, status int64) (list []*Order, err error) {
-	err = global.DB.Debug().Table("order").Where("uid = ? and paid = ?", userId, status).Find(&list).Error
+func (o *Order) AddOrderPayTime(orderSn string, timeData string) error {
+	return global.DB.Debug().Table("order").Where("order_sn = ?", orderSn).Limit(1).Update("pay_time", timeData).Error
+}
+
+func (o *Order) GetOrderPayList(userId, status int64) (list []*Order, err error) {
+	err = global.DB.Debug().Table("order").Where("uid = ? and paid = ? and is_del = ?", userId, status, 0).Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+func (o *Order) GetOrderStatusList(userId int64, status int64) (list []*Order, err error) {
+	err = global.DB.Debug().Table("order").Where("uid = ? and status = ? and is_del = ?", userId, status, 0).Find(&list).Error
 	if err != nil {
 		return nil, err
 	}
@@ -81,4 +93,16 @@ func (o *Order) AllOrderList(userId int64) (list []*Order, err error) {
 		return nil, err
 	}
 	return list, nil
+}
+
+func (o *Order) GetOrderDelList(userId int64, isDel int64) (list []*Order, err error) {
+	err = global.DB.Debug().Table("order").Where("uid = ? and is_del = ?", userId, isDel).Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+func (o *Order) GetOrderIdBy(userId int64, orderId int64) error {
+	return global.DB.Debug().Table("order").Where("uid = ? and id = ?", userId, orderId).Find(&o).Error
 }

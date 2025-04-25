@@ -21,7 +21,7 @@ func AddCart(in *cart.AddCartRequest) (*cart.AddCartResponse, error) {
 		return nil, errors.New("该商品已经下架")
 	}
 	// 判断商品库存是否充足
-	if p.Stock < int(in.CartNum) {
+	if p.Stock < in.CartNum {
 		return nil, errors.New("商品库存不足")
 	}
 
