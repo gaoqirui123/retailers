@@ -31,6 +31,8 @@ const (
 	User_UserMakeupSignIn_FullMethodName   = "/user.User/UserMakeupSignIn"
 	User_AddUsePower_FullMethodName        = "/user.User/AddUsePower"
 	User_UsePowerList_FullMethodName       = "/user.User/UsePowerList"
+	User_AddText_FullMethodName            = "/user.User/AddText"
+	User_AddUserAddress_FullMethodName     = "/user.User/AddUserAddress"
 )
 
 // UserClient is the client API for User service.
@@ -49,6 +51,8 @@ type UserClient interface {
 	UserMakeupSignIn(ctx context.Context, in *UserMakeupSignInRequest, opts ...grpc.CallOption) (*UserMakeupSignInResponse, error)
 	AddUsePower(ctx context.Context, in *AddUsePowerRequest, opts ...grpc.CallOption) (*AddUsePowerResponse, error)
 	UsePowerList(ctx context.Context, in *UsePowerListRequest, opts ...grpc.CallOption) (*UsePowerListResponse, error)
+	AddText(ctx context.Context, in *AddTextRequest, opts ...grpc.CallOption) (*AddTextResponse, error)
+	AddUserAddress(ctx context.Context, in *AddUserAddressRequest, opts ...grpc.CallOption) (*AddUserAddressResponse, error)
 }
 
 type userClient struct {
@@ -179,6 +183,26 @@ func (c *userClient) UsePowerList(ctx context.Context, in *UsePowerListRequest, 
 	return out, nil
 }
 
+func (c *userClient) AddText(ctx context.Context, in *AddTextRequest, opts ...grpc.CallOption) (*AddTextResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddTextResponse)
+	err := c.cc.Invoke(ctx, User_AddText_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) AddUserAddress(ctx context.Context, in *AddUserAddressRequest, opts ...grpc.CallOption) (*AddUserAddressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddUserAddressResponse)
+	err := c.cc.Invoke(ctx, User_AddUserAddress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -195,6 +219,8 @@ type UserServer interface {
 	UserMakeupSignIn(context.Context, *UserMakeupSignInRequest) (*UserMakeupSignInResponse, error)
 	AddUsePower(context.Context, *AddUsePowerRequest) (*AddUsePowerResponse, error)
 	UsePowerList(context.Context, *UsePowerListRequest) (*UsePowerListResponse, error)
+	AddText(context.Context, *AddTextRequest) (*AddTextResponse, error)
+	AddUserAddress(context.Context, *AddUserAddressRequest) (*AddUserAddressResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -237,6 +263,12 @@ func (UnimplementedUserServer) AddUsePower(context.Context, *AddUsePowerRequest)
 }
 func (UnimplementedUserServer) UsePowerList(context.Context, *UsePowerListRequest) (*UsePowerListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UsePowerList not implemented")
+}
+func (UnimplementedUserServer) AddText(context.Context, *AddTextRequest) (*AddTextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddText not implemented")
+}
+func (UnimplementedUserServer) AddUserAddress(context.Context, *AddUserAddressRequest) (*AddUserAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddUserAddress not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -467,6 +499,42 @@ func _User_UsePowerList_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_AddText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddTextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).AddText(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_AddText_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).AddText(ctx, req.(*AddTextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_AddUserAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddUserAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).AddUserAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_AddUserAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).AddUserAddress(ctx, req.(*AddUserAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -521,6 +589,14 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UsePowerList",
 			Handler:    _User_UsePowerList_Handler,
+		},
+		{
+			MethodName: "AddText",
+			Handler:    _User_AddText_Handler,
+		},
+		{
+			MethodName: "AddUserAddress",
+			Handler:    _User_AddUserAddress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

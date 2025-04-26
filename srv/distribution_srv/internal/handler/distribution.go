@@ -7,6 +7,7 @@ import (
 	"common/utlis"
 	"errors"
 	"fmt"
+	"strconv"
 )
 
 func GenerateInvitationCode(in *distribution.GenerateInvitationCodeRequest) (*distribution.GenerateInvitationCodeResponse, error) {
@@ -48,13 +49,16 @@ func GenerateInvitationCode(in *distribution.GenerateInvitationCodeRequest) (*di
 }
 
 func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest) (*distribution.UserFillsInInvitationCodeResponse, error) {
+
 	i := model.InvitationCode{}
 
 	id := i.FindCode(in.Str)
+
 	//查找邀请码
 	if id.Id == 0 {
-		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("用户查找不存在")}, nil
+		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("邀请吗无效")}, nil
 	}
+
 	//判断邀请码状态
 	if id.Status == 2 {
 
@@ -65,12 +69,48 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 	if id.Code != in.Str {
 		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("邀请码有误")}, nil
 	}
+
+	u := model.User{}
+	//查看我是否登录
+
+	forMe, err := u.FindId(int(in.UserId))
+
+	if err != nil {
+		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("%v", err)}, nil
+	}
+
 	//开启事务
 	ctx := global.DB.Begin()
+
 	//删除邀请码
 	ctx.Begin()
+	//未登录
+	if forMe.Uid == 0 {
+
+		u.Uid = int64(in.UserId)
+
+		u.SpreadUid = id.Uid
+
+		fmt.Println("确认上级用户id", id.Uid)
+
+		err = u.UserRegister()
+
+		if err != nil {
+			ctx.Rollback()
+			return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("%v", err)}, nil
+		}
+	} else {
+		//登录，确认上级id
+		if !u.UpdatedSpreadUid(int(in.UserId), strconv.FormatInt(id.Uid, 10)) {
+			ctx.Rollback()
+
+			return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("%v", err)}, nil
+		}
+
+	}
 
 	if !i.DeleteCode(in.Str) {
+
 		ctx.Rollback()
 		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("邀请码有误")}, nil
 	}
@@ -78,9 +118,16 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 	//更改邀请码状态
 
 	if !i.UpdateCode(in.Str) {
+
 		ctx.Rollback()
 		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("邀请码有误")}, nil
+
 	}
 
-	return &distribution.UserFillsInInvitationCodeResponse{Success: "邀请码填写成功"}, nil
+	err = ctx.Commit().Error
+	if err != nil {
+		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("事务提交有误%v", err)}, nil
+	}
+
+	return &distribution.UserFillsInInvitationCodeResponse{Success: "邀请码填写结束"}, nil
 }

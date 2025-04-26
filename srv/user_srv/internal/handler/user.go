@@ -207,3 +207,68 @@ func UsePowerList(in *user.UsePowerListRequest) (*user.UsePowerListResponse, err
 	}
 	return &user.UsePowerListResponse{List: list}, nil
 }
+
+// AddText TODO:会员分添加记录
+func AddText(in *user.AddTextRequest) (*user.AddTextResponse, error) {
+	ulss := user_level.UserLevelScoreSource{}
+	scoreSource, err := ulss.Find()
+	if err != nil {
+		return nil, err
+	}
+	switch scoreSource.Id {
+	case 1: //消费20元+1积分
+
+	case 2: //邀请一个人注册+20积分
+
+	case 3: //用户签到+5积分
+
+	case 4: //完成特定任务（观看短视频、阅读文章）+10积分
+
+	default:
+
+	}
+	//会员分添加记录表
+	ulat := user_level.UserLevelAddText{
+		Uid:    uint32(in.Uid),
+		Source: scoreSource.Source,
+		Score:  uint32(scoreSource.Score),
+	}
+	err = ulat.Add()
+	if err != nil {
+		return nil, err
+	}
+
+	//用户表的剩余积分+++++
+	u := model.User{}
+	result, err := u.FindId(int(in.Uid))
+	points := result.Integral + float64(scoreSource.Score)
+	err = u.AddScore(points, in.Uid)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user.AddTextResponse{Success: "会员分添加成功"}, nil
+}
+
+// AddUserAddress TODO:用户添加地址
+func AddUserAddress(in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+	u := model.User{}
+	FindUser, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	ua := model.UserAddress{
+		Uid:      FindUser.Uid,
+		RealName: FindUser.RealName,
+		Phone:    FindUser.Phone,
+		Province: in.Province, //收货人所在省
+		City:     in.City,     //收货人所在市
+		District: in.District, //收货人所在区
+		Detail:   in.Detail,   //收货人详细地址
+	}
+	err = ua.Created()
+	if err != nil {
+		return nil, errors.New("地址添加失败")
+	}
+	return &user.AddUserAddressResponse{Success: "地址添加成功"}, nil
+}

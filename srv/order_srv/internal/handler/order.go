@@ -8,9 +8,11 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"strconv"
+	"time"
 )
 
 func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
+	// 判断商品是否存在
 	pro := &model.Product{}
 	err := pro.GetProductIdBy(in.ProductId)
 	if err != nil {
@@ -19,12 +21,15 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	if pro.Id == 0 {
 		return nil, errors.New("商品不存在")
 	}
+	// 判断商品是否下架
 	if pro.IsShow == 0 {
 		return nil, errors.New("商品下架")
 	}
+	// 判断商品库存是否充足
 	if pro.Stock < in.Num {
 		return nil, errors.New("商品库存不足")
 	}
+	// 查询用户
 	users := &model.User{}
 	err = users.GetUserIdBy(in.Uid)
 	if err != nil {
@@ -33,21 +38,16 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	if users.Status == 0 {
 		return nil, errors.New("用户账号异常")
 	}
-	// 计算总金额
-	totalPrice := float64(in.Num) * pro.Price
-	// 判断优惠券是否存在
-	cou := &model.Coupon{}
-	err = cou.GetCouponIdBy(in.CouponId)
+	// 判断优惠券
+	cou, err := JudgeCouponStatus(in.CouponId)
 	if err != nil {
 		return nil, err
 	}
-	if cou.Id == 0 {
-		return nil, errors.New("该优惠券已过期")
-	}
+	// 计算总金额
+	totalPrice := float64(in.Num) * pro.Price
 	// 计算实际金额
-	var couponPrice float64
 	var payPrice float64
-	var deductionPrice float64
+	var couponPrice float64
 	if cou.CouponPrice <= totalPrice {
 		couponPrice = cou.CouponPrice
 		payPrice = totalPrice - cou.CouponPrice
@@ -55,6 +55,8 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 		couponPrice = 0
 		payPrice = totalPrice
 	}
+	// 计算抵扣金额
+	var deductionPrice float64
 	deductionPrice = totalPrice - payPrice
 	// 计算积分
 	gainIntegral := payPrice * 0.02
@@ -81,7 +83,7 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 		CouponPrice:    couponPrice,
 		Paid:           0,
 		PayType:        in.PayType,
-		GainIntegral:   gainIntegral,
+		GainIntegral:   int64(gainIntegral),
 		Mark:           in.Mark,
 		MerId:          in.MerId,
 		PinkId:         in.PinkId,
@@ -120,10 +122,31 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	return &order.AddOrderResponse{PayUrl: payUrl}, nil
 }
 
+func JudgeCouponStatus(couponId int64) (*model.CouponUser, error) {
+	// 判断优惠券是否存在
+	cou := &model.CouponUser{}
+	err := cou.GetCouponIdBy(couponId)
+	if err != nil {
+		return nil, err
+	}
+	if cou.Status == 2 {
+		return nil, errors.New("该优惠券已过期")
+	}
+	if cou.Status == 1 {
+		return nil, errors.New("该优惠券已使用")
+	}
+	return cou, nil
+}
+
 func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, error) {
 	orders := model.Order{}
 	status, _ := strconv.Atoi(in.Status)
 	err := orders.UpdateOrderStatus(in.OrderSn, status)
+	if err != nil {
+		return nil, err
+	}
+	timeData := time.Now().AddDate(0, 0, 0).Format("2006-01-02 15:04:05")
+	err = orders.AddOrderPayTime(in.OrderSn, timeData)
 	if err != nil {
 		return nil, err
 	}
@@ -132,8 +155,9 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 
 func OrderList(in *order.OrderListRequest) (*order.OrderListResponse, error) {
 	orders := &model.Order{}
-	if in.OrderStatus != 10 {
-		list, err := orders.GetOrderList(in.UserId, in.OrderStatus)
+	switch in.OrderStatus {
+	case -1:
+		list, err := orders.GetOrderStatusList(in.UserId, in.OrderStatus)
 		if err != nil {
 			return nil, err
 		}
@@ -142,7 +166,17 @@ func OrderList(in *order.OrderListRequest) (*order.OrderListResponse, error) {
 			return nil, err
 		}
 		return &order.OrderListResponse{List: orderList}, nil
-	} else {
+	case -2:
+		list, err := orders.GetOrderStatusList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 0:
 		list, err := orders.AllOrderList(in.UserId)
 		if err != nil {
 			return nil, err
@@ -152,6 +186,88 @@ func OrderList(in *order.OrderListRequest) (*order.OrderListResponse, error) {
 			return nil, err
 		}
 		return &order.OrderListResponse{List: orderList}, nil
+	case 1:
+		list, err := orders.GetOrderDelList(in.UserId, 1)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 2:
+		list, err := orders.GetOrderPayList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 3:
+		list, err := orders.GetOrderPayList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 4:
+		list, err := orders.GetOrderStatusList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 5:
+		list, err := orders.GetOrderStatusList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 6:
+		list, err := orders.GetOrderStatusList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 7:
+		list, err := orders.GetOrderStatusList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	case 8:
+		list, err := orders.GetOrderStatusList(in.UserId, in.OrderStatus)
+		if err != nil {
+			return nil, err
+		}
+		orderList, err := OrderLists(list)
+		if err != nil {
+			return nil, err
+		}
+		return &order.OrderListResponse{List: orderList}, nil
+	default:
+		return nil, errors.New("无效状态")
 	}
 }
 
