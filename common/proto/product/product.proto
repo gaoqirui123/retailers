@@ -7,8 +7,13 @@ service Product {
   rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);// TODO:拼团商品列表展示
   rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
   rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO:用户参与拼团
+  rpc BargainCreate(BargainCreateRequest) returns (BargainCreateResponse);//TODO:创建砍价商品信息
+  rpc ProductUpdate(ProductUpdateRequest) returns (ProductUpdateResponse);//TODO:修改商品表是否砍价状态
+  rpc BargainUpdate(BargainUpdateRequest) returns (BargainUpdateResponse);//TODO:修改砍价商品表是否删除
+  rpc BargainShow(BargainShowRequest) returns (BargainShowResponse);//TODO:砍价商品表详情
+  rpc BargainList(BargainListRequest) returns (BargainListResponse);//TODO:砍价商品表列表
 }
-
+ 
 message CombinationListRequest {
 }
 
@@ -41,3 +46,144 @@ message GroupBuyingResponse {
   bool Success = 1;
 }
 
+// 创建砍价商品信息
+message BargainCreateRequest {
+  uint32 UserID = 1; // 必填，标识发起砍价的用户 ID
+  uint32 ProductId = 2; // 与砍价活动关联的商品 ID
+  string Title = 3; // 砍价活动的名称
+  string Image = 4; // 砍价活动对应的图片地址
+  string UnitName = 5; // 商品的单位名称
+  uint32 Stock = 6; // 参与砍价商品的库存数量
+  string Images = 7; // 砍价商品的轮播图信息（如图片地址列表等）
+  double Price = 8; // 砍价金额，对应数据库 decimal 类型，使用 double 保证精度
+  double MinPrice = 9; // 砍价商品的最低价格，对应数据库 decimal 类型，使用 double 保证精度
+  uint32 Num = 10; // 每次购买砍价商品的数量
+  double BargainMaxPrice = 11; // 用户每次砍价可达到的最大金额，对应数据库 decimal 类型，使用 double 保证精度
+  double BargainMinPrice = 12; // 用户每次砍价可达到的最小金额，对应数据库 decimal 类型，使用 double 保证精度
+  uint32 BargainNum = 13; // 用户每次砍价的次数
+  uint32 Status = 14; // 砍价状态，0 表示到砍价时间不自动开启，1 表示到砍价时间自动开启
+  double GiveIntegral = 15; // 参与砍价成功后返还的积分数量，对应数据库 decimal 类型，使用 double 保证精度
+  string Info = 16; // 砍价活动的详细介绍信息
+  uint32 IsPostage = 17; // 是否包邮标识，0 为不包邮，1 为包邮
+  double Postage = 18; // 商品的邮费金额，对应数据库 decimal 类型，使用 double 保证精度
+  string Rule = 19; // 砍价活动的具体规则说明
+  string StoreName = 20; // 砍价商品所属店铺或商家名称
+  int32 TempId = 21; // 运费模板 ID
+  double Cost = 22; // 成本价
+}
+
+message BargainCreateResponse {
+  uint32 Id = 1;// 砍价商品ID
+}
+
+//修改商品表是否砍价状态
+message ProductUpdateRequest {
+  uint32 Id = 1;// 商品ID
+  int32 is_bargain = 2;//是否砍价
+  uint32 UserID = 3; // 必填，标识发起砍价的用户 ID
+}
+
+message ProductUpdateResponse{
+  uint32 Id = 1;// 商品ID
+  int32 is_bargain = 2;//是否砍价
+}
+
+//修改砍价商品表是否删除
+message BargainUpdateRequest {
+  uint32 Id = 1;// 砍价商品ID
+  uint32 IsDel = 2;//是否删除
+}
+
+message BargainUpdateResponse{
+  uint32 Id = 1;// 砍价商品ID
+  uint32 IsDel = 2;//是否删除
+}
+
+//砍价商品表详情
+message BargainShowRequest {
+  uint32 Id = 1;// 砍价商品ID
+}
+
+message BargainShowResponse{
+  uint32 Id = 1; // 砍价商品ID
+  uint32 ProductId = 2; // 关联商品ID
+  string Title = 3; // 砍价活动名称
+  string Image = 4; // 砍价活动图片
+  string UnitName = 5; // 单位名称
+  int32 Stock = 6; // 库存
+  int32 Sales = 7; // 销量
+  string Images = 8; // 砍价商品轮播图
+  int32 StartTime = 9; // 砍价开启时间
+  int32 StopTime = 10; // 砍价结束时间
+  string StoreName = 11; // 砍价商品名称
+  double Price = 12; // 砍价金额
+  double MinPrice = 13; // 砍价商品最低价
+  int32 Num = 14; // 每次购买的砍价商品数量
+  double BargainMaxPrice = 15; // 用户每次砍价的最大金额
+  double BargainMinPrice = 16; // 用户每次砍价的最小金额
+  int32 BargainNum = 17; // 用户每次砍价的次数
+  uint32 Status = 18; // 砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)
+  double GiveIntegral = 19; // 反多少积分
+  string Info = 20; // 砍价活动简介
+  double Cost = 21; // 成本价
+  int32 Sort = 22; // 排序
+  uint32 IsHot = 23; // 是否推荐0不推荐1推荐
+  uint32 IsDel = 24; // 是否删除 0未删除 1删除
+  int32 AddTime = 25; // 添加时间
+  uint32 IsPostage = 26; // 是否包邮 0不包邮 1包邮
+  double Postage = 27; // 邮费
+  string Rule = 28; // 砍价规则
+  int32 Look = 29; // 砍价商品浏览量
+  int32 Share = 30; // 砍价商品分享量
+  int32 TempId = 31; // 运费模板ID
+  double Weight = 32; // 重量
+  double Volume = 33; // 体积
+  int32 Quota = 34; // 限购总数
+  int32 QuotaShow = 35; // 限量总数显示
+}
+
+
+//砍价商品表列表
+message BargainListRequest {}
+
+message BargainListResponse{
+  repeated BargainList BargainList = 1;
+}
+
+message BargainList{
+  uint32 Id = 1; // 砍价商品ID
+  uint32 ProductId = 2; // 关联商品ID
+  string Title = 3; // 砍价活动名称
+  string Image = 4; // 砍价活动图片
+  string UnitName = 5; // 单位名称
+  int32 Stock = 6; // 库存
+  int32 Sales = 7; // 销量
+  string Images = 8; // 砍价商品轮播图
+  int32 StartTime = 9; // 砍价开启时间
+  int32 StopTime = 10; // 砍价结束时间
+  string StoreName = 11; // 砍价商品名称
+  double Price = 12; // 砍价金额
+  double MinPrice = 13; // 砍价商品最低价
+  int32 Num = 14; // 每次购买的砍价商品数量
+  double BargainMaxPrice = 15; // 用户每次砍价的最大金额
+  double BargainMinPrice = 16; // 用户每次砍价的最小金额
+  int32 BargainNum = 17; // 用户每次砍价的次数
+  uint32 Status = 18; // 砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)
+  double GiveIntegral = 19; // 反多少积分
+  string Info = 20; // 砍价活动简介
+  double Cost = 21; // 成本价
+  int32 Sort = 22; // 排序
+  uint32 IsHot = 23; // 是否推荐0不推荐1推荐
+  uint32 IsDel = 24; // 是否删除 0未删除 1删除
+  int32 AddTime = 25; // 添加时间
+  uint32 IsPostage = 26; // 是否包邮 0不包邮 1包邮
+  double Postage = 27; // 邮费
+  string Rule = 28; // 砍价规则
+  int32 Look = 29; // 砍价商品浏览量
+  int32 Share = 30; // 砍价商品分享量
+  int32 TempId = 31; // 运费模板ID
+  double Weight = 32; // 重量
+  double Volume = 33; // 体积
+  int32 Quota = 34; // 限购总数
+  int32 QuotaShow = 35; // 限量总数显示
+}
