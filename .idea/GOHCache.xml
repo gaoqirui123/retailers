@@ -2003,7 +2003,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/user_address.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745807892747" />
+              <option name="lastModified" value="1745807968199" />
               <option name="schema">
                 <list>
                   <option value="UserAddress" />
