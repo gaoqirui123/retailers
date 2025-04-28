@@ -91,3 +91,17 @@ func AddUserAddress(ctx context.Context, req *user.AddUserAddressRequest) (*user
 		return client.AddUserAddress(ctx, req)
 	})
 }
+
+// UserSignIn 用户签到
+func UserSignIn(ctx context.Context, req *user.UserSignInRequest) (*user.UserSignInResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserSignInRequest) (*user.UserSignInResponse, error) {
+		return client.UserSignIn(ctx, req)
+	})
+}
+
+// UserMakeupSignIn 用户补签
+func UserMakeupSignIn(ctx context.Context, req *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
+		return client.UserMakeupSignIn(ctx, req)
+	})
+}

@@ -12,7 +12,7 @@ service Order {
 
 // TODO:用户领取优惠券
 message UserReceiveCouponRequest {
-  string OrderSn = 1;
+  int64  UserId = 1;
   string Status = 2;
 }
 

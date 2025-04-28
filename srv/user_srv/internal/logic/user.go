@@ -74,6 +74,7 @@ func (u UserServer) AddUsePower(ctx context.Context, in *user.AddUsePowerRequest
 	}
 	return addUsePower, nil
 }
+
 func (u UserServer) UsePowerList(ctx context.Context, in *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
 	usePowerList, err := handler.UsePowerList(in)
 	if err != nil {
@@ -81,17 +82,19 @@ func (u UserServer) UsePowerList(ctx context.Context, in *user.UsePowerListReque
 	}
 	return usePowerList, nil
 }
-func (u UserServer) AddText(ctx context.Context, in *user.AddTextRequest) (*user.AddTextResponse, error) {
-	addText, err := handler.AddText(in)
+
+func (u UserServer) UserSignIn(ctx context.Context, in *user.UserSignInRequest) (*user.UserSignInResponse, error) {
+	sign, err := handler.UserSignIn(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
-	return addText, nil
+	return sign, nil
 }
-func (u UserServer) AddUserAddress(ctx context.Context, in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
-	addUserAddress, err := handler.AddUserAddress(in)
+
+func (u UserServer) UserMakeupSignIn(ctx context.Context, in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
+	makeupSignIn, err := handler.UserMakeupSignIn(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
-	return addUserAddress, nil
+	return makeupSignIn, nil
 }

@@ -189,3 +189,31 @@ func AddUserAddress(c *gin.Context) {
 	}
 	response.RespSuccess(c, "用户地址添加成功", address)
 }
+
+// TODO:用户签到
+func UserSignIn(c *gin.Context) {
+	userId := c.GetUint("userId")
+	sign, err := client.UserSignIn(c, &user.UserSignInRequest{
+		UserId: int64(userId),
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "用户签到成功", sign)
+}
+
+// TODO:用户补签
+func UserMakeupSignIn(c *gin.Context) {
+	userId := c.GetUint("userId")
+	makeupSign, err := client.UserMakeupSignIn(c, &user.UserMakeupSignInRequest{
+		UserId: int64(userId),
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "用户补签成功", makeupSign)
+}
+
+// 添加商品的时候要预热处理
