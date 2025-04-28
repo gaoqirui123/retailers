@@ -95,3 +95,10 @@ func (u UserServer) AddUserAddress(ctx context.Context, in *user.AddUserAddressR
 	}
 	return addUserAddress, nil
 }
+func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
+	userApplication, err := handler.UserApplication(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userApplication, nil
+}

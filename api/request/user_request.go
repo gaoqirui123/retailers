@@ -32,3 +32,11 @@ type AddUserAddress struct {
 	District string `form:"district" xml:"district" json:"district"  binding:"required"`
 	Detail   string `form:"detail" xml:"detail" json:"detail"  binding:"required"`
 }
+
+type UserApplication struct {
+	OrderId       int64   `form:"order_id" xml:"order_id" json:"order_id"  binding:"required"`
+	InvoiceType   string  `form:"invoice_type" xml:"invoice_type" json:"invoice_type"  binding:"required"`
+	InvoiceTitle  string  `form:"invoice_title" xml:"invoice_title" json:"invoice_title"  binding:"required"`
+	InvoiceAmount float64 `form:"invoice_amount" xml:"invoice_amount" json:"invoice_amount"  binding:"required"`
+	Type          string  `form:"type" xml:"type" json:"type"  binding:"required"`
+}
