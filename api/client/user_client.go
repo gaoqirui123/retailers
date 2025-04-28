@@ -91,3 +91,10 @@ func AddUserAddress(ctx context.Context, req *user.AddUserAddressRequest) (*user
 		return client.AddUserAddress(ctx, req)
 	})
 }
+
+// UserApplication 用户申请发票
+func UserApplication(ctx context.Context, req *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
+		return client.UserApplication(ctx, req)
+	})
+}

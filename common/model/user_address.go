@@ -27,3 +27,11 @@ type UserAddress struct {
 func (a *UserAddress) Created() error {
 	return global.DB.Debug().Table("user_address").Create(&a).Error
 }
+
+func (a *UserAddress) FindId(userId int64) (result UserAddress, err error) {
+	err = global.DB.Debug().Table("user_address").Where("uid=?", userId).Find(&result).Error
+	if err != nil {
+		return UserAddress{}, err
+	}
+	return result, nil
+}

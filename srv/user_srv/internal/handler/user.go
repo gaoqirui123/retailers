@@ -66,7 +66,7 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 // UserDetail TODO: 个人资料显示
 func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 	u := model.User{}
-	detail, err := u.Detail(int(in.Uid))
+	detail, err := u.Detail(in.Uid)
 	if err != nil {
 		return nil, err
 	}
@@ -91,14 +91,14 @@ func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 // ImproveUser TODO： 完善用户信息
 func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error) {
 	u := model.User{
-		RealName: in.RealName,        //真实姓名
-		Birthday: int64(in.Birthday), //生日
-		CardId:   in.CardId,          //身份证号码
-		Mark:     in.Mark,            //用户备注
-		Nickname: in.Nickname,        //用户昵称
-		Avatar:   in.Avatar,          //用户头像
-		Phone:    in.Phone,           //手机号码
-		Address:  in.Address,         //地址
+		RealName: in.RealName, //真实姓名
+		Birthday: in.Birthday, //生日
+		CardId:   in.CardId,   //身份证号码
+		Mark:     in.Mark,     //用户备注
+		Nickname: in.Nickname, //用户昵称
+		Avatar:   in.Avatar,   //用户头像
+		Phone:    in.Phone,    //手机号码
+		Address:  in.Address,  //地址
 	}
 	Id, err := u.FindId(int(in.Uid))
 	if err != nil {
@@ -108,7 +108,7 @@ func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error)
 		return nil, errors.New("没有这个用户")
 	}
 
-	updated := u.Updated(int(Id.Uid), u)
+	updated := u.Updated(Id.Uid, u)
 	if !updated {
 		return nil, errors.New("完善用户信息失败")
 	}
@@ -125,7 +125,7 @@ func UpdatedPassword(in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResp
 	if Id.Pwd == utlis.Encryption(in.NewPassword) {
 		return nil, errors.New("旧密码和新密码一样，修改失败")
 	}
-	newPassword := u.UpdatedPassword(int(Id.Uid), utlis.Encryption(in.NewPassword))
+	newPassword := u.UpdatedPassword(Id.Uid, utlis.Encryption(in.NewPassword))
 	if !newPassword {
 		return nil, errors.New("密码修改失败")
 	}
@@ -271,4 +271,41 @@ func AddUserAddress(in *user.AddUserAddressRequest) (*user.AddUserAddressRespons
 		return nil, errors.New("地址添加失败")
 	}
 	return &user.AddUserAddressResponse{Success: "地址添加成功"}, nil
+}
+
+// UserApplication TODO:用户申请发票
+func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
+	u := model.User{}
+	FindUser, err := u.FindId(int(in.UserId))
+	if err != nil {
+		return nil, errors.New("用户查询失败")
+	}
+	o := model.Order{}
+	FindOrder, err := o.FindId(in.OrderId)
+	if err != nil {
+		return nil, errors.New("订单查找失败")
+	}
+	ua := model.UserAddress{}
+	FindUserAddress, err := ua.FindId(in.UserId)
+	if err != nil {
+		return nil, errors.New("用户地址查询失败")
+	}
+
+	ia := model.InvoiceApplication{
+		UserId:        in.UserId,
+		OrderId:       in.OrderId,
+		InvoiceType:   in.InvoiceType,            //发票类型：普通发票、增值税专用发票
+		InvoiceTitle:  in.InvoiceTitle,           //发票抬头
+		InvoiceAmount: float64(in.InvoiceAmount), //发票金额
+		Email:         FindUser.Email,
+		Address:       FindUserAddress.Detail,
+		Phone:         FindUser.Phone,
+		Type:          in.Type, //发票材质：纸质、电子
+		MerId:         FindOrder.MerId,
+	}
+	err = ia.UserApplication()
+	if err != nil {
+		return nil, errors.New("用户发票申请失败")
+	}
+	return &user.UserApplicationResponse{Success: "用户成功申请发票"}, nil
 }
