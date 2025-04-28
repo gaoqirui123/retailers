@@ -94,18 +94,20 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 	if in == nil {
 		return nil, errors.New("请求参数有误")
 	}
-	// 查找用户订单
-	od := model.Order{}
-	order, err := od.FindUserOrder(in.Uid, in.UeId)
+	//查找用户是否有申请
+	i := model.InvoiceApplication{}
+	invoiceByUeId, err := i.GetInvoiceByUeId(in.Uid)
 	if err != nil {
 		return nil, err
 	}
-	// 检查订单是否已支付
-	if order.Paid == 0 {
-		return nil, errors.New("订单未支付，无法开发票")
+	// 查找用户订单
+	od := model.Order{}
+	_, err = od.FindUserOrder(in.Uid, invoiceByUeId.OrderId)
+	if err != nil {
+		return nil, err
 	}
 	// 更新发票申请状态
-	i := model.InvoiceApplication{}
+	i = model.InvoiceApplication{}
 	if in.Dis == "" {
 		err = i.UpdateStatus(in.UeId, in.Uid, in.Status)
 		if err != nil {
@@ -117,6 +119,7 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 			return nil, errors.New("审核失败")
 		}
 	}
+
 	return &user_enter.ProcessInvoiceResponse{Greet: "审核完成"}, nil
 }
 
@@ -124,51 +127,25 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 func InvoiceList(in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
 	ue := model.InvoiceApplication{}
 	var lists []*user_enter.InvoiceList
+	var applications []*model.InvoiceApplication
+	var err error
 	if in.Status == 0 {
-		applications, err := ue.GetInvoiceByUeId(in.UeId)
+		applications, err = ue.GetInvoiceByUeIds(in.UeId)
 		if err != nil {
 			return nil, errors.New("没有该商户的发票资料")
 		}
-		for _, application := range applications {
-			applicationTime := application.ApplicationTime.Format("20060102150405") //申请时间
-			reviewTime := application.ReviewTime.Format("20060102150405")           //审核时间
-			list := user_enter.InvoiceList{
-				UserId:                       application.UserId,
-				OrderId:                      application.OrderId,
-				InvoiceType:                  application.InvoiceType,
-				InvoiceTitle:                 application.InvoiceTitle,
-				TaxpayerIdentificationNumber: application.TaxpayerIdentificationNumber,
-				InvoiceAmount:                float32(application.InvoiceAmount),
-				ApplicationTime:              applicationTime,
-				ApplicationStatus:            application.ApplicationStatus,
-				ReviewTime:                   reviewTime,
-				Type:                         application.Type,
-			}
-			lists = append(lists, &list)
-		}
 	} else {
-		invoiceApplications, err := ue.GetInvoiceByUeIdAndStatus(in.UeId, in.Status)
+		applications, err = ue.GetInvoiceByUeIdAndStatus(in.UeId, in.Status)
 		if err != nil {
 			return nil, err
 		}
-		for _, application := range invoiceApplications {
-			applicationTime := application.ApplicationTime.Format("20060102150405") //申请时间
-			reviewTime := application.ReviewTime.Format("20060102150405")           //审核时间
-			list := user_enter.InvoiceList{
-				UserId:                       application.UserId,
-				OrderId:                      application.OrderId,
-				InvoiceType:                  application.InvoiceType,
-				InvoiceTitle:                 application.InvoiceTitle,
-				TaxpayerIdentificationNumber: application.TaxpayerIdentificationNumber,
-				InvoiceAmount:                float32(application.InvoiceAmount),
-				ApplicationTime:              applicationTime,
-				ApplicationStatus:            application.ApplicationStatus,
-				ReviewTime:                   reviewTime,
-				Type:                         application.Type,
-			}
-			lists = append(lists, &list)
-		}
 	}
+
+	for _, application := range applications {
+		list := ue.ConvertToInvoiceList(application)
+		lists = append(lists, &list)
+	}
+	pkg.AddPdf()
 	return &user_enter.InvoiceListResponse{
 		List: lists,
 	}, nil

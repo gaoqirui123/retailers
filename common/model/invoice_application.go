@@ -2,6 +2,7 @@ package model
 
 import (
 	"common/global"
+	"common/proto/user_enter"
 	"time"
 )
 
@@ -26,4 +27,59 @@ type InvoiceApplication struct {
 
 func (a *InvoiceApplication) UserApplication() error {
 	return global.DB.Debug().Table("invoice_application").Create(&a).Error
+}
+func (a *InvoiceApplication) GetInvoiceByUeIds(ueId int64) (result []*InvoiceApplication, err error) {
+	err = global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+func (a *InvoiceApplication) GetInvoiceByUeId(uId int64) (result *InvoiceApplication, err error) {
+	err = global.DB.Table("invoice_application").Where("user_id  = ?", uId).Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+func (a *InvoiceApplication) GetInvoiceByUeIdAndStatus(ueId int64, status int64) (result []*InvoiceApplication, err error) {
+	err = global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("application_status = ?", status).Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}
+
+func (a *InvoiceApplication) UpdateStatus(ueId int64, uid int64, status int64) error {
+	return global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Update("application_status", status).Error
+}
+
+func (a *InvoiceApplication) UpdateStatusDis(ueId int64, uid int64, status int64, dis string) error {
+	err := global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Update("application_status", status).Error
+	if err != nil {
+		return err
+	}
+	err = global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Update("review_remark = ?", dis).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// ConvertToInvoiceList 将 model.InvoiceApplication 转换为 user_enter.InvoiceList
+func (a *InvoiceApplication) ConvertToInvoiceList(application *InvoiceApplication) user_enter.InvoiceList {
+	applicationTime := application.ApplicationTime.Format("20060102150405") // 申请时间
+	reviewTime := application.ReviewTime.Format("20060102150405")           // 审核时间
+	return user_enter.InvoiceList{
+		UserId:                       application.UserId,
+		OrderId:                      application.OrderId,
+		InvoiceType:                  application.InvoiceType,
+		InvoiceTitle:                 application.InvoiceTitle,
+		TaxpayerIdentificationNumber: application.TaxpayerIdentificationNumber,
+		InvoiceAmount:                float32(application.InvoiceAmount),
+		ApplicationTime:              applicationTime,
+		ApplicationStatus:            application.ApplicationStatus,
+		ReviewTime:                   reviewTime,
+		Type:                         application.Type,
+	}
 }

@@ -121,10 +121,10 @@ func (o *Order) FindUserOrder(uid, ueId int64) (*Order, error) {
 	return order, nil
 }
 
-func (o *Order) FindId(orderId int64) (result Order, err error) {
+func (o *Order) FindId(orderId int64) (result *Order, err error) {
 	err = global.DB.Debug().Table("order").Where("id = ?", orderId).Find(&result).Error
 	if err != nil {
-		return Order{}, err
+		return nil, err
 	}
 	return result, nil
 }

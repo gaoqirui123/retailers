@@ -38,10 +38,6 @@ func ProcessEnter(in *administrators.ProcessEnterReq) (*administrators.ProcessEn
 	if err != nil {
 		return nil, err
 	}
-	/*	atoi, err := strconv.Atoi(time.Now().AddDate(0, 0, 0).Format("20060102150405"))
-		if err != nil {
-			return nil, err
-		}*/
 	e := model.EbSystemLog{
 		AdminId:    int(in.AdminId),
 		AdminName:  admin.RealName,
