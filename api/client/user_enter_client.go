@@ -61,3 +61,8 @@ func ProcessInvoice(ctx context.Context, in *user_enter.ProcessInvoiceRequest) (
 		return client.ProcessInvoice(ctx, req)
 	})
 }
+func InvoiceList(ctx context.Context, in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
+		return client.InvoiceList(ctx, req)
+	})
+}

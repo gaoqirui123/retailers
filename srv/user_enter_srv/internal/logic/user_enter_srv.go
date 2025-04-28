@@ -46,6 +46,15 @@ func (es UserEnterServer) ProcessInvoice(ctx context.Context, in *user_enter.Pro
 	return product, nil
 }
 
+// InvoiceList TODO:发票列表展示
+func (es UserEnterServer) InvoiceList(ctx context.Context, in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
+	product, err := handler.InvoiceList(in)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
+
 // DelProduct TODO:商户下架商品
 func (es UserEnterServer) DelProduct(ctx context.Context, in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
 	register, err := handler.DelProduct(in)
@@ -64,7 +73,7 @@ func (es UserEnterServer) Register(ctx context.Context, in *user_enter.UserEnter
 	return register, nil
 }
 
-// Login TODO:商户申请注册
+// Login TODO:商户登录
 func (es UserEnterServer) Login(ctx context.Context, in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResponse, error) {
 	register, err := handler.Login(in)
 	if err != nil {

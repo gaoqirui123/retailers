@@ -88,20 +88,91 @@ func AddCombinationProduct(in *user_enter.AddCombinationProductRequest) (*user_e
 	return &user_enter.AddCombinationProductResponse{Greet: "发布拼团商品成功"}, nil
 }
 
-// ProcessInvoice 商家审核用户的发票invoice申请
+// ProcessInvoice TODO:商家审核用户的发票invoice申请
 func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
-	/*
-		申请审核：商家收到用户的发票申请后，对申请信息进行审核。审核内容包括用户消费记录、申请信息与系统内存储信息的一致性等。若信息无误，审核通过；若存在问题，会联系用户补充或修改信息。
-	*/
-	//1.判断用户的订单是否正常，是否付款,通过用户id和订单号查找订单
-
-	//2.判断信息是否正确，价格，地址
-
-	//3.同意申请/不同意申请，给出理由
-
-	return &user_enter.ProcessInvoiceResponse{Greet: "审核成功"}, nil
+	// 检查输入参数是否为空
+	if in == nil {
+		return nil, errors.New("请求参数有误")
+	}
+	// 查找用户订单
+	od := model.Order{}
+	order, err := od.FindUserOrder(in.Uid, in.UeId)
+	if err != nil {
+		return nil, err
+	}
+	// 检查订单是否已支付
+	if order.Paid == 0 {
+		return nil, errors.New("订单未支付，无法开发票")
+	}
+	// 更新发票申请状态
+	i := model.InvoiceApplication{}
+	if in.Dis == "" {
+		err = i.UpdateStatus(in.UeId, in.Uid, in.Status)
+		if err != nil {
+			return nil, errors.New("审核失败")
+		}
+	} else {
+		err = i.UpdateStatusDis(in.UeId, in.Uid, in.Status, in.Dis)
+		if err != nil {
+			return nil, errors.New("审核失败")
+		}
+	}
+	return &user_enter.ProcessInvoiceResponse{Greet: "审核完成"}, nil
 }
 
+// InvoiceList TODO:商家审核用户的发票invoice申请
+func InvoiceList(in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
+	ue := model.InvoiceApplication{}
+	var lists []*user_enter.InvoiceList
+	if in.Status == 0 {
+		applications, err := ue.GetInvoiceByUeId(in.UeId)
+		if err != nil {
+			return nil, errors.New("没有该商户的发票资料")
+		}
+		for _, application := range applications {
+			applicationTime := application.ApplicationTime.Format("20060102150405") //申请时间
+			reviewTime := application.ReviewTime.Format("20060102150405")           //审核时间
+			list := user_enter.InvoiceList{
+				UserId:                       application.UserId,
+				OrderId:                      application.OrderId,
+				InvoiceType:                  application.InvoiceType,
+				InvoiceTitle:                 application.InvoiceTitle,
+				TaxpayerIdentificationNumber: application.TaxpayerIdentificationNumber,
+				InvoiceAmount:                float32(application.InvoiceAmount),
+				ApplicationTime:              applicationTime,
+				ApplicationStatus:            application.ApplicationStatus,
+				ReviewTime:                   reviewTime,
+				Type:                         application.Type,
+			}
+			lists = append(lists, &list)
+		}
+	} else {
+		invoiceApplications, err := ue.GetInvoiceByUeIdAndStatus(in.UeId, in.Status)
+		if err != nil {
+			return nil, err
+		}
+		for _, application := range invoiceApplications {
+			applicationTime := application.ApplicationTime.Format("20060102150405") //申请时间
+			reviewTime := application.ReviewTime.Format("20060102150405")           //审核时间
+			list := user_enter.InvoiceList{
+				UserId:                       application.UserId,
+				OrderId:                      application.OrderId,
+				InvoiceType:                  application.InvoiceType,
+				InvoiceTitle:                 application.InvoiceTitle,
+				TaxpayerIdentificationNumber: application.TaxpayerIdentificationNumber,
+				InvoiceAmount:                float32(application.InvoiceAmount),
+				ApplicationTime:              applicationTime,
+				ApplicationStatus:            application.ApplicationStatus,
+				ReviewTime:                   reviewTime,
+				Type:                         application.Type,
+			}
+			lists = append(lists, &list)
+		}
+	}
+	return &user_enter.InvoiceListResponse{
+		List: lists,
+	}, nil
+}
 func DelProduct(in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
 	p := model.Product{}
 	product, err := p.GetProductById(in.MerId, in.Pid)

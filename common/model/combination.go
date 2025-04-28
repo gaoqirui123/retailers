@@ -51,7 +51,7 @@ func (c *Combination) GetCombinationList() (result []*Combination, err error) {
 	return
 }
 func (c *Combination) Add() error {
-	return global.DB.Create(&c).Error
+	return global.DB.Table("combination").Create(&c).Error
 }
 
 func (c *Combination) GetCombinationById(pid int64) (result *Combination, err error) {

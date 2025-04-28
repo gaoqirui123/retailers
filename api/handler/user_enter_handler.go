@@ -124,6 +124,8 @@ func AddCombinationProduct(c *gin.Context) {
 	}
 	response.RespSuccess(c, "发布拼团商品成功", product)
 }
+
+// ProcessInvoice TODO:审核发票申请
 func ProcessInvoice(c *gin.Context) {
 	var data request.ProcessInvoice
 	err := c.ShouldBind(&data)
@@ -131,7 +133,21 @@ func ProcessInvoice(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
+	uid := c.GetUint("userId")
+	invoice, err := client.ProcessInvoice(c, &user_enter.ProcessInvoiceRequest{
+		UeId:   int64(uid),
+		Uid:    data.Uid,
+		Status: data.Status,
+		Dis:    data.Dis,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "审核完成", invoice)
 }
+
+// UpdateStatus TODO: 下架商品
 func UpdateStatus(c *gin.Context) {
 	var data request.DelProduct
 	err := c.ShouldBind(&data)
@@ -150,4 +166,24 @@ func UpdateStatus(c *gin.Context) {
 		return
 	}
 	response.RespSuccess(c, "下架商品成功", product)
+}
+
+// InvoiceList TODO:发票列表展示
+func InvoiceList(c *gin.Context) {
+	var data request.InvoiceList
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	uid := c.GetUint("userId")
+	list, err := client.InvoiceList(c, &user_enter.InvoiceListRequest{
+		UeId:   int64(uid),
+		Status: data.Status,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "展示成功", list)
 }

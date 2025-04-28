@@ -47,8 +47,14 @@ type AddCombinationProduct struct {
 	QuotaShow     int32   `json:"quotaShow" xml:"quotaShow" form:"quotaShow"`
 }
 type ProcessInvoice struct {
+	Status int64  `json:"status" xml:"status" form:"status"`
+	Uid    int64  `json:"uid" xml:"uid" form:"uid"`
+	Dis    string `json:"dis" xml:"dis" form:"dis"`
 }
 type DelProduct struct {
 	Pid    int64 `json:"pid" xml:"pid" form:"pid"`
+	Status int64 `json:"status" xml:"status" form:"status"`
+}
+type InvoiceList struct {
 	Status int64 `json:"status" xml:"status" form:"status"`
 }

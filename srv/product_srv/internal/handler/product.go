@@ -156,7 +156,6 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 
 	// 更新拼团的状态，检查拼团是否完成1进行中2已完成3未完成
 	if pink.CurrentNum >= pink.People {
-		pink.UpdateStatus(in.PinkId, 2)
 		err = pink.UpdateGroupStatus(key, 2)
 		if err != nil {
 			return nil, err
