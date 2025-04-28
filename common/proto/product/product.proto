@@ -90,8 +90,9 @@ message ProductUpdateResponse{
 
 //修改砍价商品表是否删除
 message BargainUpdateRequest {
-  uint32 Id = 1;// 砍价商品ID
-  uint32 IsDel = 2;//是否删除
+  uint32 UserID = 1; // 必填，标识发起砍价的用户 ID
+  uint32 Id = 2;// 砍价商品ID
+  uint32 IsDel = 3;//是否删除
 }
 
 message BargainUpdateResponse{

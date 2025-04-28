@@ -10,6 +10,41 @@
             </set>
           </value>
         </entry>
+        <entry key="Bargain">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainCreate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainShow">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUpdate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="OrderList">
           <value>
             <set>
@@ -17,10 +52,39 @@
             </set>
           </value>
         </entry>
+        <entry key="ProductUpdate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="scannedPathMapping">
       <map>
+        <entry key="file://$PROJECT_DIR$/api/handler/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745807108030" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745807108025" />
+              <option name="schema">
+                <list>
+                  <option value="BargainCreate" />
+                  <option value="ProductUpdate" />
+                  <option value="BargainShow" />
+                  <option value="BargainUpdate" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/api/request/order_request.go">
           <value>
             <ScannedPath>
@@ -34,12 +98,51 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/api/router/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745806898190" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745849848867" />
+              <option name="schema">
+                <list>
+                  <option value="Bargain" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745849848477" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1745807784551" />
+            </ScannedPath>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="tableStructMapping">
       <map>
         <entry key="add_order" value="AddOrder" />
+        <entry key="bargain" value="Bargain" />
+        <entry key="bargain_create" value="BargainCreate" />
+        <entry key="bargain_list" value="BargainList" />
+        <entry key="bargain_show" value="BargainShow" />
+        <entry key="bargain_update" value="BargainUpdate" />
         <entry key="order_list" value="OrderList" />
+        <entry key="product_update" value="ProductUpdate" />
       </map>
     </option>
   </component>

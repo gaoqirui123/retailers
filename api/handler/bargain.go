@@ -71,15 +71,48 @@ func BargainCreate(c *gin.Context) {
 
 // 砍价商品表详情
 func BargainShow(c *gin.Context) {
+	var f request.BargainShow
+	if err := c.ShouldBind(&f); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	update, err := client.BargainShow(c, &product.BargainShowRequest{Id: f.Id})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", update)
 
 }
 
 // 砍价商品表列表
 func BargainList(c *gin.Context) {
+	list, err := client.BargainList(c, &product.BargainListRequest{})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", list.BargainList)
 
 }
 
 // 修改砍价商品表是否删除
 func BargainUpdate(c *gin.Context) {
+	var f request.BargainUpdate
+	if err := c.ShouldBind(&f); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	userId := c.GetUint("userId")
+	update, err := client.BargainUpdate(c, &product.BargainUpdateRequest{
+		Id:     f.Id,
+		IsDel:  f.IsDel,
+		UserID: uint32(userId),
+	})
 
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", update)
 }

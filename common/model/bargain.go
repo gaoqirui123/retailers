@@ -51,3 +51,22 @@ func (Bargain) TableName() string {
 func (m *Bargain) BargainCreate() error {
 	return global.DB.Create(&m).Error
 }
+
+// 砍价商品表详情
+func (m *Bargain) BargainShow(Id uint32) error {
+	return global.DB.Where("id = ?", Id).Find(&m).Error
+}
+
+// 砍价商品表列表
+func (m *Bargain) BargainList() (b []*Bargain, err error) {
+	err = global.DB.Find(&b).Error
+	if err != nil {
+		return nil, err
+	}
+	return b, err
+}
+
+// 修改砍价商品表是否删除
+func (m *Bargain) BargainUpdate() error {
+	return global.DB.Model(&m).Where("id = ?", m.Id).Update("is_del", m.IsDel).Error
+}

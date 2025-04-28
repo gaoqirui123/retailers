@@ -26,7 +26,19 @@ type BargainCreate struct {
 	Cost            float64 `json:"cost" form:"cost" binding:"required"`                           //成本价
 }
 
+// 修改商品砍价状态
 type ProductUpdate struct {
 	Id        uint32 `json:"id" form:"id" binding:"required"` // 砍价表的唯一标识 ID
 	IsBargain int32  `json:"is_bargain" form:"is_bargain"`    //是否砍价
+}
+
+// 砍价商品表详情
+type BargainShow struct {
+	Id uint32 `json:"id" form:"id" binding:"required"` // 砍价表的唯一标识 ID
+}
+
+// 修改砍价商品表是否删除
+type BargainUpdate struct {
+	Id    uint32 `json:"id" form:"id" binding:"required"` // 砍价表的唯一标识 ID
+	IsDel uint32 `json:"is_del" form:"is_del"`            //是否删除
 }
