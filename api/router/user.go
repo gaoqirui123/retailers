@@ -24,7 +24,8 @@ func UserRouter(r *gin.RouterGroup) {
 		u.POST("/add/text", handler.AddText)               //todo: 会员分添加记录
 		u.POST("/add/userAddress", handler.AddUserAddress) //todo: 用户添加地址
 		u.Use(pkg.JWTAuth("retailers"))
-		u.POST("/sign", handler.UserSignIn)              //todo: 用户签到
-		u.POST("/makeup/sign", handler.UserMakeupSignIn) //todo: 用户补签
+		u.POST("/sign", handler.UserSignIn)                 //todo: 用户签到
+		u.POST("/makeup/sign", handler.UserMakeupSignIn)    //todo: 用户补签
+		u.POST("/userApplication", handler.UserApplication) //todo: 用户申请发票
 	}
 }

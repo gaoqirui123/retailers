@@ -18,6 +18,20 @@ service User {
   rpc UsePowerList(UsePowerListRequest) returns (UsePowerListResponse);//TODO:用户使用权益表展示
   rpc AddText(AddTextRequest) returns (AddTextResponse);//TODO:会员分添加记录
   rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse);//TODO:用户添加地址
+  rpc UserApplication(UserApplicationRequest) returns (UserApplicationResponse);//TODO:用户申请发票
+}
+
+//TODO:用户申请发票
+message UserApplicationRequest {
+  int64 UserId = 1;//用户id
+  int64 OrderId = 2;//订单id
+  string InvoiceType = 3;//发票类型：普通发票、增值税专用发票
+  string InvoiceTitle = 4;//发票抬头
+  float InvoiceAmount = 5;//发票金额
+  string Type = 6;//发票材质：纸质、电子
+}
+message UserApplicationResponse {
+  string Success = 1;
 }
 
 //TODO:用户添加地址

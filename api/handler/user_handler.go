@@ -216,4 +216,26 @@ func UserMakeupSignIn(c *gin.Context) {
 	response.RespSuccess(c, "用户补签成功", makeupSign)
 }
 
-// 添加商品的时候要预热处理
+// TODO: 用户申请发票
+func UserApplication(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UserApplication
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+
+	application, err := client.UserApplication(c, &user.UserApplicationRequest{
+		UserId:        int64(userId),
+		OrderId:       data.OrderId,
+		InvoiceType:   data.InvoiceType,
+		InvoiceTitle:  data.InvoiceTitle,
+		InvoiceAmount: float32(data.InvoiceAmount),
+		Type:          data.Type,
+	})
+	if err != nil {
+		response.RespError(c, "用户申请发票失败")
+		return
+	}
+	response.RespSuccess(c, "用户申请发票成功", application)
+}
