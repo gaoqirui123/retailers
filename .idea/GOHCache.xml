@@ -945,6 +945,27 @@
             </set>
           </value>
         </entry>
+        <entry key="UpdatedAddress">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UpdatedAddressRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UpdatedAddressResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="UpdatedPasswordRequest">
           <value>
             <set>
@@ -998,6 +1019,20 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/api/request/user_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserApplicationRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserApplicationResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
             </set>
           </value>
         </entry>
@@ -1386,7 +1421,7 @@
         <entry key="file://$PROJECT_DIR$/api/client/user_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745804748581" />
+              <option name="lastModified" value="1745831222971" />
             </ScannedPath>
           </value>
         </entry>
@@ -1456,7 +1491,7 @@
         <entry key="file://$PROJECT_DIR$/api/handler/user_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745807756516" />
+              <option name="lastModified" value="1745832016347" />
             </ScannedPath>
           </value>
         </entry>
@@ -1560,7 +1595,7 @@
         <entry key="file://$PROJECT_DIR$/api/request/user_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745807837211" />
+              <option name="lastModified" value="1745831993882" />
               <option name="schema">
                 <list>
                   <option value="UserLogin" />
@@ -1569,6 +1604,7 @@
                   <option value="UpdatePassWord" />
                   <option value="AddUserAddress" />
                   <option value="UserApplication" />
+                  <option value="UpdatedAddress" />
                 </list>
               </option>
             </ScannedPath>
@@ -1633,7 +1669,7 @@
         <entry key="file://$PROJECT_DIR$/api/router/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745804748273" />
+              <option name="lastModified" value="1745831223051" />
             </ScannedPath>
           </value>
         </entry>
@@ -1835,7 +1871,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/invoice_application.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745807529777" />
+              <option name="lastModified" value="1745827265806" />
               <option name="schema">
                 <list>
                   <option value="InvoiceApplication" />
@@ -2003,7 +2039,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/user_address.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745807968199" />
+              <option name="lastModified" value="1745830688537" />
               <option name="schema">
                 <list>
                   <option value="UserAddress" />
@@ -2343,9 +2379,13 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745802278005" />
+              <option name="lastModified" value="1745831533279" />
               <option name="schema">
                 <list>
+                  <option value="UpdatedAddressRequest" />
+                  <option value="UpdatedAddressResponse" />
+                  <option value="UserApplicationRequest" />
+                  <option value="UserApplicationResponse" />
                   <option value="AddUserAddressRequest" />
                   <option value="AddUserAddressResponse" />
                   <option value="AddTextRequest" />
@@ -2389,7 +2429,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745802278006" />
+              <option name="lastModified" value="1745831533279" />
               <option name="schema">
                 <list>
                   <option value="userClient" />
@@ -2694,14 +2734,14 @@
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745807742067" />
+              <option name="lastModified" value="1745831641346" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/logic/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745803923089" />
+              <option name="lastModified" value="1745828890683" />
               <option name="schema">
                 <list>
                   <option value="UserServer" />
@@ -2894,6 +2934,9 @@
         <entry key="unimplemented_user_enter_server" value="UnimplementedUserEnterServer" />
         <entry key="unimplemented_user_server" value="UnimplementedUserServer" />
         <entry key="update_pass_word" value="UpdatePassWord" />
+        <entry key="updated_address" value="UpdatedAddress" />
+        <entry key="updated_address_request" value="UpdatedAddressRequest" />
+        <entry key="updated_address_response" value="UpdatedAddressResponse" />
         <entry key="updated_password_request" value="UpdatedPasswordRequest" />
         <entry key="updated_password_response" value="UpdatedPasswordResponse" />
         <entry key="use_power_list" value="UsePowerList" />
@@ -2902,6 +2945,8 @@
         <entry key="user" value="User" />
         <entry key="user_address" value="UserAddress" />
         <entry key="user_application" value="UserApplication" />
+        <entry key="user_application_request" value="UserApplicationRequest" />
+        <entry key="user_application_response" value="UserApplicationResponse" />
         <entry key="user_client" value="userClient" />
         <entry key="user_detail" value="UserDetail" />
         <entry key="user_detail_request" value="UserDetailRequest" />
