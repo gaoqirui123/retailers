@@ -40,3 +40,12 @@ type UserApplication struct {
 	InvoiceAmount float64 `form:"invoice_amount" xml:"invoice_amount" json:"invoice_amount"  binding:"required"`
 	Type          string  `form:"type" xml:"type" json:"type"  binding:"required"`
 }
+
+type UpdatedAddress struct {
+	Province string `form:"province" xml:"province" json:"province"  binding:"required"`
+	City     string `form:"city" xml:"city" json:"city"  binding:"required"`
+	District string `form:"district" xml:"district" json:"district"  binding:"required"`
+	Detail   string `form:"detail" xml:"detail" json:"detail"  binding:"required"`
+	RealName string `form:"real_name" xml:"real_name" json:"real_name"  binding:"required"`
+	Phone    string `form:"phone" xml:"phone" json:"phone"  binding:"required"`
+}

@@ -309,3 +309,26 @@ func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResp
 	}
 	return &user.UserApplicationResponse{Success: "用户成功申请发票"}, nil
 }
+
+// UpdatedAddress TODO:用户修改地址
+func UpdatedAddress(in *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+	u := model.User{}
+	FindUser, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	ua := model.UserAddress{
+		Uid:      FindUser.Uid,
+		RealName: in.RealName,
+		Phone:    in.Phone,
+		Province: in.Province, //收货人所在省
+		City:     in.City,     //收货人所在市
+		District: in.District, //收货人所在区
+		Detail:   in.Detail,   //收货人详细地址
+	}
+	err = ua.UpdatedAddress(in.Uid)
+	if err != nil {
+		return nil, errors.New("用户地址修改失败")
+	}
+	return &user.UpdatedAddressResponse{Success: "用户地址修改成功"}, nil
+}

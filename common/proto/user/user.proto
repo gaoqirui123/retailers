@@ -20,6 +20,21 @@ service User {
   rpc AddText(AddTextRequest) returns (AddTextResponse);//TODO:会员分添加记录
   rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse);//TODO:用户添加地址
   rpc UserApplication(UserApplicationRequest) returns (UserApplicationResponse);//TODO:用户申请发票
+  rpc UpdatedAddress(UpdatedAddressRequest) returns (UpdatedAddressResponse);//TODO:用户修改地址
+}
+
+//TODO:用户修改地址
+message UpdatedAddressRequest {
+  int64 Uid = 1;//用户id
+  string RealName = 2;//收货人姓名
+  string Phone = 3;//收货人电话
+  string Province = 4;//收货人所在省
+  string City = 5;//收货人所在市
+  string District = 6;//收货人所在区
+  string Detail = 7;//收货人详细地址
+}
+message UpdatedAddressResponse {
+  string Success = 1;
 }
 
 //TODO:用户申请发票

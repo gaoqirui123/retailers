@@ -102,3 +102,10 @@ func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicatio
 	}
 	return userApplication, nil
 }
+func (u UserServer) UpdatedAddress(ctx context.Context, in *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+	updatedAddress, err := handler.UpdatedAddress(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return updatedAddress, nil
+}

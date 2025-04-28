@@ -98,3 +98,10 @@ func UserApplication(ctx context.Context, req *user.UserApplicationRequest) (*us
 		return client.UserApplication(ctx, req)
 	})
 }
+
+// UpdatedAddress 用户修改地址
+func UpdatedAddress(ctx context.Context, req *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+		return client.UpdatedAddress(ctx, req)
+	})
+}

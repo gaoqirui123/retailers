@@ -213,3 +213,28 @@ func UserApplication(c *gin.Context) {
 	}
 	response.RespSuccess(c, "用户申请发票成功", application)
 }
+
+// TODO: 用户修改地址
+func UpdatedAddress(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UpdatedAddress
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+
+	updatedAddress, err := client.UpdatedAddress(c, &user.UpdatedAddressRequest{
+		Uid:      int64(userId),
+		RealName: data.RealName,
+		Phone:    data.Phone,
+		Province: data.Province,
+		City:     data.City,
+		District: data.District,
+		Detail:   data.Detail,
+	})
+	if err != nil {
+		response.RespError(c, "用户修改地址失败")
+		return
+	}
+	response.RespSuccess(c, "用户修改地址成功", updatedAddress)
+}
