@@ -62,6 +62,15 @@ func (o *Order) AddOrder() error {
 func (o *Order) GetOrderSn(sn string) error {
 	return global.DB.Debug().Table("order").Where("order_sn = ?", sn).Limit(1).Find(&o).Error
 }
+func (o *Order) GetOrderSnUserId(sn string) Order {
+	var order Order
+	err := global.DB.Debug().Table("order").Where("order_sn = ?", sn).Limit(1).Find(&order).Error
+	if err != nil {
+		return order
+	}
+	return order
+
+}
 
 func (o *Order) UpdateOrderStatus(orderSn string, status int) error {
 	return global.DB.Debug().Table("order").Where("order_sn = ?", orderSn).Limit(1).Update("status", status).Error

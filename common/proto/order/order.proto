@@ -29,7 +29,7 @@ message AddOrderRequest {
   int64  CouponId = 5; // 优惠券ID
   string Mark = 6; // 备注
   int64  StoreId = 7; // 门店ID
-  int64  MerId = 8; // 门店ID
+  int64  MerId = 8; // 商户ID
   int64  BargainId = 9; // 砍价ID
   int64  ShippingType = 10; // 配送方式 1=快递 ，2=门店自提
   int64  IsChannel = 11; // 支付渠道
@@ -45,6 +45,7 @@ message AddOrderResponse {
 message PayCallbackRequest {
   string OrderSn = 1;
   string Status = 2;
+  float BuyerPayAmount=3;
 }
 
 message PayCallbackResponse {

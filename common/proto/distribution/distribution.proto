@@ -6,8 +6,38 @@ option go_package=".;distribution";
 service Distribution {
   rpc  GenerateInvitationCode(GenerateInvitationCodeRequest) returns (GenerateInvitationCodeResponse);//生成邀请码
   rpc  UserFillsInInvitationCode(UserFillsInInvitationCodeRequest) returns (UserFillsInInvitationCodeResponse);//用户填写邀请码
+  rpc  DistributionLevelSetting(DistributionLevelSettingRequest) returns (DistributionLevelSettingResponse);//分销等级设置
+  rpc  TheCharts(TheChartsRequest) returns (TheChartsResponse);//佣金排行榜
+}
+//佣金排行榜
+
+message TheChartsRequest{
+
+
 }
 
+message TheChartsResponse{
+  repeated ListRank list=1;
+}
+
+message ListRank{
+int64  ToUserId =1;
+float Amount=2;
+}
+
+//分销等级设置
+message DistributionLevelSettingRequest{
+  string img =5;//图片
+  string LevelName = 1;//等级名称
+  int64 Level=2;//等级
+  float One=3;//一级返佣比例
+  float Two=4;//二级返佣比例
+
+}
+
+message DistributionLevelSettingResponse{
+  bool success = 1;
+}
 //生成邀请码
 message GenerateInvitationCodeRequest{
   int64 UserId = 1;//用户id，中间件获取

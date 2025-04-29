@@ -11,6 +11,7 @@ type AppViper struct {
 	CartSrv
 	DistributionSrv
 	RandomString
+	AliPay
 }
 type NaCos struct {
 	NameSpace string
@@ -56,6 +57,14 @@ type DistributionSrv struct {
 type RandomString struct {
 	Log int
 }
+
+type AliPay struct {
+	APPID     string
+	NotifyURL string
+	ReturnURL string
+	Key       string
+}
+
 type T struct {
 	Mysql struct {
 		User     string `json:"user"`

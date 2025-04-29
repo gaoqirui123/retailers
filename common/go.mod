@@ -15,6 +15,7 @@ require (
 	github.com/jung-kurt/gofpdf v1.16.2
 	github.com/nacos-group/nacos-sdk-go v1.1.5
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/smartwalle/alipay/v3 v3.2.25
 	github.com/spf13/viper v1.20.1
