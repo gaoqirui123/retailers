@@ -4,8 +4,10 @@ import (
 	"common/global"
 	"common/model"
 	"common/proto/product"
+	"common/utlis"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"math/rand"
@@ -164,4 +166,70 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 		return nil, fmt.Errorf("更新拼团状态失败:%w", err)
 	}
 	return &product.JoinGroupBuyingResponse{Success: true}, nil
+}
+
+func AddSeckillProduct(in *product.AddSeckillProductRequest) (*product.AddSeckillProductResponse, error) {
+	//查询商品是否存在
+	p := &model.Product{}
+	err := p.GetProductIdBy(in.ProductId)
+	if err != nil {
+		return nil, err
+	}
+	if p.Id == 0 {
+		return nil, errors.New("商品不存在")
+	}
+	//判断商品库存不能小于秒杀库存
+	if p.Stock < in.Num {
+		return nil, errors.New("判断商品库存小于秒杀库存")
+	}
+	//开启事务
+	tx := global.DB.Begin()
+	//扣mysql商品表总库存
+	err = p.UpdateProductStock(in.ProductId, in.Num)
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("扣mysql商品表总库存失败")
+	}
+	seckill := &model.Seckill{
+		ProductId:   in.ProductId,
+		Image:       p.Image,
+		Images:      p.SliderImage,
+		Name:        p.StoreName,
+		Info:        p.StoreInfo,
+		Price:       float64(in.Price),
+		Cost:        p.Cost,
+		OtPrice:     p.Price,
+		Stock:       in.Num,
+		Postage:     p.Postage,
+		Description: in.Description,
+		StartTime:   in.StartTime,
+		StopTime:    in.StopTime,
+		AddTime:     time.Now().Format(time.DateTime),
+		Status:      p.IsShow,
+		IsPostage:   p.IsPostage,
+		Num:         in.Num,
+		Quota:       in.Num,
+		QuotaShow:   in.Num,
+	}
+	err = seckill.AddSeckillProduct()
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+	if seckill.Id == 0 {
+		tx.Rollback()
+		return nil, errors.New("添加秒杀商品失败")
+	}
+	//将秒杀商品添加redis的list中
+	utlis.GoodsCreateRedis(int(seckill.Stock), int(seckill.Id))
+	//判断redis库存是否添加成功
+	val := utlis.GetGoodsRedis(int(seckill.Id))
+	if val != seckill.Stock {
+		tx.Rollback()
+		return nil, errors.New("redis库存是否添加失败")
+	}
+	if err = tx.Commit().Error; err != nil {
+		return nil, err
+	}
+	return &product.AddSeckillProductResponse{SeckillId: seckill.Id}, nil
 }

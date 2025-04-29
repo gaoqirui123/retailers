@@ -36,3 +36,12 @@ func (p ProductServer) JoinGroupBuying(ctx context.Context, in *product.JoinGrou
 	}
 	return userLevelPowerList, nil
 }
+
+// AddSeckillProduct  用户发起拼团
+func (p ProductServer) AddSeckillProduct(ctx context.Context, in *product.AddSeckillProductRequest) (*product.AddSeckillProductResponse, error) {
+	add, err := handler.AddSeckillProduct(in)
+	if err != nil {
+		return nil, err
+	}
+	return add, nil
+}

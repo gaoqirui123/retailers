@@ -192,9 +192,15 @@ func AddUserAddress(c *gin.Context) {
 
 // TODO:用户签到
 func UserSignIn(c *gin.Context) {
+	var data request.UserSignIn
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
 	userId := c.GetUint("userId")
 	sign, err := client.UserSignIn(c, &user.UserSignInRequest{
-		UserId: int64(userId),
+		UserId:   int64(userId),
+		SignDate: data.SignData,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())
@@ -205,9 +211,15 @@ func UserSignIn(c *gin.Context) {
 
 // TODO:用户补签
 func UserMakeupSignIn(c *gin.Context) {
+	var data request.UserMakeupSignIn
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
 	userId := c.GetUint("userId")
 	makeupSign, err := client.UserMakeupSignIn(c, &user.UserMakeupSignInRequest{
-		UserId: int64(userId),
+		UserId:   int64(userId),
+		SignDate: data.SignData,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())

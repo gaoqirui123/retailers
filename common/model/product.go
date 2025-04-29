@@ -45,8 +45,8 @@ type Product struct {
 	Activity     string  `gorm:"column:activity;type:varchar(255);comment:活动显示排序1=秒杀，2=砍价，3=拼团;" json:"activity"`                          // 活动显示排序1=秒杀，2=砍价，3=拼团
 }
 
-func (p *Product) GetProductIdBy(id int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Find(&p).Error
+func (p *Product) GetProductIdBy(productId int64) error {
+	return global.DB.Debug().Table("product").Where("id = ?", productId).Limit(1).Find(&p).Error
 }
 
 func (p *Product) UpdateProductStock(id, num int64) error {
@@ -56,6 +56,7 @@ func (p *Product) UpdateProductStock(id, num int64) error {
 func (p *Product) Add() error {
 	return global.DB.Debug().Table("product").Create(&p).Error
 }
+
 func (p *Product) GetProductById(productId int64) (result *Product, err error) {
 	err = global.DB.Debug().Table("product").Where("id = ?", productId).Find(&result).Error
 	if err != nil {

@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Product_CombinationList_FullMethodName = "/product.Product/CombinationList"
-	Product_GroupBuying_FullMethodName     = "/product.Product/GroupBuying"
-	Product_JoinGroupBuying_FullMethodName = "/product.Product/JoinGroupBuying"
+	Product_CombinationList_FullMethodName   = "/product.Product/CombinationList"
+	Product_GroupBuying_FullMethodName       = "/product.Product/GroupBuying"
+	Product_JoinGroupBuying_FullMethodName   = "/product.Product/JoinGroupBuying"
+	Product_AddSeckillProduct_FullMethodName = "/product.Product/AddSeckillProduct"
 )
 
 // ProductClient is the client API for Product service.
@@ -31,6 +32,7 @@ type ProductClient interface {
 	CombinationList(ctx context.Context, in *CombinationListRequest, opts ...grpc.CallOption) (*CombinationListResponse, error)
 	GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error)
 	JoinGroupBuying(ctx context.Context, in *JoinGroupBuyingRequest, opts ...grpc.CallOption) (*JoinGroupBuyingResponse, error)
+	AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error)
 }
 
 type productClient struct {
@@ -71,6 +73,16 @@ func (c *productClient) JoinGroupBuying(ctx context.Context, in *JoinGroupBuying
 	return out, nil
 }
 
+func (c *productClient) AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddSeckillProductResponse)
+	err := c.cc.Invoke(ctx, Product_AddSeckillProduct_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
@@ -78,6 +90,7 @@ type ProductServer interface {
 	CombinationList(context.Context, *CombinationListRequest) (*CombinationListResponse, error)
 	GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error)
 	JoinGroupBuying(context.Context, *JoinGroupBuyingRequest) (*JoinGroupBuyingResponse, error)
+	AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -93,6 +106,9 @@ func (UnimplementedProductServer) GroupBuying(context.Context, *GroupBuyingReque
 }
 func (UnimplementedProductServer) JoinGroupBuying(context.Context, *JoinGroupBuyingRequest) (*JoinGroupBuyingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinGroupBuying not implemented")
+}
+func (UnimplementedProductServer) AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddSeckillProduct not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -161,6 +177,24 @@ func _Product_JoinGroupBuying_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_AddSeckillProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddSeckillProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).AddSeckillProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_AddSeckillProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).AddSeckillProduct(ctx, req.(*AddSeckillProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -179,6 +213,10 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JoinGroupBuying",
 			Handler:    _Product_JoinGroupBuying_Handler,
+		},
+		{
+			MethodName: "AddSeckillProduct",
+			Handler:    _Product_AddSeckillProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

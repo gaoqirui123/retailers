@@ -279,11 +279,20 @@ func AddUserAddress(in *user.AddUserAddressRequest) (*user.AddUserAddressRespons
 
 // UserSignIn TODO:用户签到
 func UserSignIn(in *user.UserSignInRequest) (*user.UserSignInResponse, error) {
+	// 如果传入了SignDate，支持自定义签到日期（方便测试）
 	var signDate time.Time
 	var err error
-	timeDate := time.Now().AddDate(0, 0, 0).Format("2006-01-02")
+	if in.SignDate != "" {
+		signDate, err = time.Parse("2006-01-02", in.SignDate) //测试的话格式(2025-03-28)
+		if err != nil {
+			return nil, fmt.Errorf("无效的签到日期格式")
+		}
+	} else {
+		signDate = time.Now() // 默认使用当前日期
+	}
+	today := signDate.Format("2006-01-02")
 	//1.检查今天是否已经签到
-	todaykey := fmt.Sprintf("sign:user:%d:%s", in.UserId, timeDate)
+	todaykey := fmt.Sprintf("sign:user:%d:%s", in.UserId, today)
 	offset := signDate.Day() // 位图的偏移量从0开始
 	bit, err := global.Rdb.GetBit(global.Ctx, todaykey, int64(offset)).Result()
 	if err != nil {
@@ -392,14 +401,13 @@ func UserSignIn(in *user.UserSignInRequest) (*user.UserSignInResponse, error) {
 // UserMakeupSignIn TODO:用户补签
 func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
 	// 1. 解析补签日期
-	timeDate := time.Now().AddDate(0, 0, 0).Format("2006-01-02")
-	makeupDate, err := time.Parse("2006-01-02", timeDate)
+	makeupDate, err := time.Parse("2006-01-02", in.SignDate)
 	if err != nil {
-		return nil, fmt.Errorf("无效的补签日期格式")
+		return nil, errors.New("无效的补签日期格式")
 	}
 	// 2. 检验补签日期 是不是在一周之内的
 	if time.Since(makeupDate) > 7*24*time.Hour {
-		return nil, fmt.Errorf("只能补签过去7天内的签到")
+		return nil, errors.New("只能补签过去7天内的签到")
 	}
 
 	// 3. 检查是否已签到
@@ -410,17 +418,17 @@ func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInR
 		return nil, err
 	}
 	if bit == 1 {
-		return nil, fmt.Errorf("该日期已签到，无需补签")
+		return nil, errors.New("该日期已签到，无需补签")
 	}
 
 	// 4. 检查用户是否有补签卡
 	makeupCard := &model.UserMakeupCard{}
 	err = makeupCard.GetUserMakeupCard(in.UserId)
 	if err != nil {
-		return nil, fmt.Errorf("没有可用的补签卡")
+		return nil, errors.New("没有可用的补签卡")
 	}
 	if makeupCard.Cardcount <= 0 {
-		return nil, fmt.Errorf("没有可用的补签卡")
+		return nil, errors.New("没有可用的补签卡")
 	}
 
 	// 5. 计算积分（补签固定得1分）
@@ -439,7 +447,7 @@ func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInR
 	err = makeupCard.UpdateUserMakeupCard(in.UserId)
 	if err != nil {
 		tx.Rollback()
-		return nil, fmt.Errorf("扣除补签卡失败")
+		return nil, errors.New("扣除补签卡失败")
 	}
 
 	// 8. 更新用户积分
@@ -447,7 +455,7 @@ func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInR
 	err = ui.UpdateUserIntegral(in.UserId, int64(points))
 	if err != nil {
 		tx.Rollback()
-		return nil, fmt.Errorf("更新积分失败")
+		return nil, errors.New("更新积分失败")
 	}
 
 	// 9. 创建积分流水记录
@@ -462,19 +470,19 @@ func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInR
 	err = integralLog.AddUserIntegralLog()
 	if err != nil {
 		tx.Rollback()
-		return nil, fmt.Errorf("创建积分流水失败")
+		return nil, errors.New("创建积分流水失败")
 	}
 
 	// 10. 更新Redis签到状态（但不更新连续签到）
 	_, err = global.Rdb.SetBit(global.Ctx, dateKey, int64(offset), 1).Result()
 	if err != nil {
 		tx.Rollback()
-		return nil, fmt.Errorf("更新签到状态失败")
+		return nil, errors.New("更新签到状态失败")
 	}
 
 	// 11. 提交事务
 	if err = tx.Commit().Error; err != nil {
-		return nil, fmt.Errorf("提交事务失败")
+		return nil, errors.New("提交事务失败")
 	}
 
 	return &user.UserMakeupSignInResponse{
@@ -485,7 +493,6 @@ func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInR
 }
 
 // UserApplication TODO:用户申请发票
-
 func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
 	u := model.User{}
 	FindUser, err := u.FindId(int(in.UserId))
@@ -502,7 +509,6 @@ func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResp
 	if err != nil {
 		return nil, errors.New("用户地址查询失败")
 	}
-
 	ia := model.InvoiceApplication{
 		UserId:        in.UserId,
 		OrderId:       in.OrderId,

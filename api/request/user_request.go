@@ -40,3 +40,11 @@ type UserApplication struct {
 	InvoiceAmount float64 `form:"invoice_amount" xml:"invoice_amount" json:"invoice_amount"  binding:"required"`
 	Type          string  `form:"type" xml:"type" json:"type"  binding:"required"`
 }
+
+type UserSignIn struct {
+	SignData string `form:"signData" xml:"signData" json:"signData"  binding:"required"`
+}
+
+type UserMakeupSignIn struct {
+	SignData string `form:"signData" xml:"signData" json:"signData"  binding:"required"`
+}
