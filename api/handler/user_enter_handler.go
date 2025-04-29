@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"retailers/api/client"
-	"retailers/api/request"
-	"retailers/api/response"
-	"retailers/common/proto/user_enter"
+	"api/client"
+	"api/request"
+	"api/response"
+	"common/proto/user_enter"
+	"github.com/gin-gonic/gin"
 )
 
 func Apply(c *gin.Context) {
@@ -16,7 +17,7 @@ func Apply(c *gin.Context) {
 	}
 	uid := c.GetUint("userId")
 	register, err := client.Apply(c, &user_enter.UserEnterApplyRequest{
-		Uid:          int64(uid),
+		UeId:         int64(uid),
 		Province:     data.Province,
 		City:         data.City,
 		District:     data.District,
@@ -134,10 +135,11 @@ func ProcessInvoice(c *gin.Context) {
 	}
 	uid := c.GetUint("userId")
 	invoice, err := client.ProcessInvoice(c, &user_enter.ProcessInvoiceRequest{
-		UeId:   int64(uid),
-		Uid:    data.Uid,
-		Status: data.Status,
-		Dis:    data.Dis,
+		UeId:    int64(uid),
+		Uid:     data.Uid,
+		Status:  data.Status,
+		Dis:     data.Dis,
+		OrderId: data.OrderId,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())

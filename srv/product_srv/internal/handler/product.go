@@ -37,8 +37,8 @@ func CombinationList(in *product.CombinationListRequest) (*product.CombinationLi
 // GroupBuying TODO:用户发起拼团
 func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, error) {
 	// 假设拼团时长为 1 小时，计算结束时间
-	addtime := time.Now().Format(global.TimeFormat) //开始时间
-	stopTime := time.Now().Add(time.Hour).Format(global.TimeFormat)
+	addtime := time.Now().Format(global.TimeFormat)                 //开始时间
+	stopTime := time.Now().Add(time.Hour).Format(global.TimeFormat) //结束时间
 	//拼团商品表查询商品
 	c := model.Combination{}
 	combination, err := c.GetCombinationById(in.Pid)
@@ -129,7 +129,7 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 		return nil, fmt.Errorf("反序列化拼团信息失败: %w", err)
 	}
 	// 检查拼团是否已结束
-	endTime, err := time.Parse(global.TimeFormat, pink.StopTime)
+	endTime, err := time.Parse(global.TimeFormat, pink.StopTime) //获取时间
 	if err != nil {
 		return nil, fmt.Errorf("解析拼团结束时间失败: %w", err)
 	}
@@ -137,7 +137,7 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 		return nil, fmt.Errorf("拼团 %s 已结束，无法参与", in.PinkId)
 	}
 	// 检查拼团是否已满员
-	if pink.CurrentNum >= pink.People {
+	if pink.CurrentNum == pink.People {
 		return nil, fmt.Errorf("拼团 %s 已完成，无法参与", in.PinkId)
 	}
 	// 更新拼团的当前人数
@@ -155,7 +155,7 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 	}
 
 	// 更新拼团的状态，检查拼团是否完成1进行中2已完成3未完成
-	if pink.CurrentNum >= pink.People {
+	if pink.CurrentNum == pink.People {
 		err = pink.UpdateGroupStatus(key, 2)
 		if err != nil {
 			return nil, err

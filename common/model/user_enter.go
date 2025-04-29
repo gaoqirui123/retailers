@@ -29,7 +29,7 @@ func (ue *UserEnter) TableName() string {
 }
 
 func (ue *UserEnter) Add() error {
-	return global.DB.Create(&ue).Error
+	return global.DB.Table("user_enter").Create(&ue).Error
 }
 
 func (ue *UserEnter) UpdateStatus(Id int64, status int64) error {

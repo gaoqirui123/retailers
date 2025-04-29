@@ -35,8 +35,8 @@ func (a *InvoiceApplication) GetInvoiceByUeIds(ueId int64) (result []*InvoiceApp
 	}
 	return
 }
-func (a *InvoiceApplication) GetInvoiceByUeId(uId int64) (result *InvoiceApplication, err error) {
-	err = global.DB.Table("invoice_application").Where("user_id  = ?", uId).Find(&result).Error
+func (a *InvoiceApplication) GetInvoiceByUeId(uId int64, orderId int64) (result *InvoiceApplication, err error) {
+	err = global.DB.Table("invoice_application").Where("user_id  = ?", uId).Where("order_id = ?", orderId).Find(&result).Error
 	if err != nil {
 		return nil, err
 	}
@@ -50,16 +50,16 @@ func (a *InvoiceApplication) GetInvoiceByUeIdAndStatus(ueId int64, status int64)
 	return
 }
 
-func (a *InvoiceApplication) UpdateStatus(ueId int64, uid int64, status int64) error {
-	return global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Update("application_status", status).Error
+func (a *InvoiceApplication) UpdateStatus(ueId int64, uid int64, status int64, orderId int64, now time.Time) error {
+	return global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Where("order_id = ?", orderId).Update("application_status", status).Update("review_remark", now).Error
 }
 
-func (a *InvoiceApplication) UpdateStatusDis(ueId int64, uid int64, status int64, dis string) error {
-	err := global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Update("application_status", status).Error
+func (a *InvoiceApplication) UpdateStatusDis(ueId int64, uid int64, status int64, dis string, orderId int64, now time.Time) error {
+	err := global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Where("order_id = ?", orderId).Update("application_status", status).Update("review_remark", now).Error
 	if err != nil {
 		return err
 	}
-	err = global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Update("review_remark = ?", dis).Error
+	err = global.DB.Table("invoice_application").Where("mer_id = ?", ueId).Where("user_id = ?", uid).Where("order_id = ?", orderId).Update("review_remark = ?", dis).Update("review_remark", now).Error
 	if err != nil {
 		return err
 	}
