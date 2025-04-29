@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"common/global"
-	"common/model"
-	"common/pkg"
-	"common/proto/order"
 	"errors"
-	"github.com/google/uuid"
+	"fmt"
+	"retailers/common/global"
+	"retailers/common/model"
+	"retailers/common/pkg"
+	"retailers/common/proto/order"
 	"strconv"
 )
 
@@ -122,11 +122,65 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 
 func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, error) {
 	orders := model.Order{}
+
+	fmt.Println(in)
 	status, _ := strconv.Atoi(in.Status)
+
 	err := orders.UpdateOrderStatus(in.OrderSn, status)
+
 	if err != nil {
 		return nil, err
 	}
+
+	o := model.Order{}
+
+	od := o.GetOrderSnUserId(in.OrderSn)
+
+	//查找不到消费用户
+	if od.Id == 0 {
+		return &order.PayCallbackResponse{Success: false}, err
+	}
+
+	//查找用户
+	u := model.User{}
+
+	id, err := u.FindId(int(od.Uid))
+
+	if err != nil {
+		return &order.PayCallbackResponse{Success: false}, err
+	}
+	var price float64
+
+	dl := model.DistributionLevel{}
+	fmt.Println(id)
+
+	disLevel := dl.FindDistributionLevel(int(id.Level))
+
+	fmt.Println("用户等级", disLevel.Level)
+
+	if disLevel.Level == 1 {
+
+		price = disLevel.One * float64(in.BuyerPayAmount)
+
+	} else if disLevel.Level == 2 {
+
+		price = disLevel.Two * float64(in.BuyerPayAmount)
+
+	}
+
+	n := model.Commission{
+		OrderSyn:   in.OrderSn,
+		FromUserId: uint32(od.Uid),
+		ToUserId:   uint32(id.SpreadUid),
+		Level:      int8(id.Level),
+		Amount:     price,
+	}
+
+	//同步返佣流水表
+	if !n.CreateCommission() {
+		return &order.PayCallbackResponse{Success: false}, nil
+	}
+
 	return &order.PayCallbackResponse{Success: true}, nil
 }
 

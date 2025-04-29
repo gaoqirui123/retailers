@@ -70,8 +70,10 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("邀请码有误")}, nil
 	}
 
-	u := model.User{}
-	//查看我是否登录
+	u := model.User{
+		Level: 1,
+	}
+	//查看我是否注册
 
 	forMe, err := u.FindId(int(in.UserId))
 
@@ -84,7 +86,7 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 
 	//删除邀请码
 	ctx.Begin()
-	//未登录
+	//未注册
 	if forMe.Uid == 0 {
 
 		u.Uid = int64(in.UserId)
@@ -93,6 +95,8 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 
 		fmt.Println("确认上级用户id", id.Uid)
 
+		u.Level = 2
+
 		err = u.UserRegister()
 
 		if err != nil {
@@ -100,7 +104,9 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 			return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("%v", err)}, nil
 		}
 	} else {
+
 		//登录，确认上级id
+
 		if !u.UpdatedSpreadUid(int(in.UserId), strconv.FormatInt(id.Uid, 10)) {
 			ctx.Rollback()
 
@@ -120,7 +126,7 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 	if !i.UpdateCode(in.Str) {
 
 		ctx.Rollback()
-		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("邀请码有误")}, nil
+		return &distribution.UserFillsInInvitationCodeResponse{Success: fmt.Sprintf("更改状态有误")}, nil
 
 	}
 
@@ -130,4 +136,38 @@ func UserFillsInInvitationCode(in *distribution.UserFillsInInvitationCodeRequest
 	}
 
 	return &distribution.UserFillsInInvitationCodeResponse{Success: "邀请码填写结束"}, nil
+}
+
+func DistributionLevelSetting(in *distribution.DistributionLevelSettingRequest) (*distribution.DistributionLevelSettingResponse, error) {
+	dl := model.DistributionLevel{
+		Img:       in.Img,
+		LevelName: in.LevelName,
+		Level:     in.Level,
+		One:       float64(in.One),
+		Two:       float64(in.Two),
+	}
+	//一级不能大于二级
+	if in.One < in.Two {
+		return &distribution.DistributionLevelSettingResponse{Success: false}, nil
+	}
+
+	if !dl.CreateDistributionLevel() {
+		return &distribution.DistributionLevelSettingResponse{Success: false}, nil
+	}
+
+	return &distribution.DistributionLevelSettingResponse{Success: true}, nil
+}
+
+func TheCharts(in *distribution.TheChartsRequest) (*distribution.TheChartsResponse, error) {
+	n := model.Commission{}
+	list := n.CalculateAndRankTotalCommission()
+
+	var sli []*distribution.ListRank
+	for _, c := range list {
+		sli = append(sli, &distribution.ListRank{
+			ToUserId: int64(c.ToUserId),
+			Amount:   float32(c.TotalAmount),
+		})
+	}
+	return &distribution.TheChartsResponse{List: sli}, nil
 }
