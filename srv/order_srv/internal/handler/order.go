@@ -1,12 +1,13 @@
 package handler
 
 import (
+	"common/global"
+	"common/model"
+	"common/pkg"
+	"common/proto/order"
 	"errors"
 	"fmt"
-	"retailers/common/global"
-	"retailers/common/model"
-	"retailers/common/pkg"
-	"retailers/common/proto/order"
+	"github.com/google/uuid"
 	"strconv"
 )
 
@@ -123,7 +124,6 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, error) {
 	orders := model.Order{}
 
-	fmt.Println(in)
 	status, _ := strconv.Atoi(in.Status)
 
 	err := orders.UpdateOrderStatus(in.OrderSn, status)
