@@ -32,20 +32,31 @@ func (p *Pink) Create() error {
 	return global.DB.Table("pink").Create(&p).Error
 }
 
-// updateGroupStatus 更新拼团状态
+// UpdateGroupStatus 更新拼团状态
 func (p *Pink) UpdateGroupStatus(key string, status int) error {
-	var pink Pink
 	groupInfoJSON, err := global.Rdb.Get(context.Background(), key).Result()
 	if err != nil {
 		return err
 	}
-	if err = json.Unmarshal([]byte(groupInfoJSON), &pink); err != nil {
+	if err = json.Unmarshal([]byte(groupInfoJSON), &p); err != nil {
 		return err
 	}
-	pink.Status = status
-	pinkJSON, err := json.Marshal(pink)
+	p.Status = status
+	pinkJSON, err := json.Marshal(p)
 	if err != nil {
 		return err
 	}
 	return global.Rdb.Set(context.Background(), key, pinkJSON, time.Hour).Err()
+}
+
+func (p *Pink) UpdateGroupNum(pinkId string, num int64) error {
+	err := global.DB.Table("pink").Where("order_id = ?", pinkId).Update("current_num", p.CurrentNum+num).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *Pink) UpdateStatus(pinkId string, status int) error {
+	return global.DB.Where("order_id = ?", pinkId).Update("status", status).Error
 }

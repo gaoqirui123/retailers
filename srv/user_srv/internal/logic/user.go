@@ -81,3 +81,24 @@ func (u UserServer) UsePowerList(ctx context.Context, in *user.UsePowerListReque
 	}
 	return usePowerList, nil
 }
+func (u UserServer) AddText(ctx context.Context, in *user.AddTextRequest) (*user.AddTextResponse, error) {
+	addText, err := handler.AddText(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return addText, nil
+}
+func (u UserServer) AddUserAddress(ctx context.Context, in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+	addUserAddress, err := handler.AddUserAddress(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return addUserAddress, nil
+}
+func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
+	userApplication, err := handler.UserApplication(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return userApplication, nil
+}

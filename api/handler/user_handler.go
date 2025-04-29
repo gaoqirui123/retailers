@@ -156,3 +156,60 @@ func UsePowerList(c *gin.Context) {
 	}
 	response.RespSuccess(c, "用户使用权益表展示成功", list)
 }
+
+// TODO: 会员分添加记录
+func AddText(c *gin.Context) {
+	userId := c.GetUint("userId")
+	text, err := client.AddText(c, &user.AddTextRequest{Uid: int64(userId)})
+	if err != nil {
+		response.RespError(c, "会员分添加记录失败")
+		return
+	}
+	response.RespSuccess(c, "会员分添加记录成功", text)
+}
+
+// TODO:用户添加地址
+func AddUserAddress(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.AddUserAddress
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	address, err := client.AddUserAddress(c, &user.AddUserAddressRequest{
+		Uid:      int64(userId),
+		Province: data.Province,
+		City:     data.City,
+		District: data.District,
+		Detail:   data.Detail,
+	})
+	if err != nil {
+		response.RespError(c, "用户地址添加失败")
+		return
+	}
+	response.RespSuccess(c, "用户地址添加成功", address)
+}
+
+// TODO: 用户申请发票
+func UserApplication(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UserApplication
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+
+	application, err := client.UserApplication(c, &user.UserApplicationRequest{
+		UserId:        int64(userId),
+		OrderId:       data.OrderId,
+		InvoiceType:   data.InvoiceType,
+		InvoiceTitle:  data.InvoiceTitle,
+		InvoiceAmount: float32(data.InvoiceAmount),
+		Type:          data.Type,
+	})
+	if err != nil {
+		response.RespError(c, "用户申请发票失败")
+		return
+	}
+	response.RespSuccess(c, "用户申请发票成功", application)
+}

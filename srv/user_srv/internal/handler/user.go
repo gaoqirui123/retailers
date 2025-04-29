@@ -66,7 +66,7 @@ func UserRegister(in *user.UserRegisterRequest) (*user.UserRegisterResponse, err
 // UserDetail TODO: 个人资料显示
 func UserDetail(in *user.UserDetailRequest) (*user.UserDetailResponse, error) {
 	u := model.User{}
-	detail, err := u.Detail(int(in.Uid))
+	detail, err := u.Detail(in.Uid)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func ImproveUser(in *user.ImproveUserRequest) (*user.ImproveUserResponse, error)
 		return nil, errors.New("没有这个用户")
 	}
 
-	updated := u.Updated(int(Id.Uid), u)
+	updated := u.Updated(Id.Uid, u)
 	if !updated {
 		return nil, errors.New("完善用户信息失败")
 	}
@@ -125,7 +125,7 @@ func UpdatedPassword(in *user.UpdatedPasswordRequest) (*user.UpdatedPasswordResp
 	if Id.Pwd == utlis.Encryption(in.NewPassword) {
 		return nil, errors.New("旧密码和新密码一样，修改失败")
 	}
-	newPassword := u.UpdatedPassword(int(Id.Uid), utlis.Encryption(in.NewPassword))
+	newPassword := u.UpdatedPassword(Id.Uid, utlis.Encryption(in.NewPassword))
 	if !newPassword {
 		return nil, errors.New("密码修改失败")
 	}
@@ -206,4 +206,106 @@ func UsePowerList(in *user.UsePowerListRequest) (*user.UsePowerListResponse, err
 		})
 	}
 	return &user.UsePowerListResponse{List: list}, nil
+}
+
+// AddText TODO:会员分添加记录
+func AddText(in *user.AddTextRequest) (*user.AddTextResponse, error) {
+	ulss := user_level.UserLevelScoreSource{}
+	scoreSource, err := ulss.Find()
+	if err != nil {
+		return nil, err
+	}
+	switch scoreSource.Id {
+	case 1: //消费20元+1积分
+
+	case 2: //邀请一个人注册+20积分
+
+	case 3: //用户签到+5积分
+
+	case 4: //完成特定任务（观看短视频、阅读文章）+10积分
+
+	default:
+
+	}
+	//会员分添加记录表
+	ulat := user_level.UserLevelAddText{
+		Uid:    uint32(in.Uid),
+		Source: scoreSource.Source,
+		Score:  uint32(scoreSource.Score),
+	}
+	err = ulat.Add()
+	if err != nil {
+		return nil, err
+	}
+
+	//用户表的剩余积分+++++
+	u := model.User{}
+	result, err := u.FindId(int(in.Uid))
+	points := result.Integral + float64(scoreSource.Score)
+	err = u.AddScore(points, in.Uid)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user.AddTextResponse{Success: "会员分添加成功"}, nil
+}
+
+// AddUserAddress TODO:用户添加地址
+func AddUserAddress(in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+	u := model.User{}
+	FindUser, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	ua := model.UserAddress{
+		Uid:      FindUser.Uid,
+		RealName: FindUser.RealName,
+		Phone:    FindUser.Phone,
+		Province: in.Province, //收货人所在省
+		City:     in.City,     //收货人所在市
+		District: in.District, //收货人所在区
+		Detail:   in.Detail,   //收货人详细地址
+	}
+	err = ua.Created()
+	if err != nil {
+		return nil, errors.New("地址添加失败")
+	}
+	return &user.AddUserAddressResponse{Success: "地址添加成功"}, nil
+}
+
+// UserApplication TODO:用户申请发票
+func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
+	u := model.User{}
+	FindUser, err := u.FindId(int(in.UserId))
+	if err != nil {
+		return nil, errors.New("用户查询失败")
+	}
+	o := model.Order{}
+	FindOrder, err := o.FindId(in.OrderId)
+	if err != nil {
+		return nil, errors.New("订单查找失败")
+	}
+	ua := model.UserAddress{}
+	FindUserAddress, err := ua.FindId(in.UserId)
+	if err != nil {
+		return nil, errors.New("用户地址查询失败")
+	}
+
+	ia := model.InvoiceApplication{
+		UserId:        in.UserId,
+		OrderId:       in.OrderId,
+		InvoiceType:   in.InvoiceType,            //发票类型：普通发票、增值税专用发票
+		InvoiceTitle:  in.InvoiceTitle,           //发票抬头
+		InvoiceAmount: float64(in.InvoiceAmount), //发票金额
+		Email:         FindUser.Email,
+		Address:       FindUserAddress.Detail,
+		Phone:         FindUser.Phone,
+		Type:          in.Type, //发票材质：纸质、电子
+		MerId:         FindOrder.MerId,
+	}
+	err = ia.UserApplication()
+	if err != nil {
+		return nil, errors.New("用户发票申请失败")
+	}
+	return &user.UserApplicationResponse{Success: "用户成功申请发票"}, nil
 }

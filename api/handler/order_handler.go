@@ -29,8 +29,7 @@ func AddOrder(c *gin.Context) {
 		BargainId:    data.BargainId,
 		ShippingType: data.ShippingType,
 		IsChannel:    data.IsChannel,
-
-		PinkId: data.PinkId,
+		PinkId:       data.PinkId,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())
