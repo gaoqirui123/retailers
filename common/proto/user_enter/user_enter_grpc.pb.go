@@ -19,20 +19,28 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
+	UserEnter_Apply_FullMethodName                 = "/user_enter.UserEnter/Apply"
 	UserEnter_Register_FullMethodName              = "/user_enter.UserEnter/Register"
+	UserEnter_Login_FullMethodName                 = "/user_enter.UserEnter/Login"
 	UserEnter_AddProduct_FullMethodName            = "/user_enter.UserEnter/AddProduct"
 	UserEnter_AddCombinationProduct_FullMethodName = "/user_enter.UserEnter/AddCombinationProduct"
 	UserEnter_ProcessInvoice_FullMethodName        = "/user_enter.UserEnter/ProcessInvoice"
+	UserEnter_DelProduct_FullMethodName            = "/user_enter.UserEnter/DelProduct"
+	UserEnter_InvoiceList_FullMethodName           = "/user_enter.UserEnter/InvoiceList"
 )
 
 // UserEnterClient is the client API for UserEnter service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserEnterClient interface {
+	Apply(ctx context.Context, in *UserEnterApplyRequest, opts ...grpc.CallOption) (*UserEnterApplyResponse, error)
 	Register(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error)
+	Login(ctx context.Context, in *UserEnterLoginRequest, opts ...grpc.CallOption) (*UserEnterLoginResponse, error)
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
 	AddCombinationProduct(ctx context.Context, in *AddCombinationProductRequest, opts ...grpc.CallOption) (*AddCombinationProductResponse, error)
 	ProcessInvoice(ctx context.Context, in *ProcessInvoiceRequest, opts ...grpc.CallOption) (*ProcessInvoiceResponse, error)
+	DelProduct(ctx context.Context, in *DelProductRequest, opts ...grpc.CallOption) (*DelProductResponse, error)
+	InvoiceList(ctx context.Context, in *InvoiceListRequest, opts ...grpc.CallOption) (*InvoiceListResponse, error)
 }
 
 type userEnterClient struct {
@@ -43,10 +51,30 @@ func NewUserEnterClient(cc grpc.ClientConnInterface) UserEnterClient {
 	return &userEnterClient{cc}
 }
 
+func (c *userEnterClient) Apply(ctx context.Context, in *UserEnterApplyRequest, opts ...grpc.CallOption) (*UserEnterApplyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserEnterApplyResponse)
+	err := c.cc.Invoke(ctx, UserEnter_Apply_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userEnterClient) Register(ctx context.Context, in *UserEnterRegisterRequest, opts ...grpc.CallOption) (*UserEnterRegisterResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserEnterRegisterResponse)
 	err := c.cc.Invoke(ctx, UserEnter_Register_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userEnterClient) Login(ctx context.Context, in *UserEnterLoginRequest, opts ...grpc.CallOption) (*UserEnterLoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserEnterLoginResponse)
+	err := c.cc.Invoke(ctx, UserEnter_Login_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,14 +111,38 @@ func (c *userEnterClient) ProcessInvoice(ctx context.Context, in *ProcessInvoice
 	return out, nil
 }
 
+func (c *userEnterClient) DelProduct(ctx context.Context, in *DelProductRequest, opts ...grpc.CallOption) (*DelProductResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DelProductResponse)
+	err := c.cc.Invoke(ctx, UserEnter_DelProduct_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userEnterClient) InvoiceList(ctx context.Context, in *InvoiceListRequest, opts ...grpc.CallOption) (*InvoiceListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InvoiceListResponse)
+	err := c.cc.Invoke(ctx, UserEnter_InvoiceList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserEnterServer is the server API for UserEnter service.
 // All implementations must embed UnimplementedUserEnterServer
 // for forward compatibility
 type UserEnterServer interface {
+	Apply(context.Context, *UserEnterApplyRequest) (*UserEnterApplyResponse, error)
 	Register(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error)
+	Login(context.Context, *UserEnterLoginRequest) (*UserEnterLoginResponse, error)
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
 	AddCombinationProduct(context.Context, *AddCombinationProductRequest) (*AddCombinationProductResponse, error)
 	ProcessInvoice(context.Context, *ProcessInvoiceRequest) (*ProcessInvoiceResponse, error)
+	DelProduct(context.Context, *DelProductRequest) (*DelProductResponse, error)
+	InvoiceList(context.Context, *InvoiceListRequest) (*InvoiceListResponse, error)
 	mustEmbedUnimplementedUserEnterServer()
 }
 
@@ -98,8 +150,14 @@ type UserEnterServer interface {
 type UnimplementedUserEnterServer struct {
 }
 
+func (UnimplementedUserEnterServer) Apply(context.Context, *UserEnterApplyRequest) (*UserEnterApplyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Apply not implemented")
+}
 func (UnimplementedUserEnterServer) Register(context.Context, *UserEnterRegisterRequest) (*UserEnterRegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedUserEnterServer) Login(context.Context, *UserEnterLoginRequest) (*UserEnterLoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedUserEnterServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
@@ -109,6 +167,12 @@ func (UnimplementedUserEnterServer) AddCombinationProduct(context.Context, *AddC
 }
 func (UnimplementedUserEnterServer) ProcessInvoice(context.Context, *ProcessInvoiceRequest) (*ProcessInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessInvoice not implemented")
+}
+func (UnimplementedUserEnterServer) DelProduct(context.Context, *DelProductRequest) (*DelProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelProduct not implemented")
+}
+func (UnimplementedUserEnterServer) InvoiceList(context.Context, *InvoiceListRequest) (*InvoiceListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InvoiceList not implemented")
 }
 func (UnimplementedUserEnterServer) mustEmbedUnimplementedUserEnterServer() {}
 
@@ -121,6 +185,24 @@ type UnsafeUserEnterServer interface {
 
 func RegisterUserEnterServer(s grpc.ServiceRegistrar, srv UserEnterServer) {
 	s.RegisterService(&UserEnter_ServiceDesc, srv)
+}
+
+func _UserEnter_Apply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserEnterApplyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).Apply(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_Apply_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).Apply(ctx, req.(*UserEnterApplyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _UserEnter_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -137,6 +219,24 @@ func _UserEnter_Register_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserEnterServer).Register(ctx, req.(*UserEnterRegisterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserEnter_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserEnterLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).Login(ctx, req.(*UserEnterLoginRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -195,6 +295,42 @@ func _UserEnter_ProcessInvoice_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserEnter_DelProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).DelProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_DelProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).DelProduct(ctx, req.(*DelProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserEnter_InvoiceList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InvoiceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).InvoiceList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_InvoiceList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).InvoiceList(ctx, req.(*InvoiceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserEnter_ServiceDesc is the grpc.ServiceDesc for UserEnter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -203,8 +339,16 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserEnterServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "Apply",
+			Handler:    _UserEnter_Apply_Handler,
+		},
+		{
 			MethodName: "Register",
 			Handler:    _UserEnter_Register_Handler,
+		},
+		{
+			MethodName: "Login",
+			Handler:    _UserEnter_Login_Handler,
 		},
 		{
 			MethodName: "AddProduct",
@@ -217,6 +361,14 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProcessInvoice",
 			Handler:    _UserEnter_ProcessInvoice_Handler,
+		},
+		{
+			MethodName: "DelProduct",
+			Handler:    _UserEnter_DelProduct_Handler,
+		},
+		{
+			MethodName: "InvoiceList",
+			Handler:    _UserEnter_InvoiceList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

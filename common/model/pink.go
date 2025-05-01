@@ -34,16 +34,15 @@ func (p *Pink) Create() error {
 
 // UpdateGroupStatus 更新拼团状态
 func (p *Pink) UpdateGroupStatus(key string, status int) error {
-	var pink Pink
 	groupInfoJSON, err := global.Rdb.Get(context.Background(), key).Result()
 	if err != nil {
 		return err
 	}
-	if err = json.Unmarshal([]byte(groupInfoJSON), &pink); err != nil {
+	if err = json.Unmarshal([]byte(groupInfoJSON), &p); err != nil {
 		return err
 	}
-	pink.Status = status
-	pinkJSON, err := json.Marshal(pink)
+	p.Status = status
+	pinkJSON, err := json.Marshal(p)
 	if err != nil {
 		return err
 	}
@@ -56,4 +55,8 @@ func (p *Pink) UpdateGroupNum(pinkId string, num int64) error {
 		return err
 	}
 	return nil
+}
+
+func (p *Pink) UpdateStatus(pinkId string, status int) error {
+	return global.DB.Where("order_id = ?", pinkId).Update("status", status).Error
 }

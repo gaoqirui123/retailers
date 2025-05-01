@@ -19,4 +19,5 @@ func RegisterRouter(r *gin.Engine) {
 		UserEnter(b)
 		Administrators(b)
 	}
+
 }

@@ -7,12 +7,13 @@ import (
 	"common/proto/order"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 func AddOrder(c *gin.Context) {
 	var data request.AddOrder
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, fmt.Sprintf("参数有误，%v", err))
 		return
 	}
 	Uid := c.GetUint("userId")
@@ -42,12 +43,25 @@ func AddOrder(c *gin.Context) {
 }
 
 func PayCallback(c *gin.Context) {
-	fmt.Println("支付回调")
+
 	orderSn := c.Request.FormValue("out_trade_no")
+
 	status := c.Request.FormValue("trade_status")
+
+	buyerPayAmount := c.Request.FormValue("buyer_pay_amount") //用户在交易中支付的金额。
+
+	fmt.Println("支付宝回调", status, orderSn, buyerPayAmount)
+	price, err := strconv.ParseFloat(buyerPayAmount, 64)
+	if err != nil {
+		// 处理转换错误
+		fmt.Println("Error converting buyer_pay_amount to float64:", err)
+		return
+	}
+
 	callback, err := client.PayCallback(c, &order.PayCallbackRequest{
-		OrderSn: orderSn,
-		Status:  status,
+		BuyerPayAmount: float32(price),
+		OrderSn:        orderSn,
+		Status:         status,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())

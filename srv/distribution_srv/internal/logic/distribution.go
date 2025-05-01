@@ -27,3 +27,21 @@ func (d DistributionServer) UserFillsInInvitationCode(ctx context.Context, in *d
 	}
 	return code, err
 }
+
+// 分销等级设置
+func (d DistributionServer) DistributionLevelSetting(ctx context.Context, in *distribution.DistributionLevelSettingRequest) (*distribution.DistributionLevelSettingResponse, error) {
+	code, err := handler.DistributionLevelSetting(in)
+	if err != nil {
+		return nil, err
+	}
+	return code, err
+}
+
+// 佣金排行榜
+func (d DistributionServer) TheCharts(ctx context.Context, in *distribution.TheChartsRequest) (*distribution.TheChartsResponse, error) {
+	code, err := handler.TheCharts(in)
+	if err != nil {
+		return nil, err
+	}
+	return code, err
+}

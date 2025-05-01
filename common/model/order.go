@@ -62,6 +62,15 @@ func (o *Order) AddOrder() error {
 func (o *Order) GetOrderStatus(sn string) error {
 	return global.DB.Debug().Table("order").Where("order_sn = ?", sn).Limit(1).Find(&o).Error
 }
+func (o *Order) GetOrderSnUserId(sn string) Order {
+	var order Order
+	err := global.DB.Debug().Table("order").Where("order_sn = ?", sn).Limit(1).Find(&order).Error
+	if err != nil {
+		return order
+	}
+	return order
+
+}
 
 func (o *Order) UpdateOrderStatus(orderSn string, status int) error {
 	return global.DB.Debug().Table("order").Where("order_sn = ?", orderSn).Limit(1).Update("status", status).Error
@@ -103,14 +112,28 @@ func (o *Order) GetOrderDelList(userId int64, isDel int64) (list []*Order, err e
 	return list, nil
 }
 
-func (o *Order) GetOrderIdBy(userId int64, orderId int64) error {
-	return global.DB.Debug().Table("order").Where("uid = ? and id = ?", userId, orderId).Find(&o).Error
+func (o *Order) GetOrderIdBy(userId int64, orderId int64) (list *Order, err error) {
+	err = global.DB.Debug().Table("order").Where("uid = ? and id = ?", userId, orderId).Find(&o).Error
+	if err != nil {
+		return nil, err
+	}
+	return
 }
 
-func (o *Order) FindId(orderId int64) (result Order, err error) {
+// FindUserOrder 根据用户ID和订单ID查找订单
+func (o *Order) FindUserOrder(uid, ueId int64) (*Order, error) {
+	uo := Order{}
+	order, err := uo.GetOrderIdBy(uid, ueId)
+	if err != nil {
+		return nil, err
+	}
+	return order, nil
+}
+
+func (o *Order) FindId(orderId int64) (result *Order, err error) {
 	err = global.DB.Debug().Table("order").Where("id = ?", orderId).Find(&result).Error
 	if err != nil {
-		return Order{}, err
+		return nil, err
 	}
 	return result, nil
 }
