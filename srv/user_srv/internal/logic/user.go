@@ -98,10 +98,19 @@ func (u UserServer) UserMakeupSignIn(ctx context.Context, in *user.UserMakeupSig
 	}
 	return makeupSignIn, nil
 }
+
 func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
 	userApplication, err := handler.UserApplication(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
 	return userApplication, nil
+}
+
+func (u UserServer) UserReceiveCoupon(ctx context.Context, in *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
+	receive, err := handler.UserReceiveCoupon(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return receive, nil
 }

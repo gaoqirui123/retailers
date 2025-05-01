@@ -50,7 +50,7 @@ func (p *Product) GetProductIdBy(productId int64) error {
 }
 
 func (p *Product) UpdateProductStock(id, num int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
 }
 
 func (p *Product) Add() error {
@@ -63,4 +63,8 @@ func (p *Product) GetProductById(productId int64) (result *Product, err error) {
 		return nil, err
 	}
 	return
+}
+
+func (p *Product) ReverseProductStock(productId, stock int64) error {
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("good_stock", gorm.Expr("good_stock + ?", stock)).Error
 }

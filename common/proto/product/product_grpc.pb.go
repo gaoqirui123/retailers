@@ -23,6 +23,7 @@ const (
 	Product_GroupBuying_FullMethodName       = "/product.Product/GroupBuying"
 	Product_JoinGroupBuying_FullMethodName   = "/product.Product/JoinGroupBuying"
 	Product_AddSeckillProduct_FullMethodName = "/product.Product/AddSeckillProduct"
+	Product_ReverseStock_FullMethodName      = "/product.Product/ReverseStock"
 )
 
 // ProductClient is the client API for Product service.
@@ -33,6 +34,7 @@ type ProductClient interface {
 	GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error)
 	JoinGroupBuying(ctx context.Context, in *JoinGroupBuyingRequest, opts ...grpc.CallOption) (*JoinGroupBuyingResponse, error)
 	AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error)
+	ReverseStock(ctx context.Context, in *ReverseStockRequest, opts ...grpc.CallOption) (*ReverseStockResponse, error)
 }
 
 type productClient struct {
@@ -83,6 +85,16 @@ func (c *productClient) AddSeckillProduct(ctx context.Context, in *AddSeckillPro
 	return out, nil
 }
 
+func (c *productClient) ReverseStock(ctx context.Context, in *ReverseStockRequest, opts ...grpc.CallOption) (*ReverseStockResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ReverseStockResponse)
+	err := c.cc.Invoke(ctx, Product_ReverseStock_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
@@ -91,6 +103,7 @@ type ProductServer interface {
 	GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error)
 	JoinGroupBuying(context.Context, *JoinGroupBuyingRequest) (*JoinGroupBuyingResponse, error)
 	AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error)
+	ReverseStock(context.Context, *ReverseStockRequest) (*ReverseStockResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -109,6 +122,9 @@ func (UnimplementedProductServer) JoinGroupBuying(context.Context, *JoinGroupBuy
 }
 func (UnimplementedProductServer) AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSeckillProduct not implemented")
+}
+func (UnimplementedProductServer) ReverseStock(context.Context, *ReverseStockRequest) (*ReverseStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReverseStock not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -195,6 +211,24 @@ func _Product_AddSeckillProduct_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_ReverseStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReverseStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).ReverseStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_ReverseStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).ReverseStock(ctx, req.(*ReverseStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -217,6 +251,10 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddSeckillProduct",
 			Handler:    _Product_AddSeckillProduct_Handler,
+		},
+		{
+			MethodName: "ReverseStock",
+			Handler:    _Product_ReverseStock_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

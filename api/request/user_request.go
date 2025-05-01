@@ -48,3 +48,7 @@ type UserSignIn struct {
 type UserMakeupSignIn struct {
 	SignData string `form:"signData" xml:"signData" json:"signData"  binding:"required"`
 }
+
+type UserReceiveCoupon struct {
+	CouponId int64 `form:"couponId" xml:"couponId" json:"couponId"  binding:"required"`
+}

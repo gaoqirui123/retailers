@@ -178,6 +178,10 @@ func AddSeckillProduct(in *product.AddSeckillProductRequest) (*product.AddSeckil
 	if p.Id == 0 {
 		return nil, errors.New("商品不存在")
 	}
+	// 判断该商品是否是该商户的
+	if p.MerId != in.UserEnterId {
+		return nil, errors.New("该商品不是你的")
+	}
 	//判断商品库存不能小于秒杀库存
 	if p.Stock < in.Num {
 		return nil, errors.New("判断商品库存小于秒杀库存")
@@ -191,6 +195,7 @@ func AddSeckillProduct(in *product.AddSeckillProductRequest) (*product.AddSeckil
 		return nil, errors.New("扣mysql商品表总库存失败")
 	}
 	seckill := &model.Seckill{
+		MerId:       p.MerId,
 		ProductId:   in.ProductId,
 		Image:       p.Image,
 		Images:      p.SliderImage,
@@ -221,9 +226,9 @@ func AddSeckillProduct(in *product.AddSeckillProductRequest) (*product.AddSeckil
 		return nil, errors.New("添加秒杀商品失败")
 	}
 	//将秒杀商品添加redis的list中
-	utlis.GoodsCreateRedis(int(seckill.Stock), int(seckill.Id))
+	utlis.ProductCreateRedis(int(seckill.Stock), int(seckill.Id))
 	//判断redis库存是否添加成功
-	val := utlis.GetGoodsRedis(int(seckill.Id))
+	val := utlis.GetProductRedis(int(seckill.Id))
 	if val != seckill.Stock {
 		tx.Rollback()
 		return nil, errors.New("redis库存是否添加失败")
@@ -232,4 +237,47 @@ func AddSeckillProduct(in *product.AddSeckillProductRequest) (*product.AddSeckil
 		return nil, err
 	}
 	return &product.AddSeckillProductResponse{SeckillId: seckill.Id}, nil
+}
+
+func ReverseStock(in *product.ReverseStockRequest) (*product.ReverseStockResponse, error) {
+	// 查询秒杀商品是否存在
+	s := &model.Seckill{}
+	err := s.GetSeckillIdBY(in.SeckillId)
+	if err != nil {
+		return nil, err
+	}
+	if s.Id == 0 {
+		return nil, errors.New("秒杀商品不存在")
+	}
+	// 判断该商品是否是该商户的
+	if s.MerId != in.UserEnterId {
+		return nil, errors.New("该商品不是你的")
+	}
+	//开启事务
+	tx := global.DB.Begin()
+	//反还剩余的商品
+	g := &model.Product{}
+	err = g.ReverseProductStock(s.ProductId, s.Stock)
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("秒杀商品不存在")
+	}
+	//清除秒杀表里的数据
+	err = s.DelSeckill(in.SeckillId)
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("清除秒杀表里的数据失败")
+	}
+	//清除redis列表库存
+	utlis.DelProductRedis(int(s.Id))
+	//判断redis列表库存是否被清除
+	val := utlis.GetProductRedis(int(s.Id))
+	if val > 0 {
+		tx.Rollback()
+		return nil, errors.New("清除redis列表库存失败")
+	}
+	if err = tx.Commit().Error; err != nil {
+		return nil, err
+	}
+	return &product.ReverseStockResponse{Success: true}, nil
 }

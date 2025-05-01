@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	"gorm.io/gorm"
+	"strconv"
 	"time"
 )
 
@@ -422,7 +423,7 @@ func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInR
 	}
 
 	// 4. 检查用户是否有补签卡
-	makeupCard := &model.UserMakeupCard{}
+	makeupCard := &model.UserMakeup{}
 	err = makeupCard.GetUserMakeupCard(in.UserId)
 	if err != nil {
 		return nil, errors.New("没有可用的补签卡")
@@ -443,7 +444,6 @@ func UserMakeupSignIn(in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInR
 	}()
 
 	// 7. 扣除补签卡
-	makeupCard = &model.UserMakeupCard{}
 	err = makeupCard.UpdateUserMakeupCard(in.UserId)
 	if err != nil {
 		tx.Rollback()
@@ -526,4 +526,27 @@ func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResp
 		return nil, errors.New("用户发票申请失败")
 	}
 	return &user.UserApplicationResponse{Success: "用户成功申请发票"}, nil
+}
+
+func UserReceiveCoupon(in *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
+	cou := &model.Coupon{}
+	if err := cou.GetCouponIdBy(in.CouponId); err != nil {
+		return nil, err
+	}
+	addTime, _ := strconv.Atoi(time.Now().AddDate(0, 0, 0).Format("20060102"))
+	endTime, _ := strconv.Atoi(time.Now().AddDate(0, 0, int(cou.CouponTime)).Format("20060102"))
+	uc := &model.CouponUser{
+		Cid:         in.CouponId,
+		Uid:         in.UserId,
+		CouponTitle: cou.Title,
+		CouponPrice: cou.CouponPrice,
+		UseMinPrice: cou.UseMinPrice,
+		AddTime:     int64(addTime),
+		EndTime:     int64(endTime),
+		Status:      0,
+	}
+	if err := uc.AddCouponUser(); err != nil {
+		return nil, err
+	}
+	return &user.UserReceiveCouponResponse{Success: true}, nil
 }

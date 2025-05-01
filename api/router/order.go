@@ -10,8 +10,8 @@ func OrderRouter(r *gin.RouterGroup) {
 	o := r.Group("/order")
 	{
 		o.Use(pkg.JWTAuth("retailers"))
-		o.POST("/add", handler.AddOrder)
-		o.POST("/callback", handler.PayCallback)
-		o.GET("/list", handler.OrderList)
+		o.POST("/add", handler.AddOrder)         // TODO: 创建订单
+		o.POST("/callback", handler.PayCallback) // TODO: 支付回调
+		o.GET("/list", handler.OrderList)        // TODO: 订单列表查询
 	}
 }

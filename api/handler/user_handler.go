@@ -95,7 +95,7 @@ func ImproveUser(c *gin.Context) {
 	response.RespSuccess(c, "用户完善信息成功", improveUser)
 }
 
-// TODO:修改密码
+// TODO: 修改密码
 func UpdatePassWord(c *gin.Context) {
 	userId := c.GetUint("userId")
 	var data request.UpdatePassWord
@@ -250,4 +250,22 @@ func UserApplication(c *gin.Context) {
 		return
 	}
 	response.RespSuccess(c, "用户申请发票成功", application)
+}
+
+func UserReceiveCoupon(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UserReceiveCoupon
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	application, err := client.UserReceiveCoupon(c, &user.UserReceiveCouponRequest{
+		UserId:   int64(userId),
+		CouponId: data.CouponId,
+	})
+	if err != nil {
+		response.RespError(c, "用户领取优惠券失败")
+		return
+	}
+	response.RespSuccess(c, "用户领取优惠券成功", application)
 }

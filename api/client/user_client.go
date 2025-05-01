@@ -112,3 +112,10 @@ func UserApplication(ctx context.Context, req *user.UserApplicationRequest) (*us
 		return client.UserApplication(ctx, req)
 	})
 }
+
+// UserReceiveCoupon 用户申请发票
+func UserReceiveCoupon(ctx context.Context, req *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
+		return client.UserReceiveCoupon(ctx, req)
+	})
+}

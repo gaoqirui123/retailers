@@ -19,6 +19,16 @@ service User {
   rpc AddText(AddTextRequest) returns (AddTextResponse);//TODO:会员分添加记录
   rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse);//TODO:用户添加地址
   rpc UserApplication(UserApplicationRequest) returns (UserApplicationResponse);//TODO:用户申请发票
+  rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO: 用户领取优惠券
+}
+// TODO:用户领取优惠券
+message UserReceiveCouponRequest {
+  int64  UserId = 1;
+  int64  CouponId = 2;
+}
+
+message UserReceiveCouponResponse {
+  bool  Success = 1;
 }
 
 //TODO:用户申请发票
