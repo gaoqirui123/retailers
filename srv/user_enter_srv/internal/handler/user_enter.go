@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Apply TODO:商家申请店铺
 func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
 	ue := model.UserEnter{
 		Uid:          int(in.UeId),
@@ -34,6 +35,7 @@ func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResp
 	return &user_enter.UserEnterApplyResponse{Greet: true}, nil
 }
 
+// AddProduct TODO:商家发布商品
 func AddProduct(in *user_enter.AddProductRequest) (*user_enter.AddProductResponse, error) {
 	p := model.Product{
 		MerId:     in.MerId,
@@ -54,7 +56,7 @@ func AddProduct(in *user_enter.AddProductRequest) (*user_enter.AddProductRespons
 	return &user_enter.AddProductResponse{Greet: true}, nil
 }
 
-// AddCombinationProduct 商家发布拼团商品
+// AddCombinationProduct TODO:商家发布拼团商品
 func AddCombinationProduct(in *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
 	p := model.Product{}
 	product, err := p.GetProductById(in.ProductId, 0)
@@ -161,6 +163,8 @@ func InvoiceList(in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResp
 		List: lists,
 	}, nil
 }
+
+// DelProduct TODO:下架商品
 func DelProduct(in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
 	p := model.Product{}
 	product, err := p.GetProductById(in.MerId, in.Pid)
@@ -181,6 +185,7 @@ func DelProduct(in *user_enter.DelProductRequest) (*user_enter.DelProductRespons
 	return &user_enter.DelProductResponse{Greet: true}, nil
 }
 
+// Register TODO:商家注册账号
 func Register(in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
 	m := model.Merchant{
 		MerchantAccount:  in.Account,
@@ -212,6 +217,7 @@ func Register(in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterReg
 	return &user_enter.UserEnterRegisterResponse{Greet: true}, nil
 }
 
+// Login TODO:商家账号登录
 func Login(in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResponse, error) {
 	m := model.Merchant{
 		MerchantAccount:  in.Account,

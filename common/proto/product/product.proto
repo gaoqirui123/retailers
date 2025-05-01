@@ -28,7 +28,7 @@ message JoinGroupBuyingRequest {
   string PinkId =2;
 }
 message JoinGroupBuyingResponse {
-  bool Success = 1;
+  string Success = 1;
 }
 
 //TODO:用户发起拼团
@@ -38,6 +38,6 @@ message GroupBuyingRequest {
   int64 Num =3;
 }
 message GroupBuyingResponse {
-  bool Success = 1;
+  string Success = 1;
 }
 

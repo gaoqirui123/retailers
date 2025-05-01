@@ -3,6 +3,7 @@ package handler
 import (
 	"common/global"
 	"common/model"
+	"common/pkg"
 	"common/proto/product"
 	"context"
 	"encoding/json"
@@ -102,10 +103,13 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	if err != nil {
 		return nil, err
 	}
-	return &product.GroupBuyingResponse{Success: true}, nil
+	pay := pkg.NewPay()
+	sprintf := fmt.Sprintf("%.2f", totalPrice)
+	s := pay.Pay(combination.Title, strconv.Itoa(pinkId), sprintf)
+	return &product.GroupBuyingResponse{Success: s}, nil
 }
 
-// JoinGroupBuying 用户参与拼团
+// JoinGroupBuying TODO: 用户参与拼团
 func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyingResponse, error) {
 	ctx := context.Background()
 	// 检查拼团是否存在
@@ -153,7 +157,6 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 	if err = global.Rdb.Set(ctx, key, pinkJSON, time.Hour).Err(); err != nil {
 		return nil, fmt.Errorf("更新拼团信息到 Redis 失败: %w", err)
 	}
-
 	// 更新拼团的状态，检查拼团是否完成1进行中2已完成3未完成
 	if pink.CurrentNum == pink.People {
 		err = pink.UpdateGroupStatus(key, 2)
@@ -162,5 +165,8 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 		}
 		return nil, fmt.Errorf("更新拼团状态失败:%w", err)
 	}
-	return &product.JoinGroupBuyingResponse{Success: true}, nil
+	pay := pkg.NewPay()
+	sprintf := fmt.Sprintf("%.2f", pink.Price)
+	s := pay.Pay(pink.OrderIdKey, pink.OrderId, sprintf)
+	return &product.JoinGroupBuyingResponse{Success: s}, nil
 }
