@@ -34,10 +34,12 @@ func (p *Pink) Create() error {
 
 // UpdateGroupStatus 更新拼团状态
 func (p *Pink) UpdateGroupStatus(key string, status int) error {
+	//从redis中获取数据
 	groupInfoJSON, err := global.Rdb.Get(context.Background(), key).Result()
 	if err != nil {
 		return err
 	}
+	//反序列化
 	if err = json.Unmarshal([]byte(groupInfoJSON), &p); err != nil {
 		return err
 	}

@@ -36,3 +36,17 @@ func JoinGroupBuying(ctx context.Context, in *product.JoinGroupBuyingRequest) (*
 		return client.JoinGroupBuying(ctx, req)
 	})
 }
+
+// AddSeckillProduct 添加秒杀商品
+func AddSeckillProduct(ctx context.Context, in *product.AddSeckillProductRequest) (*product.AddSeckillProductResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.AddSeckillProductRequest) (*product.AddSeckillProductResponse, error) {
+		return client.AddSeckillProduct(ctx, req)
+	})
+}
+
+// ReverseStock 秒杀后反还剩余的商品
+func ReverseStock(ctx context.Context, in *product.ReverseStockRequest) (*product.ReverseStockResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.ReverseStockRequest) (*product.ReverseStockResponse, error) {
+		return client.ReverseStock(ctx, req)
+	})
+}

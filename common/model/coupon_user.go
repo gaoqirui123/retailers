@@ -20,3 +20,7 @@ type CouponUser struct {
 func (c *CouponUser) GetCouponIdBy(id int64) error {
 	return global.DB.Debug().Table("coupon_user").Where("id = ?", id).Limit(1).Find(&c).Error
 }
+
+func (c *CouponUser) AddCouponUser() error {
+	return global.DB.Debug().Table("coupon_user").Create(&c).Error
+}

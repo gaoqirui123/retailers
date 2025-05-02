@@ -4,7 +4,7 @@ package user_enter;
 option go_package = ".;user_enter";
 
 message UserEnterApplyRequest {
-  int64 Uid =1;// 用户ID
+  int64 UeId =1;// 商户ID
   string Province =2; // 商户所在省
   string City =3; // 商户所在市
   string District =4; // 商户所在区
@@ -15,7 +15,7 @@ message UserEnterApplyRequest {
 }
 
 message UserEnterApplyResponse {
-  string greet = 1;
+  bool greet = 1;
 }
 message UserEnterRegisterRequest {
   string Account =1;
@@ -25,7 +25,7 @@ message UserEnterRegisterRequest {
 }
 
 message UserEnterRegisterResponse {
-  string greet = 1;
+  bool greet = 1;
 }
 message UserEnterLoginRequest {
   string Account =1;
@@ -49,7 +49,7 @@ message AddProductRequest {
 }
 
 message AddProductResponse {
-  string greet = 1;
+  bool greet = 1;
 }
 message AddCombinationProductRequest {
   int64 MerId = 1; // 商户ID
@@ -70,7 +70,7 @@ message AddCombinationProductRequest {
 }
 
 message AddCombinationProductResponse {
-  string greet = 1;
+  bool greet = 1;
 }
 //TODO:审核发票
 message ProcessInvoiceRequest {
@@ -78,10 +78,11 @@ message ProcessInvoiceRequest {
   int64  Uid =2;
   int64 Status =3;
   string Dis =4;
+  int64 OrderId =5;
 }
 
 message ProcessInvoiceResponse {
-  string greet = 1;
+  bool greet = 1;
 }
 //TODO:下架商品
 message DelProductRequest {
