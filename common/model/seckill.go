@@ -45,7 +45,7 @@ func (s *Seckill) AddSeckillProduct() error {
 }
 
 func (s *Seckill) GetSeckillIdBY(seckillId int64) error {
-	return global.DB.Debug().Table("seckill").Where("id = ? and is_del = ?", seckillId, 0).Limit(1).Find(&s).Error
+	return global.DB.Debug().Table("seckill").Where("id = ? and is_del = 0", seckillId).Limit(1).Find(&s).Error
 }
 
 func (s *Seckill) DelSeckill(seckillId int64) error {

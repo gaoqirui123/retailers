@@ -24,3 +24,7 @@ func (c *CouponUser) GetCouponIdBy(id int64) error {
 func (c *CouponUser) AddCouponUser() error {
 	return global.DB.Debug().Table("coupon_user").Create(&c).Error
 }
+
+func (c *CouponUser) GetUserCouponIdBy(couponId int64, userId int64) error {
+	return global.DB.Debug().Table("coupon_user").Where("cid = ? and uid = ?", couponId, userId).Limit(1).Find(&c).Error
+}

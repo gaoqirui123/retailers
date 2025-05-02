@@ -66,7 +66,7 @@ func (p *Product) GetProductById(productId int64, pid int64) (result *Product, e
 }
 
 func (p *Product) ReverseProductStock(productId, stock int64) error {
-	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("good_stock", gorm.Expr("good_stock + ?", stock)).Error
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("stock", gorm.Expr("stock + ?", stock)).Error
 }
 func (p *Product) UpdateStatus(status int64, pid int64) error {
 	return global.DB.Table("product").Where("id = ?", pid).Update("is_show", status).Error

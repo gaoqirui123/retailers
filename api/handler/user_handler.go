@@ -264,6 +264,10 @@ func UserReceiveCoupon(c *gin.Context) {
 		CouponId: data.CouponId,
 	})
 	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	if application.Success == false {
 		response.RespError(c, "用户领取优惠券失败")
 		return
 	}
