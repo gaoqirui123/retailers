@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"common/cron"
 	"common/global"
 	"common/model"
 	"common/pkg"
 	"common/proto/order"
+	"common/utlis"
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
@@ -39,6 +41,17 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	if users.Status == 0 {
 		return nil, errors.New("用户账号异常")
 	}
+	////判断redis库存和mysql是否一致，不一致则同步
+	//val := utlis.GetProductRedis(int(in.ProductId))
+	//if val != int64(s.StartStock) {
+	//	num := int64(s.StartStock) - val
+	//	utlis.ProductCreateRedis(int(num), int(s.Id))
+	//}
+	////判断redis库存是否添加成功
+	//get := utlis.GetProductRedis(int(s.Id))
+	//if get != int64(s.StartStock) {
+	//	return nil, errors.New("redis库存是否添加失败")
+	//}
 	// 判断优惠券
 	cou, err := JudgeCouponStatus(in.CouponId)
 	if err != nil {
@@ -63,11 +76,18 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	gainIntegral := payPrice * 0.02
 	// 开启事务
 	tx := global.DB.Begin()
-	err = pro.UpdateProductStock(in.ProductId, in.Num)
-	if err != nil {
+	// 扣减redis中的商品库存
+	update := utlis.UpdateProductRedis(in.ProductId, in.Num)
+	if update == false {
 		tx.Rollback()
-		return nil, errors.New("商品库存扣减失败")
+		return nil, errors.New("redis商品库存扣减失败")
 	}
+	// 扣减mysql中的商品库存
+	//err = pro.UpdateProductStock(in.ProductId, in.Num)
+	//if err != nil {
+	//	tx.Rollback()
+	//	return nil, errors.New("商品库存扣减失败")
+	//}
 	orderSn := uuid.New().String() + strconv.Itoa(int(in.ProductId))
 	orders := &model.Order{
 		OrderSn:        orderSn,
@@ -118,6 +138,10 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	//起一个定时任务，查询30分钟后是否未支付，未支付的不扣库存
+	cron.OrderCron(orderSn)
+
 	price := strconv.FormatFloat(orders.PayPrice, 'f', 2, 64)
 	payUrl := pkg.NewPay().Pay(pro.StoreName, orderSn, price)
 	return &order.AddOrderResponse{PayUrl: payUrl}, nil
@@ -150,7 +174,6 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 	if err != nil {
 		return nil, err
 	}
-
 	o := &model.Order{}
 	od := o.GetOrderSnUserId(in.OrderSn)
 	//查找不到消费用户
