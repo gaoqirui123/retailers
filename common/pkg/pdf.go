@@ -1,47 +1,70 @@
 package pkg
 
 import (
+	"common/model"
 	"fmt"
 	"github.com/jung-kurt/gofpdf"
+	"log"
 )
 
-// AddPdf 调用 GeneratePdf 生成 PDF 文件
-func AddPdf() error {
-	filename := "invoice_list.pdf"
-	err := GeneratePdf(filename)
-	if err != nil {
-		return fmt.Errorf("生成 PDF 文件 %s 时出错: %w", filename, err)
-	}
-	return nil
-}
+// GenerateInvoiceImage 生成包含发票信息的图片并保存为PDF到指定位置
+func GenerateInvoiceImage(invoices *model.InvoiceApplication) error {
 
-// GeneratePdf 生成 PDF 文件，包含文本和图片
-func GeneratePdf(filename string) error {
-	// 创建一个新的 PDF 对象
+	// 创建一个新的PDF对象
 	pdf := gofpdf.New("P", "mm", "A4", "")
-	// 添加一个新页面
+	// 添加一个页面
 	pdf.AddPage()
 	// 设置字体
-	pdf.SetFont("Arial", "B", 16)
-	// 添加文本内容
-	pdf.CellFormat(190, 7, "Welcome to topgoer.com", "0", 0, "CM", false, 0, "")
+	pdf.SetFont("./Dengl.ttf", "B", 16)
 
-	// 添加图片
-	imagePath := "topgoer.png"
-	pdf.ImageOptions(
-		imagePath,
-		80, 20,
-		0, 0,
-		false,
-		gofpdf.ImageOptions{ImageType: "PNG", ReadDpi: true},
-		0,
-		"",
-	)
-	// 保存并关闭 PDF 文件
-	err := pdf.OutputFileAndClose(filename)
+	// 写入标题
+	pdf.Cell(40, 10, "发票")
+	pdf.Ln(20)
+
+	// 发票信息
+	identificationNumber := invoices.TaxpayerIdentificationNumber
+	pdf.Cell(40, 10, "发票编号: "+identificationNumber)
+	pdf.Ln(10)
+	reviewTime := invoices.ReviewTime.Format("20060102150405")
+	pdf.Cell(40, 10, "开票日期: "+reviewTime)
+	pdf.Ln(10)
+	title := invoices.InvoiceTitle
+	pdf.Cell(40, 10, "客户名称: "+title)
+	pdf.Ln(10)
+
+	// 表格头部
+	pdf.SetFont("C:\\Users\\lenovo\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Dengl.ttf", "B", 12)
+	pdf.Cell(40, 10, "商品名称")
+	pdf.Cell(40, 10, "数量")
+	pdf.Cell(40, 10, "单价")
+	pdf.Cell(40, 10, "金额")
+	pdf.Ln(10)
+	invoiceAmount := invoices.InvoiceAmount
+	sprintf := fmt.Sprintf("%.2f", invoiceAmount)
+
+	// 表格内容
+	pdf.SetFont("C:\\Users\\lenovo\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Dengl.ttf", "", 12)
+	pdf.Cell(40, 10, "商品1")
+	pdf.Cell(40, 10, "2")
+	pdf.Cell(40, 10, "100.00")
+	pdf.Cell(40, 10, sprintf)
+	pdf.Ln(10)
+
+	// 总计
+	pdf.SetFont("C:\\Users\\lenovo\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Dengl.ttf", "B", 12)
+	pdf.Cell(40, 10, "总计金额: "+sprintf)
+
+	// 保存PDF文件
+	/*	err := pdf.OutputFileAndClose("invoice.pdf")
+		if err != nil {
+			log.Fatalf("生成PDF文件时出错: %v", err)
+		}*/
+
+	// 保存PDF到指定位置，使用完整的文件名
+	pdfPath := "D:\\gocode\\src\\retailers\\common\\picture\\invoice_audit_result.pdf"
+	err := pdf.OutputFileAndClose(pdfPath)
 	if err != nil {
-		return fmt.Errorf("保存 PDF 文件 %s 时出错: %w", filename, err)
+		log.Fatalf("生成PDF文件时出错: %v", err)
 	}
-
 	return nil
 }

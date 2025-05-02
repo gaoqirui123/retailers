@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="GoORMHelperCache">
+<<<<<<< HEAD
     <option name="schemaMapping">
       <map>
         <entry key="AddCart">
@@ -3424,5 +3425,8 @@
       </map>
     </option>
     <option name="lastTimeChecked" value="1746147862538" />
+=======
+    <option name="lastTimeChecked" value="1746149670387" />
+>>>>>>> f2d9488b7a1c020e8ffa6da1c5bd9e39a5124112
   </component>
 </project>

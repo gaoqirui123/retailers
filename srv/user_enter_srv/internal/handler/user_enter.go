@@ -5,12 +5,15 @@ import (
 	"common/pkg"
 	"common/proto/user_enter"
 	"errors"
+	"log"
 	"regexp"
+	"time"
 )
 
+// Apply TODO:商家申请店铺
 func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
 	ue := model.UserEnter{
-		Uid:          int(in.Uid),
+		Uid:          int(in.UeId),
 		Province:     in.Province,
 		City:         in.City,
 		District:     in.District,
@@ -29,9 +32,10 @@ func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResp
 	if err != nil {
 		return nil, err
 	}
-	return &user_enter.UserEnterApplyResponse{Greet: "申请成功，等待平台审核"}, nil
+	return &user_enter.UserEnterApplyResponse{Greet: true}, nil
 }
 
+// AddProduct TODO:商家发布商品
 func AddProduct(in *user_enter.AddProductRequest) (*user_enter.AddProductResponse, error) {
 	p := model.Product{
 		MerId:     in.MerId,
@@ -49,10 +53,10 @@ func AddProduct(in *user_enter.AddProductRequest) (*user_enter.AddProductRespons
 	if err != nil {
 		return nil, err
 	}
-	return &user_enter.AddProductResponse{Greet: "申请发布商品成功"}, nil
+	return &user_enter.AddProductResponse{Greet: true}, nil
 }
 
-// AddCombinationProduct 商家发布拼团商品
+// AddCombinationProduct TODO:商家发布拼团商品
 func AddCombinationProduct(in *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
 	p := model.Product{}
 	product, err := p.GetProductById(in.ProductId, 0)
@@ -85,7 +89,7 @@ func AddCombinationProduct(in *user_enter.AddCombinationProductRequest) (*user_e
 	if err != nil {
 		return nil, err
 	}
-	return &user_enter.AddCombinationProductResponse{Greet: "发布拼团商品成功"}, nil
+	return &user_enter.AddCombinationProductResponse{Greet: true}, nil
 }
 
 // ProcessInvoice TODO:商家审核用户的发票invoice申请
@@ -96,7 +100,7 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 	}
 	//查找用户是否有申请
 	i := model.InvoiceApplication{}
-	invoiceByUeId, err := i.GetInvoiceByUeId(in.Uid)
+	invoiceByUeId, err := i.GetInvoiceByUeId(in.Uid, in.OrderId)
 	if err != nil {
 		return nil, err
 	}
@@ -106,24 +110,33 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 	if err != nil {
 		return nil, err
 	}
+
 	// 更新发票申请状态
 	i = model.InvoiceApplication{}
 	if in.Dis == "" {
-		err = i.UpdateStatus(in.UeId, in.Uid, in.Status)
+		err = i.UpdateStatus(in.UeId, in.Uid, in.Status, in.OrderId, time.Now())
 		if err != nil {
 			return nil, errors.New("审核失败")
 		}
 	} else {
-		err = i.UpdateStatusDis(in.UeId, in.Uid, in.Status, in.Dis)
+		err = i.UpdateStatusDis(in.UeId, in.Uid, in.Status, in.Dis, in.OrderId, time.Now())
 		if err != nil {
 			return nil, errors.New("审核失败")
 		}
 	}
-
-	return &user_enter.ProcessInvoiceResponse{Greet: "审核完成"}, nil
+	id, _ := i.GetInvoiceByUeId(in.Uid, in.OrderId)
+	//发票审核成功后生成发票图片
+	err = pkg.GenerateInvoiceImage(id)
+	if err != nil {
+		return nil, err
+	}
+	if err != nil {
+		log.Fatalf("生成图片时出错: %v", err)
+	}
+	return &user_enter.ProcessInvoiceResponse{Greet: true}, nil
 }
 
-// InvoiceList TODO:商家审核用户的发票invoice申请
+// InvoiceList TODO:发票列表展示
 func InvoiceList(in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
 	ue := model.InvoiceApplication{}
 	var lists []*user_enter.InvoiceList
@@ -145,11 +158,13 @@ func InvoiceList(in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResp
 		list := ue.ConvertToInvoiceList(application)
 		lists = append(lists, &list)
 	}
-	pkg.AddPdf()
+
 	return &user_enter.InvoiceListResponse{
 		List: lists,
 	}, nil
 }
+
+// DelProduct TODO:下架商品
 func DelProduct(in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
 	p := model.Product{}
 	product, err := p.GetProductById(in.MerId, in.Pid)
@@ -170,6 +185,7 @@ func DelProduct(in *user_enter.DelProductRequest) (*user_enter.DelProductRespons
 	return &user_enter.DelProductResponse{Greet: true}, nil
 }
 
+// Register TODO:商家注册账号
 func Register(in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
 	m := model.Merchant{
 		MerchantAccount:  in.Account,
@@ -198,9 +214,10 @@ func Register(in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterReg
 	if err != nil {
 		return nil, errors.New("注册失败")
 	}
-	return &user_enter.UserEnterRegisterResponse{Greet: "注册成功"}, nil
+	return &user_enter.UserEnterRegisterResponse{Greet: true}, nil
 }
 
+// Login TODO:商家账号登录
 func Login(in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResponse, error) {
 	m := model.Merchant{
 		MerchantAccount:  in.Account,
