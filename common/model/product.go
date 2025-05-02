@@ -45,17 +45,18 @@ type Product struct {
 	Activity     string  `gorm:"column:activity;type:varchar(255);comment:活动显示排序1=秒杀，2=砍价，3=拼团;" json:"activity"`                          // 活动显示排序1=秒杀，2=砍价，3=拼团
 }
 
-func (p *Product) GetProductIdBy(id int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Find(&p).Error
+func (p *Product) GetProductIdBy(productId int64) error {
+	return global.DB.Debug().Table("product").Where("id = ?", productId).Limit(1).Find(&p).Error
 }
 
 func (p *Product) UpdateProductStock(id, num int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
 }
 
 func (p *Product) Add() error {
 	return global.DB.Debug().Table("product").Create(&p).Error
 }
+
 func (p *Product) GetProductById(productId int64, pid int64) (result *Product, err error) {
 	err = global.DB.Debug().Table("product").Where("mer_id = ?", productId).Where("id = ?", pid).Find(&result).Error
 	if err != nil {
@@ -64,6 +65,9 @@ func (p *Product) GetProductById(productId int64, pid int64) (result *Product, e
 	return
 }
 
+func (p *Product) ReverseProductStock(productId, stock int64) error {
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("good_stock", gorm.Expr("good_stock + ?", stock)).Error
+}
 func (p *Product) UpdateStatus(status int64, pid int64) error {
 	return global.DB.Table("product").Where("id = ?", pid).Update("is_show", status).Error
 }

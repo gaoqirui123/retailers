@@ -4,11 +4,37 @@ package product;
 option go_package = ".;product";
 
 service Product {
-  rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);// TODO:拼团商品列表展示
-  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO:用户发起拼团
-  rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO:用户参与拼团
+  rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);// TODO: 拼团商品列表展示
+  rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO: 用户发起拼团
+  rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO: 用户参与拼团
+  rpc AddSeckillProduct(AddSeckillProductRequest) returns (AddSeckillProductResponse);//TODO: 添加秒杀商品
+  rpc ReverseStock(ReverseStockRequest) returns (ReverseStockResponse);//TODO: 秒杀后反还剩余的商品
 }
 
+// TODO: 秒杀后反还剩余的商品
+message ReverseStockRequest {
+  int64  UserEnterId =1;
+  int64  SeckillId =2;
+}
+message ReverseStockResponse {
+  bool  Success = 1;
+}
+
+// TODO: 添加秒杀商品
+message AddSeckillProductRequest {
+  int64  UserEnterId =1;
+  int64  ProductId =2;
+  int64  Num = 3;
+  float  Price = 4;
+  string Description = 5;
+  string StartTime = 6;
+  string StopTime = 7;
+}
+message AddSeckillProductResponse {
+  int64 SeckillId = 1;
+}
+
+// TODO:拼团商品列表展示
 message CombinationListRequest {
 }
 
@@ -16,15 +42,15 @@ message CombinationListResponse {
   repeated CombinationList list =1;
 }
 message CombinationList{
-  string  Image =1;//图片
+  string Image =1;//图片
   string Title =2;//活动标题
-  int64 People =3;//参团人数
-  float Price =4;//价格
+  int64  People =3;//参团人数
+  float  Price =4;//价格
   int64  Stock =5;//库存
 }
 //TODO:用户参与拼团
 message JoinGroupBuyingRequest {
-  int64 Uid =1;
+  int64  Uid =1;
   string PinkId =2;
 }
 message JoinGroupBuyingResponse {
