@@ -10,7 +10,7 @@ func UserEnter(r *gin.RouterGroup) {
 	ue := r.Group("/userEnter")
 	{
 		ue.POST("/register", handler.Register) //商户注册
-		ue.POST("/login", handler.Login)       //商户注册
+		ue.POST("/login", handler.Login)       //商户登录
 		ue.Use(pkg.JWTAuth("merchant"))
 		ue.POST("/apply", handler.Apply)                           //商户申请
 		ue.POST("/add/product", handler.AddProduct)                //商户发布商品
@@ -19,5 +19,4 @@ func UserEnter(r *gin.RouterGroup) {
 		ue.POST("/invoice/process", handler.ProcessInvoice)        //审核发票申请
 		ue.GET("/invoice/list", handler.InvoiceList)               //发票列表展示
 	}
-
 }
