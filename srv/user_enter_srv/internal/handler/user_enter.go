@@ -1,11 +1,13 @@
 package handler
 
 import (
+	"common/global"
 	"common/model"
 	"common/pkg"
 	"common/proto/user_enter"
 	"errors"
 	"regexp"
+	"strconv"
 )
 
 func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
@@ -221,4 +223,40 @@ func Login(in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResp
 		return nil, err
 	}
 	return &user_enter.UserEnterLoginResponse{Greet: token}, nil
+}
+
+func BatchReleaseOfProducts(in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
+	// 开启事务
+	transaction := global.DB.Begin()
+	if transaction.Error != nil {
+		return nil, transaction.Error
+	}
+
+	for _, productData := range in.List {
+		p := model.Product{
+			MerId:       productData.MerId,
+			Image:       productData.Image,
+			SliderImage: productData.SliderImage,
+			StoreName:   productData.StoreName,
+			CateId:      strconv.FormatInt(productData.CateId, 10),
+			IsShow:      int64(int(productData.IsShow)),
+			Price:       float64(productData.Price),
+			Postage:     float64(productData.Postage),
+			UnitName:    productData.UnitName,
+		}
+
+		// 在事务中添加商品
+		if err := p.Add(); err != nil {
+			// 回滚事务
+			transaction.Rollback()
+			return nil, err
+		}
+	}
+
+	// 提交事务
+	if err := transaction.Commit().Error; err != nil {
+		return nil, err
+	}
+
+	return &user_enter.BatchReleaseOfProductsResponse{Success: "批量添加商品成功"}, nil
 }

@@ -58,3 +58,16 @@ type DelProduct struct {
 type InvoiceList struct {
 	Status int64 `json:"status" xml:"status" form:"status"`
 }
+
+// 商品批量发布
+type BatchReleaseOfProducts struct {
+	MerId       int64   `json:"mer_id" xml:"mer_id" form:"mer_id"`
+	Image       string  `json:"image" xml:"image" form:"image"`
+	SliderImage string  `json:"slider_image" xml:"slider_image" form:"slider_image"`
+	StoreName   string  `json:"store_name" xml:"store_name" form:"store_name"`
+	CateId      int64   `json:"cate_id" xml:"cate_id" form:"cate_id"`
+	IsShow      int64   `json:"is_show" xml:"is_show" form:"is_show"`
+	Price       float64 `json:"price" xml:"price" form:"price"`
+	Postage     float64 `json:"postage" xml:"postage" form:"postage"`
+	UnitName    string  `json:"unit_name" xml:"unit_name" form:"unit_name"`
+}

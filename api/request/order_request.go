@@ -17,3 +17,6 @@ type AddOrder struct {
 type OrderList struct {
 	OrderStatus int64 `json:"orderStatus" form:"orderStatus"`
 }
+type QrCodeVerification struct {
+	OrderId int64 `json:"order_id" form:"order_id"`
+}

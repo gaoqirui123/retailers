@@ -90,3 +90,33 @@ func (u *User) UpdatedSpreadUid(uid int, sId string) bool {
 	}
 	return true
 }
+
+// 查找uid所在位置
+func (u *User) FindDoneOrUpUid(id int64) (User, error) {
+	var find User
+	err := global.DB.Debug().Table("user").Where("uid = ?", id).Find(&find).Error
+	if err != nil {
+		return User{}, err
+	}
+	return find, nil
+}
+
+// 查找下级
+func (u *User) FindDone(spreadUid int64) []User {
+	var done []User
+	err := global.DB.Debug().Table("user").Where("spread_uid = ?", spreadUid).Find(&done).Error
+	if err != nil {
+		return nil
+	}
+	return done
+}
+
+// 查找上级
+func (u *User) FindUp(uid uint32) []User {
+	var up []User
+	err := global.DB.Debug().Table("user").Where("uid = ?", uid).Find(&up).Error
+	if err != nil {
+		return nil
+	}
+	return up
+}

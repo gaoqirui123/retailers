@@ -18,6 +18,7 @@ func UserEnter(r *gin.RouterGroup) {
 		ue.POST("/update/status", handler.UpdateStatus)            //发布下架商品
 		ue.POST("/invoice/process", handler.ProcessInvoice)        //审核发票申请
 		ue.GET("/invoice/list", handler.InvoiceList)               //发票列表展示
+		//ue.POST("/BatchReleaseOfProducts", handler.BatchReleaseOfProducts) //发票列表展示
 	}
 
 }

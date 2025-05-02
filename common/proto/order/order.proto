@@ -8,6 +8,16 @@ service Order {
   rpc PayCallback(PayCallbackRequest) returns (PayCallbackResponse); // TODO:支付回调
   rpc OrderList(OrderListRequest) returns (OrderListResponse); // TODO:订单列表查询
   rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO:用户领取优惠券
+  rpc QrCodeVerification(QrCodeVerificationRequest) returns (QrCodeVerificationResponse); // TODO:二维码核销
+}
+// TODO:二维码核销
+message QrCodeVerificationRequest {
+  int64 OrderId = 1;
+  int64 UserId = 2;
+}
+
+message QrCodeVerificationResponse {
+  bool  Success = 1;
 }
 
 // TODO:用户领取优惠券

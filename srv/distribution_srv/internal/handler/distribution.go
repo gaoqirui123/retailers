@@ -30,11 +30,6 @@ func GenerateInvitationCode(in *distribution.GenerateInvitationCodeRequest) (*di
 		str := utlis.GenerateInviteCode()
 		url = str
 
-	case 2:
-		//img, _ := strconv.Atoi(id.Avatar)
-		//utlis.ChatUrl(in.UserId, int64(img))
-		url = "成功"
-
 	default:
 		url = "请选择邀请码方式"
 
@@ -176,4 +171,54 @@ func TheCharts(in *distribution.TheChartsRequest) (*distribution.TheChartsRespon
 		})
 	}
 	return &distribution.TheChartsResponse{List: sli}, nil
+}
+
+// 查看下级用户
+func LookDoneUp(in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+
+	u := model.User{}
+	done, err := u.FindDoneOrUpUid(in.Id)
+
+	if err != nil {
+		return nil, fmt.Errorf("%w", err)
+	}
+
+	d := u.FindDone(done.SpreadUid)
+
+	var doneList []*distribution.UserList
+	for _, eb := range d {
+		doneList = append(doneList, &distribution.UserList{
+			Uid:        uint32(eb.Uid),
+			Account:    eb.Account,
+			SpreadUid:  uint32(eb.SpreadUid),
+			UserType:   eb.UserType,
+			IsPromoter: eb.IsPromoter,
+		})
+	}
+	return &distribution.LookDoneOrUpResp{List: doneList}, nil
+}
+
+// 查看上级用户
+func LookUp(in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+
+	u := model.User{}
+	up, err := u.FindDoneOrUpUid(in.Id)
+
+	if err != nil {
+		return nil, fmt.Errorf("%w", err)
+	}
+	uu := u.FindUp(uint32(up.SpreadUid))
+
+	var UpList []*distribution.UserList
+	for _, eb := range uu {
+		UpList = append(UpList, &distribution.UserList{
+			Uid:        uint32(eb.Uid),
+			Account:    eb.Account,
+			SpreadUid:  uint32(eb.SpreadUid),
+			UserType:   eb.UserType,
+			IsPromoter: eb.IsPromoter,
+		})
+	}
+	return &distribution.LookDoneOrUpResp{List: UpList}, nil
+
 }

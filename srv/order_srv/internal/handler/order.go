@@ -5,9 +5,12 @@ import (
 	"common/model"
 	"common/pkg"
 	"common/proto/order"
+	"common/utlis"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
+	"os"
 	"strconv"
 	"time"
 )
@@ -144,10 +147,12 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 	orders := model.Order{}
 
 	status, _ := strconv.Atoi(in.Status)
+
 	if err := orders.UpdateOrderStatus(in.OrderSn, status); err != nil {
 		return nil, err
 	}
 	timeData := time.Now().AddDate(0, 0, 0).Format("2006-01-02 15:04:05")
+
 	err := orders.AddOrderPayTime(in.OrderSn, timeData)
 	if err != nil {
 		return nil, err
@@ -161,15 +166,18 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 	if od.Id == 0 {
 		return &order.PayCallbackResponse{Success: false}, err
 	}
-	//查找用户
+
+	//查找用户等级
+
 	u := model.User{}
 	id, err := u.FindId(int(od.Uid))
 	if err != nil {
 		return &order.PayCallbackResponse{Success: false}, err
 	}
 	var price float64
+
+	//查找配置的返利等级
 	dl := model.DistributionLevel{}
-	fmt.Println(id)
 
 	disLevel := dl.FindDistributionLevel(int(id.Level))
 
@@ -343,4 +351,36 @@ func OrderLists(list []*model.Order) ([]*order.OrderList, error) {
 		})
 	}
 	return orderList, nil
+}
+
+func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerificationResponse, error) {
+	o := &model.Order{}
+	id, err := o.FindId(in.OrderId)
+	if err != nil {
+		return nil, err
+	}
+
+	// 将订单信息序列化为 JSON 字符串
+	orderInfo, err := json.Marshal(id)
+	if err != nil {
+		return &order.QrCodeVerificationResponse{Success: false}, err
+	}
+
+	// 指定具体的文件名
+	filePath := uuid.New().String() + strconv.Itoa(int(in.OrderId)) + ".jpeg"
+
+	// 确保目录存在
+	dir := "../../common/img/"
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			return nil, fmt.Errorf("failed to create directory: %w", err)
+		}
+	}
+
+	err = utlis.GenerateQRCode(string(orderInfo), filePath)
+	if err != nil {
+		return &order.QrCodeVerificationResponse{Success: false}, err
+	}
+	return &order.QrCodeVerificationResponse{Success: true}, nil
 }
