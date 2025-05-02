@@ -106,6 +106,9 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	pay := pkg.NewPay()
 	sprintf := fmt.Sprintf("%.2f", totalPrice)
 	s := pay.Pay(combination.Title, strconv.Itoa(pinkId), sprintf)
+	// 生成淘口令
+	taokouling := pkg.GenerateTaokouling(p)
+	fmt.Println("生成的淘口令:", taokouling)
 	return &product.GroupBuyingResponse{Success: s}, nil
 }
 

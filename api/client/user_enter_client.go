@@ -43,24 +43,28 @@ func AddProduct(ctx context.Context, in *user_enter.AddProductRequest) (*user_en
 	})
 }
 
-// AddCombinationProduct 添加组合商品
+// AddCombinationProduct 发布拼团商品
 func AddCombinationProduct(ctx context.Context, in *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
 	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.AddCombinationProductRequest) (*user_enter.AddCombinationProductResponse, error) {
 		return client.AddCombinationProduct(ctx, req)
 	})
 }
 
-// DelProduct 添加组合商品
+// DelProduct 下架商品
 func DelProduct(ctx context.Context, in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
 	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
 		return client.DelProduct(ctx, req)
 	})
 }
+
+// ProcessInvoice 审核发票
 func ProcessInvoice(ctx context.Context, in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
 	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessInvoiceResponse, error) {
 		return client.ProcessInvoice(ctx, req)
 	})
 }
+
+// InvoiceList 发票列表展示
 func InvoiceList(ctx context.Context, in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
 	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
 		return client.InvoiceList(ctx, req)

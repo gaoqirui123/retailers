@@ -633,6 +633,13 @@
             </set>
           </value>
         </entry>
+        <entry key="GroupBuying">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/pkg/taokouling.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="GroupBuyingRequest">
           <value>
             <set>
@@ -1568,7 +1575,7 @@
         <entry key="file://$PROJECT_DIR$/api/client/user_enter_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745804752869" />
+              <option name="lastModified" value="1746150775727" />
             </ScannedPath>
           </value>
         </entry>
@@ -2379,6 +2386,13 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/common/pkg/taokouling.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746154376414" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/pkg/weeklyCommission.go">
           <value>
             <ScannedPath>
@@ -2888,7 +2902,7 @@
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746080288287" />
+              <option name="lastModified" value="1746151791790" />
             </ScannedPath>
           </value>
         </entry>
@@ -3082,6 +3096,7 @@
         <entry key="get_cart_list_request" value="GetCartListRequest" />
         <entry key="get_cart_list_response" value="GetCartListResponse" />
         <entry key="group_buy" value="GroupBuy" />
+        <entry key="group_buying" value="GroupBuying" />
         <entry key="group_buying_request" value="GroupBuyingRequest" />
         <entry key="group_buying_response" value="GroupBuyingResponse" />
         <entry key="improve_user" value="ImproveUser" />
