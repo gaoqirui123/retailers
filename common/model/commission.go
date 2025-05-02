@@ -30,9 +30,6 @@ func (n *Commission) CreateCommission() bool {
 	return true
 }
 
-type StructCommission struct {
-}
-
 // 计算用户总佣金并按佣金从高到低排序
 func (n *Commission) CalculateAndRankTotalCommission() []struct {
 	ToUserId    uint32  `json:"to_user_id"`

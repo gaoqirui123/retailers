@@ -154,7 +154,9 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 	}
 
 	o := &model.Order{}
+
 	od := o.GetOrderSnUserId(in.OrderSn)
+
 	//查找不到消费用户
 	if od.Id == 0 {
 		return &order.PayCallbackResponse{Success: false}, err

@@ -1,4 +1,4 @@
-package model
+package article
 
 import (
 	"time"
@@ -11,11 +11,3 @@ type ArticleContent struct {
 	CreatedTime time.Time `bson:"created_time,omitempty"` // 添加时间
 	IsDel       int64     `bson:"is_del,omitempty"`       // 1未删2已删
 }
-
-//func (c *ArticleContent) CreateEbArticleContent() bool {
-//	err := global.DB.Debug().Table("article_content").Create(&c).Error
-//	if err != nil {
-//		return false
-//	}
-//	return true
-//}

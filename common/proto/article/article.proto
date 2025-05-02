@@ -13,7 +13,75 @@ service Article {
   rpc DeleteArticle(DeleteRequest) returns (DeleteResponse); //删除文章管理
   //  rpc DeleteArticleContent(DeleteRequest) returns (DeleteResponse); //删除文章类容
   rpc DeleteArticleCategory(DeleteRequest) returns (DeleteResponse); //删除文章分类
+  rpc PostAComment(PostACommentRequest) returns (PostACommentResponse); //发布评论
+  rpc ArticleThumbsUp(ArticleThumbsUpRequest) returns (ArticleThumbsUpResponse); //文章点赞
+  rpc DeleteComment(DeleteCommentRequest) returns (DeleteCommentResponse); //删除评论
+  rpc TopLikeArticleRanking(TopLikeArticleRankingRequest) returns (TopLikeArticleRankingResponse); //高赞文章排序
+
 }
+//高赞文章排序
+message TopLikeArticleRankingRequest {
+  int64 Top=1;
+}
+
+message TopLikeArticleRankingResponse {
+  repeated Ranking List = 1;
+}
+message Ranking{
+  uint32 id=1;//id
+  uint32 cid=2;//分类id
+  string title=3;//文章标题
+  string author=4;//文章作者
+  string imageInput=5;//文章图片
+  string synopsis=6;//文章简介
+  string hide=7;//是否隐藏
+  uint32 LikeCount=8;//点赞数量
+}
+
+//  删除评论
+message DeleteCommentRequest {
+  int64 uid=1;//用户id
+  int64 ArticleID=2;//文章 ID
+  int64 CommentID=3;//评论 ID
+
+}
+
+message DeleteCommentResponse {
+  string success = 1;
+}
+
+
+
+
+//发布评论
+message ArticleThumbsUpRequest {
+  int64 uid=1;//用户id
+  int64 ArticleID=2;//文章 ID
+  int64 Button=5;//1点赞2取消
+
+
+
+}
+message ArticleThumbsUpResponse {
+  string success = 1;
+}
+
+
+//发布评论
+message PostACommentRequest {
+  int64 uid=1;//用户id
+  int64 ArticleID=2;//文章 ID
+  string Content=3;//评论内容
+  int64 Pid=4;//父级评论 ID
+  int64 ReplyUserID=5;//被回复的用户 ID
+
+
+
+}
+message PostACommentResponse {
+  string success = 1;
+}
+
 
 //文章管理添加
 message ArticleAddRequest {

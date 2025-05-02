@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"retailers/api/client"
-	"retailers/api/request"
-	"retailers/api/response"
-	"retailers/common/proto/user_enter"
+	"api/client"
+	"api/request"
+	"api/response"
+	"common/proto/user_enter"
+	"github.com/gin-gonic/gin"
 )
 
 func Apply(c *gin.Context) {

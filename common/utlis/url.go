@@ -2,123 +2,77 @@ package utlis
 
 import (
 	"fmt"
-	"github.com/nfnt/resize"
 	"github.com/skip2/go-qrcode"
 	"image"
+	"image/draw"
 	"image/png"
-	"io"
-	"net/http"
 	"os"
-	"path/filepath"
-	"strconv"
 )
 
-// downloadImage 从网络下载图片并保存到本地
-func downloadImage(url, filePath string) error {
-	// 发起 HTTP 请求下载图片
-	resp, err := http.Get(url)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	// 检查 HTTP 响应状态
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("failed to download image: %s", resp.Status)
-	}
-
-	// 将图片保存到本地文件
-	outFile, err := os.Create(filePath)
-	if err != nil {
-		return err
-	}
-	defer outFile.Close()
-
-	_, err = io.Copy(outFile, resp.Body)
-	return err
+// resizeImage 函数用于调整图像大小
+func resizeImage(img image.Image, width, height int) image.Image {
+	resized := image.NewRGBA(image.Rect(0, 0, width, height))
+	//draw.NearestNeighbor.Scale(resized, resized.Bounds(), img, img.Bounds(), draw.Over, nil)
+	return resized
 }
 
-// ChatUrl 生成带有用户头像的二维码图片，并返回图片的访问链接
-func ChatUrl(uid int64, imgURL string) string {
-	// 将用户ID转换为字符串，用于生成二维码内容
-	content := strconv.FormatInt(uid, 10)
+const KeyOrder = "user_%d:img_%d"
 
-	// 生成基础二维码
-	qr, err := qrcode.New(content, qrcode.Medium)
+func ChatUrl(uid, str int64) {
+	// 要编码到二维码中的内容
+	content := fmt.Sprintf(KeyOrder, uid, str)
+	// 二维码的纠错级别，这里选择高纠错级别以保证添加头像后仍能正常扫描
+	errorCorrectionLevel := qrcode.High
+	// 二维码的边长（像素）
+	size := 256
+
+	// 生成二维码
+	qr, err := qrcode.New(content, errorCorrectionLevel)
 	if err != nil {
-		return fmt.Sprintf("Failed to generate QR code: %v", err)
+		panic(err)
 	}
+	qrImg := qr.Image(size)
 
-	// 创建二维码图片
-	qrCodeImage := qr.Image(256)
-
-	// 创建画布
-	bounds := qrCodeImage.Bounds()
-	outImage := image.NewRGBA(bounds)
-
-	// 将二维码绘制到画布上
-	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			outImage.Set(x, y, qrCodeImage.At(x, y))
-		}
-	}
-
-	// 下载头像图片
-	tempLogoPath := "D:\\gopath\\src\\retailers\\srv\\distribution_srv\\img\\" + "temp_logo.png"
-	if err := downloadImage(imgURL, tempLogoPath); err != nil {
-		return fmt.Sprintf("Failed to download logo image: %v", err)
-	}
-
-	// 加载用户头像
-	logoFile, err := os.Open(tempLogoPath)
+	// 打开头像文件，这里假设头像文件名为 avatar.jpg，你可按需修改
+	avatarFile, err := os.Open(fmt.Sprintf(KeyOrder, uid, str))
 	if err != nil {
-		return fmt.Sprintf("Failed to open logo image: %v", err)
+		panic(err)
 	}
-	defer logoFile.Close()
+	defer avatarFile.Close()
 
-	logoImage, _, err := image.Decode(logoFile)
+	// 解码头像图片
+	avatarImg, _, err := image.Decode(avatarFile)
 	if err != nil {
-		return fmt.Sprintf("Failed to decode logo image: %v", err)
+		panic(err)
 	}
 
-	// 调整头像大小
-	logoImage = resize.Resize(64, 64, logoImage, resize.Lanczos3)
+	// 调整头像大小，这里将头像大小设置为二维码边长的 20%
+	avatarWidth := size / 5
+	avatarHeight := size / 5
+	resizedAvatar := resizeImage(avatarImg, avatarWidth, avatarHeight)
 
-	// 计算头像在二维码中的位置
-	logoX := (bounds.Max.X - logoImage.Bounds().Max.X) / 2
-	logoY := (bounds.Max.Y - logoImage.Bounds().Max.Y) / 2
+	// 计算头像在二维码中心的位置
+	x := (qrImg.Bounds().Dx() - avatarWidth) / 2
+	y := (qrImg.Bounds().Dy() - avatarHeight) / 2
 
-	// 将头像绘制到二维码上
-	for y := 0; y < logoImage.Bounds().Max.Y; y++ {
-		for x := 0; x < logoImage.Bounds().Max.X; x++ {
-			outImage.Set(logoX+x, logoY+y, logoImage.At(x, y))
-		}
-	}
+	// 创建一个新的图像用于合成二维码和头像
+	finalImg := image.NewRGBA(qrImg.Bounds())
+	// 将二维码绘制到新图像上
+	draw.Draw(finalImg, qrImg.Bounds(), qrImg, image.Point{}, draw.Src)
+	// 将调整好大小的头像绘制到二维码中心位置
+	draw.Draw(finalImg, image.Rect(x, y, x+avatarWidth, y+avatarHeight), resizedAvatar, image.Point{}, draw.Over)
 
-	// 生成文件名
-	fileName := "invite_qr_" + strconv.FormatInt(uid, 10) + ".png"
-	filePath := filepath.Join("images", fileName)
-
-	// 确保保存路径存在
-	if err := os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
-		return fmt.Sprintf("Failed to create directory: %v", err)
-	}
-
-	// 保存最终的二维码图片
-	outFile, err := os.Create(filePath)
+	// 创建输出文件，这里将合成后的图片保存为 qrcode_with_avatar.png
+	outputFile, err := os.Create(fmt.Sprintf(KeyOrder, uid, str))
 	if err != nil {
-		return fmt.Sprintf("Failed to create file: %v", err)
+		panic(err)
 	}
-	defer outFile.Close()
+	defer outputFile.Close()
 
-	if err := png.Encode(outFile, outImage); err != nil {
-		return fmt.Sprintf("Failed to encode image: %v", err)
+	// 将合成后的图像以 PNG 格式编码并保存到文件中
+	err = png.Encode(outputFile, finalImg)
+	if err != nil {
+		panic(err)
 	}
 
-	// 删除临时头像文件
-	os.Remove(tempLogoPath)
-
-	// 返回图片的访问链接
-	imageUrl := "http://example.com/images/" + fileName
-	return imageUrl
 }
