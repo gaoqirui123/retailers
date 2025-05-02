@@ -128,9 +128,6 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 	//发票审核成功后生成发票图片
 	err = pkg.GenerateInvoiceImage(id)
 	if err != nil {
-		return nil, err
-	}
-	if err != nil {
 		log.Fatalf("生成图片时出错: %v", err)
 	}
 	return &user_enter.ProcessInvoiceResponse{Greet: true}, nil
