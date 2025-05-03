@@ -42,3 +42,10 @@ func (m *Merchant) GetMerchantByAccount(account string) (result *Merchant, err e
 	}
 	return
 }
+func (m *Merchant) GetMerchantById(id int64) (result *Merchant, err error) {
+	err = global.DB.Table("merchant").Where("merchant_id = ? ", id).Find(&result).Error
+	if err != nil {
+		return nil, err
+	}
+	return
+}

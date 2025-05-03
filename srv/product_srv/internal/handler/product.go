@@ -39,6 +39,8 @@ func CombinationList(in *product.CombinationListRequest) (*product.CombinationLi
 
 // GroupBuying TODO:用户发起拼团
 func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, error) {
+	//开启事务
+	tx := global.DB.Begin()
 	// 假设拼团时长为 1 小时，计算结束时间
 	addtime := time.Now().Format(global.TimeFormat)                 //开始时间
 	stopTime := time.Now().Add(time.Hour).Format(global.TimeFormat) //结束时间
@@ -77,7 +79,18 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	//创建订单
 	err = o.AddOrder()
 	if err != nil {
+		tx.Rollback()
 		return nil, err
+	}
+	if combination.Stock <= 0 {
+		return nil, errors.New("库存不足")
+	}
+	//扣mysql商品表总库存
+	px := &model.Combination{}
+	err = px.UpdateCombinationStock(in.Pid, in.Num)
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("扣mysql商品表总库存失败")
 	}
 	p := model.Pink{
 		Uid:        int(in.Uid),
@@ -97,6 +110,7 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	//添加拼团
 	err = p.Create()
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 	//将拼团信息存储到redis
@@ -108,9 +122,6 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	pay := pkg.NewPay()
 	sprintf := fmt.Sprintf("%.2f", totalPrice)
 	s := pay.Pay(combination.Title, strconv.Itoa(pinkId), sprintf)
-	// 生成淘口令
-	taokouling := pkg.GenerateTaokouling(p)
-	fmt.Println("生成的淘口令:", taokouling)
 	return &product.GroupBuyingResponse{Success: s}, nil
 }
 
@@ -164,11 +175,16 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 	}
 	// 更新拼团的状态，检查拼团是否完成1进行中2已完成3未完成
 	if pink.CurrentNum == pink.People {
-		err = pink.UpdateGroupStatus(key, 2)
+		err = pink.UpdateGroupStatus(context.Background(), key, 2)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("更新拼团状态失败:%w", err)
 		}
-		return nil, fmt.Errorf("更新拼团状态失败:%w", err)
+	}
+	//扣mysql商品表总库存
+	px := &model.Combination{}
+	err = px.UpdateCombinationStock(int64(pink.Pid), 1)
+	if err != nil {
+		return nil, errors.New("扣mysql商品表总库存失败")
 	}
 	pay := pkg.NewPay()
 	sprintf := fmt.Sprintf("%.2f", pink.Price)

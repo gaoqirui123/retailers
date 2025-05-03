@@ -5,13 +5,17 @@ import (
 	"common/pkg"
 	"common/proto/user_enter"
 	"errors"
-	"log"
 	"regexp"
 	"time"
 )
 
 // Apply TODO:商家申请店铺
 func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
+	m := model.Merchant{}
+	merchantById, err := m.GetMerchantById(in.UeId)
+	if err != nil {
+		return nil, err
+	}
 	ue := model.UserEnter{
 		Uid:          int(in.UeId),
 		Province:     in.Province,
@@ -19,16 +23,10 @@ func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResp
 		District:     in.District,
 		Address:      in.Address,
 		MerchantName: in.MerchantName,
-		LinkTel:      in.LinkTel,
+		LinkTel:      merchantById.ContactPhone,
 		Charter:      in.Charter,
 	}
-	if in.MerchantName == "" {
-		return nil, errors.New("商户名称不能为空")
-	}
-	if in.LinkTel == "" {
-		return nil, errors.New("商户电话不能为空")
-	}
-	err := ue.Add()
+	err = ue.Add()
 	if err != nil {
 		return nil, err
 	}
@@ -124,12 +122,7 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 			return nil, errors.New("审核失败")
 		}
 	}
-	id, _ := i.GetInvoiceByUeId(in.Uid, in.OrderId)
-	//发票审核成功后生成发票图片
-	err = pkg.GenerateInvoiceImage(id)
-	if err != nil {
-		log.Fatalf("生成图片时出错: %v", err)
-	}
+
 	return &user_enter.ProcessInvoiceResponse{Greet: true}, nil
 }
 
