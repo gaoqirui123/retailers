@@ -16,8 +16,8 @@ func ProductUpdate(c *gin.Context) {
 		return
 	}
 	userId := c.GetUint("userId")
-	update, err := client.ProductUpdate(c, &product.ProductUpdateRequest{
-		Id:        f.Id,
+	productUpdate, err := client.ProductUpdate(c, &product.ProductUpdateRequest{
+		Id:        f.ProductId,
 		IsBargain: f.IsBargain,
 		UserID:    uint32(userId),
 	})
@@ -26,7 +26,7 @@ func ProductUpdate(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", update)
+	response.RespSuccess(c, "成功", productUpdate)
 }
 
 // 创建砍价表
@@ -76,13 +76,12 @@ func BargainShow(c *gin.Context) {
 		response.RespError(c, "参数错误")
 		return
 	}
-	update, err := client.BargainShow(c, &product.BargainShowRequest{Id: f.Id})
+	show, err := client.BargainShow(c, &product.BargainShowRequest{ProductId: f.ProductId})
 	if err != nil {
 		response.RespError(c, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", update)
-
+	response.RespSuccess(c, "成功", show)
 }
 
 // 砍价商品表列表
@@ -105,14 +104,83 @@ func BargainUpdate(c *gin.Context) {
 	}
 	userId := c.GetUint("userId")
 	update, err := client.BargainUpdate(c, &product.BargainUpdateRequest{
-		Id:     f.Id,
-		IsDel:  f.IsDel,
-		UserID: uint32(userId),
+		ProductId: f.ProductId,
+		IsDel:     f.IsDel,
+		UserID:    uint32(userId),
 	})
-
 	if err != nil {
 		response.RespError(c, err.Error())
 		return
 	}
 	response.RespSuccess(c, "成功", update)
+}
+
+func BargainUserCreate(c *gin.Context) {
+	var f request.BargainUserCreate
+	if err := c.ShouldBind(&f); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	userId := c.GetUint("userId")
+	create, err := client.BargainUserCreate(c, &product.BargainUserCreateRequest{
+		Uid:             uint32(userId),
+		BargainId:       f.BargainId,
+		BargainPriceMin: f.BargainPriceMin,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", create)
+}
+
+func BargainUserShow(c *gin.Context) {
+	var f request.BargainUserShow
+	if err := c.ShouldBind(&f); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	userId := c.GetUint("userId")
+
+	show, err := client.BargainUserShow(c, &product.BargainUserShowRequest{
+		Uid:       uint32(userId),
+		BargainId: f.BargainId,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", show)
+}
+
+func BargainUserHelpShow(c *gin.Context) {
+	var f request.BargainUserHelpShow
+	if err := c.ShouldBind(&f); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	show, err := client.BargainUserHelpShow(c, &product.BargainUserHelpShowRequest{Id: f.Id})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", show)
+}
+
+func BargainUserList(c *gin.Context) {
+	list, err := client.BargainUserList(c, &product.BargainUserListRequest{})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", list.BargainUserList)
+}
+
+func BargainUserHelpList(c *gin.Context) {
+	list, err := client.BargainUserHelpList(c, &product.BargainUserHelpListRequest{})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", list.BargainUserHelpList)
 }

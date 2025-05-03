@@ -10,6 +10,51 @@ type ProductServer struct {
 	product.UnimplementedProductServer
 }
 
+// TODO:用户参与砍价信息列表
+func (p ProductServer) BargainUserList(ctx context.Context, req *product.BargainUserListRequest) (*product.BargainUserListResponse, error) {
+	list, err := handler.BargainUserList(req)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+// TODO:砍价帮助记录列表
+func (p ProductServer) BargainUserHelpList(ctx context.Context, req *product.BargainUserHelpListRequest) (*product.BargainUserHelpListResponse, error) {
+	list, err := handler.BargainUserHelpList(req)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+// TODO:创建用户参与砍价接口
+func (p ProductServer) BargainUserCreate(ctx context.Context, req *product.BargainUserCreateRequest) (*product.BargainUserCreateResponse, error) {
+	create, err := handler.BargainUserCreate(req)
+	if err != nil {
+		return nil, err
+	}
+	return create, nil
+}
+
+// TODO:用户参与砍价信息详情
+func (p ProductServer) BargainUserShow(ctx context.Context, req *product.BargainUserShowRequest) (*product.BargainUserShowResponse, error) {
+	show, err := handler.BargainUserShow(req)
+	if err != nil {
+		return nil, err
+	}
+	return show, nil
+}
+
+// TODO:砍价帮助记录详情
+func (p ProductServer) BargainUserHelpShow(ctx context.Context, req *product.BargainUserHelpShowRequest) (*product.BargainUserHelpShowResponse, error) {
+	show, err := handler.BargainUserHelpShow(req)
+	if err != nil {
+		return nil, err
+	}
+	return show, nil
+}
+
 // 修改商品表是否砍价状态
 func (p ProductServer) ProductUpdate(ctx context.Context, req *product.ProductUpdateRequest) (*product.ProductUpdateResponse, error) {
 	update, err := handler.ProductUpdate(req)

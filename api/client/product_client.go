@@ -71,3 +71,38 @@ func BargainList(ctx context.Context, in *product.BargainListRequest) (*product.
 		return client.BargainList(ctx, in)
 	})
 }
+
+// TODO:创建用户参与砍价接口
+func BargainUserCreate(ctx context.Context, in *product.BargainUserCreateRequest) (*product.BargainUserCreateResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainUserCreateRequest) (*product.BargainUserCreateResponse, error) {
+		return client.BargainUserCreate(ctx, in)
+	})
+}
+
+// TODO:用户参与砍价信息列表
+func BargainUserList(ctx context.Context, in *product.BargainUserListRequest) (*product.BargainUserListResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainUserListRequest) (*product.BargainUserListResponse, error) {
+		return client.BargainUserList(ctx, in)
+	})
+}
+
+// TODO:砍价帮助记录列表
+func BargainUserHelpList(ctx context.Context, in *product.BargainUserHelpListRequest) (*product.BargainUserHelpListResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainUserHelpListRequest) (*product.BargainUserHelpListResponse, error) {
+		return client.BargainUserHelpList(ctx, in)
+	})
+}
+
+// TODO:用户参与砍价信息详情
+func BargainUserShow(ctx context.Context, in *product.BargainUserShowRequest) (*product.BargainUserShowResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainUserShowRequest) (*product.BargainUserShowResponse, error) {
+		return client.BargainUserShow(ctx, in)
+	})
+}
+
+// TODO:砍价帮助记录详情
+func BargainUserHelpShow(ctx context.Context, in *product.BargainUserHelpShowRequest) (*product.BargainUserHelpShowResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainUserHelpShowRequest) (*product.BargainUserHelpShowResponse, error) {
+		return client.BargainUserHelpShow(ctx, in)
+	})
+}

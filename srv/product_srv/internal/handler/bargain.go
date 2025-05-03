@@ -1,9 +1,11 @@
 package handler
 
 import (
+	"common/global"
 	"common/model"
 	"common/proto/product"
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -62,9 +64,9 @@ func BargainCreate(req *product.BargainCreateRequest) (*product.BargainCreateRes
 // 砍价商品表详情
 func BargainShow(req *product.BargainShowRequest) (*product.BargainShowResponse, error) {
 	b := model.Bargain{
-		Id: req.Id,
+		ProductId: req.ProductId,
 	}
-	err := b.BargainShow(req.Id)
+	err := b.BargainShow(req.ProductId)
 	if err != nil {
 		return nil, err
 	}
@@ -162,15 +164,15 @@ func BargainList(req *product.BargainListRequest) (*product.BargainListResponse,
 // 修改砍价商品表是否删除
 func BargainUpdate(req *product.BargainUpdateRequest) (*product.BargainUpdateResponse, error) {
 	bargain := model.Bargain{
-		Id:    req.Id,
-		IsDel: uint8(req.IsDel),
+		ProductId: req.ProductId,
+		IsDel:     uint8(req.IsDel),
 	}
 	err := bargain.BargainUpdate()
 	if err != nil {
 		return nil, err
 	}
 	// 再次从数据库中查询确认更新后的数据
-	err = bargain.BargainShow(req.Id)
+	err = bargain.BargainShow(req.ProductId)
 	if err != nil {
 		return nil, err
 	}
@@ -178,4 +180,156 @@ func BargainUpdate(req *product.BargainUpdateRequest) (*product.BargainUpdateRes
 		Id:    bargain.Id,
 		IsDel: uint32(bargain.IsDel),
 	}, nil
+}
+
+// TODO:创建用户参与砍价接口（创建）
+func BargainUserCreate(req *product.BargainUserCreateRequest) (*product.BargainUserCreateResponse, error) {
+	var bargain model.Bargain
+	err := bargain.BargainShowID(req.BargainId)
+	if err != nil {
+		return nil, err
+	}
+	// 检查库存是否充足
+	if bargain.Stock <= 0 {
+		return nil, fmt.Errorf("砍价商品库存不足")
+	}
+	var bargainUser model.BargainUser
+	err = bargainUser.BargainUserShow(req.Uid, req.BargainId)
+	if err != nil {
+		return nil, err
+	}
+	if bargainUser.Id == 0 {
+		// 如果用户没有参与记录，则创建新的参与记录
+		bargainUser = model.BargainUser{
+			Uid:             req.Uid,
+			BargainId:       req.BargainId,
+			BargainPriceMin: req.BargainPriceMin,
+			FinalPrice:      bargain.Price, // 初始最终价格为原价
+			AddTime:         uint32(time.Now().Unix()),
+		}
+		err = bargainUser.BargainUserCreate()
+		if err != nil {
+			return nil, err
+		}
+	}
+	// 模拟别人帮助砍价，随机生成砍价金额
+	rand.Seed(time.Now().UnixNano())
+	price := rand.Float64()*(bargain.BargainMaxPrice-bargain.BargainMinPrice) + bargain.BargainMinPrice
+	bargainUser.Price = price
+	bargainUser.FinalPrice -= price
+	bargainUser.BargainPrice += price // 更新已砍总金额
+	// 更新用户参与砍价记录
+	err = global.DB.Save(&bargainUser).Error
+	if err != nil {
+		return nil, err
+	}
+	// 创建 BargainUserHelp 表记录
+	bargainUserHelp := model.BargainUserHelp{
+		Uid:           req.Uid, // 假设请求中包含帮助者的用户 ID
+		BargainId:     req.BargainId,
+		BargainUserId: bargainUser.Id,
+		Price:         price,
+		AddTime:       uint32(time.Now().Unix()),
+		CurrentPrice:  bargainUser.FinalPrice,
+	}
+	err = global.DB.Create(&bargainUserHelp).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &product.BargainUserCreateResponse{
+		Id:     bargainUser.Id,
+		Status: uint32(bargainUser.Status),
+	}, nil
+}
+
+// TODO:用户参与砍价信息详情
+func BargainUserShow(req *product.BargainUserShowRequest) (*product.BargainUserShowResponse, error) {
+	var BargainUser model.BargainUser
+	err := BargainUser.BargainUserShow(req.Uid, req.BargainId)
+	if err != nil {
+		return nil, err
+	}
+	return &product.BargainUserShowResponse{
+		Id:              BargainUser.Id,
+		Uid:             BargainUser.Uid,
+		BargainId:       BargainUser.BargainId,
+		BargainPriceMin: BargainUser.BargainPriceMin,
+		BargainPrice:    BargainUser.BargainPrice,
+		Price:           BargainUser.Price,
+		FinalPrice:      BargainUser.FinalPrice,
+		Status:          uint32(BargainUser.Status),
+		AddTime:         BargainUser.AddTime,
+		IsDel:           int32(BargainUser.IsDel),
+	}, nil
+}
+
+// TODO:砍价帮助记录详情
+func BargainUserHelpShow(req *product.BargainUserHelpShowRequest) (*product.BargainUserHelpShowResponse, error) {
+	var BargainUserHelp model.BargainUserHelp
+	err := BargainUserHelp.BargainUserHelpShow(req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &product.BargainUserHelpShowResponse{
+		Id:            BargainUserHelp.Id,
+		Uid:           BargainUserHelp.Uid,
+		BargainId:     BargainUserHelp.BargainId,
+		BargainUserId: BargainUserHelp.BargainUserId,
+		Price:         BargainUserHelp.Price,
+		AddTime:       BargainUserHelp.AddTime,
+		IsSuccess:     uint32(BargainUserHelp.IsSuccess),
+		CurrentPrice:  uint32(BargainUserHelp.CurrentPrice),
+	}, nil
+}
+
+// TODO:用户参与砍价信息列表
+func BargainUserList(req *product.BargainUserListRequest) (*product.BargainUserListResponse, error) {
+	var BargainUser model.BargainUser
+	list, err := BargainUser.BargainUserList()
+	if err != nil {
+		return nil, err
+	}
+	var List []*product.BargainUserList
+	for _, v := range list {
+		userList := product.BargainUserList{
+			Id:              v.Id,
+			Uid:             v.Uid,
+			BargainId:       v.BargainId,
+			BargainPriceMin: v.BargainPriceMin,
+			BargainPrice:    v.BargainPrice,
+			Price:           v.Price,
+			FinalPrice:      v.FinalPrice,
+			Status:          uint32(v.Status),
+			AddTime:         v.AddTime,
+			IsDel:           int32(v.IsDel),
+		}
+		List = append(List, &userList)
+	}
+
+	return &product.BargainUserListResponse{BargainUserList: List}, nil
+}
+
+// TODO:砍价帮助记录列表
+func BargainUserHelpList(req *product.BargainUserHelpListRequest) (*product.BargainUserHelpListResponse, error) {
+	var BargainUserHelp model.BargainUserHelp
+	list, err := BargainUserHelp.BargainUserHelpList()
+	if err != nil {
+		return nil, err
+	}
+	var List []*product.BargainUserHelpList
+	for _, v := range list {
+		userList := product.BargainUserHelpList{
+			Id:            v.Id,
+			Uid:           v.Uid,
+			BargainId:     v.BargainId,
+			BargainUserId: v.BargainUserId,
+			Price:         v.Price,
+			AddTime:       v.AddTime,
+			IsSuccess:     uint32(v.IsSuccess),
+			CurrentPrice:  uint32(v.CurrentPrice),
+		}
+		List = append(List, &userList)
+	}
+	return &product.BargainUserHelpListResponse{BargainUserHelpList: List}, nil
 }

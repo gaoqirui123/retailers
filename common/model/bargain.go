@@ -54,6 +54,11 @@ func (m *Bargain) BargainCreate() error {
 
 // 砍价商品表详情
 func (m *Bargain) BargainShow(Id uint32) error {
+	return global.DB.Where("product_id = ?", Id).Find(&m).Error
+}
+
+// 砍价商品表ID详情
+func (m *Bargain) BargainShowID(Id uint32) error {
 	return global.DB.Where("id = ?", Id).Find(&m).Error
 }
 
@@ -68,5 +73,5 @@ func (m *Bargain) BargainList() (b []*Bargain, err error) {
 
 // 修改砍价商品表是否删除
 func (m *Bargain) BargainUpdate() error {
-	return global.DB.Model(&m).Where("id = ?", m.Id).Update("is_del", m.IsDel).Error
+	return global.DB.Model(&m).Where("product_id = ?", m.ProductId).Update("is_del", m.IsDel).Error
 }

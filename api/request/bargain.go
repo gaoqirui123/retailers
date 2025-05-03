@@ -2,7 +2,6 @@ package request
 
 // 创建砍价商品信息
 type BargainCreate struct {
-	UserID          uint32  `json:"user_id" form:"user_id" binding:"required"`                     // 必填，标识发起砍价的用户 ID
 	ProductId       uint32  `json:"product_id" form:"product_id" binding:"required"`               // 与砍价活动关联的商品 ID
 	Title           string  `json:"title" form:"title" binding:"required"`                         // 砍价活动的名称
 	Image           string  `json:"image" form:"image" binding:"required"`                         // 砍价活动对应的图片地址
@@ -28,17 +27,33 @@ type BargainCreate struct {
 
 // 修改商品砍价状态
 type ProductUpdate struct {
-	Id        uint32 `json:"id" form:"id" binding:"required"` // 砍价表的唯一标识 ID
-	IsBargain int32  `json:"is_bargain" form:"is_bargain"`    //是否砍价
+	ProductId uint32 `json:"product_id" form:"product_id" binding:"required"` // 与砍价活动关联的商品 ID
+	IsBargain int32  `json:"is_bargain" form:"is_bargain"`                    //是否砍价
 }
 
 // 砍价商品表详情
 type BargainShow struct {
-	Id uint32 `json:"id" form:"id" binding:"required"` // 砍价表的唯一标识 ID
+	ProductId uint32 `json:"product_id" form:"product_id" binding:"required"` // 与砍价活动关联的商品 ID
 }
 
 // 修改砍价商品表是否删除
 type BargainUpdate struct {
-	Id    uint32 `json:"id" form:"id" binding:"required"` // 砍价表的唯一标识 ID
-	IsDel uint32 `json:"is_del" form:"is_del"`            //是否删除
+	ProductId uint32 `json:"product_id" form:"product_id" binding:"required"` // 与砍价活动关联的商品 ID
+	IsDel     uint32 `json:"is_del" form:"is_del"`                            //是否删除
+}
+
+// 创建用户参与砍价
+type BargainUserCreate struct {
+	BargainId       uint32  `json:"bargain_id" form:"bargain_id" binding:"required"`               //商品id
+	BargainPriceMin float64 `json:"bargain_price_min" form:"bargain_price_min" binding:"required"` //商品最低价
+}
+
+// 用户参与砍价信息详情
+type BargainUserShow struct {
+	BargainId uint32 `json:"bargain_id" form:"bargain_id" binding:"required"` //商品id
+}
+
+// 砍价帮助记录详情
+type BargainUserHelpShow struct {
+	Id uint32 `json:"id" form:"id" binding:"required"` //砍价帮助表id
 }
