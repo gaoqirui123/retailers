@@ -111,6 +111,7 @@ func QrCodeVerification(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
+	fmt.Println(list)
 
-	response.RespSuccess(c, "订单列表展示成功", list)
+	response.RespSuccess(c, "二维码已生成欢迎到点核销", list)
 }

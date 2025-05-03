@@ -498,6 +498,7 @@ func DeleteComment(in *article.DeleteCommentRequest) (*article.DeleteCommentResp
 	return &article.DeleteCommentResponse{Success: "评论删除成功"}, nil
 }
 
+// 点赞排序
 func TopLikeArticleRanking(in *article.TopLikeArticleRankingRequest) (*article.TopLikeArticleRankingResponse, error) {
 	if in.Top == 2 {
 		in.Top = -1

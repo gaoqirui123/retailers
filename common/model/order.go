@@ -137,3 +137,24 @@ func (o *Order) FindId(orderId int64) (result *Order, err error) {
 	}
 	return result, nil
 }
+
+// GetTotalOrderCount 获取订单总数
+func (o *Order) GetTotalOrderCount() (int64, error) {
+	var count int64
+	err := global.DB.Debug().Table("order").Count(&count).Error
+	return count, err
+}
+
+// GetTotalOrderAmount 获取订单总金额
+func (o *Order) GetTotalOrderAmount() (float64, error) {
+	var total float64
+	err := global.DB.Debug().Table("order").Select("SUM(total_price)").Scan(&total).Error
+	return total, err
+}
+
+// GetTotalRefundAmount 获取总退款数
+func (o *Order) GetTotalRefundAmount() (float64, error) {
+	var total float64
+	err := global.DB.Debug().Table("order").Select("SUM(refund_price)").Scan(&total).Error
+	return total, err
+}

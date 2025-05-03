@@ -90,3 +90,21 @@ func (es UserEnterServer) BatchReleaseOfProducts(ctx context.Context, in *user_e
 	}
 	return register, nil
 }
+
+// MerchantVerification TODO:商家核销
+func (es UserEnterServer) MerchantVerification(ctx context.Context, in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+	register, err := handler.MerchantVerification(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// MerchantVerification TODO:商家核销
+func (es UserEnterServer) CalculateOrderSummary(ctx context.Context, in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+	register, err := handler.CalculateOrderSummary(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}

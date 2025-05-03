@@ -28,6 +28,8 @@ const (
 	UserEnter_DelProduct_FullMethodName             = "/user_enter.UserEnter/DelProduct"
 	UserEnter_InvoiceList_FullMethodName            = "/user_enter.UserEnter/InvoiceList"
 	UserEnter_BatchReleaseOfProducts_FullMethodName = "/user_enter.UserEnter/BatchReleaseOfProducts"
+	UserEnter_MerchantVerification_FullMethodName   = "/user_enter.UserEnter/MerchantVerification"
+	UserEnter_CalculateOrderSummary_FullMethodName  = "/user_enter.UserEnter/CalculateOrderSummary"
 )
 
 // UserEnterClient is the client API for UserEnter service.
@@ -43,6 +45,8 @@ type UserEnterClient interface {
 	DelProduct(ctx context.Context, in *DelProductRequest, opts ...grpc.CallOption) (*DelProductResponse, error)
 	InvoiceList(ctx context.Context, in *InvoiceListRequest, opts ...grpc.CallOption) (*InvoiceListResponse, error)
 	BatchReleaseOfProducts(ctx context.Context, in *BatchReleaseOfProductsRequest, opts ...grpc.CallOption) (*BatchReleaseOfProductsResponse, error)
+	MerchantVerification(ctx context.Context, in *MerchantVerificationRequest, opts ...grpc.CallOption) (*MerchantVerificationResponse, error)
+	CalculateOrderSummary(ctx context.Context, in *CalculateOrderSummaryRequest, opts ...grpc.CallOption) (*CalculateOrderSummaryResponse, error)
 }
 
 type userEnterClient struct {
@@ -143,6 +147,26 @@ func (c *userEnterClient) BatchReleaseOfProducts(ctx context.Context, in *BatchR
 	return out, nil
 }
 
+func (c *userEnterClient) MerchantVerification(ctx context.Context, in *MerchantVerificationRequest, opts ...grpc.CallOption) (*MerchantVerificationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MerchantVerificationResponse)
+	err := c.cc.Invoke(ctx, UserEnter_MerchantVerification_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userEnterClient) CalculateOrderSummary(ctx context.Context, in *CalculateOrderSummaryRequest, opts ...grpc.CallOption) (*CalculateOrderSummaryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CalculateOrderSummaryResponse)
+	err := c.cc.Invoke(ctx, UserEnter_CalculateOrderSummary_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserEnterServer is the server API for UserEnter service.
 // All implementations must embed UnimplementedUserEnterServer
 // for forward compatibility
@@ -156,6 +180,8 @@ type UserEnterServer interface {
 	DelProduct(context.Context, *DelProductRequest) (*DelProductResponse, error)
 	InvoiceList(context.Context, *InvoiceListRequest) (*InvoiceListResponse, error)
 	BatchReleaseOfProducts(context.Context, *BatchReleaseOfProductsRequest) (*BatchReleaseOfProductsResponse, error)
+	MerchantVerification(context.Context, *MerchantVerificationRequest) (*MerchantVerificationResponse, error)
+	CalculateOrderSummary(context.Context, *CalculateOrderSummaryRequest) (*CalculateOrderSummaryResponse, error)
 	mustEmbedUnimplementedUserEnterServer()
 }
 
@@ -189,6 +215,12 @@ func (UnimplementedUserEnterServer) InvoiceList(context.Context, *InvoiceListReq
 }
 func (UnimplementedUserEnterServer) BatchReleaseOfProducts(context.Context, *BatchReleaseOfProductsRequest) (*BatchReleaseOfProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchReleaseOfProducts not implemented")
+}
+func (UnimplementedUserEnterServer) MerchantVerification(context.Context, *MerchantVerificationRequest) (*MerchantVerificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantVerification not implemented")
+}
+func (UnimplementedUserEnterServer) CalculateOrderSummary(context.Context, *CalculateOrderSummaryRequest) (*CalculateOrderSummaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CalculateOrderSummary not implemented")
 }
 func (UnimplementedUserEnterServer) mustEmbedUnimplementedUserEnterServer() {}
 
@@ -365,6 +397,42 @@ func _UserEnter_BatchReleaseOfProducts_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserEnter_MerchantVerification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantVerificationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).MerchantVerification(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_MerchantVerification_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).MerchantVerification(ctx, req.(*MerchantVerificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserEnter_CalculateOrderSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CalculateOrderSummaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).CalculateOrderSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_CalculateOrderSummary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).CalculateOrderSummary(ctx, req.(*CalculateOrderSummaryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserEnter_ServiceDesc is the grpc.ServiceDesc for UserEnter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -407,6 +475,14 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchReleaseOfProducts",
 			Handler:    _UserEnter_BatchReleaseOfProducts_Handler,
+		},
+		{
+			MethodName: "MerchantVerification",
+			Handler:    _UserEnter_MerchantVerification_Handler,
+		},
+		{
+			MethodName: "CalculateOrderSummary",
+			Handler:    _UserEnter_CalculateOrderSummary_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

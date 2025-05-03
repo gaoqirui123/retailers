@@ -74,3 +74,17 @@ func BatchReleaseOfProducts(ctx context.Context, in *user_enter.BatchReleaseOfPr
 		return client.BatchReleaseOfProducts(ctx, req)
 	})
 }
+
+// 商家核销
+func MerchantVerification(ctx context.Context, in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+		return client.MerchantVerification(ctx, req)
+	})
+}
+
+// 商家统计
+func CalculateOrderSummary(ctx context.Context, in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+		return client.CalculateOrderSummary(ctx, req)
+	})
+}

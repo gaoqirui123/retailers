@@ -1428,6 +1428,236 @@ func (x *BatchReleaseOfProductsResponse) GetSuccess() string {
 	return ""
 }
 
+// TODO:商家核销
+type MerchantVerificationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrderId int64 `protobuf:"varint,1,opt,name=OrderId,proto3" json:"OrderId,omitempty"` // 订单ID
+	UserId  int64 `protobuf:"varint,2,opt,name=UserId,proto3" json:"UserId,omitempty"`   //用户id
+}
+
+func (x *MerchantVerificationRequest) Reset() {
+	*x = MerchantVerificationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_user_enter_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MerchantVerificationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MerchantVerificationRequest) ProtoMessage() {}
+
+func (x *MerchantVerificationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_enter_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MerchantVerificationRequest.ProtoReflect.Descriptor instead.
+func (*MerchantVerificationRequest) Descriptor() ([]byte, []int) {
+	return file_user_enter_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *MerchantVerificationRequest) GetOrderId() int64 {
+	if x != nil {
+		return x.OrderId
+	}
+	return 0
+}
+
+func (x *MerchantVerificationRequest) GetUserId() int64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+type MerchantVerificationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Greet bool `protobuf:"varint,1,opt,name=greet,proto3" json:"greet,omitempty"`
+}
+
+func (x *MerchantVerificationResponse) Reset() {
+	*x = MerchantVerificationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_user_enter_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MerchantVerificationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MerchantVerificationResponse) ProtoMessage() {}
+
+func (x *MerchantVerificationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_user_enter_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MerchantVerificationResponse.ProtoReflect.Descriptor instead.
+func (*MerchantVerificationResponse) Descriptor() ([]byte, []int) {
+	return file_user_enter_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *MerchantVerificationResponse) GetGreet() bool {
+	if x != nil {
+		return x.Greet
+	}
+	return false
+}
+
+// TODO:商家统计
+type CalculateOrderSummaryRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	User_Id int64 `protobuf:"varint,1,opt,name=User_Id,json=UserId,proto3" json:"User_Id,omitempty"` // 商户id
+}
+
+func (x *CalculateOrderSummaryRequest) Reset() {
+	*x = CalculateOrderSummaryRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_user_enter_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CalculateOrderSummaryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateOrderSummaryRequest) ProtoMessage() {}
+
+func (x *CalculateOrderSummaryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_enter_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateOrderSummaryRequest.ProtoReflect.Descriptor instead.
+func (*CalculateOrderSummaryRequest) Descriptor() ([]byte, []int) {
+	return file_user_enter_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *CalculateOrderSummaryRequest) GetUser_Id() int64 {
+	if x != nil {
+		return x.User_Id
+	}
+	return 0
+}
+
+type CalculateOrderSummaryResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrderCount       int32   `protobuf:"varint,1,opt,name=order_count,json=orderCount,proto3" json:"order_count,omitempty"`
+	TotalAmount      float32 `protobuf:"fixed32,2,opt,name=total_amount,json=totalAmount,proto3" json:"total_amount,omitempty"`
+	TotalRefund      float32 `protobuf:"fixed32,3,opt,name=total_refund,json=totalRefund,proto3" json:"total_refund,omitempty"`
+	ProductViewCount int32   `protobuf:"varint,4,opt,name=product_view_count,json=productViewCount,proto3" json:"product_view_count,omitempty"`
+	UniqueVisitors   int32   `protobuf:"varint,5,opt,name=unique_visitors,json=uniqueVisitors,proto3" json:"unique_visitors,omitempty"`
+}
+
+func (x *CalculateOrderSummaryResponse) Reset() {
+	*x = CalculateOrderSummaryResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_user_enter_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CalculateOrderSummaryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateOrderSummaryResponse) ProtoMessage() {}
+
+func (x *CalculateOrderSummaryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_user_enter_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateOrderSummaryResponse.ProtoReflect.Descriptor instead.
+func (*CalculateOrderSummaryResponse) Descriptor() ([]byte, []int) {
+	return file_user_enter_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *CalculateOrderSummaryResponse) GetOrderCount() int32 {
+	if x != nil {
+		return x.OrderCount
+	}
+	return 0
+}
+
+func (x *CalculateOrderSummaryResponse) GetTotalAmount() float32 {
+	if x != nil {
+		return x.TotalAmount
+	}
+	return 0
+}
+
+func (x *CalculateOrderSummaryResponse) GetTotalRefund() float32 {
+	if x != nil {
+		return x.TotalRefund
+	}
+	return 0
+}
+
+func (x *CalculateOrderSummaryResponse) GetProductViewCount() int32 {
+	if x != nil {
+		return x.ProductViewCount
+	}
+	return 0
+}
+
+func (x *CalculateOrderSummaryResponse) GetUniqueVisitors() int32 {
+	if x != nil {
+		return x.UniqueVisitors
+	}
+	return 0
+}
+
 var File_user_enter_proto protoreflect.FileDescriptor
 
 var file_user_enter_proto_rawDesc = []byte{
@@ -1595,7 +1825,33 @@ var file_user_enter_proto_rawDesc = []byte{
 	0x6c, 0x65, 0x61, 0x73, 0x65, 0x4f, 0x66, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65,
 	0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73,
-	0x73, 0x32, 0xa6, 0x06, 0x0a, 0x09, 0x55, 0x73, 0x65, 0x72, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x12,
+	0x73, 0x22, 0x4f, 0x0a, 0x1b, 0x4d, 0x65, 0x72, 0x63, 0x68, 0x61, 0x6e, 0x74, 0x56, 0x65, 0x72,
+	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x18, 0x0a, 0x07, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x07, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72,
+	0x49, 0x64, 0x22, 0x34, 0x0a, 0x1c, 0x4d, 0x65, 0x72, 0x63, 0x68, 0x61, 0x6e, 0x74, 0x56, 0x65,
+	0x72, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x67, 0x72, 0x65, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x05, 0x67, 0x72, 0x65, 0x65, 0x74, 0x22, 0x37, 0x0a, 0x1c, 0x43, 0x61, 0x6c, 0x63,
+	0x75, 0x6c, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72,
+	0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x55, 0x73, 0x65, 0x72,
+	0x5f, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49,
+	0x64, 0x22, 0xdd, 0x01, 0x0a, 0x1d, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x43,
+	0x6f, 0x75, 0x6e, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x61, 0x6d,
+	0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c,
+	0x5f, 0x72, 0x65, 0x66, 0x75, 0x6e, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x0b, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x52, 0x65, 0x66, 0x75, 0x6e, 0x64, 0x12, 0x2c, 0x0a, 0x12, 0x70, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x76, 0x69, 0x65, 0x77, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x10, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x56,
+	0x69, 0x65, 0x77, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x27, 0x0a, 0x0f, 0x75, 0x6e, 0x69, 0x71,
+	0x75, 0x65, 0x5f, 0x76, 0x69, 0x73, 0x69, 0x74, 0x6f, 0x72, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x0e, 0x75, 0x6e, 0x69, 0x71, 0x75, 0x65, 0x56, 0x69, 0x73, 0x69, 0x74, 0x6f, 0x72,
+	0x73, 0x32, 0xff, 0x07, 0x0a, 0x09, 0x55, 0x73, 0x65, 0x72, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x12,
 	0x4e, 0x0a, 0x05, 0x41, 0x70, 0x70, 0x6c, 0x79, 0x12, 0x21, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x5f,
 	0x65, 0x6e, 0x74, 0x65, 0x72, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x45, 0x6e, 0x74, 0x65, 0x72, 0x41,
 	0x70, 0x70, 0x6c, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x75, 0x73,
@@ -1645,9 +1901,22 @@ var file_user_enter_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a,
 	0x2e, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x2e, 0x42, 0x61, 0x74, 0x63,
 	0x68, 0x52, 0x65, 0x6c, 0x65, 0x61, 0x73, 0x65, 0x4f, 0x66, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
-	0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x3b,
-	0x75, 0x73, 0x65, 0x72, 0x5f, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x69, 0x0a, 0x14, 0x4d, 0x65,
+	0x72, 0x63, 0x68, 0x61, 0x6e, 0x74, 0x56, 0x65, 0x72, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x27, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x2e,
+	0x4d, 0x65, 0x72, 0x63, 0x68, 0x61, 0x6e, 0x74, 0x56, 0x65, 0x72, 0x69, 0x66, 0x69, 0x63, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x75, 0x73,
+	0x65, 0x72, 0x5f, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x2e, 0x4d, 0x65, 0x72, 0x63, 0x68, 0x61, 0x6e,
+	0x74, 0x56, 0x65, 0x72, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x6c, 0x0a, 0x15, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61,
+	0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x12, 0x28,
+	0x2e, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x65, 0x6e, 0x74, 0x65, 0x72, 0x2e, 0x43, 0x61, 0x6c, 0x63,
+	0x75, 0x6c, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72,
+	0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x29, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x65, 0x6e, 0x74, 0x65, 0x72, 0x2e, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x3b, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x65, 0x6e,
+	0x74, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1662,7 +1931,7 @@ func file_user_enter_proto_rawDescGZIP() []byte {
 	return file_user_enter_proto_rawDescData
 }
 
-var file_user_enter_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_user_enter_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_user_enter_proto_goTypes = []any{
 	(*UserEnterApplyRequest)(nil),          // 0: user_enter.UserEnterApplyRequest
 	(*UserEnterApplyResponse)(nil),         // 1: user_enter.UserEnterApplyResponse
@@ -1684,6 +1953,10 @@ var file_user_enter_proto_goTypes = []any{
 	(*CreateAllProducts)(nil),              // 17: user_enter.CreateAllProducts
 	(*BatchReleaseOfProductsRequest)(nil),  // 18: user_enter.BatchReleaseOfProductsRequest
 	(*BatchReleaseOfProductsResponse)(nil), // 19: user_enter.BatchReleaseOfProductsResponse
+	(*MerchantVerificationRequest)(nil),    // 20: user_enter.MerchantVerificationRequest
+	(*MerchantVerificationResponse)(nil),   // 21: user_enter.MerchantVerificationResponse
+	(*CalculateOrderSummaryRequest)(nil),   // 22: user_enter.CalculateOrderSummaryRequest
+	(*CalculateOrderSummaryResponse)(nil),  // 23: user_enter.CalculateOrderSummaryResponse
 }
 var file_user_enter_proto_depIdxs = []int32{
 	16, // 0: user_enter.InvoiceListResponse.list:type_name -> user_enter.InvoiceList
@@ -1697,17 +1970,21 @@ var file_user_enter_proto_depIdxs = []int32{
 	12, // 8: user_enter.UserEnter.DelProduct:input_type -> user_enter.DelProductRequest
 	14, // 9: user_enter.UserEnter.InvoiceList:input_type -> user_enter.InvoiceListRequest
 	18, // 10: user_enter.UserEnter.BatchReleaseOfProducts:input_type -> user_enter.BatchReleaseOfProductsRequest
-	1,  // 11: user_enter.UserEnter.Apply:output_type -> user_enter.UserEnterApplyResponse
-	3,  // 12: user_enter.UserEnter.Register:output_type -> user_enter.UserEnterRegisterResponse
-	5,  // 13: user_enter.UserEnter.Login:output_type -> user_enter.UserEnterLoginResponse
-	7,  // 14: user_enter.UserEnter.AddProduct:output_type -> user_enter.AddProductResponse
-	9,  // 15: user_enter.UserEnter.AddCombinationProduct:output_type -> user_enter.AddCombinationProductResponse
-	11, // 16: user_enter.UserEnter.ProcessInvoice:output_type -> user_enter.ProcessInvoiceResponse
-	13, // 17: user_enter.UserEnter.DelProduct:output_type -> user_enter.DelProductResponse
-	15, // 18: user_enter.UserEnter.InvoiceList:output_type -> user_enter.InvoiceListResponse
-	19, // 19: user_enter.UserEnter.BatchReleaseOfProducts:output_type -> user_enter.BatchReleaseOfProductsResponse
-	11, // [11:20] is the sub-list for method output_type
-	2,  // [2:11] is the sub-list for method input_type
+	20, // 11: user_enter.UserEnter.MerchantVerification:input_type -> user_enter.MerchantVerificationRequest
+	22, // 12: user_enter.UserEnter.CalculateOrderSummary:input_type -> user_enter.CalculateOrderSummaryRequest
+	1,  // 13: user_enter.UserEnter.Apply:output_type -> user_enter.UserEnterApplyResponse
+	3,  // 14: user_enter.UserEnter.Register:output_type -> user_enter.UserEnterRegisterResponse
+	5,  // 15: user_enter.UserEnter.Login:output_type -> user_enter.UserEnterLoginResponse
+	7,  // 16: user_enter.UserEnter.AddProduct:output_type -> user_enter.AddProductResponse
+	9,  // 17: user_enter.UserEnter.AddCombinationProduct:output_type -> user_enter.AddCombinationProductResponse
+	11, // 18: user_enter.UserEnter.ProcessInvoice:output_type -> user_enter.ProcessInvoiceResponse
+	13, // 19: user_enter.UserEnter.DelProduct:output_type -> user_enter.DelProductResponse
+	15, // 20: user_enter.UserEnter.InvoiceList:output_type -> user_enter.InvoiceListResponse
+	19, // 21: user_enter.UserEnter.BatchReleaseOfProducts:output_type -> user_enter.BatchReleaseOfProductsResponse
+	21, // 22: user_enter.UserEnter.MerchantVerification:output_type -> user_enter.MerchantVerificationResponse
+	23, // 23: user_enter.UserEnter.CalculateOrderSummary:output_type -> user_enter.CalculateOrderSummaryResponse
+	13, // [13:24] is the sub-list for method output_type
+	2,  // [2:13] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
 	2,  // [2:2] is the sub-list for extension extendee
 	0,  // [0:2] is the sub-list for field type_name
@@ -1959,6 +2236,54 @@ func file_user_enter_proto_init() {
 				return nil
 			}
 		}
+		file_user_enter_proto_msgTypes[20].Exporter = func(v any, i int) any {
+			switch v := v.(*MerchantVerificationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_user_enter_proto_msgTypes[21].Exporter = func(v any, i int) any {
+			switch v := v.(*MerchantVerificationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_user_enter_proto_msgTypes[22].Exporter = func(v any, i int) any {
+			switch v := v.(*CalculateOrderSummaryRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_user_enter_proto_msgTypes[23].Exporter = func(v any, i int) any {
+			switch v := v.(*CalculateOrderSummaryResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1966,7 +2291,7 @@ func file_user_enter_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_user_enter_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   24,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

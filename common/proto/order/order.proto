@@ -17,7 +17,7 @@ message QrCodeVerificationRequest {
 }
 
 message QrCodeVerificationResponse {
-  bool  Success = 1;
+  string  Success = 1;
 }
 
 // TODO:用户领取优惠券

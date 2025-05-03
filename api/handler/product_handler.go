@@ -53,6 +53,8 @@ func JoinGroupBuying(c *gin.Context) {
 		response.RespError(c, fmt.Sprintf(err.Error()))
 		return
 	}
+
+	fmt.Println(list)
 	response.RespSuccess(c, "参与拼团成功", list)
 }
 

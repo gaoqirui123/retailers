@@ -72,3 +72,9 @@ type BatchReleaseOfProducts struct {
 	Postage     float64 `json:"postage" xml:"postage" form:"postage"`
 	UnitName    string  `json:"unit_name" xml:"unit_name" form:"unit_name"`
 }
+
+// 商家核销
+type MerchantVerification struct {
+	OrderId int64 `json:"order_id" xml:"order_id" form:"order_id"`
+	UserId  int64 `json:"user_id" xml:"user_id" form:"user_id"`
+}

@@ -277,3 +277,70 @@ func BatchReleaseOfProducts(in *user_enter.BatchReleaseOfProductsRequest) (*user
 
 	return &user_enter.BatchReleaseOfProductsResponse{Success: "批量添加商品成功"}, nil
 }
+
+type OrderSyn struct {
+	ID      int64  `json:"id"`
+	OrderSn string `json:"orderSn"`
+	Status  int64  `json:"status"`
+	Paid    int64  `json:"paid"`
+}
+
+func MerchantVerification(in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+
+	o := model.Order{}
+
+	id, err := o.FindId(in.OrderId)
+	if err != nil {
+		return &user_enter.MerchantVerificationResponse{Greet: false}, nil
+	}
+	err = o.UpdateOrderStatus(id.OrderSn, 7)
+	if err != nil {
+		return &user_enter.MerchantVerificationResponse{Greet: false}, nil
+	}
+	return &user_enter.MerchantVerificationResponse{Greet: true}, nil
+
+}
+
+func CalculateOrderSummary(in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+	orders := &model.Order{}
+	products := &model.Product{}
+
+	// 获取订单总数
+	orderCount, err := orders.GetTotalOrderCount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取订单总金额
+	totalAmount, err := orders.GetTotalOrderAmount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取总退款数
+	totalRefund, err := orders.GetTotalRefundAmount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取商品总浏览量
+	productViewCount, err := products.GetTotalViewCount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取商品访问客数
+	//uniqueVisitors, err := visitors.GetUniqueVisitorCount()
+	//if err != nil {
+	//	return nil, err
+	//}
+
+	return &user_enter.CalculateOrderSummaryResponse{
+		OrderCount:       int32(orderCount),
+		TotalAmount:      float32(totalAmount),
+		TotalRefund:      float32(totalRefund),
+		ProductViewCount: int32(productViewCount),
+		//	UniqueVisitors:   int32(uniqueVisitors),
+	}, nil
+
+}

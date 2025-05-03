@@ -109,7 +109,7 @@ func (a ArticleServer) DeleteComment(ctx context.Context, in *article.DeleteComm
 	return list, nil
 }
 
-// 删除评论
+// 点赞排序
 func (a ArticleServer) TopLikeArticleRanking(ctx context.Context, in *article.TopLikeArticleRankingRequest) (*article.TopLikeArticleRankingResponse, error) {
 	list, err := handler.TopLikeArticleRanking(in)
 	if err != nil {

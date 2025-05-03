@@ -140,6 +140,29 @@ message BatchReleaseOfProductsResponse{
   string success=1;
 
 }
+//TODO:商家核销
+message MerchantVerificationRequest {
+  int64 OrderId = 1; // 订单ID
+  int64 UserId=2;//用户id
+
+}
+
+message MerchantVerificationResponse {
+  bool greet = 1;
+}
+//TODO:商家统计
+message CalculateOrderSummaryRequest {
+  int64 User_Id = 1; // 商户id
+
+}
+
+message CalculateOrderSummaryResponse {
+  int32 order_count = 1;
+  float total_amount = 2;
+  float total_refund = 3;
+  int32 product_view_count = 4;
+  int32 unique_visitors = 5;
+}
 service UserEnter {
   rpc Apply(UserEnterApplyRequest) returns (UserEnterApplyResponse);//商家申请
   rpc Register(UserEnterRegisterRequest) returns (UserEnterRegisterResponse);//商家注册
@@ -150,4 +173,7 @@ service UserEnter {
   rpc DelProduct(DelProductRequest) returns (DelProductResponse);//商家下架商品
   rpc InvoiceList(InvoiceListRequest) returns (InvoiceListResponse);//发票列表展示
   rpc BatchReleaseOfProducts(BatchReleaseOfProductsRequest) returns (BatchReleaseOfProductsResponse);//商品批量发布
+  rpc MerchantVerification(MerchantVerificationRequest) returns (MerchantVerificationResponse);//商家核销
+  rpc CalculateOrderSummary(CalculateOrderSummaryRequest) returns (CalculateOrderSummaryResponse);//商家统计
+
 }
