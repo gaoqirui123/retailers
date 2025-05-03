@@ -21,6 +21,7 @@ service User {
   rpc UserApplication(UserApplicationRequest) returns (UserApplicationResponse);//TODO:用户申请发票
   rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO: 用户领取优惠券
 }
+
 // TODO:用户领取优惠券
 message UserReceiveCouponRequest {
   int64  UserId = 1;

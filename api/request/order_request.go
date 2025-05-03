@@ -13,6 +13,7 @@ type AddOrder struct {
 	IsChannel             int64  `json:"isChannel" form:"isChannel" binding:"required"`
 	PinkId                int64  `json:"pinkId" form:"pinkId"`
 	ProductSpecifications string `json:"productSpecifications" form:"productSpecifications" binding:"required"`
+	Source                int64  `json:"source" form:"source"`
 }
 type OrderList struct {
 	OrderStatus int64 `json:"orderStatus" form:"orderStatus"`

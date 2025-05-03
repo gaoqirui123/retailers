@@ -24,6 +24,7 @@ message AddOrderRequest {
   int64  IsChannel = 11; // 支付渠道
   int64  PinkId = 12; // 拼团ID
   string ProductSpecifications = 13; // 商品属性
+  int64  Source = 14; // 来源（1.普通商品，2秒杀商品）
 }
 
 message AddOrderResponse {

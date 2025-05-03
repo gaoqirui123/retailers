@@ -301,9 +301,9 @@ func AddSeckillProduct(in *user_enter.AddSeckillProductRequest) (*user_enter.Add
 		return nil, errors.New("添加秒杀商品失败")
 	}
 	//将秒杀商品添加redis的list中
-	utlis.ProductCreateRedis(int(seckill.Stock), int(seckill.Id))
+	utlis.SeckillCreateRedis(int(seckill.Stock), int(seckill.Id))
 	//判断redis库存是否添加成功
-	val := utlis.GetProductRedis(int(seckill.Id))
+	val := utlis.GetSeckillRedis(int(seckill.Id))
 	if val != seckill.Stock {
 		tx.Rollback()
 		return nil, errors.New("redis库存是否添加失败")
@@ -345,9 +345,9 @@ func ReverseStock(in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockR
 		return nil, errors.New("清除秒杀表里的数据失败")
 	}
 	//清除redis列表库存
-	utlis.DelProductRedis(int(s.Id))
+	utlis.DelSeckillRedis(int(s.Id))
 	//判断redis列表库存是否被清除
-	val := utlis.GetProductRedis(int(s.Id))
+	val := utlis.GetSeckillRedis(int(s.Id))
 	if val > 0 {
 		tx.Rollback()
 		return nil, errors.New("清除redis列表库存失败")
