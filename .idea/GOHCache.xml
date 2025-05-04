@@ -423,13 +423,6 @@
             </set>
           </value>
         </entry>
-        <entry key="Combinations">
-          <value>
-            <set>
-              <option value="file://$PROJECT_DIR$/../zg6/gin-vue-admin/server/model/example/combination.go" />
-            </set>
-          </value>
-        </entry>
         <entry key="Commission">
           <value>
             <set>
@@ -1694,7 +1687,7 @@
         <entry key="file://$PROJECT_DIR$/api/cmd/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1745636418455" />
+              <option name="lastModified" value="1746322728409" />
             </ScannedPath>
           </value>
         </entry>
@@ -3099,7 +3092,7 @@
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746278575319" />
+              <option name="lastModified" value="1746363373410" />
             </ScannedPath>
           </value>
         </entry>
@@ -3195,18 +3188,6 @@
             </ScannedPath>
           </value>
         </entry>
-        <entry key="file://$PROJECT_DIR$/../zg6/gin-vue-admin/server/model/example/combination.go">
-          <value>
-            <ScannedPath>
-              <option name="lastModified" value="1746273266904" />
-              <option name="schema">
-                <list>
-                  <option value="Combinations" />
-                </list>
-              </option>
-            </ScannedPath>
-          </value>
-        </entry>
       </map>
     </option>
     <option name="tableStructMapping">
@@ -3274,7 +3255,6 @@
         <entry key="combination_list" value="CombinationList" />
         <entry key="combination_list_request" value="CombinationListRequest" />
         <entry key="combination_list_response" value="CombinationListResponse" />
-        <entry key="combinations" value="Combinations" />
         <entry key="commission" value="Commission" />
         <entry key="consul" value="Consul" />
         <entry key="coupon" value="Coupon" />
@@ -3443,6 +3423,6 @@
         <entry key="x" value="x" />
       </map>
     </option>
-    <option name="lastTimeChecked" value="1746270884721" />
+    <option name="lastTimeChecked" value="1746358985832" />
   </component>
 </project>

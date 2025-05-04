@@ -4,6 +4,7 @@ import (
 	"common/global"
 	"common/model"
 	"common/pkg"
+	"common/proto/order"
 	"common/proto/product"
 	"common/utlis"
 	"context"
@@ -11,6 +12,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
+	"google.golang.org/grpc"
 	"math/rand"
 	"strconv"
 	"time"
@@ -50,19 +52,25 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	if err != nil {
 		return nil, err
 	}
+	// 检查库存
+	if combination.Stock < int(in.Num) {
+		tx.Rollback()
+		return nil, fmt.Errorf("库存不足，当前库存: %d，需要数量: %d", combination.Stock, in.Num)
+	}
+
 	//生成订单id
 	orderId := uuid.New().String()
 	// 生成唯一的拼团 ID
 	pinkId := rand.Intn(1000000)
 	//用户表查找用户信息
-	u := model.User{}
-	user, err := u.FindId(int(in.Uid))
-	if err != nil {
-		return nil, err
-	}
+	/*	u := model.User{}
+		user, err := u.FindId(int(in.Uid))
+		if err != nil {
+			return nil, err
+		}*/
 	//商品总价格
 	totalPrice := float64(in.Num) * combination.Price
-	o := model.Order{
+	/*o := model.Order{
 		OrderSn:       orderId,
 		Uid:           in.Uid,
 		RealName:      user.RealName,
@@ -75,16 +83,41 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 		MerId:         int64(combination.MerId),
 		CombinationId: in.Pid,
 		PinkId:        int64(pinkId),
-	}
+	}*/
 	//创建订单
-	err = o.AddOrder()
+
+	conn, err := grpc.Dial("127.0.0.1:8083", grpc.WithInsecure())
 	if err != nil {
-		tx.Rollback()
 		return nil, err
 	}
-	if combination.Stock <= 0 {
-		return nil, errors.New("库存不足")
+	defer conn.Close()
+	client := order.NewOrderClient(conn)
+	orderRequest := &order.AddOrderRequest{
+		Uid:                   in.Uid,
+		ProductId:             in.Pid,
+		Num:                   in.Num,
+		PayType:               1,
+		CouponId:              0,
+		Mark:                  "",
+		StoreId:               0,
+		MerId:                 int64(combination.MerId),
+		BargainId:             1,
+		ShippingType:          1,
+		IsChannel:             0,
+		PinkId:                int64(pinkId),
+		ProductSpecifications: "白色",
 	}
+	addOrder, err := client.AddOrder(context.Background(), orderRequest)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(addOrder)
+	/*	err = o.AddOrder()
+		if err != nil {
+			tx.Rollback()
+			return nil, err
+		}
+	*/
 	//扣mysql商品表总库存
 	px := &model.Combination{}
 	err = px.UpdateCombinationStock(in.Pid, in.Num)
@@ -106,7 +139,11 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 		AddTime:    addtime,
 		StopTime:   stopTime,
 	}
-	marshal, _ := json.Marshal(p)
+	marshal, err := json.Marshal(p)
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
 	//添加拼团
 	err = p.Create()
 	if err != nil {
@@ -117,19 +154,28 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	key := global.GroupBuyKeyPrefix + strconv.Itoa(pinkId)
 	err = global.Rdb.Set(context.Background(), key, marshal, time.Hour).Err()
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
+	//发起支付
 	pay := pkg.NewPay()
 	sprintf := fmt.Sprintf("%.2f", totalPrice)
 	s := pay.Pay(combination.Title, strconv.Itoa(pinkId), sprintf)
-	return &product.GroupBuyingResponse{Success: s}, nil
+	fmt.Println(s)
+	//生成拼团链接
+	// 链接的基础部分
+	baseURL := "https://314b3024.r39.cpolar.top/join_group"
+	// 将拼团 ID 嵌入到链接中
+	link := fmt.Sprintf("%s?id=%d", baseURL, pinkId)
+	tx.Commit()
+	return &product.GroupBuyingResponse{Success: link}, nil
 }
 
 // JoinGroupBuying TODO: 用户参与拼团
 func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyingResponse, error) {
 	ctx := context.Background()
 	// 检查拼团是否存在
-	key := "group_buy:" + in.PinkId
+	key := global.GroupBuyKeyPrefix + in.PinkId
 	exists, err := global.Rdb.Exists(ctx, key).Result()
 	if err != nil {
 		return nil, err
@@ -180,12 +226,42 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 			return nil, fmt.Errorf("更新拼团状态失败:%w", err)
 		}
 	}
+	//生成订单id
+	orderId := uuid.New().String()
+	//用户表查找用户信息
+	u := model.User{}
+	user, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+	//商品总价格
+	totalPrice := pink.Price
+	atoi, _ := strconv.Atoi(pink.OrderId)
+	o := model.Order{
+		OrderSn:       orderId,
+		Uid:           in.Uid,
+		RealName:      user.RealName,
+		UserPhone:     user.Phone,
+		UserAddress:   user.Address,
+		TotalNum:      1,
+		TotalPrice:    totalPrice,
+		PayPrice:      totalPrice,
+		PayType:       1,
+		CombinationId: int64(pink.Pid),
+		PinkId:        int64(atoi),
+	}
+	//创建订单
+	err = o.AddOrder()
+	if err != nil {
+		return nil, err
+	}
 	//扣mysql商品表总库存
 	px := &model.Combination{}
 	err = px.UpdateCombinationStock(int64(pink.Pid), 1)
 	if err != nil {
 		return nil, errors.New("扣mysql商品表总库存失败")
 	}
+	//发起支付
 	pay := pkg.NewPay()
 	sprintf := fmt.Sprintf("%.2f", pink.Price)
 	s := pay.Pay(pink.OrderIdKey, pink.OrderId, sprintf)
