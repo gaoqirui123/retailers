@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	KEY      = "start_stock:start_id_"
-	LOCK_KEY = "start_lock"
+	KEY      = "seckill_stock:seckill_id_"
+	LOCK_KEY = "seckill_stock"
 )
 
 // 获取锁
@@ -34,7 +34,7 @@ func DeleteLock(lockKey string, lockValue string) {
 
 //将秒杀商品添加redis的list中
 
-func ProductCreateRedis(num, startId int) {
+func SeckillCreateRedis(num, seckillId int) {
 	// 生成唯一的锁值
 	lockValue := fmt.Sprintf("%d_%d", time.Now().UnixNano(), time.Now().Nanosecond())
 
@@ -45,10 +45,9 @@ func ProductCreateRedis(num, startId int) {
 
 	// 释放锁
 	defer DeleteLock(LOCK_KEY, lockValue)
-
-	id := strconv.Itoa(startId)
+	id := strconv.Itoa(seckillId)
 	for i := 0; i < num; i++ {
-		err := global.Rdb.LPush(global.Ctx, KEY+id, startId).Err()
+		err := global.Rdb.LPush(global.Ctx, KEY+id, seckillId).Err()
 		if err != nil {
 			return
 		}
@@ -57,16 +56,16 @@ func ProductCreateRedis(num, startId int) {
 
 //判断redis库存是否添加成功
 
-func GetProductRedis(startId int) int64 {
-	id := strconv.Itoa(startId)
+func GetSeckillRedis(seckillId int) int64 {
+	id := strconv.Itoa(seckillId)
 	return global.Rdb.LLen(global.Ctx, KEY+id).Val()
 }
 
 //扣减秒杀商品redis列表库存
 
-func UpdateProductRedis(startId, num int64) bool {
-	id := strconv.Itoa(int(startId))
-	err := global.Rdb.LRem(global.Ctx, KEY+id, num, startId)
+func UpdateSeckillRedis(seckillId, num int64) bool {
+	id := strconv.Itoa(int(seckillId))
+	err := global.Rdb.LRem(global.Ctx, KEY+id, num, seckillId).Err()
 	if err != nil {
 		return false
 	}
@@ -75,7 +74,7 @@ func UpdateProductRedis(startId, num int64) bool {
 
 //清除redis列表库存
 
-func DelProductRedis(startId int) {
-	id := strconv.Itoa(startId)
+func DelSeckillRedis(seckillId int) {
+	id := strconv.Itoa(seckillId)
 	global.Rdb.Del(global.Ctx, KEY+id)
 }

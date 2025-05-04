@@ -36,21 +36,3 @@ func (p ProductServer) JoinGroupBuying(ctx context.Context, in *product.JoinGrou
 	}
 	return userLevelPowerList, nil
 }
-
-// AddSeckillProduct  TODO: 添加秒杀商品
-func (p ProductServer) AddSeckillProduct(ctx context.Context, in *product.AddSeckillProductRequest) (*product.AddSeckillProductResponse, error) {
-	add, err := handler.AddSeckillProduct(in)
-	if err != nil {
-		return nil, err
-	}
-	return add, nil
-}
-
-// ReverseSeckillStock  TODO: 秒杀后反还剩余的商品
-func (p ProductServer) ReverseStock(ctx context.Context, in *product.ReverseStockRequest) (*product.ReverseStockResponse, error) {
-	reverse, err := handler.ReverseStock(in)
-	if err != nil {
-		return nil, err
-	}
-	return reverse, nil
-}

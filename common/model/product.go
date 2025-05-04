@@ -24,7 +24,7 @@ type Product struct {
 	Sort         int64   `gorm:"column:sort;type:smallint;comment:排序;default:0;" json:"sort"`                                              // 排序
 	Sales        int64   `gorm:"column:sales;type:mediumint UNSIGNED;comment:销量;default:0;" json:"sales"`                                  // 销量
 	Stock        int64   `gorm:"column:stock;type:mediumint UNSIGNED;comment:库存;not null;default:0;" json:"stock"`                         // 库存
-	IsShow       int64   `gorm:"column:is_show;type:tinyint(1);comment:状态（0：未上架，1：上架）;not null;default:1;" json:"is_show"`                 // 状态（0：未上架，1：上架）
+	IsShow       int64   `gorm:"column:is_show;type:tinyint(1);comment:状态（0：上架，1：下架）;not null;default:1;" json:"is_show"`                  // 状态（0：未上架，1：上架）
 	IsHot        int64   `gorm:"column:is_hot;type:tinyint(1);comment:是否热卖;default:0;" json:"is_hot"`                                      // 是否热卖
 	IsBenefit    int64   `gorm:"column:is_benefit;type:tinyint(1);comment:是否优惠;default:0;" json:"is_benefit"`                              // 是否优惠
 	IsBest       int64   `gorm:"column:is_best;type:tinyint(1);comment:是否精品;default:0;" json:"is_best"`                                    // 是否精品
@@ -46,7 +46,7 @@ type Product struct {
 }
 
 func (p *Product) GetProductIdBy(productId int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", productId).Limit(1).Find(&p).Error
+	return global.DB.Debug().Table("product").Where("id = ? and  and is_del = 0 and is_show = 0", productId).Limit(1).Find(&p).Error
 }
 
 func (p *Product) UpdateProductStock(id, num int64) error {
@@ -66,7 +66,7 @@ func (p *Product) GetProductById(productId int64, pid int64) (result *Product, e
 }
 
 func (p *Product) ReverseProductStock(productId, stock int64) error {
-	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("good_stock", gorm.Expr("good_stock + ?", stock)).Error
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("stock", gorm.Expr("stock + ?", stock)).Error
 }
 func (p *Product) UpdateStatus(status int64, pid int64) error {
 	return global.DB.Table("product").Where("id = ?", pid).Update("is_show", status).Error

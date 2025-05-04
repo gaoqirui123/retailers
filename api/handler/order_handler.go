@@ -30,6 +30,7 @@ func AddOrder(c *gin.Context) {
 		ShippingType: data.ShippingType,
 		IsChannel:    data.IsChannel,
 		PinkId:       data.PinkId,
+		Source:       data.Source,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())

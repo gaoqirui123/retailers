@@ -66,3 +66,17 @@ func InvoiceList(ctx context.Context, in *user_enter.InvoiceListRequest) (*user_
 		return client.InvoiceList(ctx, req)
 	})
 }
+
+// AddSeckillProduct 添加秒杀商品
+func AddSeckillProduct(ctx context.Context, in *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+		return client.AddSeckillProduct(ctx, req)
+	})
+}
+
+// ReverseStock 秒杀后反还剩余的商品
+func ReverseStock(ctx context.Context, in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+		return client.ReverseStock(ctx, req)
+	})
+}

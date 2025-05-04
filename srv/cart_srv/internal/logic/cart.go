@@ -39,9 +39,9 @@ func (c CartServer) GetCartList(ctx context.Context, in *cart.GetCartListRequest
 	return list, nil
 }
 func (c CartServer) UpdateCart(ctx context.Context, in *cart.UpdateCartRequest) (*cart.UpdateCartResponse, error) {
-	list, err := handler.UpdateCart(in)
+	update, err := handler.UpdateCart(in)
 	if err != nil {
 		return nil, err
 	}
-	return list, nil
+	return update, nil
 }

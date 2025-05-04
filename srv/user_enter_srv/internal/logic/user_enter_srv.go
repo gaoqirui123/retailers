@@ -81,3 +81,21 @@ func (es UserEnterServer) Login(ctx context.Context, in *user_enter.UserEnterLog
 	}
 	return register, nil
 }
+
+// AddSeckillProduct  TODO: 添加秒杀商品
+func (es UserEnterServer) AddSeckillProduct(ctx context.Context, in *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+	add, err := handler.AddSeckillProduct(in)
+	if err != nil {
+		return nil, err
+	}
+	return add, nil
+}
+
+// ReverseStock  TODO: 秒杀后反还剩余的商品
+func (es UserEnterServer) ReverseStock(ctx context.Context, in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+	reverse, err := handler.ReverseStock(in)
+	if err != nil {
+		return nil, err
+	}
+	return reverse, nil
+}
