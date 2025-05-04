@@ -2777,7 +2777,11 @@
         <entry key="file://$PROJECT_DIR$/common/model/visitors.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746325280506" />
+=======
+              <option name="lastModified" value="1746323893288" />
+>>>>>>> 25d926fdd55bd104dd306507c7ca612b62615812
               <option name="schema">
                 <list>
                   <option value="VisitorCount" />
@@ -3031,7 +3035,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/order/order.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746325280511" />
+=======
+              <option name="lastModified" value="1746278203290" />
+>>>>>>> 25d926fdd55bd104dd306507c7ca612b62615812
               <option name="schema">
                 <list>
                   <option value="QrCodeVerificationRequest" />
@@ -3054,7 +3062,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/order/order_grpc.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746325280514" />
+=======
+              <option name="lastModified" value="1746278203290" />
+>>>>>>> 25d926fdd55bd104dd306507c7ca612b62615812
               <option name="schema">
                 <list>
                   <option value="orderClient" />
@@ -3162,7 +3174,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746325280516" />
+=======
+              <option name="lastModified" value="1746271233121" />
+>>>>>>> 25d926fdd55bd104dd306507c7ca612b62615812
               <option name="schema">
                 <list>
                   <option value="ReverseStockRequest" />
@@ -3202,7 +3218,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746325280517" />
+=======
+              <option name="lastModified" value="1746271233121" />
+>>>>>>> 25d926fdd55bd104dd306507c7ca612b62615812
               <option name="schema">
                 <list>
                   <option value="userEnterClient" />
