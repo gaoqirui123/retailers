@@ -45,10 +45,6 @@ type Product struct {
 	Activity     string  `gorm:"column:activity;type:varchar(255);comment:活动显示排序1=秒杀，2=砍价，3=拼团;" json:"activity"`                                     // 活动显示排序1=秒杀，2=砍价，3=拼团
 }
 
-func (Product) TableName() string {
-	return "product"
-}
-
 // UpdateProductField 根据商品ID和字段名，更新商品表中指定字段的值
 func (p *Product) UpdateProductField(productID int, IsBargain int32) error {
 	return global.DB.Debug().Table("product").Model(&p).Where("id = ?", productID).Update("is_bargain", IsBargain).Error
