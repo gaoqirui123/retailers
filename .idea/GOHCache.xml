@@ -353,6 +353,69 @@
             </set>
           </value>
         </entry>
+        <entry key="Bargain">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainCreate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainShow">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUpdate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/bargain_user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserCreate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelp">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/bargain_user_help.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelpShow">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserShow">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="BatchReleaseOfProducts">
           <value>
             <set>
@@ -472,21 +535,7 @@
             </set>
           </value>
         </entry>
-        <entry key="CombinationList">
-          <value>
-            <set>
-              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
-            </set>
-          </value>
-        </entry>
         <entry key="CombinationListRequest">
-          <value>
-            <set>
-              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
-            </set>
-          </value>
-        </entry>
-        <entry key="CombinationListResponse">
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
@@ -755,7 +804,6 @@
         <entry key="GroupBuyingRequest">
           <value>
             <set>
-              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
             </set>
           </value>
@@ -763,7 +811,6 @@
         <entry key="GroupBuyingResponse">
           <value>
             <set>
-              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
             </set>
           </value>
@@ -836,20 +883,6 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/api/request/product_request.go" />
-            </set>
-          </value>
-        </entry>
-        <entry key="JoinGroupBuyingRequest">
-          <value>
-            <set>
-              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
-            </set>
-          </value>
-        </entry>
-        <entry key="JoinGroupBuyingResponse">
-          <value>
-            <set>
-              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
             </set>
           </value>
         </entry>
@@ -957,7 +990,6 @@
             <set>
               <option value="file://$PROJECT_DIR$/common/model/order_product.go" />
               <option value="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go" />
-              <option value="file://$PROJECT_DIR$/../../retailers/srv/order_srv/internal/handler/order.go" />
             </set>
           </value>
         </entry>
@@ -1115,6 +1147,13 @@
             </set>
           </value>
         </entry>
+        <entry key="ProductUpdate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="QrCodeVerification">
           <value>
             <set>
@@ -1140,7 +1179,6 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/rabbitMq/simple/rabbitmq.go" />
-              <option value="file://$PROJECT_DIR$/../../retailers/common/rabbitMq/simple/rabbitmq.go" />
             </set>
           </value>
         </entry>
@@ -1854,7 +1892,6 @@
               <option value="file://$PROJECT_DIR$/common/proto/cart/cart.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/distribution/distribution.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/order/order.pb.go" />
-              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
               <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
             </set>
@@ -1909,7 +1946,7 @@
         <entry key="file://$PROJECT_DIR$/api/client/product_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746355932249" />
+              <option name="lastModified" value="1746361704958" />
             </ScannedPath>
           </value>
         </entry>
@@ -1945,6 +1982,13 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746355932251" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361704959" />
             </ScannedPath>
           </value>
         </entry>
@@ -2024,6 +2068,24 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361704959" />
+              <option name="schema">
+                <list>
+                  <option value="BargainCreate" />
+                  <option value="ProductUpdate" />
+                  <option value="BargainShow" />
+                  <option value="BargainUpdate" />
+                  <option value="BargainUserCreate" />
+                  <option value="BargainUserShow" />
+                  <option value="BargainUserHelpShow" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/api/request/cart_request.go">
           <value>
             <ScannedPath>
@@ -2055,7 +2117,7 @@
         <entry key="file://$PROJECT_DIR$/api/request/order_request.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746355932257" />
+              <option name="lastModified" value="1746364022073" />
               <option name="schema">
                 <list>
                   <option value="AddOrder" />
@@ -2167,7 +2229,7 @@
         <entry key="file://$PROJECT_DIR$/api/router/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746355932259" />
+              <option name="lastModified" value="1746361704961" />
             </ScannedPath>
           </value>
         </entry>
@@ -2335,6 +2397,42 @@
               <option name="schema">
                 <list>
                   <option value="ArticleUserComment" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361704961" />
+              <option name="schema">
+                <list>
+                  <option value="Bargain" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/bargain_user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361704961" />
+              <option name="schema">
+                <list>
+                  <option value="BargainUser" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/bargain_user_help.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361704961" />
+              <option name="schema">
+                <list>
+                  <option value="BargainUserHelp" />
                 </list>
               </option>
             </ScannedPath>
@@ -2511,7 +2609,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746355932325" />
+              <option name="lastModified" value="1746363828661" />
               <option name="schema">
                 <list>
                   <option value="Product" />
@@ -3065,17 +3163,10 @@
         <entry key="file://$PROJECT_DIR$/common/proto/product/product.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746355932349" />
+              <option name="lastModified" value="1746361704963" />
               <option name="schema">
                 <list>
                   <option value="CombinationListRequest" />
-                  <option value="CombinationListResponse" />
-                  <option value="CombinationList" />
-                  <option value="JoinGroupBuyingRequest" />
-                  <option value="JoinGroupBuyingResponse" />
-                  <option value="GroupBuyingRequest" />
-                  <option value="GroupBuyingResponse" />
-                  <option value="x" />
                 </list>
               </option>
             </ScannedPath>
@@ -3084,7 +3175,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/product/product_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746355932351" />
+              <option name="lastModified" value="1746361704964" />
               <option name="schema">
                 <list>
                   <option value="productClient" />
@@ -3448,6 +3539,13 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361704965" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
           <value>
             <ScannedPath>
@@ -3458,7 +3556,7 @@
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/logic/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746355932379" />
+              <option name="lastModified" value="1746361704965" />
               <option name="schema">
                 <list>
                   <option value="ProductServer" />
@@ -3552,44 +3650,6 @@
             </ScannedPath>
           </value>
         </entry>
-        <entry key="file://$PROJECT_DIR$/../../retailers/common/cron/bargain_cron.go">
-          <value>
-            <ScannedPath>
-              <option name="lastModified" value="1746357983378" />
-            </ScannedPath>
-          </value>
-        </entry>
-        <entry key="file://$PROJECT_DIR$/../../retailers/common/cron/pink_cron.go">
-          <value>
-            <ScannedPath>
-              <option name="lastModified" value="1746359590399" />
-            </ScannedPath>
-          </value>
-        </entry>
-        <entry key="file://$PROJECT_DIR$/../../retailers/common/rabbitMq/simple/rabbitmq.go">
-          <value>
-            <ScannedPath>
-              <option name="lastModified" value="1746359623878" />
-              <option name="schema">
-                <list>
-                  <option value="RabbitMQ" />
-                </list>
-              </option>
-            </ScannedPath>
-          </value>
-        </entry>
-        <entry key="file://$PROJECT_DIR$/../../retailers/srv/order_srv/internal/handler/order.go">
-          <value>
-            <ScannedPath>
-              <option name="lastModified" value="1746359590404" />
-              <option name="schema">
-                <list>
-                  <option value="OrderProduct" />
-                </list>
-              </option>
-            </ScannedPath>
-          </value>
-        </entry>
       </map>
     </option>
     <option name="tableStructMapping">
@@ -3646,6 +3706,15 @@
         <entry key="article_thumbs_up_response" value="ArticleThumbsUpResponse" />
         <entry key="article_user_comment" value="ArticleUserComment" />
         <entry key="article_user_comment_like_count" value="ArticleUserCommentLikeCount" />
+        <entry key="bargain" value="Bargain" />
+        <entry key="bargain_create" value="BargainCreate" />
+        <entry key="bargain_show" value="BargainShow" />
+        <entry key="bargain_update" value="BargainUpdate" />
+        <entry key="bargain_user" value="BargainUser" />
+        <entry key="bargain_user_create" value="BargainUserCreate" />
+        <entry key="bargain_user_help" value="BargainUserHelp" />
+        <entry key="bargain_user_help_show" value="BargainUserHelpShow" />
+        <entry key="bargain_user_show" value="BargainUserShow" />
         <entry key="batch_release_of_products" value="BatchReleaseOfProducts" />
         <entry key="batch_release_of_products_request" value="BatchReleaseOfProductsRequest" />
         <entry key="batch_release_of_products_response" value="BatchReleaseOfProductsResponse" />
@@ -3664,9 +3733,7 @@
         <entry key="clear_cart_request" value="ClearCartRequest" />
         <entry key="clear_cart_response" value="ClearCartResponse" />
         <entry key="combination" value="Combination" />
-        <entry key="combination_list" value="CombinationList" />
         <entry key="combination_list_request" value="CombinationListRequest" />
-        <entry key="combination_list_response" value="CombinationListResponse" />
         <entry key="commission" value="Commission" />
         <entry key="consul" value="Consul" />
         <entry key="coupon" value="Coupon" />
@@ -3716,8 +3783,6 @@
         <entry key="invoice_list_request" value="InvoiceListRequest" />
         <entry key="invoice_list_response" value="InvoiceListResponse" />
         <entry key="join_group_buy" value="JoinGroupBuy" />
-        <entry key="join_group_buying_request" value="JoinGroupBuyingRequest" />
-        <entry key="join_group_buying_response" value="JoinGroupBuyingResponse" />
         <entry key="jwt" value="JWT" />
         <entry key="list_rank" value="ListRank" />
         <entry key="login" value="Login" />
@@ -3758,6 +3823,7 @@
         <entry key="product_client" value="productClient" />
         <entry key="product_server" value="ProductServer" />
         <entry key="product_srv" value="ProductSrv" />
+        <entry key="product_update" value="ProductUpdate" />
         <entry key="qr_code_verification" value="QrCodeVerification" />
         <entry key="qr_code_verification_request" value="QrCodeVerificationRequest" />
         <entry key="qr_code_verification_response" value="QrCodeVerificationResponse" />
@@ -3859,6 +3925,6 @@
         <entry key="x" value="x" />
       </map>
     </option>
-    <option name="lastTimeChecked" value="1746355988473" />
+    <option name="lastTimeChecked" value="1746361727475" />
   </component>
 </project>
