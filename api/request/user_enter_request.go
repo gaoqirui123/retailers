@@ -6,7 +6,6 @@ type Apply struct {
 	District     string `json:"district" xml:"district" form:"district" binding:"required"`
 	Address      string `json:"address" xml:"address" form:"address" binding:"required"`
 	MerchantName string `json:"merchantName" xml:"merchantName" form:"merchantName" binding:"required"`
-	LinkTel      string `json:"linkTel" xml:"linkTel" form:"linkTel" binding:"required"`
 	Charter      string `json:"charter" xml:"charter" form:"charter" binding:"required"`
 }
 type Register struct {

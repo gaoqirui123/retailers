@@ -23,7 +23,6 @@ func Apply(c *gin.Context) {
 		District:     data.District,
 		Address:      data.Address,
 		MerchantName: data.MerchantName,
-		LinkTel:      data.LinkTel,
 		Charter:      data.Charter,
 	})
 	if err != nil {

@@ -14,8 +14,11 @@ func GenerateInvoiceImage(invoices *model.InvoiceApplication) error {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	// 添加一个页面
 	pdf.AddPage()
+	pdf.AddFont("方正粗宋简体", "B", "../../common/fonts/方正粗宋简体_2.ttf")
+
+	pdf.SetFont("方正粗宋简体", "B", 16)
 	// 设置字体
-	pdf.SetFont("./Dengl.ttf", "B", 16)
+	//pdf.SetFont("../../common/fonts/方正粗宋简体_2.TTF", "B", 16)
 
 	// 写入标题
 	pdf.Cell(40, 10, "发票")
@@ -33,7 +36,7 @@ func GenerateInvoiceImage(invoices *model.InvoiceApplication) error {
 	pdf.Ln(10)
 
 	// 表格头部
-	pdf.SetFont("C:\\Users\\lenovo\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Dengl.ttf", "B", 12)
+	pdf.SetFont("../../common/fonts/方正粗宋简体_2.TTF", "B", 12)
 	pdf.Cell(40, 10, "商品名称")
 	pdf.Cell(40, 10, "数量")
 	pdf.Cell(40, 10, "单价")
@@ -43,7 +46,7 @@ func GenerateInvoiceImage(invoices *model.InvoiceApplication) error {
 	sprintf := fmt.Sprintf("%.2f", invoiceAmount)
 
 	// 表格内容
-	pdf.SetFont("C:\\Users\\lenovo\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Dengl.ttf", "", 12)
+	pdf.SetFont("../../common/fonts/方正粗宋简体_2.TTF", "", 12)
 	pdf.Cell(40, 10, "商品1")
 	pdf.Cell(40, 10, "2")
 	pdf.Cell(40, 10, "100.00")
@@ -51,17 +54,11 @@ func GenerateInvoiceImage(invoices *model.InvoiceApplication) error {
 	pdf.Ln(10)
 
 	// 总计
-	pdf.SetFont("C:\\Users\\lenovo\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Dengl.ttf", "B", 12)
+	pdf.SetFont("../../common/fonts/方正粗宋简体_2.TTF", "B", 12)
 	pdf.Cell(40, 10, "总计金额: "+sprintf)
 
-	// 保存PDF文件
-	/*	err := pdf.OutputFileAndClose("invoice.pdf")
-		if err != nil {
-			log.Fatalf("生成PDF文件时出错: %v", err)
-		}*/
-
 	// 保存PDF到指定位置，使用完整的文件名
-	pdfPath := "D:\\gocode\\src\\retailers\\common\\picture\\invoice_audit_result.pdf"
+	pdfPath := "../common/picture/invoice_audit_result.pdf"
 	err := pdf.OutputFileAndClose(pdfPath)
 	if err != nil {
 		log.Fatalf("生成PDF文件时出错: %v", err)
