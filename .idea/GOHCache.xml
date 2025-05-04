@@ -2758,7 +2758,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/visitors.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746237628281" />
+              <option name="lastModified" value="1746323893288" />
               <option name="schema">
                 <list>
                   <option value="VisitorCount" />
@@ -2993,7 +2993,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/order/order.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746177161750" />
+              <option name="lastModified" value="1746278203290" />
               <option name="schema">
                 <list>
                   <option value="QrCodeVerificationRequest" />
@@ -3016,7 +3016,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/order/order_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746177161750" />
+              <option name="lastModified" value="1746278203290" />
               <option name="schema">
                 <list>
                   <option value="orderClient" />
@@ -3128,7 +3128,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746236408184" />
+              <option name="lastModified" value="1746271233121" />
               <option name="schema">
                 <list>
                   <option value="UserEnterApplyRequest" />
@@ -3164,7 +3164,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746236408184" />
+              <option name="lastModified" value="1746271233121" />
               <option name="schema">
                 <list>
                   <option value="userEnterClient" />
