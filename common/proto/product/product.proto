@@ -7,32 +7,8 @@ service Product {
   rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);// TODO: 拼团商品列表展示
   rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO: 用户发起拼团
   rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO: 用户参与拼团
-  rpc AddSeckillProduct(AddSeckillProductRequest) returns (AddSeckillProductResponse);//TODO: 添加秒杀商品
-  rpc ReverseStock(ReverseStockRequest) returns (ReverseStockResponse);//TODO: 秒杀后反还剩余的商品
 }
 
-// TODO: 秒杀后反还剩余的商品
-message ReverseStockRequest {
-  int64  UserEnterId =1;
-  int64  SeckillId =2;
-}
-message ReverseStockResponse {
-  bool  Success = 1;
-}
-
-// TODO: 添加秒杀商品
-message AddSeckillProductRequest {
-  int64  UserEnterId =1;
-  int64  ProductId =2;
-  int64  Num = 3;
-  float  Price = 4;
-  string Description = 5;
-  string StartTime = 6;
-  string StopTime = 7;
-}
-message AddSeckillProductResponse {
-  int64 SeckillId = 1;
-}
 
 // TODO:拼团商品列表展示
 message CombinationListRequest {

@@ -5,6 +5,7 @@ import (
 	"api/request"
 	"api/response"
 	"common/proto/article"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -144,6 +145,86 @@ func DeleteArticleCategory(c *gin.Context) {
 	}
 	release, err := client.DeleteArticleCategory(c, &article.DeleteRequest{
 		Ids: int64(data.Id),
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", release)
+}
+
+// 发布评论
+func PostAComment(c *gin.Context) {
+	var data request.PostAComment
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, fmt.Sprintf("%v", err))
+		return
+	}
+	userId := c.GetUint("userId")
+	release, err := client.PostAComment(c, &article.PostACommentRequest{
+		Uid:         int64(userId),
+		ArticleID:   int64(data.ArticleID),
+		Content:     data.Content,
+		Pid:         int64(data.Pid),
+		ReplyUserID: int64(data.ReplyUserID),
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", release)
+}
+
+// 文章点赞
+func ArticleThumbsUp(c *gin.Context) {
+	var data request.ArticleThumbsUp
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, fmt.Sprintf("%v", err))
+		return
+	}
+	userId := c.GetUint("userId")
+	release, err := client.ArticleThumbsUp(c, &article.ArticleThumbsUpRequest{
+		Uid:       int64(userId),
+		ArticleID: int64(data.ArticleID),
+		Button:    int64(data.Button),
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", release)
+}
+
+// 删除评论
+func DeleteComment(c *gin.Context) {
+	var data request.DeleteComment
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, fmt.Sprintf("%v", err))
+		return
+	}
+	userId := c.GetUint("userId")
+	release, err := client.DeleteComment(c, &article.DeleteCommentRequest{
+		Uid:       int64(userId),
+		ArticleID: int64(data.ArticleID),
+		CommentID: int64(data.CommentID),
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "成功", release)
+}
+
+// 高赞文章排序
+func TopLikeArticleRanking(c *gin.Context) {
+	var data request.TopLikeArticleRanking
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, fmt.Sprintf("%v", err))
+		return
+	}
+
+	release, err := client.TopLikeArticleRanking(c, &article.TopLikeArticleRankingRequest{
+		Top: int64(data.Top),
 	})
 	if err != nil {
 		response.RespError(c, err.Error())

@@ -18,5 +18,9 @@ func ArticleRouter(c *gin.RouterGroup) {
 		a.POST("/article/edit", handler.EditArticle)                     //编辑文章
 		a.GET("/delete/article", handler.DeleteArticle)                  //删除文章管理
 		a.GET("/delete/article/category", handler.DeleteArticleCategory) //删除文章分类
+		a.POST("/postAComment", handler.PostAComment)                    //发布评论
+		a.GET("/articleThumbsUp", handler.ArticleThumbsUp)               //文章点赞
+		a.GET("/deleteComment", handler.DeleteComment)                   //删除评论
+		a.GET("/topLikeArticleRanking", handler.TopLikeArticleRanking)   //高赞文章排序
 	}
 }

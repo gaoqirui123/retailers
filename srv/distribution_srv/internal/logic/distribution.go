@@ -45,3 +45,21 @@ func (d DistributionServer) TheCharts(ctx context.Context, in *distribution.TheC
 	}
 	return code, err
 }
+
+// TODO 用户下级展示
+func (d DistributionServer) LookDoneUp(ctx context.Context, in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+	code, err := handler.LookDoneUp(in)
+	if err != nil {
+		return nil, err
+	}
+	return code, err
+}
+
+// TODO 用户上级展示
+func (d DistributionServer) LookUp(ctx context.Context, in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+	code, err := handler.LookUp(in)
+	if err != nil {
+		return nil, err
+	}
+	return code, err
+}

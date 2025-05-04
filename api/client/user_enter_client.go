@@ -70,3 +70,38 @@ func InvoiceList(ctx context.Context, in *user_enter.InvoiceListRequest) (*user_
 		return client.InvoiceList(ctx, req)
 	})
 }
+
+// AddSeckillProduct 添加秒杀商品
+func AddSeckillProduct(ctx context.Context, in *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+		return client.AddSeckillProduct(ctx, req)
+	})
+}
+
+// ReverseStock 秒杀后反还剩余的商品
+func ReverseStock(ctx context.Context, in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+		return client.ReverseStock(ctx, req)
+	})
+}
+
+// BatchReleaseOfProducts 商品批量发布
+func BatchReleaseOfProducts(ctx context.Context, in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
+		return client.BatchReleaseOfProducts(ctx, req)
+	})
+}
+
+// MerchantVerification 商家核销
+func MerchantVerification(ctx context.Context, in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+		return client.MerchantVerification(ctx, req)
+	})
+}
+
+// CalculateOrderSummary 商家统计
+func CalculateOrderSummary(ctx context.Context, in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+		return client.CalculateOrderSummary(ctx, req)
+	})
+}

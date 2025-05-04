@@ -1,4 +1,4 @@
-package model
+package article
 
 import (
 	"time"
@@ -16,6 +16,7 @@ type Article struct {
 	ShareTitle    string    `bson:"share_title,omitempty"`    // 文章分享标题
 	ShareSynopsis string    `bson:"share_synopsis,omitempty"` // 文章分享简介
 	Visit         int64     `bson:"visit,omitempty"`          // 浏览次数
+	LikeCount     int64     `bson:"like_count,omitempty"`     //点赞次数
 	Url           string    `bson:"url,omitempty"`            // 原文链接
 	Status        string    `bson:"status,omitempty"`         // 状态
 	AddTime       time.Time `bson:"add_time,omitempty"`       // 添加时间
@@ -26,12 +27,3 @@ type Article struct {
 	IsDel         int64     `bson:"is_del,omitempty"`         // 1未删除2已删除
 	UpdatedAt     time.Time `bson:"updated_at,omitempty"`     // 修改时间
 }
-
-//
-//func (ab *Article) CreateEbArticle() bool {
-//	err := global.DB.Debug().Table("article").Create(&ab).Error
-//	if err != nil {
-//		return false
-//	}
-//	return true
-//}

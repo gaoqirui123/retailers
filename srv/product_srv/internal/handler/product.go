@@ -6,10 +6,8 @@ import (
 	"common/pkg"
 	"common/proto/order"
 	"common/proto/product"
-	"common/utlis"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
@@ -266,118 +264,4 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 	sprintf := fmt.Sprintf("%.2f", pink.Price)
 	s := pay.Pay(pink.OrderIdKey, pink.OrderId, sprintf)
 	return &product.JoinGroupBuyingResponse{Success: s}, nil
-}
-
-func AddSeckillProduct(in *product.AddSeckillProductRequest) (*product.AddSeckillProductResponse, error) {
-	//查询商品是否存在
-	p := &model.Product{}
-	err := p.GetProductIdBy(in.ProductId)
-	if err != nil {
-		return nil, err
-	}
-	if p.Id == 0 {
-		return nil, errors.New("商品不存在")
-	}
-	// 判断该商品是否是该商户的
-	if p.MerId != in.UserEnterId {
-		return nil, errors.New("该商品不是你的")
-	}
-	//判断商品库存不能小于秒杀库存
-	if p.Stock < in.Num {
-		return nil, errors.New("判断商品库存小于秒杀库存")
-	}
-	//开启事务
-	tx := global.DB.Begin()
-	//扣mysql商品表总库存
-	err = p.UpdateProductStock(in.ProductId, in.Num)
-	if err != nil {
-		tx.Rollback()
-		return nil, errors.New("扣mysql商品表总库存失败")
-	}
-	seckill := &model.Seckill{
-		MerId:       p.MerId,
-		ProductId:   in.ProductId,
-		Image:       p.Image,
-		Images:      p.SliderImage,
-		Name:        p.StoreName,
-		Info:        p.StoreInfo,
-		Price:       float64(in.Price),
-		Cost:        p.Cost,
-		OtPrice:     p.Price,
-		Stock:       in.Num,
-		Postage:     p.Postage,
-		Description: in.Description,
-		StartTime:   in.StartTime,
-		StopTime:    in.StopTime,
-		AddTime:     time.Now().Format(time.DateTime),
-		Status:      p.IsShow,
-		IsPostage:   p.IsPostage,
-		Num:         in.Num,
-		Quota:       in.Num,
-		QuotaShow:   in.Num,
-	}
-	err = seckill.AddSeckillProduct()
-	if err != nil {
-		tx.Rollback()
-		return nil, err
-	}
-	if seckill.Id == 0 {
-		tx.Rollback()
-		return nil, errors.New("添加秒杀商品失败")
-	}
-	//将秒杀商品添加redis的list中
-	utlis.ProductCreateRedis(int(seckill.Stock), int(seckill.Id))
-	//判断redis库存是否添加成功
-	val := utlis.GetProductRedis(int(seckill.Id))
-	if val != seckill.Stock {
-		tx.Rollback()
-		return nil, errors.New("redis库存是否添加失败")
-	}
-	if err = tx.Commit().Error; err != nil {
-		return nil, err
-	}
-	return &product.AddSeckillProductResponse{SeckillId: seckill.Id}, nil
-}
-
-func ReverseStock(in *product.ReverseStockRequest) (*product.ReverseStockResponse, error) {
-	// 查询秒杀商品是否存在
-	s := &model.Seckill{}
-	err := s.GetSeckillIdBY(in.SeckillId)
-	if err != nil {
-		return nil, err
-	}
-	if s.Id == 0 {
-		return nil, errors.New("秒杀商品不存在")
-	}
-	// 判断该商品是否是该商户的
-	if s.MerId != in.UserEnterId {
-		return nil, errors.New("该商品不是你的")
-	}
-	//开启事务
-	tx := global.DB.Begin()
-	//反还剩余的商品
-	g := &model.Product{}
-	err = g.ReverseProductStock(s.ProductId, s.Stock)
-	if err != nil {
-		tx.Rollback()
-		return nil, errors.New("秒杀商品不存在")
-	}
-	//清除秒杀表里的数据
-	err = s.DelSeckill(in.SeckillId)
-	if err != nil {
-		tx.Rollback()
-		return nil, errors.New("清除秒杀表里的数据失败")
-	}
-	//清除redis列表库存
-	utlis.DelProductRedis(int(s.Id))
-	//判断redis列表库存是否被清除
-	val := utlis.GetProductRedis(int(s.Id))
-	if val > 0 {
-		tx.Rollback()
-		return nil, errors.New("清除redis列表库存失败")
-	}
-	if err = tx.Commit().Error; err != nil {
-		return nil, err
-	}
-	return &product.ReverseStockResponse{Success: true}, nil
 }

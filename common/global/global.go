@@ -23,4 +23,13 @@ var (
 const (
 	TimeFormat        = "2006-01-02 15:04:05"
 	GroupBuyKeyPrefix = "group_buy:"
+	IMGName           = "user_%d_order_%d"
 )
+
+var Order struct {
+	Id      int64  `json:"id"`
+	OrderSn string `json:"order_sn"`
+	Uid     int64  `json:"uid"`
+	Paid    int64  `json:"paid"`
+	Status  int64  `json:"status"`
+}

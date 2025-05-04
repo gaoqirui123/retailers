@@ -35,3 +35,10 @@ func OrderList(ctx context.Context, in *order.OrderListRequest) (*order.OrderLis
 		return client.OrderList(ctx, req)
 	})
 }
+
+// TODO:二维码核销
+func QrCodeVerification(ctx context.Context, in *order.QrCodeVerificationRequest) (*order.QrCodeVerificationResponse, error) {
+	return OrderClients(ctx, in, func(ctx context.Context, client order.OrderClient, req *order.QrCodeVerificationRequest) (*order.QrCodeVerificationResponse, error) {
+		return client.QrCodeVerification(ctx, req)
+	})
+}

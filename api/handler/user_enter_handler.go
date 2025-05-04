@@ -187,3 +187,114 @@ func InvoiceList(c *gin.Context) {
 	}
 	response.RespSuccess(c, "展示成功", list)
 }
+
+// AddSeckillProduct TODO: 添加秒杀商品
+func AddSeckillProduct(c *gin.Context) {
+	userEnterId := c.GetUint("userId")
+	var data request.AddSeckillProduct
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	seckill, err := client.AddSeckillProduct(c, &user_enter.AddSeckillProductRequest{
+		UserEnterId: int64(userEnterId),
+		ProductId:   data.ProductId,
+		Num:         data.Num,
+		Price:       float32(data.Price),
+		Description: data.Description,
+		StartTime:   data.StartTime,
+		StopTime:    data.StopTime,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	if seckill.SeckillId == 0 {
+		response.RespError(c, "添加秒杀商品成功")
+		return
+	}
+	response.RespSuccess(c, "添加秒杀商品成功", seckill)
+}
+
+// ReverseStock TODO: 秒杀后反还剩余的商品
+func ReverseStock(c *gin.Context) {
+	userEnterId := c.GetUint("userId")
+	var data request.ReverseStock
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	reverse, err := client.ReverseStock(c, &user_enter.ReverseStockRequest{
+		UserEnterId: int64(userEnterId),
+		SeckillId:   data.ProductId,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	if reverse.Success == false {
+		response.RespError(c, "秒杀后反还剩余的商品失败")
+		return
+	}
+	response.RespSuccess(c, "秒杀后反还剩余的商品成功", reverse)
+}
+
+func MerchantVerification(c *gin.Context) {
+	//uid := c.GetUint("userId")
+	var data request.MerchantVerification
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+
+	ar, err := client.MerchantVerification(c, &user_enter.MerchantVerificationRequest{
+		UserId:  data.UserId,
+		OrderId: data.OrderId,
+	})
+
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "商家核销成功", ar)
+
+}
+
+func CalculateOrderSummary(c *gin.Context) {
+	ar, err := client.CalculateOrderSummary(c, &user_enter.CalculateOrderSummaryRequest{})
+
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "商家统计成功", ar)
+}
+
+//批量添加商品
+
+//func BatchReleaseOfProducts(c *gin.Context) {
+//	var data request.BatchReleaseOfProducts
+//	err := c.ShouldBind(&data)
+//	if err != nil {
+//		response.RespError(c, err.Error())
+//		return
+//	}
+//	uid := c.GetUint("userId")
+//	list, err := client.BatchReleaseOfProducts(c, &user_enter.BatchReleaseOfProductsRequest{
+//		MerId:       int64(uid),
+//		Image:       data.Image,
+//		SliderImage: data.SliderImage,
+//		StoreName:   data.StoreName,
+//		CateId:      data.CateId,
+//		IsShow:      data.IsShow,
+//		Price:       int64(data.Price),
+//		Postage:     int64(data.Postage),
+//		UnitName:    data.UnitName,
+//	})
+//	if err != nil {
+//		response.RespError(c, err.Error())
+//		return
+//	}
+//	response.RespSuccess(c, "批量发布成功", list)
+//}

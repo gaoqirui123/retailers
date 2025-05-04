@@ -1,4 +1,4 @@
-package model
+package article
 
 import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -20,11 +20,3 @@ type ArticleCategory struct {
 	AddTime time.Time          `bson:"add_time,omitempty"` // 添加时间
 	Hidden  string             `bson:"hidden,omitempty"`   // 是否隐藏
 }
-
-//func (a *ArticleCategory) CreateArticleCategory() bool {
-//	err := global.DB.Debug().Table("article_category").Create(&a).Error
-//	if err != nil {
-//		return false
-//	}
-//	return true
-//}

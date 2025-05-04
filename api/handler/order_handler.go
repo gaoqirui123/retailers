@@ -30,6 +30,7 @@ func AddOrder(c *gin.Context) {
 		ShippingType: data.ShippingType,
 		IsChannel:    data.IsChannel,
 		PinkId:       data.PinkId,
+		Source:       data.Source,
 	})
 	if err != nil {
 		response.RespError(c, err.Error())
@@ -94,4 +95,24 @@ func OrderList(c *gin.Context) {
 		return
 	}
 	response.RespSuccess(c, "订单列表展示成功", list.List)
+}
+
+func QrCodeVerification(c *gin.Context) {
+	var data request.QrCodeVerification
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	UserId := c.GetUint("userId")
+	list, err := client.QrCodeVerification(c, &order.QrCodeVerificationRequest{
+		UserId:  int64(UserId),
+		OrderId: data.OrderId,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	fmt.Println(list)
+
+	response.RespSuccess(c, "二维码已生成欢迎到点核销", list)
 }
