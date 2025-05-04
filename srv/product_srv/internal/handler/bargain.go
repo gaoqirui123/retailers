@@ -182,7 +182,7 @@ func BargainUpdate(req *product.BargainUpdateRequest) (*product.BargainUpdateRes
 	}, nil
 }
 
-// TODO:创建用户参与砍价接口（创建）
+// TODO:创建用户参与砍价接口
 func BargainUserCreate(req *product.BargainUserCreateRequest) (*product.BargainUserCreateResponse, error) {
 	var bargain model.Bargain
 	err := bargain.BargainShowID(req.BargainId)
