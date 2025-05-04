@@ -15,8 +15,5 @@ func OrderRouter(r *gin.RouterGroup) {
 		o.POST("/add", handler.AddOrder)                         // TODO: 创建订单
 		o.GET("/list", handler.OrderList)                        // TODO: 订单列表查询
 		o.GET("/qrCodeVerification", handler.QrCodeVerification) //TODO:二维码核销
-		o.POST("/add", handler.AddOrder)                         // TODO: 创建订单
-		o.GET("/list", handler.OrderList)                        // TODO: 订单列表查询
-
 	}
 }
