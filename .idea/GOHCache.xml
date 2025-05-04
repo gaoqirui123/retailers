@@ -3,6 +3,55 @@
   <component name="GoORMHelperCache">
     <option name="schemaMapping">
       <map>
+        <entry key="AddCombinationProduct">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AddOrder">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../789/retailers/api/request/order_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AddProduct">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="AddSeckillProduct">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Apply">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BatchPublishProducts">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BatchReleaseOfProducts">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="Combination">
           <value>
             <set>
@@ -10,9 +59,46 @@
             </set>
           </value>
         </entry>
+        <entry key="DelProduct">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="InvoiceList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Login">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MerchantVerification">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="OrderList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../789/retailers/api/request/order_request.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="OrderProduct">
           <value>
             <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/common/global/global.go" />
+              <option value="file://$PROJECT_DIR$/../456/retailers/srv/order_srv/internal/handler/order.go" />
               <option value="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go" />
             </set>
           </value>
@@ -24,10 +110,45 @@
             </set>
           </value>
         </entry>
+        <entry key="OrderSyn">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/srv/user_enter_srv/internal/handler/user_enter.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="Pink">
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/model/pink.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProcessInvoice">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Product">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../789/retailers/common/model/product.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProductInfo">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="QrCodeVerification">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../789/retailers/api/request/order_request.go" />
             </set>
           </value>
         </entry>
@@ -38,10 +159,153 @@
             </set>
           </value>
         </entry>
+        <entry key="Register">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ReverseStock">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserEnterServer">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../456/retailers/srv/user_enter_srv/internal/logic/user_enter_srv.go" />
+            </set>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="scannedPathMapping">
       <map>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/api/client/user_enter_client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746365760119" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/api/handler/product_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746367500539" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/api/handler/user_enter_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746367500309" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/api/request/user_enter_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746367384958" />
+              <option name="schema">
+                <list>
+                  <option value="Apply" />
+                  <option value="Register" />
+                  <option value="Login" />
+                  <option value="AddProduct" />
+                  <option value="AddCombinationProduct" />
+                  <option value="ProcessInvoice" />
+                  <option value="DelProduct" />
+                  <option value="InvoiceList" />
+                  <option value="AddSeckillProduct" />
+                  <option value="ReverseStock" />
+                  <option value="MerchantVerification" />
+                  <option value="BatchPublishProducts" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/api/router/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746367170324" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/api/router/user_enter.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746366376962" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/common/global/global.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746368276592" />
+              <option name="schema">
+                <list>
+                  <option value="OrderProduct" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/srv/order_srv/internal/handler/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746368276546" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/srv/user_enter_srv/internal/handler/user_enter.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746368212571" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../456/retailers/srv/user_enter_srv/internal/logic/user_enter_srv.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746367384934" />
+              <option name="schema">
+                <list>
+                  <option value="UserEnterServer" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../789/retailers/api/request/order_request.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746364022073" />
+              <option name="schema">
+                <list>
+                  <option value="AddOrder" />
+                  <option value="OrderList" />
+                  <option value="QrCodeVerification" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../789/retailers/common/model/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746363828661" />
+              <option name="schema">
+                <list>
+                  <option value="Product" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/cron/pink_cron.go">
           <value>
             <ScannedPath>
@@ -120,11 +384,31 @@
     </option>
     <option name="tableStructMapping">
       <map>
+        <entry key="add_combination_product" value="AddCombinationProduct" />
+        <entry key="add_order" value="AddOrder" />
+        <entry key="add_product" value="AddProduct" />
+        <entry key="add_seckill_product" value="AddSeckillProduct" />
+        <entry key="apply" value="Apply" />
+        <entry key="batch_publish_products" value="BatchPublishProducts" />
+        <entry key="batch_release_of_products" value="BatchReleaseOfProducts" />
         <entry key="combination" value="Combination" />
+        <entry key="del_product" value="DelProduct" />
+        <entry key="invoice_list" value="InvoiceList" />
+        <entry key="login" value="Login" />
+        <entry key="merchant_verification" value="MerchantVerification" />
+        <entry key="order_list" value="OrderList" />
         <entry key="order_product" value="OrderProduct" />
         <entry key="order_server" value="OrderServer" />
+        <entry key="order_syn" value="OrderSyn" />
         <entry key="pink" value="Pink" />
+        <entry key="process_invoice" value="ProcessInvoice" />
+        <entry key="product" value="Product" />
+        <entry key="product_info" value="ProductInfo" />
+        <entry key="qr_code_verification" value="QrCodeVerification" />
         <entry key="rabbit_mq" value="RabbitMQ" />
+        <entry key="register" value="Register" />
+        <entry key="reverse_stock" value="ReverseStock" />
+        <entry key="user_enter_server" value="UserEnterServer" />
       </map>
     </option>
   </component>
