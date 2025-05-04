@@ -239,3 +239,63 @@ func ReverseStock(c *gin.Context) {
 	}
 	response.RespSuccess(c, "秒杀后反还剩余的商品成功", reverse)
 }
+
+func MerchantVerification(c *gin.Context) {
+	//uid := c.GetUint("userId")
+	var data request.MerchantVerification
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+
+	ar, err := client.MerchantVerification(c, &user_enter.MerchantVerificationRequest{
+		UserId:  data.UserId,
+		OrderId: data.OrderId,
+	})
+
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "商家核销成功", ar)
+
+}
+
+func CalculateOrderSummary(c *gin.Context) {
+	ar, err := client.CalculateOrderSummary(c, &user_enter.CalculateOrderSummaryRequest{})
+
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "商家统计成功", ar)
+}
+
+//批量添加商品
+
+//func BatchReleaseOfProducts(c *gin.Context) {
+//	var data request.BatchReleaseOfProducts
+//	err := c.ShouldBind(&data)
+//	if err != nil {
+//		response.RespError(c, err.Error())
+//		return
+//	}
+//	uid := c.GetUint("userId")
+//	list, err := client.BatchReleaseOfProducts(c, &user_enter.BatchReleaseOfProductsRequest{
+//		MerId:       int64(uid),
+//		Image:       data.Image,
+//		SliderImage: data.SliderImage,
+//		StoreName:   data.StoreName,
+//		CateId:      data.CateId,
+//		IsShow:      data.IsShow,
+//		Price:       int64(data.Price),
+//		Postage:     int64(data.Postage),
+//		UnitName:    data.UnitName,
+//	})
+//	if err != nil {
+//		response.RespError(c, err.Error())
+//		return
+//	}
+//	response.RespSuccess(c, "批量发布成功", list)
+//}

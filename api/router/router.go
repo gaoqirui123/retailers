@@ -5,6 +5,7 @@ import (
 )
 
 func RegisterRouter(r *gin.Engine) {
+
 	c := r.Group("/api/c")
 	{
 		UserRouter(c)

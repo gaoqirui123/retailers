@@ -9,8 +9,16 @@ import (
 	"errors"
 	"log"
 	"regexp"
+	"strconv"
 	"time"
 )
+
+type OrderSyn struct {
+	ID      int64  `json:"id"`
+	OrderSn string `json:"orderSn"`
+	Status  int64  `json:"status"`
+	Paid    int64  `json:"paid"`
+}
 
 // Apply TODO:商家申请店铺
 func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
@@ -356,4 +364,97 @@ func ReverseStock(in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockR
 		return nil, err
 	}
 	return &user_enter.ReverseStockResponse{Success: true}, nil
+}
+
+// BatchReleaseOfProducts TODO:商品批量发布
+func BatchReleaseOfProducts(in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
+	// 开启事务
+	transaction := global.DB.Begin()
+	if transaction.Error != nil {
+		return nil, transaction.Error
+	}
+	for _, productData := range in.List {
+		p := model.Product{
+			MerId:       productData.MerId,
+			Image:       productData.Image,
+			SliderImage: productData.SliderImage,
+			StoreName:   productData.StoreName,
+			CateId:      strconv.FormatInt(productData.CateId, 10),
+			IsShow:      int64(int(productData.IsShow)),
+			Price:       float64(productData.Price),
+			Postage:     float64(productData.Postage),
+			UnitName:    productData.UnitName,
+		}
+
+		// 在事务中添加商品
+		if err := p.Add(); err != nil {
+			// 回滚事务
+			transaction.Rollback()
+			return nil, err
+		}
+	}
+
+	// 提交事务
+	if err := transaction.Commit().Error; err != nil {
+		return nil, err
+	}
+
+	return &user_enter.BatchReleaseOfProductsResponse{Success: "批量添加商品成功"}, nil
+}
+
+// MerchantVerification TODO:商家核销
+func MerchantVerification(in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+	o := &model.Order{}
+	id, err := o.FindId(in.OrderId)
+	if err != nil {
+		return &user_enter.MerchantVerificationResponse{Greet: false}, nil
+	}
+	err = o.UpdateOrderStatus(id.OrderSn, 7)
+	if err != nil {
+		return &user_enter.MerchantVerificationResponse{Greet: false}, nil
+	}
+	return &user_enter.MerchantVerificationResponse{Greet: true}, nil
+}
+
+// CalculateOrderSummary TODO:商家统计
+func CalculateOrderSummary(in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+	orders := &model.Order{}
+	products := &model.Product{}
+	// 获取订单总数
+	orderCount, err := orders.GetTotalOrderCount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取订单总金额
+	totalAmount, err := orders.GetTotalOrderAmount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取总退款数
+	totalRefund, err := orders.GetTotalRefundAmount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取商品总浏览量
+	productViewCount, err := products.GetTotalViewCount()
+	if err != nil {
+		return nil, err
+	}
+
+	// 获取商品访问客数
+	//uniqueVisitors, err := visitors.GetUniqueVisitorCount()
+	//if err != nil {
+	//	return nil, err
+	//}
+
+	return &user_enter.CalculateOrderSummaryResponse{
+		OrderCount:       int32(orderCount),
+		TotalAmount:      float32(totalAmount),
+		TotalRefund:      float32(totalRefund),
+		ProductViewCount: int32(productViewCount),
+		//	UniqueVisitors:   int32(uniqueVisitors),
+	}, nil
 }

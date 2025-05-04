@@ -13,8 +13,8 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/hashicorp/consul/api v1.32.0
 	github.com/jung-kurt/gofpdf v1.16.2
+	github.com/makiuchi-d/gozxing v0.1.1
 	github.com/nacos-group/nacos-sdk-go v1.1.5
-	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/smartwalle/alipay/v3 v3.2.25
@@ -104,6 +104,7 @@ require (
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect

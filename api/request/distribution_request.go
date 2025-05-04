@@ -19,3 +19,6 @@ type DistributionLevelSetting struct {
 	Two       float64 `json:"two" binding:"required"  form:"two"`               //二级返佣比例
 
 }
+type UserUpOrDone struct {
+	Button int `json:"button" binding:"required"  form:"button"` //按钮输入
+}

@@ -72,3 +72,22 @@ type AddSeckillProduct struct {
 type ReverseStock struct {
 	ProductId int64 `json:"productId" xml:"productId" form:"productId"`
 }
+
+// 商家核销
+type MerchantVerification struct {
+	UserId  int64 `json:"user_id" xml:"user_id" form:"user_id"`
+	OrderId int64 `json:"order_id" xml:"order_id" form:"order_id"`
+}
+
+// 商品批量发布
+type BatchReleaseOfProducts struct {
+	MerId       int64   `json:"mer_id" xml:"mer_id" form:"mer_id"`
+	Image       string  `json:"image" xml:"image" form:"image"`
+	SliderImage string  `json:"slider_image" xml:"slider_image" form:"slider_image"`
+	StoreName   string  `json:"store_name" xml:"store_name" form:"store_name"`
+	CateId      int64   `json:"cate_id" xml:"cate_id" form:"cate_id"`
+	IsShow      int64   `json:"is_show" xml:"is_show" form:"is_show"`
+	Price       float64 `json:"price" xml:"price" form:"price"`
+	Postage     float64 `json:"postage" xml:"postage" form:"postage"`
+	UnitName    string  `json:"unit_name" xml:"unit_name" form:"unit_name"`
+}

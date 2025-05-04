@@ -43,3 +43,17 @@ func TheCharts(ctx context.Context, in *distribution.TheChartsRequest) (*distrib
 		return client.TheCharts(ctx, req)
 	})
 }
+
+// // 下级用户展示
+func LookDoneUp(ctx context.Context, in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+		return client.LookDoneUp(ctx, req)
+	})
+}
+
+// 上级用户展示
+func LookUp(ctx context.Context, in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+		return client.LookUp(ctx, req)
+	})
+}

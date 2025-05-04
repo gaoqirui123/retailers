@@ -4,11 +4,33 @@ package article;
 option go_package=".;distribution";
 
 service Distribution {
-  rpc  GenerateInvitationCode(GenerateInvitationCodeRequest) returns (GenerateInvitationCodeResponse);//生成邀请码
-  rpc  UserFillsInInvitationCode(UserFillsInInvitationCodeRequest) returns (UserFillsInInvitationCodeResponse);//用户填写邀请码
-  rpc  DistributionLevelSetting(DistributionLevelSettingRequest) returns (DistributionLevelSettingResponse);//分销等级设置
-  rpc  TheCharts(TheChartsRequest) returns (TheChartsResponse);//佣金排行榜
+  rpc  GenerateInvitationCode(GenerateInvitationCodeRequest) returns (GenerateInvitationCodeResponse);//TODO 生成邀请码
+  rpc  UserFillsInInvitationCode(UserFillsInInvitationCodeRequest) returns (UserFillsInInvitationCodeResponse);// TODO 用户填写邀请码
+  rpc  DistributionLevelSetting(DistributionLevelSettingRequest) returns (DistributionLevelSettingResponse);//TODO 分销等级设置
+  rpc  TheCharts(TheChartsRequest) returns (TheChartsResponse);//TODO 佣金排行榜
+  rpc  LookDoneUp(LookDoneOrUpReq) returns(LookDoneOrUpResp);//  TODO 用户下级展示
+  rpc LookUp(LookDoneOrUpReq) returns(LookDoneOrUpResp);//  TODO 用户上级展示
 }
+
+message LookDoneOrUpReq{
+  int64 Id = 1;
+
+}
+
+message LookDoneOrUpResp{
+  repeated UserList list=1;
+}
+
+message UserList{
+  uint32 Uid=1;//用户id
+  string   Account=2;//用户账号
+  uint32 SpreadUid=3;//推广元id
+  string UserType=4;//用户类型
+  int64  IsPromoter=5;//是否为推广员
+}
+
+
+
 //佣金排行榜
 
 message TheChartsRequest{
