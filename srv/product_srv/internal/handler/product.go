@@ -4,13 +4,12 @@ import (
 	"common/global"
 	"common/model"
 	"common/pkg"
-	"common/proto/order"
 	"common/proto/product"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
-	"google.golang.org/grpc"
 	"math/rand"
 	"strconv"
 	"time"
@@ -61,14 +60,14 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	// 生成唯一的拼团 ID
 	pinkId := rand.Intn(1000000)
 	//用户表查找用户信息
-	/*	u := model.User{}
-		user, err := u.FindId(int(in.Uid))
-		if err != nil {
-			return nil, err
-		}*/
+	u := model.User{}
+	user, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
 	//商品总价格
 	totalPrice := float64(in.Num) * combination.Price
-	/*o := model.Order{
+	o := model.Order{
 		OrderSn:       orderId,
 		Uid:           in.Uid,
 		RealName:      user.RealName,
@@ -81,41 +80,14 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 		MerId:         int64(combination.MerId),
 		CombinationId: in.Pid,
 		PinkId:        int64(pinkId),
-	}*/
+	}
 	//创建订单
+	err = o.AddOrder()
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
 
-	conn, err := grpc.Dial("127.0.0.1:8083", grpc.WithInsecure())
-	if err != nil {
-		return nil, err
-	}
-	defer conn.Close()
-	client := order.NewOrderClient(conn)
-	orderRequest := &order.AddOrderRequest{
-		Uid:                   in.Uid,
-		ProductId:             in.Pid,
-		Num:                   in.Num,
-		PayType:               1,
-		CouponId:              0,
-		Mark:                  "",
-		StoreId:               0,
-		MerId:                 int64(combination.MerId),
-		BargainId:             1,
-		ShippingType:          1,
-		IsChannel:             0,
-		PinkId:                int64(pinkId),
-		ProductSpecifications: "白色",
-	}
-	addOrder, err := client.AddOrder(context.Background(), orderRequest)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println(addOrder)
-	/*	err = o.AddOrder()
-		if err != nil {
-			tx.Rollback()
-			return nil, err
-		}
-	*/
 	//扣mysql商品表总库存
 	px := &model.Combination{}
 	err = px.UpdateCombinationStock(in.Pid, in.Num)
