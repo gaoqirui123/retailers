@@ -8,6 +8,16 @@ service Order {
   rpc PayCallback(PayCallbackRequest) returns (PayCallbackResponse); // TODO:支付回调
   rpc OrderList(OrderListRequest) returns (OrderListResponse); // TODO:订单列表查询
   rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO:用户领取优惠券
+  rpc QrCodeVerification(QrCodeVerificationRequest) returns (QrCodeVerificationResponse); // TODO:二维码核销
+}
+// TODO:二维码核销
+message QrCodeVerificationRequest {
+  int64 OrderId = 1;
+  int64 UserId = 2;
+}
+
+message QrCodeVerificationResponse {
+  string  Success = 1;
 }
 
 // TODO:用户领取优惠券
@@ -29,12 +39,13 @@ message AddOrderRequest {
   int64  CouponId = 5; // 优惠券ID
   string Mark = 6; // 备注
   int64  StoreId = 7; // 门店ID
-  int64  MerId = 8; // 门店ID
+  int64  MerId = 8; // 商户ID
   int64  BargainId = 9; // 砍价ID
   int64  ShippingType = 10; // 配送方式 1=快递 ，2=门店自提
   int64  IsChannel = 11; // 支付渠道
   int64  PinkId = 12; // 拼团ID
   string ProductSpecifications = 13; // 商品属性
+  int64  Source = 14; // 来源（1.普通商品，2秒杀商品）
 }
 
 message AddOrderResponse {
@@ -45,6 +56,7 @@ message AddOrderResponse {
 message PayCallbackRequest {
   string OrderSn = 1;
   string Status = 2;
+  float BuyerPayAmount=3;
 }
 
 message PayCallbackResponse {

@@ -95,7 +95,7 @@ func ImproveUser(c *gin.Context) {
 	response.RespSuccess(c, "用户完善信息成功", improveUser)
 }
 
-// TODO:修改密码
+// TODO: 修改密码
 func UpdatePassWord(c *gin.Context) {
 	userId := c.GetUint("userId")
 	var data request.UpdatePassWord
@@ -188,4 +188,88 @@ func AddUserAddress(c *gin.Context) {
 		return
 	}
 	response.RespSuccess(c, "用户地址添加成功", address)
+}
+
+// TODO:用户签到
+func UserSignIn(c *gin.Context) {
+	var data request.UserSignIn
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	userId := c.GetUint("userId")
+	sign, err := client.UserSignIn(c, &user.UserSignInRequest{
+		UserId:   int64(userId),
+		SignDate: data.SignData,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "用户签到成功", sign)
+}
+
+// TODO:用户补签
+func UserMakeupSignIn(c *gin.Context) {
+	var data request.UserMakeupSignIn
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	userId := c.GetUint("userId")
+	makeupSign, err := client.UserMakeupSignIn(c, &user.UserMakeupSignInRequest{
+		UserId:   int64(userId),
+		SignDate: data.SignData,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "用户补签成功", makeupSign)
+}
+
+// TODO: 用户申请发票
+func UserApplication(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UserApplication
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+
+	application, err := client.UserApplication(c, &user.UserApplicationRequest{
+		UserId:        int64(userId),
+		OrderId:       data.OrderId,
+		InvoiceType:   data.InvoiceType,
+		InvoiceTitle:  data.InvoiceTitle,
+		InvoiceAmount: float32(data.InvoiceAmount),
+		Type:          data.Type,
+	})
+	if err != nil {
+		response.RespError(c, "用户申请发票失败")
+		return
+	}
+	response.RespSuccess(c, "用户申请发票成功", application)
+}
+
+func UserReceiveCoupon(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UserReceiveCoupon
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	application, err := client.UserReceiveCoupon(c, &user.UserReceiveCouponRequest{
+		UserId:   int64(userId),
+		CouponId: data.CouponId,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	if application.Success == false {
+		response.RespError(c, "用户领取优惠券失败")
+		return
+	}
+	response.RespSuccess(c, "用户领取优惠券成功", application)
 }

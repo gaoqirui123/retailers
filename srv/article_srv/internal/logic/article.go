@@ -81,3 +81,39 @@ func (a ArticleServer) DeleteArticleCategory(ctx context.Context, in *article.De
 	}
 	return list, nil
 }
+
+// 发布评论
+func (a ArticleServer) PostAComment(ctx context.Context, in *article.PostACommentRequest) (*article.PostACommentResponse, error) {
+	list, err := handler.PostAComment(in)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+// 文章点赞
+func (a ArticleServer) ArticleThumbsUp(ctx context.Context, in *article.ArticleThumbsUpRequest) (*article.ArticleThumbsUpResponse, error) {
+	list, err := handler.ArticleThumbsUp(in)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+// 删除评论
+func (a ArticleServer) DeleteComment(ctx context.Context, in *article.DeleteCommentRequest) (*article.DeleteCommentResponse, error) {
+	list, err := handler.DeleteComment(in)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
+// 点赞排序
+func (a ArticleServer) TopLikeArticleRanking(ctx context.Context, in *article.TopLikeArticleRankingRequest) (*article.TopLikeArticleRankingResponse, error) {
+	list, err := handler.TopLikeArticleRanking(in)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
+}

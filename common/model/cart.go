@@ -48,3 +48,7 @@ func (c *Cart) GetCartList(uid int64) (list []*Cart, err error) {
 	}
 	return list, nil
 }
+
+func (c *Cart) UpdateCart() error {
+	return global.DB.Debug().Table("cart").Updates(&c).Error
+}

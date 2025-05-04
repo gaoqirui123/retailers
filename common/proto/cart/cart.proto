@@ -4,12 +4,26 @@ package cart;
 option go_package = ".;cart";
 
 service Cart {
-  rpc AddCart(AddCartRequest) returns (AddCartResponse);
-  rpc DeleteCart(DeleteCartRequest) returns (DeleteCartResponse);
-  rpc ClearCart(ClearCartRequest) returns (ClearCartResponse);
-  rpc GetCartList(GetCartListRequest) returns (GetCartListResponse);
+  rpc AddCart(AddCartRequest) returns (AddCartResponse); // TODO:添加购物车
+  rpc DeleteCart(DeleteCartRequest) returns (DeleteCartResponse); // TODO:删除购物车商品
+  rpc ClearCart(ClearCartRequest) returns (ClearCartResponse);  // TODO:清空购物车
+  rpc GetCartList(GetCartListRequest) returns (GetCartListResponse); // TODO:查询购物车列表
+  rpc UpdateCart(UpdateCartRequest) returns (UpdateCartResponse); // TODO:修改购物车信息
 }
 
+// TODO:修改购物车信息
+message UpdateCartRequest {
+  int64  UserId = 1;
+  int64  CartId = 2;
+  int64  Num = 3;
+  string ProductSpecifications = 4;
+}
+
+message UpdateCartResponse {
+  bool Success = 1;
+}
+
+// TODO:查询购物车列表
 message GetCartListRequest {
   int64  Uid = 1;
 }
@@ -33,6 +47,8 @@ message GetCartList {
   int64  AddTime = 12; // 添加时间
 }
 
+// TODO:删除购物车商品
+
 message DeleteCartRequest {
   int64  Uid = 1;
   int64  ProductId = 2;
@@ -42,6 +58,7 @@ message DeleteCartResponse {
   bool Success = 1;
 }
 
+// TODO:清空购物车
 message ClearCartRequest {
   uint64 Uid = 1;
 }
@@ -50,6 +67,7 @@ message ClearCartResponse {
   bool Success = 1;
 }
 
+// TODO:添加购物车
 message AddCartRequest {
   int64  Uid = 1; // 用户ID
   string Type = 2; // 商品类型

@@ -10,9 +10,9 @@ type UserEnterServer struct {
 	user_enter.UnimplementedUserEnterServer
 }
 
-// Register TODO:商户申请注册
-func (es UserEnterServer) Register(ctx context.Context, in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
-	register, err := handler.Register(in)
+// Apply TODO:商户申请注册
+func (es UserEnterServer) Apply(ctx context.Context, in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
+	register, err := handler.Apply(in)
 	if err != nil {
 		return nil, err
 	}
@@ -44,4 +44,85 @@ func (es UserEnterServer) ProcessInvoice(ctx context.Context, in *user_enter.Pro
 		return nil, err
 	}
 	return product, nil
+}
+
+// InvoiceList TODO:发票列表展示
+func (es UserEnterServer) InvoiceList(ctx context.Context, in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResponse, error) {
+	product, err := handler.InvoiceList(in)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
+}
+
+// DelProduct TODO:商户下架商品
+func (es UserEnterServer) DelProduct(ctx context.Context, in *user_enter.DelProductRequest) (*user_enter.DelProductResponse, error) {
+	register, err := handler.DelProduct(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// Register TODO:商户申请注册
+func (es UserEnterServer) Register(ctx context.Context, in *user_enter.UserEnterRegisterRequest) (*user_enter.UserEnterRegisterResponse, error) {
+	register, err := handler.Register(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// Login TODO:商户登录
+func (es UserEnterServer) Login(ctx context.Context, in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResponse, error) {
+	register, err := handler.Login(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// AddSeckillProduct  TODO: 添加秒杀商品
+func (es UserEnterServer) AddSeckillProduct(ctx context.Context, in *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+	add, err := handler.AddSeckillProduct(in)
+	if err != nil {
+		return nil, err
+	}
+	return add, nil
+}
+
+// ReverseStock  TODO: 秒杀后反还剩余的商品
+func (es UserEnterServer) ReverseStock(ctx context.Context, in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+	reverse, err := handler.ReverseStock(in)
+	if err != nil {
+		return nil, err
+	}
+	return reverse, nil
+}
+
+// BatchReleaseOfProducts TODO:商品批量发布
+func (es UserEnterServer) BatchReleaseOfProducts(ctx context.Context, in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
+	register, err := handler.BatchReleaseOfProducts(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// MerchantVerification TODO:商家核销
+func (es UserEnterServer) MerchantVerification(ctx context.Context, in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
+	register, err := handler.MerchantVerification(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
+}
+
+// CalculateOrderSummary TODO:商家统计
+func (es UserEnterServer) CalculateOrderSummary(ctx context.Context, in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
+	register, err := handler.CalculateOrderSummary(in)
+	if err != nil {
+		return nil, err
+	}
+	return register, nil
 }

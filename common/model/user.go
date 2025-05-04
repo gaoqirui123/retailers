@@ -15,6 +15,7 @@ type User struct {
 	Nickname       string  `gorm:"column:nickname;type:varchar(60);comment:用户昵称;not null;" json:"nickname"`                              // 用户昵称
 	Avatar         string  `gorm:"column:avatar;type:varchar(256);comment:用户头像;not null;" json:"avatar"`                                 // 用户头像
 	Phone          string  `gorm:"column:phone;type:char(15);comment:手机号码;default:NULL;" json:"phone"`                                   // 手机号码
+	Email          string  `gorm:"column:email;type:varchar(20);comment:邮箱;not null;" json:"email"`                                      // 邮箱
 	FreezeAmount   float64 `gorm:"column:freeze_amount;type:decimal(8, 2);comment:冻结金额;default:NULL;" json:"freeze_amount"`              // 冻结金额
 	NowMoney       float64 `gorm:"column:now_money;type:decimal(8, 2) UNSIGNED;comment:用户余额;not null;default:0.00;" json:"now_money"`    // 用户余额
 	BrokeragePrice float64 `gorm:"column:brokerage_price;type:decimal(8, 2);comment:佣金金额;not null;default:0.00;" json:"brokerage_price"` // 佣金金额
@@ -45,7 +46,7 @@ func (u *User) UserRegister() error {
 func (u *User) GetUserIdBy(uid int64) error {
 	return global.DB.Debug().Table("user").Where("uid = ?", uid).Limit(1).Find(&u).Error
 }
-func (u *User) Detail(uid int) (result []User, err error) {
+func (u *User) Detail(uid int64) (result []User, err error) {
 	err = global.DB.Debug().Table("user").Where("uid=?", uid).Find(&result).Error
 	if err != nil {
 		return nil, err
@@ -61,7 +62,7 @@ func (u *User) FindId(id int) (result User, err error) {
 	return result, nil
 }
 
-func (u *User) Updated(id int, users User) bool {
+func (u *User) Updated(id int64, users User) bool {
 	err := global.DB.Debug().Table("user").Where("uid=?", id).Updates(users).Error
 	if err != nil {
 		return false
@@ -69,7 +70,7 @@ func (u *User) Updated(id int, users User) bool {
 	return true
 }
 
-func (u *User) UpdatedPassword(uid int, password string) bool {
+func (u *User) UpdatedPassword(uid int64, password string) bool {
 	err := global.DB.Debug().Table("user").Where("uid=?", uid).Limit(1).First(&u).Update("pwd", password).Error
 	if err != nil {
 		return false
@@ -83,9 +84,39 @@ func (u *User) AddScore(score float64, uid int64) error {
 
 // UpdatedSpreadUid 确认上级用户
 func (u *User) UpdatedSpreadUid(uid int, sId string) bool {
-	err := global.DB.Debug().Table("user").Where("uid=?", uid).Limit(1).First(&u).Update("spread_uid", sId).Error
+	err := global.DB.Debug().Table("user").Where("uid=?", uid).Limit(1).First(&u).Update("spread_uid,level", sId).Error
 	if err != nil {
 		return false
 	}
 	return true
+}
+
+// 查找uid所在位置
+func (u *User) FindDoneOrUpUid(id int64) (User, error) {
+	var find User
+	err := global.DB.Debug().Table("user").Where("uid = ?", id).Find(&find).Error
+	if err != nil {
+		return User{}, err
+	}
+	return find, nil
+}
+
+// 查找下级
+func (u *User) FindDone(spreadUid int64) []User {
+	var done []User
+	err := global.DB.Debug().Table("user").Where("spread_uid = ?", spreadUid).Find(&done).Error
+	if err != nil {
+		return nil
+	}
+	return done
+}
+
+// 查找上级
+func (u *User) FindUp(uid uint32) []User {
+	var up []User
+	err := global.DB.Debug().Table("user").Where("uid = ?", uid).Find(&up).Error
+	if err != nil {
+		return nil
+	}
+	return up
 }

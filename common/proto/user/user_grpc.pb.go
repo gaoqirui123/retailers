@@ -33,6 +33,8 @@ const (
 	User_UsePowerList_FullMethodName       = "/user.User/UsePowerList"
 	User_AddText_FullMethodName            = "/user.User/AddText"
 	User_AddUserAddress_FullMethodName     = "/user.User/AddUserAddress"
+	User_UserApplication_FullMethodName    = "/user.User/UserApplication"
+	User_UserReceiveCoupon_FullMethodName  = "/user.User/UserReceiveCoupon"
 )
 
 // UserClient is the client API for User service.
@@ -53,6 +55,8 @@ type UserClient interface {
 	UsePowerList(ctx context.Context, in *UsePowerListRequest, opts ...grpc.CallOption) (*UsePowerListResponse, error)
 	AddText(ctx context.Context, in *AddTextRequest, opts ...grpc.CallOption) (*AddTextResponse, error)
 	AddUserAddress(ctx context.Context, in *AddUserAddressRequest, opts ...grpc.CallOption) (*AddUserAddressResponse, error)
+	UserApplication(ctx context.Context, in *UserApplicationRequest, opts ...grpc.CallOption) (*UserApplicationResponse, error)
+	UserReceiveCoupon(ctx context.Context, in *UserReceiveCouponRequest, opts ...grpc.CallOption) (*UserReceiveCouponResponse, error)
 }
 
 type userClient struct {
@@ -203,6 +207,26 @@ func (c *userClient) AddUserAddress(ctx context.Context, in *AddUserAddressReque
 	return out, nil
 }
 
+func (c *userClient) UserApplication(ctx context.Context, in *UserApplicationRequest, opts ...grpc.CallOption) (*UserApplicationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserApplicationResponse)
+	err := c.cc.Invoke(ctx, User_UserApplication_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) UserReceiveCoupon(ctx context.Context, in *UserReceiveCouponRequest, opts ...grpc.CallOption) (*UserReceiveCouponResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserReceiveCouponResponse)
+	err := c.cc.Invoke(ctx, User_UserReceiveCoupon_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -221,6 +245,8 @@ type UserServer interface {
 	UsePowerList(context.Context, *UsePowerListRequest) (*UsePowerListResponse, error)
 	AddText(context.Context, *AddTextRequest) (*AddTextResponse, error)
 	AddUserAddress(context.Context, *AddUserAddressRequest) (*AddUserAddressResponse, error)
+	UserApplication(context.Context, *UserApplicationRequest) (*UserApplicationResponse, error)
+	UserReceiveCoupon(context.Context, *UserReceiveCouponRequest) (*UserReceiveCouponResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -269,6 +295,12 @@ func (UnimplementedUserServer) AddText(context.Context, *AddTextRequest) (*AddTe
 }
 func (UnimplementedUserServer) AddUserAddress(context.Context, *AddUserAddressRequest) (*AddUserAddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserAddress not implemented")
+}
+func (UnimplementedUserServer) UserApplication(context.Context, *UserApplicationRequest) (*UserApplicationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserApplication not implemented")
+}
+func (UnimplementedUserServer) UserReceiveCoupon(context.Context, *UserReceiveCouponRequest) (*UserReceiveCouponResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserReceiveCoupon not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -535,6 +567,42 @@ func _User_AddUserAddress_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_UserApplication_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserApplicationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserApplication(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserApplication_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserApplication(ctx, req.(*UserApplicationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_UserReceiveCoupon_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserReceiveCouponRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserReceiveCoupon(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserReceiveCoupon_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserReceiveCoupon(ctx, req.(*UserReceiveCouponRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -597,6 +665,14 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddUserAddress",
 			Handler:    _User_AddUserAddress_Handler,
+		},
+		{
+			MethodName: "UserApplication",
+			Handler:    _User_UserApplication_Handler,
+		},
+		{
+			MethodName: "UserReceiveCoupon",
+			Handler:    _User_UserReceiveCoupon_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

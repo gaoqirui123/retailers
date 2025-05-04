@@ -99,6 +99,8 @@ message BargainUserHelpList {
   uint32 CurrentPrice = 8;
 }
 
+
+// TODO:拼团商品列表展示
 message CombinationListRequest {
 }
 
@@ -106,19 +108,19 @@ message CombinationListResponse {
   repeated CombinationList list =1;
 }
 message CombinationList{
-  string  Image =1;//图片
+  string Image =1;//图片
   string Title =2;//活动标题
-  int64 People =3;//参团人数
-  float Price =4;//价格
+  int64  People =3;//参团人数
+  float  Price =4;//价格
   int64  Stock =5;//库存
 }
 //TODO:用户参与拼团
 message JoinGroupBuyingRequest {
-  int64 Uid =1;
+  int64  Uid =1;
   string PinkId =2;
 }
 message JoinGroupBuyingResponse {
-  bool Success = 1;
+  string Success = 1;
 }
 
 //TODO:用户发起拼团
@@ -128,7 +130,7 @@ message GroupBuyingRequest {
   int64 Num =3;
 }
 message GroupBuyingResponse {
-  bool Success = 1;
+  string Success = 1;
 }
 
 // 创建砍价商品信息

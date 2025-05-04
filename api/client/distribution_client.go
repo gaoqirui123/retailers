@@ -29,3 +29,31 @@ func UserFillsInInvitationCode(ctx context.Context, in *distribution.UserFillsIn
 		return client.UserFillsInInvitationCode(ctx, req)
 	})
 }
+
+// DistributionLevelSetting 分销等级设置
+func DistributionLevelSetting(ctx context.Context, in *distribution.DistributionLevelSettingRequest) (*distribution.DistributionLevelSettingResponse, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.DistributionLevelSettingRequest) (*distribution.DistributionLevelSettingResponse, error) {
+		return client.DistributionLevelSetting(ctx, req)
+	})
+}
+
+// TheCharts 佣金排行榜
+func TheCharts(ctx context.Context, in *distribution.TheChartsRequest) (*distribution.TheChartsResponse, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.TheChartsRequest) (*distribution.TheChartsResponse, error) {
+		return client.TheCharts(ctx, req)
+	})
+}
+
+// // 下级用户展示
+func LookDoneUp(ctx context.Context, in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+		return client.LookDoneUp(ctx, req)
+	})
+}
+
+// 上级用户展示
+func LookUp(ctx context.Context, in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+	return DistributionClients(ctx, in, func(ctx context.Context, client distribution.DistributionClient, req *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, error) {
+		return client.LookUp(ctx, req)
+	})
+}

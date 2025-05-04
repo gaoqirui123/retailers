@@ -17,7 +17,7 @@ func ProductUpdate(req *product.ProductUpdateRequest) (*product.ProductUpdateRes
 		return nil, err
 	}
 	//重新从数据库中查询更新后的记录
-	err = m.GetProductIdBy(int64(req.Id))
+	err = m.GetProductShow(int64(req.Id))
 	if err != nil {
 		return nil, err
 	}

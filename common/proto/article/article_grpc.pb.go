@@ -27,6 +27,10 @@ const (
 	Article_EditArticle_FullMethodName           = "/article.Article/EditArticle"
 	Article_DeleteArticle_FullMethodName         = "/article.Article/DeleteArticle"
 	Article_DeleteArticleCategory_FullMethodName = "/article.Article/DeleteArticleCategory"
+	Article_PostAComment_FullMethodName          = "/article.Article/PostAComment"
+	Article_ArticleThumbsUp_FullMethodName       = "/article.Article/ArticleThumbsUp"
+	Article_DeleteComment_FullMethodName         = "/article.Article/DeleteComment"
+	Article_TopLikeArticleRanking_FullMethodName = "/article.Article/TopLikeArticleRanking"
 )
 
 // ArticleClient is the client API for Article service.
@@ -42,6 +46,10 @@ type ArticleClient interface {
 	DeleteArticle(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	// rpc DeleteArticleContent(DeleteRequest) returns (DeleteResponse); //删除文章类容
 	DeleteArticleCategory(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	PostAComment(ctx context.Context, in *PostACommentRequest, opts ...grpc.CallOption) (*PostACommentResponse, error)
+	ArticleThumbsUp(ctx context.Context, in *ArticleThumbsUpRequest, opts ...grpc.CallOption) (*ArticleThumbsUpResponse, error)
+	DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*DeleteCommentResponse, error)
+	TopLikeArticleRanking(ctx context.Context, in *TopLikeArticleRankingRequest, opts ...grpc.CallOption) (*TopLikeArticleRankingResponse, error)
 }
 
 type articleClient struct {
@@ -132,6 +140,46 @@ func (c *articleClient) DeleteArticleCategory(ctx context.Context, in *DeleteReq
 	return out, nil
 }
 
+func (c *articleClient) PostAComment(ctx context.Context, in *PostACommentRequest, opts ...grpc.CallOption) (*PostACommentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PostACommentResponse)
+	err := c.cc.Invoke(ctx, Article_PostAComment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) ArticleThumbsUp(ctx context.Context, in *ArticleThumbsUpRequest, opts ...grpc.CallOption) (*ArticleThumbsUpResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ArticleThumbsUpResponse)
+	err := c.cc.Invoke(ctx, Article_ArticleThumbsUp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) DeleteComment(ctx context.Context, in *DeleteCommentRequest, opts ...grpc.CallOption) (*DeleteCommentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteCommentResponse)
+	err := c.cc.Invoke(ctx, Article_DeleteComment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) TopLikeArticleRanking(ctx context.Context, in *TopLikeArticleRankingRequest, opts ...grpc.CallOption) (*TopLikeArticleRankingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TopLikeArticleRankingResponse)
+	err := c.cc.Invoke(ctx, Article_TopLikeArticleRanking_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ArticleServer is the server API for Article service.
 // All implementations must embed UnimplementedArticleServer
 // for forward compatibility
@@ -145,6 +193,10 @@ type ArticleServer interface {
 	DeleteArticle(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	// rpc DeleteArticleContent(DeleteRequest) returns (DeleteResponse); //删除文章类容
 	DeleteArticleCategory(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	PostAComment(context.Context, *PostACommentRequest) (*PostACommentResponse, error)
+	ArticleThumbsUp(context.Context, *ArticleThumbsUpRequest) (*ArticleThumbsUpResponse, error)
+	DeleteComment(context.Context, *DeleteCommentRequest) (*DeleteCommentResponse, error)
+	TopLikeArticleRanking(context.Context, *TopLikeArticleRankingRequest) (*TopLikeArticleRankingResponse, error)
 	mustEmbedUnimplementedArticleServer()
 }
 
@@ -175,6 +227,18 @@ func (UnimplementedArticleServer) DeleteArticle(context.Context, *DeleteRequest)
 }
 func (UnimplementedArticleServer) DeleteArticleCategory(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteArticleCategory not implemented")
+}
+func (UnimplementedArticleServer) PostAComment(context.Context, *PostACommentRequest) (*PostACommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostAComment not implemented")
+}
+func (UnimplementedArticleServer) ArticleThumbsUp(context.Context, *ArticleThumbsUpRequest) (*ArticleThumbsUpResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ArticleThumbsUp not implemented")
+}
+func (UnimplementedArticleServer) DeleteComment(context.Context, *DeleteCommentRequest) (*DeleteCommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteComment not implemented")
+}
+func (UnimplementedArticleServer) TopLikeArticleRanking(context.Context, *TopLikeArticleRankingRequest) (*TopLikeArticleRankingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TopLikeArticleRanking not implemented")
 }
 func (UnimplementedArticleServer) mustEmbedUnimplementedArticleServer() {}
 
@@ -333,6 +397,78 @@ func _Article_DeleteArticleCategory_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Article_PostAComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostACommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).PostAComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_PostAComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).PostAComment(ctx, req.(*PostACommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_ArticleThumbsUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ArticleThumbsUpRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).ArticleThumbsUp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_ArticleThumbsUp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).ArticleThumbsUp(ctx, req.(*ArticleThumbsUpRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_DeleteComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).DeleteComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_DeleteComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).DeleteComment(ctx, req.(*DeleteCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_TopLikeArticleRanking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TopLikeArticleRankingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).TopLikeArticleRanking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Article_TopLikeArticleRanking_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).TopLikeArticleRanking(ctx, req.(*TopLikeArticleRankingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Article_ServiceDesc is the grpc.ServiceDesc for Article service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -371,6 +507,22 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteArticleCategory",
 			Handler:    _Article_DeleteArticleCategory_Handler,
+		},
+		{
+			MethodName: "PostAComment",
+			Handler:    _Article_PostAComment_Handler,
+		},
+		{
+			MethodName: "ArticleThumbsUp",
+			Handler:    _Article_ArticleThumbsUp_Handler,
+		},
+		{
+			MethodName: "DeleteComment",
+			Handler:    _Article_DeleteComment_Handler,
+		},
+		{
+			MethodName: "TopLikeArticleRanking",
+			Handler:    _Article_TopLikeArticleRanking_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

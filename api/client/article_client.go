@@ -70,3 +70,31 @@ func DeleteArticleCategory(ctx context.Context, in *article.DeleteRequest) (*art
 		return client.DeleteArticleCategory(ctx, req)
 	})
 }
+
+// PostAComment 发布评论
+func PostAComment(ctx context.Context, in *article.PostACommentRequest) (*article.PostACommentResponse, error) {
+	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.PostACommentRequest) (*article.PostACommentResponse, error) {
+		return client.PostAComment(ctx, req)
+	})
+}
+
+// ArticleThumbsUp 文章点赞
+func ArticleThumbsUp(ctx context.Context, in *article.ArticleThumbsUpRequest) (*article.ArticleThumbsUpResponse, error) {
+	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.ArticleThumbsUpRequest) (*article.ArticleThumbsUpResponse, error) {
+		return client.ArticleThumbsUp(ctx, req)
+	})
+}
+
+// ArticleThumbsUp //删除评论
+func DeleteComment(ctx context.Context, in *article.DeleteCommentRequest) (*article.DeleteCommentResponse, error) {
+	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.DeleteCommentRequest) (*article.DeleteCommentResponse, error) {
+		return client.DeleteComment(ctx, req)
+	})
+}
+
+// ArticleThumbsUp //删除评论
+func TopLikeArticleRanking(ctx context.Context, in *article.TopLikeArticleRankingRequest) (*article.TopLikeArticleRankingResponse, error) {
+	return ArticleClients(ctx, in, func(ctx context.Context, client article.ArticleClient, req *article.TopLikeArticleRankingRequest) (*article.TopLikeArticleRankingResponse, error) {
+		return client.TopLikeArticleRanking(ctx, req)
+	})
+}
