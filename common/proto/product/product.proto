@@ -9,7 +9,6 @@ service Product {
   rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO: 用户参与拼团
 }
 
-
 // TODO:拼团商品列表展示
 message CombinationListRequest {
 }

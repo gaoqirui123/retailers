@@ -27,5 +27,6 @@ func UserRouter(r *gin.RouterGroup) {
 		u.POST("/makeup/sign", handler.UserMakeupSignIn)     //todo: 用户补签
 		u.POST("/userApplication", handler.UserApplication)  //todo: 用户申请发票
 		u.POST("/receive/coupon", handler.UserReceiveCoupon) //todo: 用户领取优惠券
+		u.POST("/userWithdraw", handler.UserWithdraw)        //todo: 用户领提现
 	}
 }
