@@ -23,6 +23,8 @@ const (
 	Distribution_UserFillsInInvitationCode_FullMethodName = "/article.Distribution/UserFillsInInvitationCode"
 	Distribution_DistributionLevelSetting_FullMethodName  = "/article.Distribution/DistributionLevelSetting"
 	Distribution_TheCharts_FullMethodName                 = "/article.Distribution/TheCharts"
+	Distribution_LookDoneUp_FullMethodName                = "/article.Distribution/LookDoneUp"
+	Distribution_LookUp_FullMethodName                    = "/article.Distribution/LookUp"
 )
 
 // DistributionClient is the client API for Distribution service.
@@ -33,6 +35,8 @@ type DistributionClient interface {
 	UserFillsInInvitationCode(ctx context.Context, in *UserFillsInInvitationCodeRequest, opts ...grpc.CallOption) (*UserFillsInInvitationCodeResponse, error)
 	DistributionLevelSetting(ctx context.Context, in *DistributionLevelSettingRequest, opts ...grpc.CallOption) (*DistributionLevelSettingResponse, error)
 	TheCharts(ctx context.Context, in *TheChartsRequest, opts ...grpc.CallOption) (*TheChartsResponse, error)
+	LookDoneUp(ctx context.Context, in *LookDoneOrUpReq, opts ...grpc.CallOption) (*LookDoneOrUpResp, error)
+	LookUp(ctx context.Context, in *LookDoneOrUpReq, opts ...grpc.CallOption) (*LookDoneOrUpResp, error)
 }
 
 type distributionClient struct {
@@ -83,6 +87,26 @@ func (c *distributionClient) TheCharts(ctx context.Context, in *TheChartsRequest
 	return out, nil
 }
 
+func (c *distributionClient) LookDoneUp(ctx context.Context, in *LookDoneOrUpReq, opts ...grpc.CallOption) (*LookDoneOrUpResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LookDoneOrUpResp)
+	err := c.cc.Invoke(ctx, Distribution_LookDoneUp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *distributionClient) LookUp(ctx context.Context, in *LookDoneOrUpReq, opts ...grpc.CallOption) (*LookDoneOrUpResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LookDoneOrUpResp)
+	err := c.cc.Invoke(ctx, Distribution_LookUp_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DistributionServer is the server API for Distribution service.
 // All implementations must embed UnimplementedDistributionServer
 // for forward compatibility
@@ -91,6 +115,8 @@ type DistributionServer interface {
 	UserFillsInInvitationCode(context.Context, *UserFillsInInvitationCodeRequest) (*UserFillsInInvitationCodeResponse, error)
 	DistributionLevelSetting(context.Context, *DistributionLevelSettingRequest) (*DistributionLevelSettingResponse, error)
 	TheCharts(context.Context, *TheChartsRequest) (*TheChartsResponse, error)
+	LookDoneUp(context.Context, *LookDoneOrUpReq) (*LookDoneOrUpResp, error)
+	LookUp(context.Context, *LookDoneOrUpReq) (*LookDoneOrUpResp, error)
 	mustEmbedUnimplementedDistributionServer()
 }
 
@@ -109,6 +135,12 @@ func (UnimplementedDistributionServer) DistributionLevelSetting(context.Context,
 }
 func (UnimplementedDistributionServer) TheCharts(context.Context, *TheChartsRequest) (*TheChartsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TheCharts not implemented")
+}
+func (UnimplementedDistributionServer) LookDoneUp(context.Context, *LookDoneOrUpReq) (*LookDoneOrUpResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LookDoneUp not implemented")
+}
+func (UnimplementedDistributionServer) LookUp(context.Context, *LookDoneOrUpReq) (*LookDoneOrUpResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LookUp not implemented")
 }
 func (UnimplementedDistributionServer) mustEmbedUnimplementedDistributionServer() {}
 
@@ -195,6 +227,42 @@ func _Distribution_TheCharts_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Distribution_LookDoneUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LookDoneOrUpReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DistributionServer).LookDoneUp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Distribution_LookDoneUp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DistributionServer).LookDoneUp(ctx, req.(*LookDoneOrUpReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Distribution_LookUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LookDoneOrUpReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DistributionServer).LookUp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Distribution_LookUp_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DistributionServer).LookUp(ctx, req.(*LookDoneOrUpReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Distribution_ServiceDesc is the grpc.ServiceDesc for Distribution service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -217,6 +285,14 @@ var Distribution_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TheCharts",
 			Handler:    _Distribution_TheCharts_Handler,
+		},
+		{
+			MethodName: "LookDoneUp",
+			Handler:    _Distribution_LookDoneUp_Handler,
+		},
+		{
+			MethodName: "LookUp",
+			Handler:    _Distribution_LookUp_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

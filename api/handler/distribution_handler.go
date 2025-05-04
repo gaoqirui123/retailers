@@ -79,3 +79,24 @@ func TheCharts(c *gin.Context) {
 	}
 	response.RespSuccess(c, "成功", release)
 }
+
+func LookDoneUp(c *gin.Context) {
+	var data request.UserUpOrDone
+	userId := c.GetUint("userId")
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+
+	if data.Button == 1 {
+
+		up, _ := client.LookDoneUp(c, &distribution.LookDoneOrUpReq{Id: int64(userId)})
+
+		response.RespSuccess(c, "成功", up)
+
+	} else if data.Button == 2 {
+		done, _ := client.LookUp(c, &distribution.LookDoneOrUpReq{Id: int64(userId)})
+		response.RespSuccess(c, "成功", done)
+	}
+}

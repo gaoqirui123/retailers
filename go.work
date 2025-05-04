@@ -1,13 +1,16 @@
-go 1.23
+go 1.23.0
+
+toolchain go1.23.6
+
 use (
 	api
 	common
-	srv/cart_srv
+	srv/admin_srv
 	srv/article_srv
+	srv/cart_srv
+	srv/distribution_srv
 	srv/order_srv
 	srv/product_srv
 	srv/user_enter_srv
 	srv/user_srv
-	srv/admin_srv
-	srv/distribution_srv
 )

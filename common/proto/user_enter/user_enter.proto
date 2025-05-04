@@ -12,10 +12,12 @@ service UserEnter {
   rpc ProcessInvoice(ProcessInvoiceRequest) returns (ProcessInvoiceResponse); //商家审核用户的发票invoice申请
   rpc DelProduct(DelProductRequest) returns (DelProductResponse);//商家下架商品
   rpc InvoiceList(InvoiceListRequest) returns (InvoiceListResponse);//发票列表展示
+  rpc BatchReleaseOfProducts(BatchReleaseOfProductsRequest) returns (BatchReleaseOfProductsResponse);//商品批量发布
+  rpc MerchantVerification(MerchantVerificationRequest) returns (MerchantVerificationResponse);//商家核销
+  rpc CalculateOrderSummary(CalculateOrderSummaryRequest) returns (CalculateOrderSummaryResponse);//商家统计
   rpc AddSeckillProduct(AddSeckillProductRequest) returns (AddSeckillProductResponse);//TODO: 添加秒杀商品
   rpc ReverseStock(ReverseStockRequest) returns (ReverseStockResponse);//TODO: 秒杀后反还剩余的商品
 }
-
 
 // TODO: 秒杀后反还剩余的商品
 message ReverseStockRequest {
@@ -151,5 +153,53 @@ message InvoiceList{
   int64 ApplicationStatus =8;
   string ReviewTime =9;
   string Type =10;
+}
+
+//商品批量发布
+message CreateAllProducts{
+  int64 MerId =1;//商户id
+  string Image =2;//图片
+  string SliderImage =3;//轮播图
+  string StoreName =4;//商品名称
+  int64 CateId=5;//分类id
+  int64 IsShow=6;//状态（0：未上架，1：上架）
+  float Price =7;//商品价格
+  float Postage =8;//邮费
+  string UnitName =9;//单位名
+
+}
+
+message BatchReleaseOfProductsRequest{
+
+  repeated CreateAllProducts list=1;
+
+}
+
+message BatchReleaseOfProductsResponse{
+
+  string success=1;
+
+}
+//TODO:商家核销
+message MerchantVerificationRequest {
+  int64 OrderId = 1; // 订单ID
+  int64 UserId=2;//用户id
+
+}
+
+message MerchantVerificationResponse {
+  bool greet = 1;
+}
+//TODO:商家统计
+message CalculateOrderSummaryRequest {
+  int64 User_Id = 1; // 商户id
+}
+
+message CalculateOrderSummaryResponse {
+  int32 order_count = 1;
+  float total_amount = 2;
+  float total_refund = 3;
+  int32 product_view_count = 4;
+  int32 unique_visitors = 5;
 }
 

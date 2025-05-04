@@ -19,16 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	UserEnter_Apply_FullMethodName                 = "/user_enter.UserEnter/Apply"
-	UserEnter_Register_FullMethodName              = "/user_enter.UserEnter/Register"
-	UserEnter_Login_FullMethodName                 = "/user_enter.UserEnter/Login"
-	UserEnter_AddProduct_FullMethodName            = "/user_enter.UserEnter/AddProduct"
-	UserEnter_AddCombinationProduct_FullMethodName = "/user_enter.UserEnter/AddCombinationProduct"
-	UserEnter_ProcessInvoice_FullMethodName        = "/user_enter.UserEnter/ProcessInvoice"
-	UserEnter_DelProduct_FullMethodName            = "/user_enter.UserEnter/DelProduct"
-	UserEnter_InvoiceList_FullMethodName           = "/user_enter.UserEnter/InvoiceList"
-	UserEnter_AddSeckillProduct_FullMethodName     = "/user_enter.UserEnter/AddSeckillProduct"
-	UserEnter_ReverseStock_FullMethodName          = "/user_enter.UserEnter/ReverseStock"
+	UserEnter_Apply_FullMethodName                  = "/user_enter.UserEnter/Apply"
+	UserEnter_Register_FullMethodName               = "/user_enter.UserEnter/Register"
+	UserEnter_Login_FullMethodName                  = "/user_enter.UserEnter/Login"
+	UserEnter_AddProduct_FullMethodName             = "/user_enter.UserEnter/AddProduct"
+	UserEnter_AddCombinationProduct_FullMethodName  = "/user_enter.UserEnter/AddCombinationProduct"
+	UserEnter_ProcessInvoice_FullMethodName         = "/user_enter.UserEnter/ProcessInvoice"
+	UserEnter_DelProduct_FullMethodName             = "/user_enter.UserEnter/DelProduct"
+	UserEnter_InvoiceList_FullMethodName            = "/user_enter.UserEnter/InvoiceList"
+	UserEnter_BatchReleaseOfProducts_FullMethodName = "/user_enter.UserEnter/BatchReleaseOfProducts"
+	UserEnter_MerchantVerification_FullMethodName   = "/user_enter.UserEnter/MerchantVerification"
+	UserEnter_CalculateOrderSummary_FullMethodName  = "/user_enter.UserEnter/CalculateOrderSummary"
+	UserEnter_AddSeckillProduct_FullMethodName      = "/user_enter.UserEnter/AddSeckillProduct"
+	UserEnter_ReverseStock_FullMethodName           = "/user_enter.UserEnter/ReverseStock"
 )
 
 // UserEnterClient is the client API for UserEnter service.
@@ -43,6 +46,9 @@ type UserEnterClient interface {
 	ProcessInvoice(ctx context.Context, in *ProcessInvoiceRequest, opts ...grpc.CallOption) (*ProcessInvoiceResponse, error)
 	DelProduct(ctx context.Context, in *DelProductRequest, opts ...grpc.CallOption) (*DelProductResponse, error)
 	InvoiceList(ctx context.Context, in *InvoiceListRequest, opts ...grpc.CallOption) (*InvoiceListResponse, error)
+	BatchReleaseOfProducts(ctx context.Context, in *BatchReleaseOfProductsRequest, opts ...grpc.CallOption) (*BatchReleaseOfProductsResponse, error)
+	MerchantVerification(ctx context.Context, in *MerchantVerificationRequest, opts ...grpc.CallOption) (*MerchantVerificationResponse, error)
+	CalculateOrderSummary(ctx context.Context, in *CalculateOrderSummaryRequest, opts ...grpc.CallOption) (*CalculateOrderSummaryResponse, error)
 	AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error)
 	ReverseStock(ctx context.Context, in *ReverseStockRequest, opts ...grpc.CallOption) (*ReverseStockResponse, error)
 }
@@ -135,6 +141,36 @@ func (c *userEnterClient) InvoiceList(ctx context.Context, in *InvoiceListReques
 	return out, nil
 }
 
+func (c *userEnterClient) BatchReleaseOfProducts(ctx context.Context, in *BatchReleaseOfProductsRequest, opts ...grpc.CallOption) (*BatchReleaseOfProductsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BatchReleaseOfProductsResponse)
+	err := c.cc.Invoke(ctx, UserEnter_BatchReleaseOfProducts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userEnterClient) MerchantVerification(ctx context.Context, in *MerchantVerificationRequest, opts ...grpc.CallOption) (*MerchantVerificationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MerchantVerificationResponse)
+	err := c.cc.Invoke(ctx, UserEnter_MerchantVerification_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userEnterClient) CalculateOrderSummary(ctx context.Context, in *CalculateOrderSummaryRequest, opts ...grpc.CallOption) (*CalculateOrderSummaryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CalculateOrderSummaryResponse)
+	err := c.cc.Invoke(ctx, UserEnter_CalculateOrderSummary_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userEnterClient) AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AddSeckillProductResponse)
@@ -167,6 +203,9 @@ type UserEnterServer interface {
 	ProcessInvoice(context.Context, *ProcessInvoiceRequest) (*ProcessInvoiceResponse, error)
 	DelProduct(context.Context, *DelProductRequest) (*DelProductResponse, error)
 	InvoiceList(context.Context, *InvoiceListRequest) (*InvoiceListResponse, error)
+	BatchReleaseOfProducts(context.Context, *BatchReleaseOfProductsRequest) (*BatchReleaseOfProductsResponse, error)
+	MerchantVerification(context.Context, *MerchantVerificationRequest) (*MerchantVerificationResponse, error)
+	CalculateOrderSummary(context.Context, *CalculateOrderSummaryRequest) (*CalculateOrderSummaryResponse, error)
 	AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error)
 	ReverseStock(context.Context, *ReverseStockRequest) (*ReverseStockResponse, error)
 	mustEmbedUnimplementedUserEnterServer()
@@ -199,6 +238,15 @@ func (UnimplementedUserEnterServer) DelProduct(context.Context, *DelProductReque
 }
 func (UnimplementedUserEnterServer) InvoiceList(context.Context, *InvoiceListRequest) (*InvoiceListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InvoiceList not implemented")
+}
+func (UnimplementedUserEnterServer) BatchReleaseOfProducts(context.Context, *BatchReleaseOfProductsRequest) (*BatchReleaseOfProductsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchReleaseOfProducts not implemented")
+}
+func (UnimplementedUserEnterServer) MerchantVerification(context.Context, *MerchantVerificationRequest) (*MerchantVerificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MerchantVerification not implemented")
+}
+func (UnimplementedUserEnterServer) CalculateOrderSummary(context.Context, *CalculateOrderSummaryRequest) (*CalculateOrderSummaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CalculateOrderSummary not implemented")
 }
 func (UnimplementedUserEnterServer) AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSeckillProduct not implemented")
@@ -363,6 +411,60 @@ func _UserEnter_InvoiceList_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserEnter_BatchReleaseOfProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchReleaseOfProductsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).BatchReleaseOfProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_BatchReleaseOfProducts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).BatchReleaseOfProducts(ctx, req.(*BatchReleaseOfProductsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserEnter_MerchantVerification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MerchantVerificationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).MerchantVerification(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_MerchantVerification_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).MerchantVerification(ctx, req.(*MerchantVerificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserEnter_CalculateOrderSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CalculateOrderSummaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).CalculateOrderSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_CalculateOrderSummary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).CalculateOrderSummary(ctx, req.(*CalculateOrderSummaryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserEnter_AddSeckillProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddSeckillProductRequest)
 	if err := dec(in); err != nil {
@@ -437,6 +539,18 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InvoiceList",
 			Handler:    _UserEnter_InvoiceList_Handler,
+		},
+		{
+			MethodName: "BatchReleaseOfProducts",
+			Handler:    _UserEnter_BatchReleaseOfProducts_Handler,
+		},
+		{
+			MethodName: "MerchantVerification",
+			Handler:    _UserEnter_MerchantVerification_Handler,
+		},
+		{
+			MethodName: "CalculateOrderSummary",
+			Handler:    _UserEnter_CalculateOrderSummary_Handler,
 		},
 		{
 			MethodName: "AddSeckillProduct",

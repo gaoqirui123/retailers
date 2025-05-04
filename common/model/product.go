@@ -71,3 +71,10 @@ func (p *Product) ReverseProductStock(productId, stock int64) error {
 func (p *Product) UpdateStatus(status int64, pid int64) error {
 	return global.DB.Table("product").Where("id = ?", pid).Update("is_show", status).Error
 }
+
+// GetTotalViewCount 获取商品总浏览量
+func (p *Product) GetTotalViewCount() (int64, error) {
+	var total int64
+	err := global.DB.Table("product").Select("SUM(browse)").Scan(&total).Error
+	return total, err
+}

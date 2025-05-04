@@ -6,10 +6,13 @@ import (
 	"common/model"
 	"common/pkg"
 	"common/proto/order"
+	"common/rabbitMq/simple"
 	"common/utlis"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
+	"os"
 	"strconv"
 	"time"
 )
@@ -154,6 +157,16 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 
 	prices := strconv.FormatFloat(orders.PayPrice, 'f', 2, 64)
 	payUrl := pkg.NewPay().Pay(orderProduct.ProductName, orderSn, prices)
+	//ordersMarshal, err := json.Marshal(orders)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//opMarshal, err := json.Marshal(op)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//simple.Publish(string(ordersMarshal))
+	//simple.Publish(string(opMarshal))
 	return &order.AddOrderResponse{PayUrl: payUrl}, nil
 }
 
@@ -272,15 +285,16 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 	if od.Id == 0 {
 		return &order.PayCallbackResponse{Success: false}, err
 	}
-	//查找用户
+	//查找用户等级
 	u := model.User{}
 	id, err := u.FindId(int(od.Uid))
 	if err != nil {
 		return &order.PayCallbackResponse{Success: false}, err
 	}
 	var price float64
-	dl := model.DistributionLevel{}
-	fmt.Println(id)
+
+	//查找配置的返利等级
+	dl := &model.DistributionLevel{}
 
 	disLevel := dl.FindDistributionLevel(int(id.Level))
 
@@ -288,19 +302,30 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 
 	if disLevel.Level == 1 {
 		price = disLevel.One * float64(in.BuyerPayAmount)
+		n := &model.Commission{
+			OrderSyn:   in.OrderSn,
+			FromUserId: uint32(od.Uid),
+			ToUserId:   uint32(id.SpreadUid),
+			Level:      int8(id.Level),
+			Amount:     price,
+		}
+		//同步返佣流水表
+		if !n.CreateCommission() {
+			return &order.PayCallbackResponse{Success: false}, nil
+		}
 	} else if disLevel.Level == 2 {
 		price = disLevel.Two * float64(in.BuyerPayAmount)
-	}
-	n := &model.Commission{
-		OrderSyn:   in.OrderSn,
-		FromUserId: uint32(od.Uid),
-		ToUserId:   uint32(id.SpreadUid),
-		Level:      int8(id.Level),
-		Amount:     price,
-	}
-	//同步返佣流水表
-	if !n.CreateCommission() {
-		return &order.PayCallbackResponse{Success: false}, nil
+		n := &model.Commission{
+			OrderSyn:   in.OrderSn,
+			FromUserId: uint32(od.Uid),
+			ToUserId:   uint32(id.SpreadUid),
+			Level:      int8(id.Level),
+			Amount:     price,
+		}
+		//同步返佣流水表
+		if !n.CreateCommission() {
+			return &order.PayCallbackResponse{Success: false}, nil
+		}
 	}
 	return &order.PayCallbackResponse{Success: true}, nil
 }
@@ -454,4 +479,74 @@ func OrderLists(list []*model.Order) ([]*order.OrderList, error) {
 		})
 	}
 	return orderList, nil
+}
+
+func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerificationResponse, error) {
+	o := &model.Order{}
+	id, err := o.FindId(in.OrderId)
+	if err != nil {
+		return nil, err
+	}
+	////判断订单是否付款
+	//
+	//if id.Paid != 3 {
+	//	return &order.QrCodeVerificationResponse{Success: false}, err
+	//}
+	////判断订单状态
+	//
+	//if id.Status != 5 {
+	//	return &order.QrCodeVerificationResponse{Success: false}, err
+	//}
+	// 将订单信息序列化为 JSON 字符串
+	Order := global.Order
+	Order.Id = id.Id
+	Order.OrderSn = id.OrderSn
+	Order.Uid = id.Uid
+	Order.Paid = id.Paid
+	Order.Status = id.Status
+
+	orderInfo, err := json.Marshal(Order)
+	//	err = global.Rdb.Set(context.Background(), fmt.Sprintf(global.IMGName, in.UserId, in.OrderId), string(orderInfo), time.Minute*5).Err()
+	//	if err != nil {
+	//		return nil, err
+	//	}
+
+	if err != nil {
+		return &order.QrCodeVerificationResponse{Success: err.Error()}, err
+	}
+
+	// 指定具体的文件名
+	filePath := "../../common/img/" + fmt.Sprintf(global.IMGName, in.UserId, in.OrderId) + ".png"
+
+	// 确保目录存在
+	dir := "../../common/img"
+	if _, err = os.Stat(dir); os.IsNotExist(err) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			return nil, fmt.Errorf("failed to create directory: %w", err)
+		}
+	}
+	logoPath := "../../common/img/1234.png" // 替换为你的 logo 图片路径
+	err = utlis.GenerateQRCodeWithLogo(string(orderInfo), logoPath, filePath)
+	if err != nil {
+		return &order.QrCodeVerificationResponse{Success: err.Error()}, err
+	}
+	code, err := utlis.DecodeQRCode(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	all := json.Unmarshal([]byte(code), &Order)
+	if all != nil {
+
+		return &order.QrCodeVerificationResponse{Success: fmt.Sprintf("JSON 反序列化失败: %v\n", all)}, all
+	}
+
+	keyall := fmt.Sprintf(global.IMGName, Order.Uid, Order.Id)
+	return &order.QrCodeVerificationResponse{Success: keyall}, nil
+}
+
+func Consumption(in *order.ConsumptionRequest) (*order.ConsumptionResponse, error) {
+	simple.Receive()
+	return &order.ConsumptionResponse{Success: true}, nil
 }

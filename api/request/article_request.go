@@ -48,3 +48,31 @@ type EditArticle struct {
 type DeleteArticle struct {
 	Id uint32 `json:"id" form:"id" binding:"required"`
 }
+
+// 发布评论
+type PostAComment struct {
+	Pid         uint32 `json:"pid" form:"pid"`                                  //父级评论 ID
+	ArticleID   uint32 `json:"article_id" form:"article_id" binding:"required"` //文章 ID
+	Content     string `json:"content" form:"content" binding:"required"`       //评论内容
+	ReplyUserID uint32 `json:"reply_user_id" form:"reply_user_id"`              //被回复的用户 ID
+
+}
+
+// 文章点赞
+type ArticleThumbsUp struct {
+	ArticleID uint32 `json:"article_id" form:"article_id" binding:"required"` //文章 ID
+	Button    uint32 `json:"button" form:"button" binding:"required"`         //1点赞2取消
+
+}
+
+// 删除评论
+type DeleteComment struct {
+	ArticleID uint32 `json:"article_id" form:"article_id" binding:"required"` //文章 ID
+	CommentID uint32 `json:"comment_id" form:"comment_id" binding:"required"` //文章 ID
+}
+
+// 高赞文章排序
+type TopLikeArticleRanking struct {
+	Top uint32 `json:"top" form:"top" binding:"required"` //文章 ID
+
+}

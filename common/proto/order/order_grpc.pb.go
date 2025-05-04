@@ -19,9 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Order_AddOrder_FullMethodName    = "/order.Order/AddOrder"
-	Order_PayCallback_FullMethodName = "/order.Order/PayCallback"
-	Order_OrderList_FullMethodName   = "/order.Order/OrderList"
+	Order_AddOrder_FullMethodName           = "/order.Order/AddOrder"
+	Order_PayCallback_FullMethodName        = "/order.Order/PayCallback"
+	Order_OrderList_FullMethodName          = "/order.Order/OrderList"
+	Order_UserReceiveCoupon_FullMethodName  = "/order.Order/UserReceiveCoupon"
+	Order_QrCodeVerification_FullMethodName = "/order.Order/QrCodeVerification"
+	Order_Consumption_FullMethodName        = "/order.Order/Consumption"
 )
 
 // OrderClient is the client API for Order service.
@@ -31,6 +34,9 @@ type OrderClient interface {
 	AddOrder(ctx context.Context, in *AddOrderRequest, opts ...grpc.CallOption) (*AddOrderResponse, error)
 	PayCallback(ctx context.Context, in *PayCallbackRequest, opts ...grpc.CallOption) (*PayCallbackResponse, error)
 	OrderList(ctx context.Context, in *OrderListRequest, opts ...grpc.CallOption) (*OrderListResponse, error)
+	UserReceiveCoupon(ctx context.Context, in *UserReceiveCouponRequest, opts ...grpc.CallOption) (*UserReceiveCouponResponse, error)
+	QrCodeVerification(ctx context.Context, in *QrCodeVerificationRequest, opts ...grpc.CallOption) (*QrCodeVerificationResponse, error)
+	Consumption(ctx context.Context, in *ConsumptionRequest, opts ...grpc.CallOption) (*ConsumptionResponse, error)
 }
 
 type orderClient struct {
@@ -71,6 +77,36 @@ func (c *orderClient) OrderList(ctx context.Context, in *OrderListRequest, opts 
 	return out, nil
 }
 
+func (c *orderClient) UserReceiveCoupon(ctx context.Context, in *UserReceiveCouponRequest, opts ...grpc.CallOption) (*UserReceiveCouponResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserReceiveCouponResponse)
+	err := c.cc.Invoke(ctx, Order_UserReceiveCoupon_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderClient) QrCodeVerification(ctx context.Context, in *QrCodeVerificationRequest, opts ...grpc.CallOption) (*QrCodeVerificationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QrCodeVerificationResponse)
+	err := c.cc.Invoke(ctx, Order_QrCodeVerification_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderClient) Consumption(ctx context.Context, in *ConsumptionRequest, opts ...grpc.CallOption) (*ConsumptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ConsumptionResponse)
+	err := c.cc.Invoke(ctx, Order_Consumption_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderServer is the server API for Order service.
 // All implementations must embed UnimplementedOrderServer
 // for forward compatibility
@@ -78,6 +114,9 @@ type OrderServer interface {
 	AddOrder(context.Context, *AddOrderRequest) (*AddOrderResponse, error)
 	PayCallback(context.Context, *PayCallbackRequest) (*PayCallbackResponse, error)
 	OrderList(context.Context, *OrderListRequest) (*OrderListResponse, error)
+	UserReceiveCoupon(context.Context, *UserReceiveCouponRequest) (*UserReceiveCouponResponse, error)
+	QrCodeVerification(context.Context, *QrCodeVerificationRequest) (*QrCodeVerificationResponse, error)
+	Consumption(context.Context, *ConsumptionRequest) (*ConsumptionResponse, error)
 	mustEmbedUnimplementedOrderServer()
 }
 
@@ -93,6 +132,15 @@ func (UnimplementedOrderServer) PayCallback(context.Context, *PayCallbackRequest
 }
 func (UnimplementedOrderServer) OrderList(context.Context, *OrderListRequest) (*OrderListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OrderList not implemented")
+}
+func (UnimplementedOrderServer) UserReceiveCoupon(context.Context, *UserReceiveCouponRequest) (*UserReceiveCouponResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserReceiveCoupon not implemented")
+}
+func (UnimplementedOrderServer) QrCodeVerification(context.Context, *QrCodeVerificationRequest) (*QrCodeVerificationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QrCodeVerification not implemented")
+}
+func (UnimplementedOrderServer) Consumption(context.Context, *ConsumptionRequest) (*ConsumptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Consumption not implemented")
 }
 func (UnimplementedOrderServer) mustEmbedUnimplementedOrderServer() {}
 
@@ -161,6 +209,60 @@ func _Order_OrderList_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Order_UserReceiveCoupon_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserReceiveCouponRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).UserReceiveCoupon(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Order_UserReceiveCoupon_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).UserReceiveCoupon(ctx, req.(*UserReceiveCouponRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Order_QrCodeVerification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QrCodeVerificationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).QrCodeVerification(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Order_QrCodeVerification_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).QrCodeVerification(ctx, req.(*QrCodeVerificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Order_Consumption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConsumptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServer).Consumption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Order_Consumption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServer).Consumption(ctx, req.(*ConsumptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Order_ServiceDesc is the grpc.ServiceDesc for Order service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -179,6 +281,18 @@ var Order_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "OrderList",
 			Handler:    _Order_OrderList_Handler,
+		},
+		{
+			MethodName: "UserReceiveCoupon",
+			Handler:    _Order_UserReceiveCoupon_Handler,
+		},
+		{
+			MethodName: "QrCodeVerification",
+			Handler:    _Order_QrCodeVerification_Handler,
+		},
+		{
+			MethodName: "Consumption",
+			Handler:    _Order_Consumption_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
