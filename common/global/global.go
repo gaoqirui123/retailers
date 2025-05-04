@@ -33,3 +33,11 @@ var Order struct {
 	Paid    int64  `json:"paid"`
 	Status  int64  `json:"status"`
 }
+
+type OrderProduct struct {
+	Price       float64
+	ProductName string
+	Postage     float64
+	Image       string
+	IsShow      int64
+}

@@ -99,7 +99,6 @@ message BargainUserHelpList {
   uint32 CurrentPrice = 8;
 }
 
-
 // TODO:拼团商品列表展示
 message CombinationListRequest {
 }
