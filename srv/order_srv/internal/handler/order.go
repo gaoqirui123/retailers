@@ -153,7 +153,6 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	go cron.OrderCron(orderSn)
 
 	prices := strconv.FormatFloat(orders.PayPrice, 'f', 2, 64)
-	fmt.Println(orderProduct.ProductName, orderSn, prices, ".............")
 	payUrl := pkg.NewPay().Pay(orderProduct.ProductName, orderSn, prices)
 	return &order.AddOrderResponse{PayUrl: payUrl}, nil
 }
@@ -245,7 +244,6 @@ func JudgeCouponStatus(couponId int64) (*model.CouponUser, error) {
 }
 
 func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, error) {
-	fmt.Println(in, "1111111111")
 	var status int
 	if in.Status == "WAIT_BUYER_PAY" {
 		status = 1

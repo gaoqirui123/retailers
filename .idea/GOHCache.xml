@@ -2126,6 +2126,13 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/common/cron/bargain_cron.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746357983378" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/common/cron/order.go">
           <value>
             <ScannedPath>
@@ -3239,7 +3246,7 @@
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746281719052" />
+              <option name="lastModified" value="1746355394075" />
               <option name="schema">
                 <list>
                   <option value="OrderProduct" />
