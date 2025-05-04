@@ -9,6 +9,7 @@ service Product {
   rpc JoinGroupBuying(JoinGroupBuyingRequest) returns (JoinGroupBuyingResponse);//TODO: 用户参与拼团
   rpc AddSeckillProduct(AddSeckillProductRequest) returns (AddSeckillProductResponse);//TODO: 添加秒杀商品
   rpc ReverseStock(ReverseStockRequest) returns (ReverseStockResponse);//TODO: 秒杀后反还剩余的商品
+  rpc Fghjkl(ReverseStockRequest) returns (ReverseStockResponse);//TODO: 秒杀后反还剩余的商品
 }
 
 // TODO: 秒杀后反还剩余的商品
