@@ -85,10 +85,10 @@ func ReverseStock(ctx context.Context, in *user_enter.ReverseStockRequest) (*use
 	})
 }
 
-// BatchReleaseOfProducts 商品批量发布
-func BatchReleaseOfProducts(ctx context.Context, in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
-	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
-		return client.BatchReleaseOfProducts(ctx, req)
+// BatchPublishProducts 商品批量发布
+func BatchPublishProducts(ctx context.Context, in *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
+		return client.BatchPublishProducts(ctx, req)
 	})
 }
 

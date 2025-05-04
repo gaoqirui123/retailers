@@ -14,7 +14,7 @@ type VisitorCount struct {
 	CreateTime time.Time `gorm:"type:datetime;default:CURRENT_TIMESTAMP;comment:'访问时间'"` // CreateTime 记录访问发生的时间
 }
 
-// GetUniqueVisitorCount 获取商品访问客数，假设访客表中有一个 user_id 字段来区分不同访客
+// GetUniqueVisitorCount 获取商品访问客数
 func (v *VisitorCount) GetUniqueVisitorCount() (int64, error) {
 	var count int64
 	err := global.DB.Model(v).Distinct("user_id").Count(&count).Error
