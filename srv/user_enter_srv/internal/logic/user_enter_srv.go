@@ -100,9 +100,9 @@ func (es UserEnterServer) ReverseStock(ctx context.Context, in *user_enter.Rever
 	return reverse, nil
 }
 
-// BatchReleaseOfProducts TODO:商品批量发布
-func (es UserEnterServer) BatchReleaseOfProducts(ctx context.Context, in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
-	register, err := handler.BatchReleaseOfProducts(in)
+// BatchPublishProducts TODO:商品批量发布
+func (es UserEnterServer) BatchPublishProducts(ctx context.Context, in *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
+	register, err := handler.BatchPublishProducts(in)
 	if err != nil {
 		return nil, err
 	}

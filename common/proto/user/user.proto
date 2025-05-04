@@ -20,6 +20,21 @@ service User {
   rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse);//TODO:用户添加地址
   rpc UserApplication(UserApplicationRequest) returns (UserApplicationResponse);//TODO:用户申请发票
   rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO: 用户领取优惠券
+  rpc UserWithdraw(UserWithdrawRequest) returns (UserWithdrawResponse); // TODO: 用户提现
+}
+
+// TODO: 用户提现请求
+message UserWithdrawRequest {
+  int64 user_id = 1; // 用户 ID
+  float amount = 2; // 提现金额
+  string withdraw_method = 3; // 提现方式，例如："支付宝", "微信", "银行卡"
+  string account_info = 4; // 提现账户信息，根据提现方式不同而不同，如支付宝账号、银行卡号等
+
+}
+
+// TODO: 用户提现响应
+message UserWithdrawResponse {
+  bool success = 1; // 提现是否成功
 }
 
 // TODO:用户领取优惠券

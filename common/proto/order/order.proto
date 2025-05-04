@@ -9,7 +9,16 @@ service Order {
   rpc OrderList(OrderListRequest) returns (OrderListResponse); // TODO:订单列表查询
   rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO:用户领取优惠券
   rpc QrCodeVerification(QrCodeVerificationRequest) returns (QrCodeVerificationResponse); // TODO:二维码核销
+  rpc Consumption(ConsumptionRequest) returns (ConsumptionResponse); // TODO:消费队列里的消息
 }
+
+// TODO:消费队列里的消息
+message ConsumptionRequest {}
+
+message ConsumptionResponse {
+  bool  Success = 1;
+}
+
 // TODO:二维码核销
 message QrCodeVerificationRequest {
   int64 OrderId = 1;
