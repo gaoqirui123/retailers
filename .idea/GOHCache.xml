@@ -3,6 +3,7 @@
   <component name="GoORMHelperCache">
     <option name="schemaMapping">
       <map>
+<<<<<<< HEAD
         <entry key="AddCart">
           <value>
             <set>
@@ -486,6 +487,8 @@
             </set>
           </value>
         </entry>
+=======
+>>>>>>> origin/gqr
         <entry key="Combination">
           <value>
             <set>
@@ -493,6 +496,7 @@
             </set>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="CombinationList">
           <value>
             <set>
@@ -978,6 +982,11 @@
             <set>
               <option value="file://$PROJECT_DIR$/common/global/global.go" />
               <option value="file://$PROJECT_DIR$/common/model/order_product.go" />
+=======
+        <entry key="OrderProduct">
+          <value>
+            <set>
+>>>>>>> origin/gqr
               <option value="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go" />
             </set>
           </value>
@@ -989,6 +998,7 @@
             </set>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="OrderSrv">
           <value>
             <set>
@@ -1017,6 +1027,8 @@
             </set>
           </value>
         </entry>
+=======
+>>>>>>> origin/gqr
         <entry key="Pink">
           <value>
             <set>
@@ -1024,6 +1036,7 @@
             </set>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="PostAComment">
           <value>
             <set>
@@ -1165,6 +1178,8 @@
             </set>
           </value>
         </entry>
+=======
+>>>>>>> origin/gqr
         <entry key="RabbitMQ">
           <value>
             <set>
@@ -1172,6 +1187,7 @@
             </set>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="RandomString">
           <value>
             <set>
@@ -1908,10 +1924,13 @@
             </set>
           </value>
         </entry>
+=======
+>>>>>>> origin/gqr
       </map>
     </option>
     <option name="scannedPathMapping">
       <map>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/api/client/admin_client.go">
           <value>
             <ScannedPath>
@@ -2403,13 +2422,23 @@
                   <option value="Cart" />
                 </list>
               </option>
+=======
+        <entry key="file://$PROJECT_DIR$/common/cron/pink_cron.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361450142" />
+>>>>>>> origin/gqr
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/common/model/combination.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746365475595" />
+=======
+              <option name="lastModified" value="1746360461074" />
+>>>>>>> origin/gqr
               <option name="schema">
                 <list>
                   <option value="Combination" />
@@ -2418,6 +2447,7 @@
             </ScannedPath>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/common/model/commission.go">
           <value>
             <ScannedPath>
@@ -2554,6 +2584,12 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746365475602" />
+=======
+        <entry key="file://$PROJECT_DIR$/common/model/pink.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746361338688" />
+>>>>>>> origin/gqr
               <option name="schema">
                 <list>
                   <option value="Pink" />
@@ -2562,6 +2598,7 @@
             </ScannedPath>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/common/model/product.go">
           <value>
             <ScannedPath>
@@ -3286,6 +3323,12 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746365475648" />
+=======
+        <entry key="file://$PROJECT_DIR$/common/rabbitMq/simple/rabbitmq.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746359911197" />
+>>>>>>> origin/gqr
               <option name="schema">
                 <list>
                   <option value="RabbitMQ" />
@@ -3294,6 +3337,7 @@
             </ScannedPath>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/common/utlis/encryption.go">
           <value>
             <ScannedPath>
@@ -3472,13 +3516,28 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746368276546" />
+=======
+        <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746360079834" />
+              <option name="schema">
+                <list>
+                  <option value="OrderProduct" />
+                </list>
+              </option>
+>>>>>>> origin/gqr
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/logic/order.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746365475672" />
+=======
+              <option name="lastModified" value="1746360134031" />
+>>>>>>> origin/gqr
               <option name="schema">
                 <list>
                   <option value="OrderServer" />
@@ -3487,6 +3546,7 @@
             </ScannedPath>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/register.go">
           <value>
             <ScannedPath>
@@ -3597,6 +3657,12 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746365475684" />
+=======
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746360352718" />
+>>>>>>> origin/gqr
             </ScannedPath>
           </value>
         </entry>
@@ -3604,6 +3670,7 @@
     </option>
     <option name="tableStructMapping">
       <map>
+<<<<<<< HEAD
         <entry key="add_cart" value="AddCart" />
         <entry key="add_cart_request" value="AddCartRequest" />
         <entry key="add_cart_response" value="AddCartResponse" />
@@ -3877,5 +3944,14 @@
       </map>
     </option>
     <option name="lastTimeChecked" value="1746365547320" />
+=======
+        <entry key="combination" value="Combination" />
+        <entry key="order_product" value="OrderProduct" />
+        <entry key="order_server" value="OrderServer" />
+        <entry key="pink" value="Pink" />
+        <entry key="rabbit_mq" value="RabbitMQ" />
+      </map>
+    </option>
+>>>>>>> origin/gqr
   </component>
 </project>

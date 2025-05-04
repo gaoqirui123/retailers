@@ -6,6 +6,7 @@ import (
 	"common/model"
 	"common/pkg"
 	"common/proto/order"
+	"common/rabbitMq/simple"
 	"common/utlis"
 	"encoding/json"
 	"errors"
@@ -147,8 +148,17 @@ func AddOrder(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
 	go cron.OrderCron(orderSn)
 
 	prices := strconv.FormatFloat(orders.PayPrice, 'f', 2, 64)
-	fmt.Println(orderProduct.ProductName, orderSn, prices, ".............")
 	payUrl := pkg.NewPay().Pay(orderProduct.ProductName, orderSn, prices)
+	//ordersMarshal, err := json.Marshal(orders)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//opMarshal, err := json.Marshal(op)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//simple.Publish(string(ordersMarshal))
+	//simple.Publish(string(opMarshal))
 	return &order.AddOrderResponse{PayUrl: payUrl}, nil
 }
 
@@ -559,4 +569,9 @@ func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerif
 
 	keyall := fmt.Sprintf(global.IMGName, Order.Uid, Order.Id)
 	return &order.QrCodeVerificationResponse{Success: keyall}, nil
+}
+
+func Consumption(in *order.ConsumptionRequest) (*order.ConsumptionResponse, error) {
+	simple.Receive()
+	return &order.ConsumptionResponse{Success: true}, nil
 }

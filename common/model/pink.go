@@ -78,3 +78,7 @@ func (p *Pink) UpdateGroupNum(pinkId string, num int64) error {
 func (p *Pink) UpdateStatus(pinkId string, status int) error {
 	return global.DB.Where("order_id = ?", pinkId).Update("status", status).Error
 }
+
+func (p *Pink) GetPainUnique(unique int64) error {
+	return global.DB.Where("order_id = ?", unique).Limit(1).Find(p).Error
+}
