@@ -119,3 +119,10 @@ func UserReceiveCoupon(ctx context.Context, req *user.UserReceiveCouponRequest) 
 		return client.UserReceiveCoupon(ctx, req)
 	})
 }
+
+// UserReceiveCoupon 用户提现
+func UserWithdraw(ctx context.Context, req *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
+		return client.UserWithdraw(ctx, req)
+	})
+}

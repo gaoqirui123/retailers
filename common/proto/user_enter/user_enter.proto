@@ -163,6 +163,34 @@ message CalculateOrderSummaryResponse {
   int32 product_view_count = 4;
   int32 unique_visitors = 5;
 }
+
+// 批量商品发布请求消息
+message BatchPublishProductsRequest {
+  repeated ProductInfo products = 1;
+}
+
+// 单个商品信息
+message ProductInfo {
+  int64   MerId         =1; // 商户Id(0为总后台管理员创建,不为0的时候是商户后台创建)
+  string Image =2;    //商品图片
+  string StoreName =3;   //商品名称
+  string StoreInfo =4;   //商品简介
+  string  BarCode =5;  //商品条码（一维码）
+  string CateId =6;//分类id
+  float Price =7;//商品价格
+  float Postage =8;//邮费
+  string UnitName =9;//单位名
+  string Activity =10;//活动显示排序1=秒杀，2=砍价，3=拼团
+
+}
+
+// 批量商品发布响应消息
+message BatchPublishProductsResponse {
+  bool success = 1;
+  repeated string error_messages = 2; // 若有部分商品发布失败，记录错误信息
+}
+
+
 service UserEnter {
   rpc Apply(UserEnterApplyRequest) returns (UserEnterApplyResponse);//商家申请
   rpc Register(UserEnterRegisterRequest) returns (UserEnterRegisterResponse);//商家注册
@@ -172,8 +200,10 @@ service UserEnter {
   rpc ProcessInvoice(ProcessInvoiceRequest) returns (ProcessInvoiceResponse); //商家审核用户的发票invoice申请
   rpc DelProduct(DelProductRequest) returns (DelProductResponse);//商家下架商品
   rpc InvoiceList(InvoiceListRequest) returns (InvoiceListResponse);//发票列表展示
-  rpc BatchReleaseOfProducts(BatchReleaseOfProductsRequest) returns (BatchReleaseOfProductsResponse);//商品批量发布
+  rpc BatchPublishProducts(BatchPublishProductsRequest) returns (BatchPublishProductsResponse);// 批量商品发布请求
   rpc MerchantVerification(MerchantVerificationRequest) returns (MerchantVerificationResponse);//商家核销
   rpc CalculateOrderSummary(CalculateOrderSummaryRequest) returns (CalculateOrderSummaryResponse);//商家统计
 
 }
+
+

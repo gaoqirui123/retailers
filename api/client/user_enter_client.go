@@ -69,9 +69,9 @@ func InvoiceList(ctx context.Context, in *user_enter.InvoiceListRequest) (*user_
 }
 
 // 商品批量发布
-func BatchReleaseOfProducts(ctx context.Context, in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
-	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
-		return client.BatchReleaseOfProducts(ctx, req)
+func BatchPublishProducts(ctx context.Context, in *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
+	return UserEnterClients(ctx, in, func(ctx context.Context, client user_enter.UserEnterClient, req *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
+		return client.BatchPublishProducts(ctx, req)
 	})
 }
 

@@ -114,3 +114,10 @@ func (u UserServer) UserReceiveCoupon(ctx context.Context, in *user.UserReceiveC
 	}
 	return receive, nil
 }
+func (u UserServer) UserWithdraw(ctx context.Context, in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
+	receive, err := handler.UserWithdraw(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return receive, nil
+}

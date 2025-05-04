@@ -550,3 +550,64 @@ func UserReceiveCoupon(in *user.UserReceiveCouponRequest) (*user.UserReceiveCoup
 	}
 	return &user.UserReceiveCouponResponse{Success: true}, nil
 }
+
+// 用户提现
+func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
+	// 1. 检查用户是否存在
+	u := model.User{}
+	userInfo, err := u.FindId(int(in.UserId))
+	if err != nil {
+		return nil, err
+	}
+	if userInfo.Uid == 0 {
+		return nil, errors.New("用户不存在")
+	}
+
+	// 2. 检查用户余额是否足够
+	if userInfo.NowMoney < float64(in.Amount) {
+		return nil, errors.New("余额不足")
+	}
+
+	// 3. 开启事务处理
+	tx := global.DB.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	// 4. 扣除用户余额
+	newBalance := userInfo.NowMoney - float64(in.Amount)
+	err = u.UpdateBalance(in.UserId, newBalance)
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+
+	// 5. 记录提现记录
+	ue := &model.UserExtract{
+		Uid:          in.UserId,
+		RealName:     userInfo.RealName,
+		ExtractType:  in.WithdrawMethod, //支付类型
+		BankCode:     in.AccountInfo,
+		AlipayCode:   in.AccountInfo, //支付宝账号
+		ExtractPrice: float64(in.Amount),
+		AddTime:      time.Time{},
+		Status:       0,
+		Wechat:       in.AccountInfo, //微信号
+	}
+	if !ue.CreateUserExtract() {
+		tx.Rollback()
+		return nil, err
+	}
+
+	// 6. 提交事务
+	if err = tx.Commit().Error; err != nil {
+		return nil, err
+	}
+
+	return &user.UserWithdrawResponse{
+		Success: true,
+	}, nil
+
+}

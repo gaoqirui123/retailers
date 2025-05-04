@@ -269,3 +269,27 @@ func UserReceiveCoupon(c *gin.Context) {
 	}
 	response.RespSuccess(c, "用户领取优惠券成功", application)
 }
+
+func UserWithdraw(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UserWithdraw
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+	userWithdraw, err := client.UserWithdraw(c, &user.UserWithdrawRequest{
+		UserId:         int64(userId),
+		Amount:         float32(data.Amount),
+		WithdrawMethod: data.WithdrawMethod,
+		AccountInfo:    data.AccountInfo,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	if userWithdraw.Success == false {
+		response.RespError(c, "用户提现失败")
+		return
+	}
+	response.RespSuccess(c, "用户提现成功", userWithdraw)
+}

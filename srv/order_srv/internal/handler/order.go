@@ -166,17 +166,30 @@ func JudgeCouponStatus(couponId int64) (*model.CouponUser, error) {
 }
 
 func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, error) {
+	// 开启事务
+	tx := global.DB.Begin()
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
 
 	orders := &model.Order{}
 	status, _ := strconv.Atoi(in.Status)
 
 	if err := orders.UpdateOrderStatus(in.OrderSn, status); err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 	timeData := time.Now().AddDate(0, 0, 0).Format("2006-01-02 15:04:05")
 
 	err := orders.AddOrderPayTime(in.OrderSn, timeData)
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 	o := &model.Order{}
@@ -185,51 +198,77 @@ func PayCallback(in *order.PayCallbackRequest) (*order.PayCallbackResponse, erro
 
 	//查找不到消费用户
 	if od.Id == 0 {
+		tx.Rollback()
 		return &order.PayCallbackResponse{Success: false}, err
 	}
 
 	//查找用户等级
-
 	u := model.User{}
 	id, err := u.FindId(int(od.Uid))
 	if err != nil {
+		tx.Rollback()
 		return &order.PayCallbackResponse{Success: false}, err
 	}
-	var price float64
+	if id.Uid == 0 {
 
-	//查找配置的返利等级
-	dl := model.DistributionLevel{}
+		return &order.PayCallbackResponse{Success: true}, err
+	} else {
+		var price float64
 
-	disLevel := dl.FindDistributionLevel(int(id.Level))
+		//查找配置的返利等级
+		dl := model.DistributionLevel{}
 
-	fmt.Println("用户等级", disLevel.Level)
+		disLevel := dl.FindDistributionLevel(int(id.Level))
 
-	if disLevel.Level == 1 {
-		price = disLevel.One * float64(in.BuyerPayAmount)
-		n := &model.Commission{
-			OrderSyn:   in.OrderSn,
-			FromUserId: uint32(od.Uid),
-			ToUserId:   uint32(id.SpreadUid),
-			Level:      int8(id.Level),
-			Amount:     price,
+		fmt.Println("用户等级", disLevel.Level)
+
+		if disLevel.Level == 1 {
+			price = disLevel.One * float64(in.BuyerPayAmount)
+			n := &model.Commission{
+				OrderSyn:   in.OrderSn,
+				FromUserId: uint32(od.Uid),
+				ToUserId:   uint32(id.SpreadUid),
+				Level:      int8(id.Level),
+				Amount:     price,
+			}
+			//同步返佣流水表
+			nowPrice := id.NowMoney
+			err = u.UpdateBalance(id.Uid, nowPrice)
+			if err != nil {
+				tx.Rollback()
+				return nil, err
+			}
+			if !n.CreateCommission() {
+				tx.Rollback()
+				return &order.PayCallbackResponse{Success: false}, nil
+			}
+		} else if disLevel.Level == 2 {
+			price = disLevel.Two * float64(in.BuyerPayAmount)
+			n := &model.Commission{
+				OrderSyn:   in.OrderSn,
+				FromUserId: uint32(od.Uid),
+				ToUserId:   uint32(id.SpreadUid),
+				Level:      int8(id.Level),
+				Amount:     price,
+			}
+
+			//同步返佣流水表
+			nowPrice := id.NowMoney
+			err = u.UpdateBalance(id.Uid, nowPrice)
+			if err != nil {
+				tx.Rollback()
+				return nil, err
+			}
+			if !n.CreateCommission() {
+				tx.Rollback()
+				return &order.PayCallbackResponse{Success: false}, nil
+			}
 		}
-		//同步返佣流水表
-		if !n.CreateCommission() {
-			return &order.PayCallbackResponse{Success: false}, nil
-		}
-	} else if disLevel.Level == 2 {
-		price = disLevel.Two * float64(in.BuyerPayAmount)
-		n := &model.Commission{
-			OrderSyn:   in.OrderSn,
-			FromUserId: uint32(od.Uid),
-			ToUserId:   uint32(id.SpreadUid),
-			Level:      int8(id.Level),
-			Amount:     price,
-		}
-		//同步返佣流水表
-		if !n.CreateCommission() {
-			return &order.PayCallbackResponse{Success: false}, nil
-		}
+	}
+
+	// 提交事务
+	if err = tx.Commit().Error; err != nil {
+		return nil, err
 	}
 
 	return &order.PayCallbackResponse{Success: true}, nil
@@ -411,10 +450,6 @@ func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerif
 	Order.Status = id.Status
 
 	orderInfo, err := json.Marshal(Order)
-	//	err = global.Rdb.Set(context.Background(), fmt.Sprintf(global.IMGName, in.UserId, in.OrderId), string(orderInfo), time.Minute*5).Err()
-	//	if err != nil {
-	//		return nil, err
-	//	}
 
 	if err != nil {
 		return &order.QrCodeVerificationResponse{Success: err.Error()}, err

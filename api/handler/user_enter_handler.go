@@ -189,33 +189,42 @@ func InvoiceList(c *gin.Context) {
 	response.RespSuccess(c, "展示成功", list)
 }
 
-//批量添加商品
+// 批量添加商品
+// 批量添加商品
+func BatchPublishProducts(c *gin.Context) {
+	var data request.BatchReleaseOfProducts
+	err := c.ShouldBind(&data)
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	uid := c.GetUint("userId")
 
-//func BatchReleaseOfProducts(c *gin.Context) {
-//	var data request.BatchReleaseOfProducts
-//	err := c.ShouldBind(&data)
-//	if err != nil {
-//		response.RespError(c, err.Error())
-//		return
-//	}
-//	uid := c.GetUint("userId")
-//	list, err := client.BatchReleaseOfProducts(c, &user_enter.BatchReleaseOfProductsRequest{
-//		MerId:       int64(uid),
-//		Image:       data.Image,
-//		SliderImage: data.SliderImage,
-//		StoreName:   data.StoreName,
-//		CateId:      data.CateId,
-//		IsShow:      data.IsShow,
-//		Price:       int64(data.Price),
-//		Postage:     int64(data.Postage),
-//		UnitName:    data.UnitName,
-//	})
-//	if err != nil {
-//		response.RespError(c, err.Error())
-//		return
-//	}
-//	response.RespSuccess(c, "批量发布成功", list)
-//}
+	var productRequests []*user_enter.ProductInfo
+	for _, product := range data.Products {
+		productRequests = append(productRequests, &user_enter.ProductInfo{
+			MerId:     int64(uid),
+			Image:     product.Image,
+			StoreName: product.StoreName,
+			StoreInfo: product.StoreInfo,
+			BarCode:   product.BarCode,
+			CateId:    product.CateId,
+			Price:     float32(product.Price),
+			Postage:   float32(product.Postage),
+			UnitName:  product.UnitName,
+			Activity:  product.Activity,
+		})
+	}
+
+	list, err := client.BatchPublishProducts(c, &user_enter.BatchPublishProductsRequest{
+		Products: productRequests,
+	})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "批量发布成功", list)
+}
 
 func MerchantVerification(c *gin.Context) {
 	//uid := c.GetUint("userId")

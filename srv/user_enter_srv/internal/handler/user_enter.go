@@ -8,7 +8,6 @@ import (
 	"errors"
 	"log"
 	"regexp"
-	"strconv"
 	"time"
 )
 
@@ -242,24 +241,26 @@ func Login(in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResp
 	return &user_enter.UserEnterLoginResponse{Greet: token}, nil
 }
 
-func BatchReleaseOfProducts(in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
+// 商品批量发布
+func BatchPublishProducts(in *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
 	// 开启事务
 	transaction := global.DB.Begin()
 	if transaction.Error != nil {
 		return nil, transaction.Error
 	}
 
-	for _, productData := range in.List {
+	for _, productData := range in.Products {
 		p := model.Product{
-			MerId:       productData.MerId,
-			Image:       productData.Image,
-			SliderImage: productData.SliderImage,
-			StoreName:   productData.StoreName,
-			CateId:      strconv.FormatInt(productData.CateId, 10),
-			IsShow:      int64(int(productData.IsShow)),
-			Price:       float64(productData.Price),
-			Postage:     float64(productData.Postage),
-			UnitName:    productData.UnitName,
+			MerId:     productData.MerId,
+			Image:     productData.Image,
+			StoreName: productData.StoreName,
+			StoreInfo: productData.StoreInfo,
+			BarCode:   productData.BarCode,
+			CateId:    productData.CateId,
+			Price:     float64(productData.Price),
+			Postage:   float64(productData.Postage),
+			UnitName:  productData.UnitName,
+			Activity:  productData.Activity,
 		}
 
 		// 在事务中添加商品
@@ -275,7 +276,7 @@ func BatchReleaseOfProducts(in *user_enter.BatchReleaseOfProductsRequest) (*user
 		return nil, err
 	}
 
-	return &user_enter.BatchReleaseOfProductsResponse{Success: "批量添加商品成功"}, nil
+	return &user_enter.BatchPublishProductsResponse{Success: true}, nil
 }
 
 type OrderSyn struct {
@@ -285,6 +286,7 @@ type OrderSyn struct {
 	Paid    int64  `json:"paid"`
 }
 
+// 店家确认核销
 func MerchantVerification(in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
 
 	o := model.Order{}

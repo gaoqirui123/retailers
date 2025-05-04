@@ -83,8 +83,8 @@ func (es UserEnterServer) Login(ctx context.Context, in *user_enter.UserEnterLog
 }
 
 // BatchReleaseOfProducts TODO:商品批量发布
-func (es UserEnterServer) BatchReleaseOfProducts(ctx context.Context, in *user_enter.BatchReleaseOfProductsRequest) (*user_enter.BatchReleaseOfProductsResponse, error) {
-	register, err := handler.BatchReleaseOfProducts(in)
+func (es UserEnterServer) BatchPublishProducts(ctx context.Context, in *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
+	register, err := handler.BatchPublishProducts(in)
 	if err != nil {
 		return nil, err
 	}
