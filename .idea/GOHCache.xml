@@ -2873,7 +2873,11 @@
         <entry key="file://$PROJECT_DIR$/common/model/visitors.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746355932333" />
+=======
+              <option name="lastModified" value="1746323893288" />
+>>>>>>> origin/cm
               <option name="schema">
                 <list>
                   <option value="VisitorCount" />
@@ -3127,7 +3131,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/order/order.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746355932348" />
+=======
+              <option name="lastModified" value="1746278203290" />
+>>>>>>> origin/cm
               <option name="schema">
                 <list>
                   <option value="QrCodeVerificationRequest" />
@@ -3150,7 +3158,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/order/order_grpc.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746355932349" />
+=======
+              <option name="lastModified" value="1746278203290" />
+>>>>>>> origin/cm
               <option name="schema">
                 <list>
                   <option value="orderClient" />
@@ -3251,7 +3263,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746355932353" />
+=======
+              <option name="lastModified" value="1746271233121" />
+>>>>>>> origin/cm
               <option name="schema">
                 <list>
                   <option value="ReverseStockRequest" />
@@ -3291,7 +3307,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746355932354" />
+=======
+              <option name="lastModified" value="1746271233121" />
+>>>>>>> origin/cm
               <option name="schema">
                 <list>
                   <option value="userEnterClient" />
