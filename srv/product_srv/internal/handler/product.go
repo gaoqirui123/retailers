@@ -7,6 +7,7 @@ import (
 	"common/proto/product"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"math/rand"
