@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product;
 option go_package = ".;product";
-
+////是的反革命，。
 service Product {
   rpc CombinationList(CombinationListRequest) returns (CombinationListResponse);// TODO: 拼团商品列表展示
   rpc GroupBuying(GroupBuyingRequest) returns (GroupBuyingResponse);//TODO: 用户发起拼团
