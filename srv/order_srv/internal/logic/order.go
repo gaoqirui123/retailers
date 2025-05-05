@@ -35,11 +35,18 @@ func (o OrderServer) OrderList(ctx context.Context, in *order.OrderListRequest) 
 	return list, err
 }
 
-// TODO:二维码核销
 func (o OrderServer) QrCodeVerification(ctx context.Context, in *order.QrCodeVerificationRequest) (*order.QrCodeVerificationResponse, error) {
 	list, err := handler.QrCodeVerification(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
 	return list, err
+}
+
+func (o OrderServer) Consumption(ctx context.Context, in *order.ConsumptionRequest) (*order.ConsumptionResponse, error) {
+	con, err := handler.Consumption(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return con, err
 }

@@ -142,8 +142,32 @@ func (r *RabbitMQ) ConsumeSimple() {
 	go func() {
 		for d := range msgs {
 			//消息逻辑处理，可以自行设计逻辑
-
 			log.Printf("Received a message: 入库成功 : %s", d.Body)
+			//tx := global.DB.Begin()
+			//orders := &model.Order{}
+			//err = json.Unmarshal(d.Body, &orders)
+			//if err != nil {
+			//	return
+			//}
+			//err = orders.AddOrder()
+			//if err != nil {
+			//	tx.Rollback()
+			//	return
+			//}
+			//op := &model.OrderProduct{}
+			//err = json.Unmarshal(d.Body, &op)
+			//if err != nil {
+			//	return
+			//}
+			//err = orders.AddOrder()
+			//if err != nil {
+			//	tx.Rollback()
+			//	return
+			//}
+			//err = tx.Commit().Error
+			//if err != nil {
+			//	return
+			//}
 		}
 	}()
 

@@ -67,3 +67,7 @@ func (c *Combination) GetCombinationById(pid int64) (result *Combination, err er
 func (c *Combination) UpdateCombinationStock(id, num int64) error {
 	return global.DB.Debug().Table("combination").Model(&Combination{}).Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
 }
+
+func (c *Combination) ReverseCombinationStock(id int64, num int64) error {
+	return global.DB.Debug().Table("combination").Model(&Combination{}).Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock + ?", num)).Error
+}

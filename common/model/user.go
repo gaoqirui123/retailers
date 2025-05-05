@@ -120,3 +120,12 @@ func (u *User) FindUp(uid uint32) []User {
 	}
 	return up
 }
+
+// 提现后，扣减账户余额
+func (u *User) UpdateBalance(id int64, balance float64) error {
+	err := global.DB.Debug().Table("user").Where("uid = ?", id).Update("now_money", balance).Error
+	if err != nil {
+		return nil
+	}
+	return nil
+}
