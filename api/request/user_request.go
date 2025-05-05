@@ -41,6 +41,7 @@ type UserApplication struct {
 	Type          string  `form:"type" xml:"type" json:"type"  binding:"required"`
 }
 
+<<<<<<< HEAD
 type UpdatedAddress struct {
 	Province string `form:"province" xml:"province" json:"province"  binding:"required"`
 	City     string `form:"city" xml:"city" json:"city"  binding:"required"`
@@ -48,4 +49,24 @@ type UpdatedAddress struct {
 	Detail   string `form:"detail" xml:"detail" json:"detail"  binding:"required"`
 	RealName string `form:"real_name" xml:"real_name" json:"real_name"  binding:"required"`
 	Phone    string `form:"phone" xml:"phone" json:"phone"  binding:"required"`
+=======
+type UserSignIn struct {
+	SignData string `form:"signData" xml:"signData" json:"signData"  binding:"required"`
+}
+
+type UserMakeupSignIn struct {
+	SignData string `form:"signData" xml:"signData" json:"signData"  binding:"required"`
+}
+
+type UserReceiveCoupon struct {
+	CouponId int64 `form:"couponId" xml:"couponId" json:"couponId"  binding:"required"`
+}
+
+// 用户提现
+type UserWithdraw struct {
+	Amount         float64 `form:"amount" xml:"amount" json:"amount"  binding:"required"`        // 提现金额
+	WithdrawMethod string  `form:"withdraw_method" xml:"withdraw_method" json:"withdraw_method"` // 提现方式，例如："支付宝", "微信", "银行卡"
+	AccountInfo    string  `form:"account_info" xml:"account_info" json:"account_info"`          // 提现账户信息，根据提现方式不同而不同，如支付宝账号、银行卡号等
+
+>>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
 }

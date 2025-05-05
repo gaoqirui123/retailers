@@ -74,6 +74,7 @@ func (u UserServer) AddUsePower(ctx context.Context, in *user.AddUsePowerRequest
 	}
 	return addUsePower, nil
 }
+
 func (u UserServer) UsePowerList(ctx context.Context, in *user.UsePowerListRequest) (*user.UsePowerListResponse, error) {
 	usePowerList, err := handler.UsePowerList(in)
 	if err != nil {
@@ -81,20 +82,23 @@ func (u UserServer) UsePowerList(ctx context.Context, in *user.UsePowerListReque
 	}
 	return usePowerList, nil
 }
-func (u UserServer) AddText(ctx context.Context, in *user.AddTextRequest) (*user.AddTextResponse, error) {
-	addText, err := handler.AddText(in)
+
+func (u UserServer) UserSignIn(ctx context.Context, in *user.UserSignInRequest) (*user.UserSignInResponse, error) {
+	sign, err := handler.UserSignIn(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
-	return addText, nil
+	return sign, nil
 }
-func (u UserServer) AddUserAddress(ctx context.Context, in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
-	addUserAddress, err := handler.AddUserAddress(in)
+
+func (u UserServer) UserMakeupSignIn(ctx context.Context, in *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
+	makeupSignIn, err := handler.UserMakeupSignIn(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
-	return addUserAddress, nil
+	return makeupSignIn, nil
 }
+
 func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
 	userApplication, err := handler.UserApplication(in)
 	if err != nil {
@@ -102,10 +106,27 @@ func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicatio
 	}
 	return userApplication, nil
 }
+<<<<<<< HEAD
 func (u UserServer) UpdatedAddress(ctx context.Context, in *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
 	updatedAddress, err := handler.UpdatedAddress(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
 	return updatedAddress, nil
+=======
+
+func (u UserServer) UserReceiveCoupon(ctx context.Context, in *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
+	receive, err := handler.UserReceiveCoupon(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return receive, nil
+}
+func (u UserServer) UserWithdraw(ctx context.Context, in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
+	receive, err := handler.UserWithdraw(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return receive, nil
+>>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
 }

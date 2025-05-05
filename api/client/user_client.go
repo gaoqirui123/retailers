@@ -92,6 +92,20 @@ func AddUserAddress(ctx context.Context, req *user.AddUserAddressRequest) (*user
 	})
 }
 
+// UserSignIn 用户签到
+func UserSignIn(ctx context.Context, req *user.UserSignInRequest) (*user.UserSignInResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserSignInRequest) (*user.UserSignInResponse, error) {
+		return client.UserSignIn(ctx, req)
+	})
+}
+
+// UserMakeupSignIn 用户补签
+func UserMakeupSignIn(ctx context.Context, req *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserMakeupSignInRequest) (*user.UserMakeupSignInResponse, error) {
+		return client.UserMakeupSignIn(ctx, req)
+	})
+}
+
 // UserApplication 用户申请发票
 func UserApplication(ctx context.Context, req *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
 	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserApplicationRequest) (*user.UserApplicationResponse, error) {
@@ -99,9 +113,23 @@ func UserApplication(ctx context.Context, req *user.UserApplicationRequest) (*us
 	})
 }
 
+<<<<<<< HEAD
 // UpdatedAddress 用户修改地址
 func UpdatedAddress(ctx context.Context, req *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
 	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
 		return client.UpdatedAddress(ctx, req)
+=======
+// UserReceiveCoupon 用户申请发票
+func UserReceiveCoupon(ctx context.Context, req *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
+		return client.UserReceiveCoupon(ctx, req)
+	})
+}
+
+// UserReceiveCoupon 用户提现
+func UserWithdraw(ctx context.Context, req *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
+		return client.UserWithdraw(ctx, req)
+>>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
 	})
 }

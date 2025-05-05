@@ -3,7 +3,6 @@ syntax = "proto3";
 package user;
 option go_package = ".;user";
 
-
 service User {
   rpc UserLogin(UserLoginRequest) returns (UserLoginResponse);//TODO:用户登录
   rpc UserRegister(UserRegisterRequest) returns (UserRegisterResponse);//TODO:用户注册
@@ -20,6 +19,7 @@ service User {
   rpc AddText(AddTextRequest) returns (AddTextResponse);//TODO:会员分添加记录
   rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse);//TODO:用户添加地址
   rpc UserApplication(UserApplicationRequest) returns (UserApplicationResponse);//TODO:用户申请发票
+<<<<<<< HEAD
   rpc UpdatedAddress(UpdatedAddressRequest) returns (UpdatedAddressResponse);//TODO:用户修改地址
 }
 
@@ -35,6 +35,34 @@ message UpdatedAddressRequest {
 }
 message UpdatedAddressResponse {
   string Success = 1;
+=======
+  rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO: 用户领取优惠券
+  rpc UserWithdraw(UserWithdrawRequest) returns (UserWithdrawResponse); // TODO: 用户提现
+}
+
+// TODO: 用户提现请求
+message UserWithdrawRequest {
+  int64 user_id = 1; // 用户 ID
+  float amount = 2; // 提现金额
+  string withdraw_method = 3; // 提现方式，例如："支付宝", "微信", "银行卡"
+  string account_info = 4; // 提现账户信息，根据提现方式不同而不同，如支付宝账号、银行卡号等
+
+}
+
+// TODO: 用户提现响应
+message UserWithdrawResponse {
+  bool success = 1; // 提现是否成功
+}
+
+// TODO:用户领取优惠券
+message UserReceiveCouponRequest {
+  int64  UserId = 1;
+  int64  CouponId = 2;
+}
+
+message UserReceiveCouponResponse {
+  bool  Success = 1;
+>>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
 }
 
 //TODO:用户申请发票
@@ -77,7 +105,9 @@ message UserMakeupSignInRequest {
   string SignDate = 2; //补签日期
 }
 message UserMakeupSignInResponse {
-  bool  Success = 1;
+  bool   Success = 1;
+  string Message = 2;
+  int64  Points = 3; // 积分
 }
 
 //TODO:用户签到
@@ -86,7 +116,9 @@ message UserSignInRequest {
   string SignDate = 2; //签到日期
 }
 message UserSignInResponse {
-  bool  Success = 1;
+  bool   Success = 1;
+  string Message = 2;
+  int64  Points = 3; // 积分
 }
 
 //TODO:用户发起拼团

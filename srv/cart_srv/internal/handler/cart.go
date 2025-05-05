@@ -106,3 +106,17 @@ func GetCartList(in *cart.GetCartListRequest) (*cart.GetCartListResponse, error)
 	}
 	return &cart.GetCartListResponse{List: cartList}, nil
 }
+
+func UpdateCart(in *cart.UpdateCartRequest) (*cart.UpdateCartResponse, error) {
+	c := &model.Cart{
+		Id:                uint64(in.CartId),
+		Uid:               uint32(in.UserId),
+		CartNum:           uint16(in.Num),
+		ProductAttrUnique: in.ProductSpecifications,
+	}
+	err := c.UpdateCart()
+	if err != nil {
+		return nil, err
+	}
+	return &cart.UpdateCartResponse{Success: true}, nil
+}

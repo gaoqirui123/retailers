@@ -12,11 +12,15 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/hashicorp/consul/api v1.32.0
+	github.com/jung-kurt/gofpdf v1.16.2
+	github.com/makiuchi-d/gozxing v0.1.1
 	github.com/nacos-group/nacos-sdk-go v1.1.5
-	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/smartwalle/alipay/v3 v3.2.25
 	github.com/spf13/viper v1.20.1
+	github.com/streadway/amqp v1.1.0
+	go.mongodb.org/mongo-driver v1.17.3
 	go.uber.org/zap v1.27.0
 	golang.org/x/crypto v0.33.0
 	google.golang.org/grpc v1.71.1
@@ -93,7 +97,6 @@ require (
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
-	go.mongodb.org/mongo-driver v1.17.3 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.8.0 // indirect
 	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8 // indirect
@@ -101,6 +104,7 @@ require (
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect

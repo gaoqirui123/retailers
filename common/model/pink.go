@@ -4,6 +4,7 @@ import (
 	"common/global"
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -32,28 +33,52 @@ func (p *Pink) Create() error {
 	return global.DB.Table("pink").Create(&p).Error
 }
 
-// UpdateGroupStatus 更新拼团状态
-func (p *Pink) UpdateGroupStatus(key string, status int) error {
-	var pink Pink
-	groupInfoJSON, err := global.Rdb.Get(context.Background(), key).Result()
-	if err != nil {
-		return err
+// UpdateGroupStatus 更新拼团状态到 MySQL 和 Redis
+func (p *Pink) UpdateGroupStatus(ctx context.Context, key string, status int) error {
+	// 更新 MySQL 中的拼团状态
+	if err := global.DB.Table("pink").Model(&p).Where("order_id = ?", key).Update("status", status).Error; err != nil {
+		return fmt.Errorf("更新 MySQL 拼团状态失败: %w", err)
 	}
-	if err = json.Unmarshal([]byte(groupInfoJSON), &pink); err != nil {
-		return err
-	}
-	pink.Status = status
-	pinkJSON, err := json.Marshal(pink)
-	if err != nil {
-		return err
-	}
-	return global.Rdb.Set(context.Background(), key, pinkJSON, time.Hour).Err()
-}
 
+	// 从 Redis 中获取当前拼团信息
+	groupInfoJSON, err := global.Rdb.Get(ctx, key).Result()
+	if err != nil {
+		return fmt.Errorf("获取 Redis 拼团信息失败: %w", err)
+	}
+
+	// 反序列化
+	if err = json.Unmarshal([]byte(groupInfoJSON), p); err != nil {
+		return fmt.Errorf("反序列化 Redis 拼团信息失败: %w", err)
+	}
+
+	// 更新拼团状态
+	p.Status = status
+
+	// 序列化更新后的拼团信息
+	pinkJSON, err := json.Marshal(p)
+	if err != nil {
+		return fmt.Errorf("序列化更新后的 Redis 拼团信息失败: %w", err)
+	}
+
+	// 更新 Redis 中的拼团信息
+	if err = global.Rdb.Set(ctx, key, pinkJSON, time.Hour).Err(); err != nil {
+		return fmt.Errorf("更新 Redis 拼团信息失败: %w", err)
+	}
+
+	return nil
+}
 func (p *Pink) UpdateGroupNum(pinkId string, num int64) error {
 	err := global.DB.Table("pink").Where("order_id = ?", pinkId).Update("current_num", p.CurrentNum+num).Error
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func (p *Pink) UpdateStatus(pinkId string, status int) error {
+	return global.DB.Where("order_id = ?", pinkId).Update("status", status).Error
+}
+
+func (p *Pink) GetPainUnique(unique int64) error {
+	return global.DB.Where("order_id = ?", unique).Limit(1).Find(p).Error
 }

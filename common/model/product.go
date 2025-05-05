@@ -24,7 +24,7 @@ type Product struct {
 	Sort         int64   `gorm:"column:sort;type:smallint;comment:排序;default:0;" json:"sort"`                                              // 排序
 	Sales        int64   `gorm:"column:sales;type:mediumint UNSIGNED;comment:销量;default:0;" json:"sales"`                                  // 销量
 	Stock        int64   `gorm:"column:stock;type:mediumint UNSIGNED;comment:库存;not null;default:0;" json:"stock"`                         // 库存
-	IsShow       int64   `gorm:"column:is_show;type:tinyint(1);comment:状态（0：未上架，1：上架）;not null;default:1;" json:"is_show"`                 // 状态（0：未上架，1：上架）
+	IsShow       int64   `gorm:"column:is_show;type:tinyint(1);comment:状态（0：上架，1：下架）;not null;default:1;" json:"is_show"`                  // 状态（0：未上架，1：上架）
 	IsHot        int64   `gorm:"column:is_hot;type:tinyint(1);comment:是否热卖;default:0;" json:"is_hot"`                                      // 是否热卖
 	IsBenefit    int64   `gorm:"column:is_benefit;type:tinyint(1);comment:是否优惠;default:0;" json:"is_benefit"`                              // 是否优惠
 	IsBest       int64   `gorm:"column:is_best;type:tinyint(1);comment:是否精品;default:0;" json:"is_best"`                                    // 是否精品
@@ -45,21 +45,36 @@ type Product struct {
 	Activity     string  `gorm:"column:activity;type:varchar(255);comment:活动显示排序1=秒杀，2=砍价，3=拼团;" json:"activity"`                          // 活动显示排序1=秒杀，2=砍价，3=拼团
 }
 
-func (p *Product) GetProductIdBy(id int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Find(&p).Error
+func (p *Product) GetProductIdBy(productId int64) error {
+	return global.DB.Debug().Table("product").Where("id = ? and  and is_del = 0 and is_show = 0", productId).Limit(1).Find(&p).Error
 }
 
 func (p *Product) UpdateProductStock(id, num int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
 }
 
 func (p *Product) Add() error {
 	return global.DB.Debug().Table("product").Create(&p).Error
 }
-func (p *Product) GetProductById(productId int64) (result *Product, err error) {
-	err = global.DB.Debug().Table("product").Where("id = ?", productId).Find(&result).Error
+
+func (p *Product) GetProductById(productId int64, pid int64) (result *Product, err error) {
+	err = global.DB.Debug().Table("product").Where("mer_id = ?", productId).Where("id = ?", pid).Find(&result).Error
 	if err != nil {
 		return nil, err
 	}
 	return
+}
+
+func (p *Product) ReverseProductStock(productId, stock int64) error {
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("stock", gorm.Expr("stock + ?", stock)).Error
+}
+func (p *Product) UpdateStatus(status int64, pid int64) error {
+	return global.DB.Table("product").Where("id = ?", pid).Update("is_show", status).Error
+}
+
+// GetTotalViewCount 获取商品总浏览量
+func (p *Product) GetTotalViewCount() (int64, error) {
+	var total int64
+	err := global.DB.Table("product").Select("SUM(browse)").Scan(&total).Error
+	return total, err
 }

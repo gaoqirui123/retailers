@@ -1,25 +1,33 @@
 package request
 
+type Apply struct {
+	Province     string `json:"province" xml:"province" form:"province" binding:"required"`
+	City         string `json:"city" xml:"city" form:"city" binding:"required"`
+	District     string `json:"district" xml:"district" form:"district" binding:"required"`
+	Address      string `json:"address" xml:"address" form:"address" binding:"required"`
+	MerchantName string `json:"merchantName" xml:"merchantName" form:"merchantName" binding:"required"`
+	Charter      string `json:"charter" xml:"charter" form:"charter" binding:"required"`
+}
 type Register struct {
-	Province     string `json:"province" xml:"province" form:"province"`
-	City         string `json:"city" xml:"city" form:"city"`
-	District     string `json:"district" xml:"district" form:"district"`
-	Address      string `json:"address" xml:"address" form:"address"`
-	MerchantName string `json:"merchantName" xml:"merchantName" form:"merchantName"`
-	LinkTel      string `json:"linkTel" xml:"linkTel" form:"linkTel"`
-	Charter      string `json:"charter" xml:"charter" form:"charter"`
+	Account  string `json:"account" xml:"account" form:"account" binding:"required"`
+	Password string `json:"password" xml:"password" form:"password" binding:"required"`
+	Phone    string `json:"phone" xml:"phone" form:"phone" binding:"required"`
+	Email    string `json:"email" xml:"email" form:"email" binding:"required"`
+}
+type Login struct {
+	Account  string `json:"account" xml:"account" form:"account" binding:"required"`
+	Password string `json:"password" xml:"password" form:"password" binding:"required"`
 }
 type AddProduct struct {
-	MerId     int64   `json:"merId" xml:"merId" form:"merId"`
-	Image     string  `json:"image" xml:"image" form:"image"`
-	StoreName string  `json:"storeName" xml:"storeName" form:"storeName"`
-	StoreInfo string  `json:"storeInfo" xml:"storeInfo" form:"storeInfo"`
-	BarCode   string  `json:"barCode" xml:"barCode" form:"barCode"`
-	CateId    string  `json:"cateId" xml:"cateId" form:"cateId"`
-	Price     float64 `json:"price" xml:"price" form:"price"`
-	Postage   float64 `json:"postage" xml:"postage" form:"postage"`
-	UnitName  string  `json:"unitName" xml:"unitName" form:"unitName"`
-	Activity  string  `json:"activity" xml:"activity" form:"activity"`
+	Image     string  `json:"image" xml:"image" form:"image" binding:"required"`
+	StoreName string  `json:"storeName" xml:"storeName" form:"storeName" binding:"required"`
+	StoreInfo string  `json:"storeInfo" xml:"storeInfo" form:"storeInfo" binding:"required"`
+	BarCode   string  `json:"barCode" xml:"barCode" form:"barCode" binding:"required"`
+	CateId    string  `json:"cateId" xml:"cateId" form:"cateId" binding:"required"`
+	Price     float64 `json:"price" xml:"price" form:"price" binding:"required"`
+	Postage   float64 `json:"postage" xml:"postage" form:"postage" binding:"required"`
+	UnitName  string  `json:"unitName" xml:"unitName" form:"unitName" binding:"required"`
+	Activity  string  `json:"activity" xml:"activity" form:"activity" binding:"required"`
 }
 type AddCombinationProduct struct {
 	ProductId     int64   `json:"productId" xml:"productId" form:"productId"`
@@ -38,4 +46,42 @@ type AddCombinationProduct struct {
 	QuotaShow     int32   `json:"quotaShow" xml:"quotaShow" form:"quotaShow"`
 }
 type ProcessInvoice struct {
+	Status  int64  `json:"status" xml:"status" form:"status"`
+	Uid     int64  `json:"uid" xml:"uid" form:"uid"`
+	Dis     string `json:"dis" xml:"dis" form:"dis"`
+	OrderId int64  `json:"orderId" xml:"orderId" form:"orderId"`
+}
+type DelProduct struct {
+	Pid    int64 `json:"pid" xml:"pid" form:"pid"`
+	Status int64 `json:"status" xml:"status" form:"status"`
+}
+type InvoiceList struct {
+	Status int64 `json:"status" xml:"status" form:"status"`
+}
+
+type AddSeckillProduct struct {
+	ProductId   int64   `json:"productId" xml:"productId" form:"productId"`
+	Num         int64   `json:"num" xml:"num" form:"num"`
+	Price       float64 `json:"price" xml:"price" form:"price"`
+	Description string  `json:"description" xml:"description" form:"description"`
+	StartTime   string  `json:"startTime" xml:"startTime" form:"startTime"`
+	StopTime    string  `json:"stopTime" xml:"stopTime" form:"stopTime"`
+}
+
+type ReverseStock struct {
+	ProductId int64 `json:"productId" xml:"productId" form:"productId"`
+}
+
+// 商家核销
+
+type MerchantVerification struct {
+	UserId  int64 `json:"user_id" xml:"user_id" form:"user_id"`
+	OrderId int64 `json:"order_id" xml:"order_id" form:"order_id"`
+}
+
+// 商品批量发布
+
+type BatchPublishProducts struct {
+	MerId    int64        `json:"mer_id" xml:"mer_id" form:"mer_id"`
+	Products []AddProduct `json:"products" xml:"products" form:"products"`
 }

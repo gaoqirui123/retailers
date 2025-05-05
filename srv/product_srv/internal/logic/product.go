@@ -19,7 +19,7 @@ func (p ProductServer) CombinationList(ctx context.Context, in *product.Combinat
 	return list, nil
 }
 
-// GroupBuying 用户发起拼团
+// GroupBuying TODO:用户发起拼团
 func (p ProductServer) GroupBuying(ctx context.Context, in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, error) {
 	userLevelPowerList, err := handler.GroupBuying(in)
 	if err != nil {
@@ -28,7 +28,7 @@ func (p ProductServer) GroupBuying(ctx context.Context, in *product.GroupBuyingR
 	return userLevelPowerList, nil
 }
 
-// JoinGroupBuying  用户发起拼团
+// JoinGroupBuying  TODO:用户参与拼团
 func (p ProductServer) JoinGroupBuying(ctx context.Context, in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyingResponse, error) {
 	userLevelPowerList, err := handler.JoinGroupBuying(in)
 	if err != nil {
