@@ -3,6 +3,7 @@
   <component name="GoORMHelperCache">
     <option name="schemaMapping">
       <map>
+<<<<<<< HEAD
         <entry key="AddCart">
           <value>
             <set>
@@ -1007,6 +1008,8 @@
             </set>
           </value>
         </entry>
+=======
+>>>>>>> origin/develop
         <entry key="Product">
           <value>
             <set>
@@ -1014,6 +1017,7 @@
             </set>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="ProductAttr">
           <value>
             <set>
@@ -1650,10 +1654,13 @@
             </set>
           </value>
         </entry>
+=======
+>>>>>>> origin/develop
       </map>
     </option>
     <option name="scannedPathMapping">
       <map>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/api/client/admin_client.go">
           <value>
             <ScannedPath>
@@ -2322,7 +2329,17 @@
         <entry key="file://$PROJECT_DIR$/common/model/product.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746408110415" />
+=======
+              <option name="lastModified" value="1746405153820" />
+=======
+        <entry key="file://$PROJECT_DIR$/common/model/product.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746407550552" />
+>>>>>>> origin/develop
+>>>>>>> 391e5c26fbfaddfaf84a892f47e43d2b22d40460
               <option name="schema">
                 <list>
                   <option value="Product" />
@@ -2331,6 +2348,7 @@
             </ScannedPath>
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/common/model/product_attr.go">
           <value>
             <ScannedPath>
@@ -3317,10 +3335,13 @@
             </ScannedPath>
           </value>
         </entry>
+=======
+>>>>>>> origin/develop
       </map>
     </option>
     <option name="tableStructMapping">
       <map>
+<<<<<<< HEAD
         <entry key="add_cart" value="AddCart" />
         <entry key="add_cart_request" value="AddCartRequest" />
         <entry key="add_cart_response" value="AddCartResponse" />
@@ -3469,7 +3490,10 @@
         <entry key="process_invoice" value="ProcessInvoice" />
         <entry key="process_invoice_request" value="ProcessInvoiceRequest" />
         <entry key="process_invoice_response" value="ProcessInvoiceResponse" />
+=======
+>>>>>>> origin/develop
         <entry key="product" value="Product" />
+<<<<<<< HEAD
         <entry key="product_attr" value="ProductAttr" />
         <entry key="product_attr_result" value="ProductAttrResult" />
         <entry key="product_attr_value" value="ProductAttrValue" />
@@ -3558,5 +3582,13 @@
       </map>
     </option>
     <option name="lastTimeChecked" value="1746408130323" />
+=======
+      </map>
+    </option>
+<<<<<<< HEAD
+    <option name="lastTimeChecked" value="1746405183058" />
+=======
+>>>>>>> origin/develop
+>>>>>>> 391e5c26fbfaddfaf84a892f47e43d2b22d40460
   </component>
 </project>
