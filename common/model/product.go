@@ -50,8 +50,14 @@ func (p *Product) UpdateProductField(productID int, IsBargain int32) error {
 	return global.DB.Debug().Table("product").Model(&p).Where("id = ?", productID).Update("is_bargain", IsBargain).Error
 }
 
-func (p *Product) GetProductIdBy(id int64) error {
+func (p *Product) GetProductShow(id int64) error {
 	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Find(&p).Error
+
+}
+
+func (p *Product) GetProductIdBy(productId int64) error {
+	return global.DB.Debug().Table("product").Where("id = ? and  and is_del = 0 and is_show = 0", productId).Limit(1).Find(&p).Error
+
 }
 
 func (p *Product) UpdateProductStock(id, num int64) error {

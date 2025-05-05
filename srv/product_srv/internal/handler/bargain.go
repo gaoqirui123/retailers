@@ -17,7 +17,7 @@ func ProductUpdate(req *product.ProductUpdateRequest) (*product.ProductUpdateRes
 		return nil, err
 	}
 	//重新从数据库中查询更新后的记录
-	err = m.GetProductIdBy(int64(req.Id))
+	err = m.GetProductShow(int64(req.Id))
 	if err != nil {
 		return nil, err
 	}
@@ -206,15 +206,27 @@ func BargainUserCreate(req *product.BargainUserCreateRequest) (*product.BargainU
 			BargainPriceMin: req.BargainPriceMin,
 			FinalPrice:      bargain.Price, // 初始最终价格为原价
 			AddTime:         uint32(time.Now().Unix()),
+			EndTime:         uint32(time.Now().Add(time.Hour).Unix()), // 设置砍价截止时间为当前时间加1小时，可根据需求调整
 		}
 		err = bargainUser.BargainUserCreate()
 		if err != nil {
 			return nil, err
 		}
 	}
+	// 检查是否已经砍到最低价
+	if bargainUser.FinalPrice <= bargainUser.BargainPriceMin {
+		return &product.BargainUserCreateResponse{
+			Id:     bargainUser.Id,
+			Status: uint32(bargainUser.Status),
+		}, nil
+	}
 	// 模拟别人帮助砍价，随机生成砍价金额
 	rand.Seed(time.Now().UnixNano())
 	price := rand.Float64()*(bargain.BargainMaxPrice-bargain.BargainMinPrice) + bargain.BargainMinPrice
+	// 确保最终价格不会低于最低价
+	if bargainUser.FinalPrice-price < bargainUser.BargainPriceMin {
+		price = bargainUser.FinalPrice - bargainUser.BargainPriceMin
+	}
 	bargainUser.Price = price
 	bargainUser.FinalPrice -= price
 	bargainUser.BargainPrice += price // 更新已砍总金额
@@ -235,6 +247,22 @@ func BargainUserCreate(req *product.BargainUserCreateRequest) (*product.BargainU
 	err = global.DB.Create(&bargainUserHelp).Error
 	if err != nil {
 		return nil, err
+	}
+	// 检查是否在规定时间内砍到最低价
+	if bargainUser.FinalPrice <= bargainUser.BargainPriceMin && time.Now().Unix() <= int64(bargainUser.EndTime) {
+		// 砍价成功，修改砍价状态
+		bargainUser.Status = model.BargainUserStatusSuccess
+		err = global.DB.Save(&bargainUser).Error
+		if err != nil {
+			return nil, err
+		}
+	} else if time.Now().Unix() > int64(bargainUser.EndTime) {
+		// 超过规定时间，砍价失败，修改砍价状态
+		bargainUser.Status = model.BargainUserStatusFailed
+		err = global.DB.Save(&bargainUser).Error
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &product.BargainUserCreateResponse{

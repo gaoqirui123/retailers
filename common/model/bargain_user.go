@@ -1,6 +1,9 @@
 package model
 
-import "common/global"
+import (
+	"common/global"
+	"gorm.io/gorm"
+)
 
 // 用户参与砍价商品记录表（只要砍过都算，不管是否砍成功）
 type BargainUser struct {
@@ -13,6 +16,7 @@ type BargainUser struct {
 	FinalPrice      float64 `gorm:"column:final_price;type:decimal(8, 2) UNSIGNED;comment:商品最终价格;default:NULL;" json:"final_price"`             // 商品最终价格
 	Status          uint8   `gorm:"column:status;type:tinyint UNSIGNED;comment:状态 1参与中 2 活动结束参与失败 3活动结束参与成功;not null;default:1;" json:"status"` // 状态 1参与中 2 活动结束参与失败 3活动结束参与成功
 	AddTime         uint32  `gorm:"column:add_time;type:int UNSIGNED;comment:参与时间;" json:"add_time"`                                            // 参与时间
+	EndTime         uint32  `gorm:"column:end_time;type:int UNSIGNED;comment:结束时间;" json:"end_time"`                                            // 结束时间
 	IsDel           int8    `gorm:"column:is_del;type:tinyint(1);comment:是否取消;not null;default:0;" json:"is_del"`                               // 是否取消
 }
 
@@ -37,4 +41,17 @@ func (m *BargainUser) BargainUserList() (b []*BargainUser, err error) {
 		return nil, err
 	}
 	return b, err
+}
+
+// 定义砍价状态的常量
+const (
+	BargainUserStatusPending = iota // 砍价进行中
+	BargainUserStatusSuccess        // 砍价成功
+	BargainUserStatusFailed         // 砍价失败
+)
+
+// UpdateStatus 是一个方法，用于更新砍价用户的状态
+func (bu *BargainUser) UpdateStatus(db *gorm.DB, status uint8) error {
+	bu.Status = status
+	return db.Save(bu).Error
 }
