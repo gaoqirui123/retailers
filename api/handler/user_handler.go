@@ -252,21 +252,14 @@ func UserApplication(c *gin.Context) {
 	response.RespSuccess(c, "用户申请发票成功", application)
 }
 
-<<<<<<< HEAD
 // TODO: 用户修改地址
 func UpdatedAddress(c *gin.Context) {
 	userId := c.GetUint("userId")
 	var data request.UpdatedAddress
-=======
-func UserReceiveCoupon(c *gin.Context) {
-	userId := c.GetUint("userId")
-	var data request.UserReceiveCoupon
->>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
 	if err := c.ShouldBind(&data); err != nil {
 		response.RespError(c, "参数错误")
 		return
 	}
-<<<<<<< HEAD
 
 	updatedAddress, err := client.UpdatedAddress(c, &user.UpdatedAddressRequest{
 		Uid:      int64(userId),
@@ -282,7 +275,11 @@ func UserReceiveCoupon(c *gin.Context) {
 		return
 	}
 	response.RespSuccess(c, "用户修改地址成功", updatedAddress)
-=======
+}
+
+func UserReceiveCoupon(c *gin.Context) {
+	userId := c.GetUint("userId")
+	var data request.UserReceiveCoupon
 	application, err := client.UserReceiveCoupon(c, &user.UserReceiveCouponRequest{
 		UserId:   int64(userId),
 		CouponId: data.CouponId,
@@ -320,5 +317,4 @@ func UserWithdraw(c *gin.Context) {
 		return
 	}
 	response.RespSuccess(c, "用户提现成功", userWithdraw)
->>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
 }

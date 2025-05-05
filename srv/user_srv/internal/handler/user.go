@@ -528,7 +528,6 @@ func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResp
 	return &user.UserApplicationResponse{Success: "用户成功申请发票"}, nil
 }
 
-<<<<<<< HEAD
 // UpdatedAddress TODO:用户修改地址
 func UpdatedAddress(in *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
 	u := model.User{}
@@ -550,7 +549,8 @@ func UpdatedAddress(in *user.UpdatedAddressRequest) (*user.UpdatedAddressRespons
 		return nil, errors.New("用户地址修改失败")
 	}
 	return &user.UpdatedAddressResponse{Success: "用户地址修改成功"}, nil
-=======
+}
+
 // UserReceiveCoupon TODO:用户领取优惠券
 func UserReceiveCoupon(in *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
 	cou := &model.Coupon{}
@@ -644,6 +644,4 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 	return &user.UserWithdrawResponse{
 		Success: true,
 	}, nil
-
->>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
 }
