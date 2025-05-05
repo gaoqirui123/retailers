@@ -3,7 +3,6 @@
   <component name="GoORMHelperCache">
     <option name="schemaMapping">
       <map>
-<<<<<<< HEAD
         <entry key="AddCart">
           <value>
             <set>
@@ -351,6 +350,216 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/model/article/article_user_comment-like_count.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Bargain">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainCreate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainCreateRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainCreateResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainListRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainListResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainShow">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainShowRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainShowResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUpdate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUpdateRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUpdateResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/bargain_user.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserCreate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserCreateRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserCreateResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelp">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/model/bargain_user_help.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelpList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelpListRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelpListResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelpShow">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelpShowRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserHelpShowResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserList">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserListRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserListResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserShow">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserShowRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BargainUserShowResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
             </set>
           </value>
         </entry>
@@ -1066,8 +1275,6 @@
             </set>
           </value>
         </entry>
-=======
->>>>>>> origin/develop
         <entry key="Product">
           <value>
             <set>
@@ -1075,7 +1282,6 @@
             </set>
           </value>
         </entry>
-<<<<<<< HEAD
         <entry key="ProductAttr">
           <value>
             <set>
@@ -1122,6 +1328,27 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/config/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProductUpdate">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/api/request/bargain.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProductUpdateRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ProductUpdateResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/product/product.pb.go" />
             </set>
           </value>
         </entry>
@@ -1890,13 +2117,10 @@
             </set>
           </value>
         </entry>
-=======
->>>>>>> origin/develop
       </map>
     </option>
     <option name="scannedPathMapping">
       <map>
-<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/api/client/admin_client.go">
           <value>
             <ScannedPath>
@@ -1942,7 +2166,7 @@
         <entry key="file://$PROJECT_DIR$/api/client/product_client.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153757" />
+              <option name="lastModified" value="1746407897514" />
             </ScannedPath>
           </value>
         </entry>
@@ -1978,6 +2202,13 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746405153760" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/handler/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746407897514" />
             </ScannedPath>
           </value>
         </entry>
@@ -2052,6 +2283,24 @@
                   <option value="ArticleThumbsUp" />
                   <option value="DeleteComment" />
                   <option value="TopLikeArticleRanking" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/api/request/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746407897514" />
+              <option name="schema">
+                <list>
+                  <option value="BargainCreate" />
+                  <option value="ProductUpdate" />
+                  <option value="BargainShow" />
+                  <option value="BargainUpdate" />
+                  <option value="BargainUserCreate" />
+                  <option value="BargainUserShow" />
+                  <option value="BargainUserHelpShow" />
                 </list>
               </option>
             </ScannedPath>
@@ -2201,7 +2450,7 @@
         <entry key="file://$PROJECT_DIR$/api/router/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153766" />
+              <option name="lastModified" value="1746407897515" />
             </ScannedPath>
           </value>
         </entry>
@@ -2259,6 +2508,27 @@
                   <option value="Consul" />
                 </list>
               </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/cron/bargain_cron.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746405153769" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/cron/order_cron.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746405153769" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/cron/pink_cron.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746405153769" />
             </ScannedPath>
           </value>
         </entry>
@@ -2367,6 +2637,42 @@
               <option name="schema">
                 <list>
                   <option value="ArticleUserComment" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746407897515" />
+              <option name="schema">
+                <list>
+                  <option value="Bargain" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/bargain_user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746407897515" />
+              <option name="schema">
+                <list>
+                  <option value="BargainUser" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/common/model/bargain_user_help.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746407897516" />
+              <option name="schema">
+                <list>
+                  <option value="BargainUserHelp" />
                 </list>
               </option>
             </ScannedPath>
@@ -2543,13 +2849,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153820" />
-=======
-        <entry key="file://$PROJECT_DIR$/common/model/product.go">
-          <value>
-            <ScannedPath>
-              <option name="lastModified" value="1746407550552" />
->>>>>>> origin/develop
+              <option name="lastModified" value="1746407897517" />
               <option name="schema">
                 <list>
                   <option value="Product" />
@@ -2558,7 +2858,6 @@
             </ScannedPath>
           </value>
         </entry>
-<<<<<<< HEAD
         <entry key="file://$PROJECT_DIR$/common/model/product_attr.go">
           <value>
             <ScannedPath>
@@ -3106,9 +3405,21 @@
         <entry key="file://$PROJECT_DIR$/common/proto/product/product.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153836" />
+              <option name="lastModified" value="1746407897517" />
               <option name="schema">
                 <list>
+                  <option value="BargainUserCreateRequest" />
+                  <option value="BargainUserCreateResponse" />
+                  <option value="BargainUserShowRequest" />
+                  <option value="BargainUserShowResponse" />
+                  <option value="BargainUserHelpShowRequest" />
+                  <option value="BargainUserHelpShowResponse" />
+                  <option value="BargainUserListRequest" />
+                  <option value="BargainUserListResponse" />
+                  <option value="BargainUserList" />
+                  <option value="BargainUserHelpListRequest" />
+                  <option value="BargainUserHelpListResponse" />
+                  <option value="BargainUserHelpList" />
                   <option value="CombinationListRequest" />
                   <option value="CombinationListResponse" />
                   <option value="CombinationList" />
@@ -3116,6 +3427,17 @@
                   <option value="JoinGroupBuyingResponse" />
                   <option value="GroupBuyingRequest" />
                   <option value="GroupBuyingResponse" />
+                  <option value="BargainCreateRequest" />
+                  <option value="BargainCreateResponse" />
+                  <option value="ProductUpdateRequest" />
+                  <option value="ProductUpdateResponse" />
+                  <option value="BargainUpdateRequest" />
+                  <option value="BargainUpdateResponse" />
+                  <option value="BargainShowRequest" />
+                  <option value="BargainShowResponse" />
+                  <option value="BargainListRequest" />
+                  <option value="BargainListResponse" />
+                  <option value="BargainList" />
                   <option value="x" />
                 </list>
               </option>
@@ -3125,7 +3447,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/product/product_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153837" />
+              <option name="lastModified" value="1746407897518" />
               <option name="schema">
                 <list>
                   <option value="productClient" />
@@ -3486,17 +3808,24 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/bargain.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746407897520" />
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/handler/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153854" />
+              <option name="lastModified" value="1746407897520" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/srv/product_srv/internal/logic/product.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153855" />
+              <option name="lastModified" value="1746407897521" />
               <option name="schema">
                 <list>
                   <option value="ProductServer" />
@@ -3585,13 +3914,10 @@
             </ScannedPath>
           </value>
         </entry>
-=======
->>>>>>> origin/develop
       </map>
     </option>
     <option name="tableStructMapping">
       <map>
-<<<<<<< HEAD
         <entry key="add_cart" value="AddCart" />
         <entry key="add_cart_request" value="AddCartRequest" />
         <entry key="add_cart_response" value="AddCartResponse" />
@@ -3644,6 +3970,36 @@
         <entry key="article_thumbs_up_response" value="ArticleThumbsUpResponse" />
         <entry key="article_user_comment" value="ArticleUserComment" />
         <entry key="article_user_comment_like_count" value="ArticleUserCommentLikeCount" />
+        <entry key="bargain" value="Bargain" />
+        <entry key="bargain_create" value="BargainCreate" />
+        <entry key="bargain_create_request" value="BargainCreateRequest" />
+        <entry key="bargain_create_response" value="BargainCreateResponse" />
+        <entry key="bargain_list" value="BargainList" />
+        <entry key="bargain_list_request" value="BargainListRequest" />
+        <entry key="bargain_list_response" value="BargainListResponse" />
+        <entry key="bargain_show" value="BargainShow" />
+        <entry key="bargain_show_request" value="BargainShowRequest" />
+        <entry key="bargain_show_response" value="BargainShowResponse" />
+        <entry key="bargain_update" value="BargainUpdate" />
+        <entry key="bargain_update_request" value="BargainUpdateRequest" />
+        <entry key="bargain_update_response" value="BargainUpdateResponse" />
+        <entry key="bargain_user" value="BargainUser" />
+        <entry key="bargain_user_create" value="BargainUserCreate" />
+        <entry key="bargain_user_create_request" value="BargainUserCreateRequest" />
+        <entry key="bargain_user_create_response" value="BargainUserCreateResponse" />
+        <entry key="bargain_user_help" value="BargainUserHelp" />
+        <entry key="bargain_user_help_list" value="BargainUserHelpList" />
+        <entry key="bargain_user_help_list_request" value="BargainUserHelpListRequest" />
+        <entry key="bargain_user_help_list_response" value="BargainUserHelpListResponse" />
+        <entry key="bargain_user_help_show" value="BargainUserHelpShow" />
+        <entry key="bargain_user_help_show_request" value="BargainUserHelpShowRequest" />
+        <entry key="bargain_user_help_show_response" value="BargainUserHelpShowResponse" />
+        <entry key="bargain_user_list" value="BargainUserList" />
+        <entry key="bargain_user_list_request" value="BargainUserListRequest" />
+        <entry key="bargain_user_list_response" value="BargainUserListResponse" />
+        <entry key="bargain_user_show" value="BargainUserShow" />
+        <entry key="bargain_user_show_request" value="BargainUserShowRequest" />
+        <entry key="bargain_user_show_response" value="BargainUserShowResponse" />
         <entry key="batch_publish_products" value="BatchPublishProducts" />
         <entry key="batch_publish_products_request" value="BatchPublishProductsRequest" />
         <entry key="batch_publish_products_response" value="BatchPublishProductsResponse" />
@@ -3748,14 +4104,122 @@
         <entry key="process_invoice" value="ProcessInvoice" />
         <entry key="process_invoice_request" value="ProcessInvoiceRequest" />
         <entry key="process_invoice_response" value="ProcessInvoiceResponse" />
-=======
->>>>>>> origin/develop
         <entry key="product" value="Product" />
+        <entry key="product_attr" value="ProductAttr" />
+        <entry key="product_attr_result" value="ProductAttrResult" />
+        <entry key="product_attr_value" value="ProductAttrValue" />
+        <entry key="product_cate" value="ProductCate" />
+        <entry key="product_client" value="productClient" />
+        <entry key="product_info" value="ProductInfo" />
+        <entry key="product_server" value="ProductServer" />
+        <entry key="product_srv" value="ProductSrv" />
+        <entry key="product_update" value="ProductUpdate" />
+        <entry key="product_update_request" value="ProductUpdateRequest" />
+        <entry key="product_update_response" value="ProductUpdateResponse" />
+        <entry key="qr_code_verification" value="QrCodeVerification" />
+        <entry key="qr_code_verification_request" value="QrCodeVerificationRequest" />
+        <entry key="qr_code_verification_response" value="QrCodeVerificationResponse" />
+        <entry key="rabbit_mq" value="RabbitMQ" />
+        <entry key="random_string" value="RandomString" />
+        <entry key="ranking" value="Ranking" />
+        <entry key="real_names" value="RealNames" />
+        <entry key="register" value="Register" />
+        <entry key="reverse_stock" value="ReverseStock" />
+        <entry key="reverse_stock_request" value="ReverseStockRequest" />
+        <entry key="reverse_stock_response" value="ReverseStockResponse" />
+        <entry key="seckill" value="Seckill" />
+        <entry key="send_sms_request" value="SendSmsRequest" />
+        <entry key="send_sms_response" value="SendSmsResponse" />
+        <entry key="sign" value="Sign" />
+        <entry key="store" value="Store" />
+        <entry key="store_staff" value="StoreStaff" />
+        <entry key="t" value="T" />
+        <entry key="the_charts_request" value="TheChartsRequest" />
+        <entry key="the_charts_response" value="TheChartsResponse" />
+        <entry key="top_like_article_ranking" value="TopLikeArticleRanking" />
+        <entry key="top_like_article_ranking_request" value="TopLikeArticleRankingRequest" />
+        <entry key="top_like_article_ranking_response" value="TopLikeArticleRankingResponse" />
+        <entry key="unimplemented_administrators_server" value="UnimplementedAdministratorsServer" />
+        <entry key="unimplemented_article_server" value="UnimplementedArticleServer" />
+        <entry key="unimplemented_cart_server" value="UnimplementedCartServer" />
+        <entry key="unimplemented_distribution_server" value="UnimplementedDistributionServer" />
+        <entry key="unimplemented_order_server" value="UnimplementedOrderServer" />
+        <entry key="unimplemented_product_server" value="UnimplementedProductServer" />
+        <entry key="unimplemented_user_enter_server" value="UnimplementedUserEnterServer" />
+        <entry key="unimplemented_user_server" value="UnimplementedUserServer" />
+        <entry key="update_cart_request" value="UpdateCartRequest" />
+        <entry key="update_cart_response" value="UpdateCartResponse" />
+        <entry key="update_pass_word" value="UpdatePassWord" />
+        <entry key="updated_password_request" value="UpdatedPasswordRequest" />
+        <entry key="updated_password_response" value="UpdatedPasswordResponse" />
+        <entry key="use_power_list" value="UsePowerList" />
+        <entry key="use_power_list_request" value="UsePowerListRequest" />
+        <entry key="use_power_list_response" value="UsePowerListResponse" />
+        <entry key="user" value="User" />
+        <entry key="user_address" value="UserAddress" />
+        <entry key="user_application" value="UserApplication" />
+        <entry key="user_application_request" value="UserApplicationRequest" />
+        <entry key="user_application_response" value="UserApplicationResponse" />
+        <entry key="user_client" value="userClient" />
+        <entry key="user_detail" value="UserDetail" />
+        <entry key="user_detail_request" value="UserDetailRequest" />
+        <entry key="user_detail_response" value="UserDetailResponse" />
+        <entry key="user_enter" value="UserEnter" />
+        <entry key="user_enter_apply_request" value="UserEnterApplyRequest" />
+        <entry key="user_enter_apply_response" value="UserEnterApplyResponse" />
+        <entry key="user_enter_client" value="userEnterClient" />
+        <entry key="user_enter_login_request" value="UserEnterLoginRequest" />
+        <entry key="user_enter_login_response" value="UserEnterLoginResponse" />
+        <entry key="user_enter_register_request" value="UserEnterRegisterRequest" />
+        <entry key="user_enter_register_response" value="UserEnterRegisterResponse" />
+        <entry key="user_enter_server" value="UserEnterServer" />
+        <entry key="user_enter_srv" value="UserEnterSrv" />
+        <entry key="user_extract" value="UserExtract" />
+        <entry key="user_fills_in_invitation_code" value="UserFillsInInvitationCode" />
+        <entry key="user_fills_in_invitation_code_request" value="UserFillsInInvitationCodeRequest" />
+        <entry key="user_fills_in_invitation_code_response" value="UserFillsInInvitationCodeResponse" />
+        <entry key="user_integral" value="UserIntegral" />
+        <entry key="user_integral_log" value="UserIntegralLog" />
+        <entry key="user_level" value="UserLevel" />
+        <entry key="user_level_add_text" value="UserLevelAddText" />
+        <entry key="user_level_list" value="UserLevelList" />
+        <entry key="user_level_list_request" value="UserLevelListRequest" />
+        <entry key="user_level_list_response" value="UserLevelListResponse" />
+        <entry key="user_level_power" value="UserLevelPower" />
+        <entry key="user_level_power_list" value="UserLevelPowerList" />
+        <entry key="user_level_power_list_request" value="UserLevelPowerListRequest" />
+        <entry key="user_level_power_list_response" value="UserLevelPowerListResponse" />
+        <entry key="user_level_record" value="UserLevelRecord" />
+        <entry key="user_level_score_source" value="UserLevelScoreSource" />
+        <entry key="user_level_use_power" value="UserLevelUsePower" />
+        <entry key="user_list" value="UserList" />
+        <entry key="user_login" value="UserLogin" />
+        <entry key="user_login_request" value="UserLoginRequest" />
+        <entry key="user_login_response" value="UserLoginResponse" />
+        <entry key="user_makeup" value="UserMakeup" />
+        <entry key="user_makeup_sign_in" value="UserMakeupSignIn" />
+        <entry key="user_makeup_sign_in_request" value="UserMakeupSignInRequest" />
+        <entry key="user_makeup_sign_in_response" value="UserMakeupSignInResponse" />
+        <entry key="user_receive_coupon" value="UserReceiveCoupon" />
+        <entry key="user_receive_coupon_request" value="UserReceiveCouponRequest" />
+        <entry key="user_receive_coupon_response" value="UserReceiveCouponResponse" />
+        <entry key="user_register" value="UserRegister" />
+        <entry key="user_register_request" value="UserRegisterRequest" />
+        <entry key="user_register_response" value="UserRegisterResponse" />
+        <entry key="user_server" value="UserServer" />
+        <entry key="user_sign_in" value="UserSignIn" />
+        <entry key="user_sign_in_request" value="UserSignInRequest" />
+        <entry key="user_sign_in_response" value="UserSignInResponse" />
+        <entry key="user_srv" value="UserSrv" />
+        <entry key="user_up_or_done" value="UserUpOrDone" />
+        <entry key="user_withdraw" value="UserWithdraw" />
+        <entry key="user_withdraw_request" value="UserWithdrawRequest" />
+        <entry key="user_withdraw_response" value="UserWithdrawResponse" />
+        <entry key="visitor_count" value="VisitorCount" />
+        <entry key="watch" value="Watch" />
+        <entry key="x" value="x" />
       </map>
     </option>
-<<<<<<< HEAD
-    <option name="lastTimeChecked" value="1746405183058" />
-=======
->>>>>>> origin/develop
+    <option name="lastTimeChecked" value="1746413299306" />
   </component>
 </project>
