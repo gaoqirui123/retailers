@@ -2,9 +2,12 @@ module order_srv
 
 go 1.23.0
 
-toolchain go1.23.6
+toolchain go1.23
 
-require google.golang.org/grpc v1.71.1
+require (
+	github.com/google/uuid v1.6.0
+	google.golang.org/grpc v1.71.1
+)
 
 require (
 	github.com/fogleman/gg v1.3.0 // indirect

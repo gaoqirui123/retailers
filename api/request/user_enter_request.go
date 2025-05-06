@@ -6,7 +6,6 @@ type Apply struct {
 	District     string `json:"district" xml:"district" form:"district" binding:"required"`
 	Address      string `json:"address" xml:"address" form:"address" binding:"required"`
 	MerchantName string `json:"merchantName" xml:"merchantName" form:"merchantName" binding:"required"`
-	LinkTel      string `json:"linkTel" xml:"linkTel" form:"linkTel" binding:"required"`
 	Charter      string `json:"charter" xml:"charter" form:"charter" binding:"required"`
 }
 type Register struct {
@@ -60,26 +59,29 @@ type InvoiceList struct {
 	Status int64 `json:"status" xml:"status" form:"status"`
 }
 
-// 商品批量发布
-
-type ProductInfo struct {
-	Image       string  `json:"image" xml:"image" form:"image"`
-	SliderImage string  `json:"slider_image" xml:"slider_image" form:"slider_image"`
-	StoreName   string  `json:"store_name" xml:"store_name" form:"store_name"`
-	CateId      int64   `json:"cate_id" xml:"cate_id" form:"cate_id"`
-	IsShow      int64   `json:"is_show" xml:"is_show" form:"is_show"`
+type AddSeckillProduct struct {
+	ProductId   int64   `json:"productId" xml:"productId" form:"productId"`
+	Num         int64   `json:"num" xml:"num" form:"num"`
 	Price       float64 `json:"price" xml:"price" form:"price"`
-	Postage     float64 `json:"postage" xml:"postage" form:"postage"`
-	UnitName    string  `json:"unit_name" xml:"unit_name" form:"unit_name"`
+	Description string  `json:"description" xml:"description" form:"description"`
+	StartTime   string  `json:"startTime" xml:"startTime" form:"startTime"`
+	StopTime    string  `json:"stopTime" xml:"stopTime" form:"stopTime"`
 }
 
-type BatchReleaseOfProducts struct {
-	MerId    int64        `json:"mer_id" xml:"mer_id" form:"mer_id"`
-	Products []AddProduct `json:"products" xml:"products" form:"products"`
+type ReverseStock struct {
+	ProductId int64 `json:"productId" xml:"productId" form:"productId"`
 }
 
 // 商家核销
+
 type MerchantVerification struct {
-	OrderId int64 `json:"order_id" xml:"order_id" form:"order_id"`
 	UserId  int64 `json:"user_id" xml:"user_id" form:"user_id"`
+	OrderId int64 `json:"order_id" xml:"order_id" form:"order_id"`
+}
+
+// 商品批量发布
+
+type BatchPublishProducts struct {
+	MerId    int64        `json:"mer_id" xml:"mer_id" form:"mer_id"`
+	Products []AddProduct `json:"products" xml:"products" form:"products"`
 }

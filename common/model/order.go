@@ -73,7 +73,7 @@ func (o *Order) GetOrderSnUserId(sn string) Order {
 }
 
 func (o *Order) UpdateOrderStatus(orderSn string, status int) error {
-	return global.DB.Debug().Table("order").Where("order_sn = ?", orderSn).Limit(1).Update("status", status).Error
+	return global.DB.Debug().Table("order").Where("order_sn = ?", orderSn).Limit(1).Update("paid", status).Error
 }
 
 func (o *Order) AddOrderPayTime(orderSn string, timeData string) error {

@@ -24,7 +24,7 @@ type Product struct {
 	Sort         int64   `gorm:"column:sort;type:smallint;comment:排序;default:0;" json:"sort"`                                              // 排序
 	Sales        int64   `gorm:"column:sales;type:mediumint UNSIGNED;comment:销量;default:0;" json:"sales"`                                  // 销量
 	Stock        int64   `gorm:"column:stock;type:mediumint UNSIGNED;comment:库存;not null;default:0;" json:"stock"`                         // 库存
-	IsShow       int64   `gorm:"column:is_show;type:tinyint(1);comment:状态（0：未上架，1：上架）;not null;default:1;" json:"is_show"`                 // 状态（0：未上架，1：上架）
+	IsShow       int64   `gorm:"column:is_show;type:tinyint(1);comment:状态（0：上架，1：下架）;not null;default:1;" json:"is_show"`                  // 状态（0：未上架，1：上架）
 	IsHot        int64   `gorm:"column:is_hot;type:tinyint(1);comment:是否热卖;default:0;" json:"is_hot"`                                      // 是否热卖
 	IsBenefit    int64   `gorm:"column:is_benefit;type:tinyint(1);comment:是否优惠;default:0;" json:"is_benefit"`                              // 是否优惠
 	IsBest       int64   `gorm:"column:is_best;type:tinyint(1);comment:是否精品;default:0;" json:"is_best"`                                    // 是否精品
@@ -36,7 +36,7 @@ type Product struct {
 	GiveIntegral float64 `gorm:"column:give_integral;type:decimal(8, 2) UNSIGNED;comment:获得积分;not null;" json:"give_integral"`             // 获得积分
 	Cost         float64 `gorm:"column:cost;type:decimal(8, 2) UNSIGNED;comment:成本价;default:NULL;" json:"cost"`                            // 成本价
 	IsSeckill    int64   `gorm:"column:is_seckill;type:tinyint UNSIGNED;comment:秒杀状态 0 未开启 1已开启;default:0;" json:"is_seckill"`             // 秒杀状态 0 未开启 1已开启
-	IsBargain    int64   `gorm:"column:is_bargain;type:tinyint UNSIGNED;comment:砍价状态 0未开启 1开启;default:NULL;" json:"is_bargain"`            // 砍价状态 0未开启 1开启
+	IsBargain    int64   `gorm:"column:is_bargain;type:tinyint UNSIGNED;comment:砍价状态 0未开启 1开启;default:0;" json:"is_bargain"`               // 砍价状态 0未开启 1开启
 	IsGood       int64   `gorm:"column:is_good;type:tinyint(1);comment:是否优品推荐;default:0;" json:"is_good"`                                  // 是否优品推荐
 	IsSub        int64   `gorm:"column:is_sub;type:tinyint(1);comment:是否单独分佣;default:0;" json:"is_sub"`                                    // 是否单独分佣
 	Ficti        int64   `gorm:"column:ficti;type:mediumint;comment:虚拟销量;default:100;" json:"ficti"`                                       // 虚拟销量
@@ -45,8 +45,19 @@ type Product struct {
 	Activity     string  `gorm:"column:activity;type:varchar(255);comment:活动显示排序1=秒杀，2=砍价，3=拼团;" json:"activity"`                          // 活动显示排序1=秒杀，2=砍价，3=拼团
 }
 
+// UpdateProductField 根据商品ID和字段名，更新商品表中指定字段的值
+func (p *Product) UpdateProductField(productID int, IsBargain int32) error {
+	return global.DB.Debug().Table("product").Model(&p).Where("id = ?", productID).Update("is_bargain", IsBargain).Error
+}
+
+func (p *Product) GetProductShow(id int64) error {
+	return global.DB.Debug().Table("product").Where("id = ?", id).Limit(1).Find(&p).Error
+
+}
+
 func (p *Product) GetProductIdBy(productId int64) error {
-	return global.DB.Debug().Table("product").Where("id = ?", productId).Limit(1).Find(&p).Error
+	return global.DB.Debug().Table("product").Where("id = ? and  and is_del = 0 and is_show = 0", productId).Limit(1).Find(&p).Error
+
 }
 
 func (p *Product) UpdateProductStock(id, num int64) error {
@@ -66,7 +77,7 @@ func (p *Product) GetProductById(productId int64, pid int64) (result *Product, e
 }
 
 func (p *Product) ReverseProductStock(productId, stock int64) error {
-	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("good_stock", gorm.Expr("good_stock + ?", stock)).Error
+	return global.DB.Debug().Table("product").Model(&Product{}).Where("id = ?", productId).Update("stock", gorm.Expr("stock + ?", stock)).Error
 }
 func (p *Product) UpdateStatus(status int64, pid int64) error {
 	return global.DB.Table("product").Where("id = ?", pid).Update("is_show", status).Error

@@ -82,7 +82,25 @@ func (es UserEnterServer) Login(ctx context.Context, in *user_enter.UserEnterLog
 	return register, nil
 }
 
-// BatchReleaseOfProducts TODO:商品批量发布
+// AddSeckillProduct  TODO: 添加秒杀商品
+func (es UserEnterServer) AddSeckillProduct(ctx context.Context, in *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+	add, err := handler.AddSeckillProduct(in)
+	if err != nil {
+		return nil, err
+	}
+	return add, nil
+}
+
+// ReverseStock  TODO: 秒杀后反还剩余的商品
+func (es UserEnterServer) ReverseStock(ctx context.Context, in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+	reverse, err := handler.ReverseStock(in)
+	if err != nil {
+		return nil, err
+	}
+	return reverse, nil
+}
+
+// BatchPublishProducts TODO:商品批量发布
 func (es UserEnterServer) BatchPublishProducts(ctx context.Context, in *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
 	register, err := handler.BatchPublishProducts(in)
 	if err != nil {
@@ -100,7 +118,7 @@ func (es UserEnterServer) MerchantVerification(ctx context.Context, in *user_ent
 	return register, nil
 }
 
-// MerchantVerification TODO:商家核销
+// CalculateOrderSummary TODO:商家统计
 func (es UserEnterServer) CalculateOrderSummary(ctx context.Context, in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
 	register, err := handler.CalculateOrderSummary(in)
 	if err != nil {

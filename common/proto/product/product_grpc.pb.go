@@ -19,11 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Product_CombinationList_FullMethodName   = "/product.Product/CombinationList"
-	Product_GroupBuying_FullMethodName       = "/product.Product/GroupBuying"
-	Product_JoinGroupBuying_FullMethodName   = "/product.Product/JoinGroupBuying"
-	Product_AddSeckillProduct_FullMethodName = "/product.Product/AddSeckillProduct"
-	Product_ReverseStock_FullMethodName      = "/product.Product/ReverseStock"
+	Product_CombinationList_FullMethodName     = "/product.Product/CombinationList"
+	Product_GroupBuying_FullMethodName         = "/product.Product/GroupBuying"
+	Product_JoinGroupBuying_FullMethodName     = "/product.Product/JoinGroupBuying"
+	Product_BargainCreate_FullMethodName       = "/product.Product/BargainCreate"
+	Product_ProductUpdate_FullMethodName       = "/product.Product/ProductUpdate"
+	Product_BargainUpdate_FullMethodName       = "/product.Product/BargainUpdate"
+	Product_BargainShow_FullMethodName         = "/product.Product/BargainShow"
+	Product_BargainList_FullMethodName         = "/product.Product/BargainList"
+	Product_BargainUserCreate_FullMethodName   = "/product.Product/BargainUserCreate"
+	Product_BargainUserShow_FullMethodName     = "/product.Product/BargainUserShow"
+	Product_BargainUserHelpShow_FullMethodName = "/product.Product/BargainUserHelpShow"
+	Product_BargainUserList_FullMethodName     = "/product.Product/BargainUserList"
+	Product_BargainUserHelpList_FullMethodName = "/product.Product/BargainUserHelpList"
 )
 
 // ProductClient is the client API for Product service.
@@ -33,8 +41,16 @@ type ProductClient interface {
 	CombinationList(ctx context.Context, in *CombinationListRequest, opts ...grpc.CallOption) (*CombinationListResponse, error)
 	GroupBuying(ctx context.Context, in *GroupBuyingRequest, opts ...grpc.CallOption) (*GroupBuyingResponse, error)
 	JoinGroupBuying(ctx context.Context, in *JoinGroupBuyingRequest, opts ...grpc.CallOption) (*JoinGroupBuyingResponse, error)
-	AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error)
-	ReverseStock(ctx context.Context, in *ReverseStockRequest, opts ...grpc.CallOption) (*ReverseStockResponse, error)
+	BargainCreate(ctx context.Context, in *BargainCreateRequest, opts ...grpc.CallOption) (*BargainCreateResponse, error)
+	ProductUpdate(ctx context.Context, in *ProductUpdateRequest, opts ...grpc.CallOption) (*ProductUpdateResponse, error)
+	BargainUpdate(ctx context.Context, in *BargainUpdateRequest, opts ...grpc.CallOption) (*BargainUpdateResponse, error)
+	BargainShow(ctx context.Context, in *BargainShowRequest, opts ...grpc.CallOption) (*BargainShowResponse, error)
+	BargainList(ctx context.Context, in *BargainListRequest, opts ...grpc.CallOption) (*BargainListResponse, error)
+	BargainUserCreate(ctx context.Context, in *BargainUserCreateRequest, opts ...grpc.CallOption) (*BargainUserCreateResponse, error)
+	BargainUserShow(ctx context.Context, in *BargainUserShowRequest, opts ...grpc.CallOption) (*BargainUserShowResponse, error)
+	BargainUserHelpShow(ctx context.Context, in *BargainUserHelpShowRequest, opts ...grpc.CallOption) (*BargainUserHelpShowResponse, error)
+	BargainUserList(ctx context.Context, in *BargainUserListRequest, opts ...grpc.CallOption) (*BargainUserListResponse, error)
+	BargainUserHelpList(ctx context.Context, in *BargainUserHelpListRequest, opts ...grpc.CallOption) (*BargainUserHelpListResponse, error)
 }
 
 type productClient struct {
@@ -75,20 +91,100 @@ func (c *productClient) JoinGroupBuying(ctx context.Context, in *JoinGroupBuying
 	return out, nil
 }
 
-func (c *productClient) AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error) {
+func (c *productClient) BargainCreate(ctx context.Context, in *BargainCreateRequest, opts ...grpc.CallOption) (*BargainCreateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddSeckillProductResponse)
-	err := c.cc.Invoke(ctx, Product_AddSeckillProduct_FullMethodName, in, out, cOpts...)
+	out := new(BargainCreateResponse)
+	err := c.cc.Invoke(ctx, Product_BargainCreate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *productClient) ReverseStock(ctx context.Context, in *ReverseStockRequest, opts ...grpc.CallOption) (*ReverseStockResponse, error) {
+func (c *productClient) ProductUpdate(ctx context.Context, in *ProductUpdateRequest, opts ...grpc.CallOption) (*ProductUpdateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ReverseStockResponse)
-	err := c.cc.Invoke(ctx, Product_ReverseStock_FullMethodName, in, out, cOpts...)
+	out := new(ProductUpdateResponse)
+	err := c.cc.Invoke(ctx, Product_ProductUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainUpdate(ctx context.Context, in *BargainUpdateRequest, opts ...grpc.CallOption) (*BargainUpdateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainUpdateResponse)
+	err := c.cc.Invoke(ctx, Product_BargainUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainShow(ctx context.Context, in *BargainShowRequest, opts ...grpc.CallOption) (*BargainShowResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainShowResponse)
+	err := c.cc.Invoke(ctx, Product_BargainShow_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainList(ctx context.Context, in *BargainListRequest, opts ...grpc.CallOption) (*BargainListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainListResponse)
+	err := c.cc.Invoke(ctx, Product_BargainList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainUserCreate(ctx context.Context, in *BargainUserCreateRequest, opts ...grpc.CallOption) (*BargainUserCreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainUserCreateResponse)
+	err := c.cc.Invoke(ctx, Product_BargainUserCreate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainUserShow(ctx context.Context, in *BargainUserShowRequest, opts ...grpc.CallOption) (*BargainUserShowResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainUserShowResponse)
+	err := c.cc.Invoke(ctx, Product_BargainUserShow_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainUserHelpShow(ctx context.Context, in *BargainUserHelpShowRequest, opts ...grpc.CallOption) (*BargainUserHelpShowResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainUserHelpShowResponse)
+	err := c.cc.Invoke(ctx, Product_BargainUserHelpShow_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainUserList(ctx context.Context, in *BargainUserListRequest, opts ...grpc.CallOption) (*BargainUserListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainUserListResponse)
+	err := c.cc.Invoke(ctx, Product_BargainUserList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productClient) BargainUserHelpList(ctx context.Context, in *BargainUserHelpListRequest, opts ...grpc.CallOption) (*BargainUserHelpListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BargainUserHelpListResponse)
+	err := c.cc.Invoke(ctx, Product_BargainUserHelpList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -102,8 +198,16 @@ type ProductServer interface {
 	CombinationList(context.Context, *CombinationListRequest) (*CombinationListResponse, error)
 	GroupBuying(context.Context, *GroupBuyingRequest) (*GroupBuyingResponse, error)
 	JoinGroupBuying(context.Context, *JoinGroupBuyingRequest) (*JoinGroupBuyingResponse, error)
-	AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error)
-	ReverseStock(context.Context, *ReverseStockRequest) (*ReverseStockResponse, error)
+	BargainCreate(context.Context, *BargainCreateRequest) (*BargainCreateResponse, error)
+	ProductUpdate(context.Context, *ProductUpdateRequest) (*ProductUpdateResponse, error)
+	BargainUpdate(context.Context, *BargainUpdateRequest) (*BargainUpdateResponse, error)
+	BargainShow(context.Context, *BargainShowRequest) (*BargainShowResponse, error)
+	BargainList(context.Context, *BargainListRequest) (*BargainListResponse, error)
+	BargainUserCreate(context.Context, *BargainUserCreateRequest) (*BargainUserCreateResponse, error)
+	BargainUserShow(context.Context, *BargainUserShowRequest) (*BargainUserShowResponse, error)
+	BargainUserHelpShow(context.Context, *BargainUserHelpShowRequest) (*BargainUserHelpShowResponse, error)
+	BargainUserList(context.Context, *BargainUserListRequest) (*BargainUserListResponse, error)
+	BargainUserHelpList(context.Context, *BargainUserHelpListRequest) (*BargainUserHelpListResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -120,11 +224,35 @@ func (UnimplementedProductServer) GroupBuying(context.Context, *GroupBuyingReque
 func (UnimplementedProductServer) JoinGroupBuying(context.Context, *JoinGroupBuyingRequest) (*JoinGroupBuyingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinGroupBuying not implemented")
 }
-func (UnimplementedProductServer) AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddSeckillProduct not implemented")
+func (UnimplementedProductServer) BargainCreate(context.Context, *BargainCreateRequest) (*BargainCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainCreate not implemented")
 }
-func (UnimplementedProductServer) ReverseStock(context.Context, *ReverseStockRequest) (*ReverseStockResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReverseStock not implemented")
+func (UnimplementedProductServer) ProductUpdate(context.Context, *ProductUpdateRequest) (*ProductUpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProductUpdate not implemented")
+}
+func (UnimplementedProductServer) BargainUpdate(context.Context, *BargainUpdateRequest) (*BargainUpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainUpdate not implemented")
+}
+func (UnimplementedProductServer) BargainShow(context.Context, *BargainShowRequest) (*BargainShowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainShow not implemented")
+}
+func (UnimplementedProductServer) BargainList(context.Context, *BargainListRequest) (*BargainListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainList not implemented")
+}
+func (UnimplementedProductServer) BargainUserCreate(context.Context, *BargainUserCreateRequest) (*BargainUserCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainUserCreate not implemented")
+}
+func (UnimplementedProductServer) BargainUserShow(context.Context, *BargainUserShowRequest) (*BargainUserShowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainUserShow not implemented")
+}
+func (UnimplementedProductServer) BargainUserHelpShow(context.Context, *BargainUserHelpShowRequest) (*BargainUserHelpShowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainUserHelpShow not implemented")
+}
+func (UnimplementedProductServer) BargainUserList(context.Context, *BargainUserListRequest) (*BargainUserListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainUserList not implemented")
+}
+func (UnimplementedProductServer) BargainUserHelpList(context.Context, *BargainUserHelpListRequest) (*BargainUserHelpListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BargainUserHelpList not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -193,38 +321,182 @@ func _Product_JoinGroupBuying_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_AddSeckillProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddSeckillProductRequest)
+func _Product_BargainCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainCreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).AddSeckillProduct(ctx, in)
+		return srv.(ProductServer).BargainCreate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Product_AddSeckillProduct_FullMethodName,
+		FullMethod: Product_BargainCreate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).AddSeckillProduct(ctx, req.(*AddSeckillProductRequest))
+		return srv.(ProductServer).BargainCreate(ctx, req.(*BargainCreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_ReverseStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReverseStockRequest)
+func _Product_ProductUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductUpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).ReverseStock(ctx, in)
+		return srv.(ProductServer).ProductUpdate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Product_ReverseStock_FullMethodName,
+		FullMethod: Product_ProductUpdate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).ReverseStock(ctx, req.(*ReverseStockRequest))
+		return srv.(ProductServer).ProductUpdate(ctx, req.(*ProductUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainUpdate(ctx, req.(*BargainUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainShow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainShowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainShow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainShow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainShow(ctx, req.(*BargainShowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainList(ctx, req.(*BargainListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainUserCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainUserCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainUserCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainUserCreate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainUserCreate(ctx, req.(*BargainUserCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainUserShow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainUserShowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainUserShow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainUserShow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainUserShow(ctx, req.(*BargainUserShowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainUserHelpShow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainUserHelpShowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainUserHelpShow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainUserHelpShow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainUserHelpShow(ctx, req.(*BargainUserHelpShowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainUserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainUserListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainUserList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainUserList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainUserList(ctx, req.(*BargainUserListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Product_BargainUserHelpList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BargainUserHelpListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).BargainUserHelpList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_BargainUserHelpList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).BargainUserHelpList(ctx, req.(*BargainUserHelpListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -249,12 +521,44 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Product_JoinGroupBuying_Handler,
 		},
 		{
-			MethodName: "AddSeckillProduct",
-			Handler:    _Product_AddSeckillProduct_Handler,
+			MethodName: "BargainCreate",
+			Handler:    _Product_BargainCreate_Handler,
 		},
 		{
-			MethodName: "ReverseStock",
-			Handler:    _Product_ReverseStock_Handler,
+			MethodName: "ProductUpdate",
+			Handler:    _Product_ProductUpdate_Handler,
+		},
+		{
+			MethodName: "BargainUpdate",
+			Handler:    _Product_BargainUpdate_Handler,
+		},
+		{
+			MethodName: "BargainShow",
+			Handler:    _Product_BargainShow_Handler,
+		},
+		{
+			MethodName: "BargainList",
+			Handler:    _Product_BargainList_Handler,
+		},
+		{
+			MethodName: "BargainUserCreate",
+			Handler:    _Product_BargainUserCreate_Handler,
+		},
+		{
+			MethodName: "BargainUserShow",
+			Handler:    _Product_BargainUserShow_Handler,
+		},
+		{
+			MethodName: "BargainUserHelpShow",
+			Handler:    _Product_BargainUserHelpShow_Handler,
+		},
+		{
+			MethodName: "BargainUserList",
+			Handler:    _Product_BargainUserList_Handler,
+		},
+		{
+			MethodName: "BargainUserHelpList",
+			Handler:    _Product_BargainUserHelpList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

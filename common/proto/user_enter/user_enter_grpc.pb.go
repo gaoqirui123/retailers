@@ -30,6 +30,8 @@ const (
 	UserEnter_BatchPublishProducts_FullMethodName  = "/user_enter.UserEnter/BatchPublishProducts"
 	UserEnter_MerchantVerification_FullMethodName  = "/user_enter.UserEnter/MerchantVerification"
 	UserEnter_CalculateOrderSummary_FullMethodName = "/user_enter.UserEnter/CalculateOrderSummary"
+	UserEnter_AddSeckillProduct_FullMethodName     = "/user_enter.UserEnter/AddSeckillProduct"
+	UserEnter_ReverseStock_FullMethodName          = "/user_enter.UserEnter/ReverseStock"
 )
 
 // UserEnterClient is the client API for UserEnter service.
@@ -47,6 +49,8 @@ type UserEnterClient interface {
 	BatchPublishProducts(ctx context.Context, in *BatchPublishProductsRequest, opts ...grpc.CallOption) (*BatchPublishProductsResponse, error)
 	MerchantVerification(ctx context.Context, in *MerchantVerificationRequest, opts ...grpc.CallOption) (*MerchantVerificationResponse, error)
 	CalculateOrderSummary(ctx context.Context, in *CalculateOrderSummaryRequest, opts ...grpc.CallOption) (*CalculateOrderSummaryResponse, error)
+	AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error)
+	ReverseStock(ctx context.Context, in *ReverseStockRequest, opts ...grpc.CallOption) (*ReverseStockResponse, error)
 }
 
 type userEnterClient struct {
@@ -167,6 +171,26 @@ func (c *userEnterClient) CalculateOrderSummary(ctx context.Context, in *Calcula
 	return out, nil
 }
 
+func (c *userEnterClient) AddSeckillProduct(ctx context.Context, in *AddSeckillProductRequest, opts ...grpc.CallOption) (*AddSeckillProductResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddSeckillProductResponse)
+	err := c.cc.Invoke(ctx, UserEnter_AddSeckillProduct_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userEnterClient) ReverseStock(ctx context.Context, in *ReverseStockRequest, opts ...grpc.CallOption) (*ReverseStockResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ReverseStockResponse)
+	err := c.cc.Invoke(ctx, UserEnter_ReverseStock_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserEnterServer is the server API for UserEnter service.
 // All implementations must embed UnimplementedUserEnterServer
 // for forward compatibility
@@ -182,6 +206,8 @@ type UserEnterServer interface {
 	BatchPublishProducts(context.Context, *BatchPublishProductsRequest) (*BatchPublishProductsResponse, error)
 	MerchantVerification(context.Context, *MerchantVerificationRequest) (*MerchantVerificationResponse, error)
 	CalculateOrderSummary(context.Context, *CalculateOrderSummaryRequest) (*CalculateOrderSummaryResponse, error)
+	AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error)
+	ReverseStock(context.Context, *ReverseStockRequest) (*ReverseStockResponse, error)
 	mustEmbedUnimplementedUserEnterServer()
 }
 
@@ -221,6 +247,12 @@ func (UnimplementedUserEnterServer) MerchantVerification(context.Context, *Merch
 }
 func (UnimplementedUserEnterServer) CalculateOrderSummary(context.Context, *CalculateOrderSummaryRequest) (*CalculateOrderSummaryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalculateOrderSummary not implemented")
+}
+func (UnimplementedUserEnterServer) AddSeckillProduct(context.Context, *AddSeckillProductRequest) (*AddSeckillProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddSeckillProduct not implemented")
+}
+func (UnimplementedUserEnterServer) ReverseStock(context.Context, *ReverseStockRequest) (*ReverseStockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReverseStock not implemented")
 }
 func (UnimplementedUserEnterServer) mustEmbedUnimplementedUserEnterServer() {}
 
@@ -433,6 +465,42 @@ func _UserEnter_CalculateOrderSummary_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserEnter_AddSeckillProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddSeckillProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).AddSeckillProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_AddSeckillProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).AddSeckillProduct(ctx, req.(*AddSeckillProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserEnter_ReverseStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReverseStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserEnterServer).ReverseStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserEnter_ReverseStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserEnterServer).ReverseStock(ctx, req.(*ReverseStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserEnter_ServiceDesc is the grpc.ServiceDesc for UserEnter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -483,6 +551,14 @@ var UserEnter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CalculateOrderSummary",
 			Handler:    _UserEnter_CalculateOrderSummary_Handler,
+		},
+		{
+			MethodName: "AddSeckillProduct",
+			Handler:    _UserEnter_AddSeckillProduct_Handler,
+		},
+		{
+			MethodName: "ReverseStock",
+			Handler:    _UserEnter_ReverseStock_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

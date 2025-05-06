@@ -528,14 +528,23 @@ func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResp
 	return &user.UserApplicationResponse{Success: "用户成功申请发票"}, nil
 }
 
+// UserReceiveCoupon TODO:用户领取优惠券
 func UserReceiveCoupon(in *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
 	cou := &model.Coupon{}
 	if err := cou.GetCouponIdBy(in.CouponId); err != nil {
 		return nil, err
 	}
+	uc := &model.CouponUser{}
+	err := uc.GetUserCouponIdBy(in.CouponId, in.UserId)
+	if err != nil {
+		return nil, err
+	}
+	if uc.Id != 0 {
+		return nil, errors.New("不可重复领取")
+	}
 	addTime, _ := strconv.Atoi(time.Now().AddDate(0, 0, 0).Format("20060102"))
 	endTime, _ := strconv.Atoi(time.Now().AddDate(0, 0, int(cou.CouponTime)).Format("20060102"))
-	uc := &model.CouponUser{
+	uc = &model.CouponUser{
 		Cid:         in.CouponId,
 		Uid:         in.UserId,
 		CouponTitle: cou.Title,
@@ -547,6 +556,9 @@ func UserReceiveCoupon(in *user.UserReceiveCouponRequest) (*user.UserReceiveCoup
 	}
 	if err := uc.AddCouponUser(); err != nil {
 		return nil, err
+	}
+	if uc.Id == 0 {
+		return nil, errors.New("领取优惠券失败")
 	}
 	return &user.UserReceiveCouponResponse{Success: true}, nil
 }

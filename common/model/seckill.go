@@ -45,7 +45,7 @@ func (s *Seckill) AddSeckillProduct() error {
 }
 
 func (s *Seckill) GetSeckillIdBY(seckillId int64) error {
-	return global.DB.Debug().Table("seckill").Where("id = ? and is_del = ?", seckillId, 0).Limit(1).Find(&s).Error
+	return global.DB.Debug().Table("seckill").Where("id = ? and is_del = 0 and status = 0", seckillId).Limit(1).Find(&s).Error
 }
 
 func (s *Seckill) DelSeckill(seckillId int64) error {
@@ -53,5 +53,9 @@ func (s *Seckill) DelSeckill(seckillId int64) error {
 }
 
 func (s *Seckill) StartsStockReverse(seckillId, num int64) error {
-	return global.DB.Debug().Model(&Seckill{}).Table("seckill").Where("id = ?", seckillId).Update("start_stock", gorm.Expr("start_stock + ?", num)).Error
+	return global.DB.Debug().Model(&Seckill{}).Table("seckill").Where("id = ?", seckillId).Update("stock", gorm.Expr("stock + ?", num)).Error
+}
+
+func (s *Seckill) UpdateSeckillStock(seckillId, num int64) error {
+	return global.DB.Debug().Model(&Seckill{}).Table("seckill").Where("id = ?", seckillId).Update("stock", gorm.Expr("stock - ?", num)).Error
 }

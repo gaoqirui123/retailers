@@ -23,7 +23,6 @@ service User {
   rpc UserWithdraw(UserWithdrawRequest) returns (UserWithdrawResponse); // TODO: 用户提现
 }
 
-
 // TODO: 用户提现请求
 message UserWithdrawRequest {
   int64 user_id = 1; // 用户 ID
@@ -36,10 +35,7 @@ message UserWithdrawRequest {
 // TODO: 用户提现响应
 message UserWithdrawResponse {
   bool success = 1; // 提现是否成功
- // string message = 2; // 提现结果消息，如 "提现成功" 或 "余额不足"
 }
-
-
 
 // TODO:用户领取优惠券
 message UserReceiveCouponRequest {

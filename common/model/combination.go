@@ -1,6 +1,9 @@
 package model
 
-import "common/global"
+import (
+	"common/global"
+	"gorm.io/gorm"
+)
 
 // Combination 拼团商品表
 type Combination struct {
@@ -55,9 +58,16 @@ func (c *Combination) Add() error {
 }
 
 func (c *Combination) GetCombinationById(pid int64) (result *Combination, err error) {
-	err = global.DB.Table("combination").Where("id = ?", pid).Find(&result).Error
+	err = global.DB.Table("combination").Where("id = ? and is_del = 0", pid).Find(&result).Error
 	if err != nil {
 		return nil, err
 	}
 	return
+}
+func (c *Combination) UpdateCombinationStock(id, num int64) error {
+	return global.DB.Debug().Table("combination").Model(&Combination{}).Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock - ?", num)).Error
+}
+
+func (c *Combination) ReverseCombinationStock(id int64, num int64) error {
+	return global.DB.Debug().Table("combination").Model(&Combination{}).Where("id = ?", id).Limit(1).Update("stock", gorm.Expr("stock + ?", num)).Error
 }

@@ -5,14 +5,19 @@ import (
 	"common/model"
 	"common/pkg"
 	"common/proto/user_enter"
+	"common/utlis"
 	"errors"
-	"log"
 	"regexp"
 	"time"
 )
 
 // Apply TODO:商家申请店铺
 func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResponse, error) {
+	m := model.Merchant{}
+	merchantById, err := m.GetMerchantById(in.UeId)
+	if err != nil {
+		return nil, err
+	}
 	ue := model.UserEnter{
 		Uid:          int(in.UeId),
 		Province:     in.Province,
@@ -20,16 +25,10 @@ func Apply(in *user_enter.UserEnterApplyRequest) (*user_enter.UserEnterApplyResp
 		District:     in.District,
 		Address:      in.Address,
 		MerchantName: in.MerchantName,
-		LinkTel:      in.LinkTel,
+		LinkTel:      merchantById.ContactPhone,
 		Charter:      in.Charter,
 	}
-	if in.MerchantName == "" {
-		return nil, errors.New("商户名称不能为空")
-	}
-	if in.LinkTel == "" {
-		return nil, errors.New("商户电话不能为空")
-	}
-	err := ue.Add()
+	err = ue.Add()
 	if err != nil {
 		return nil, err
 	}
@@ -125,15 +124,7 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 			return nil, errors.New("审核失败")
 		}
 	}
-	id, _ := i.GetInvoiceByUeId(in.Uid, in.OrderId)
-	//发票审核成功后生成发票图片
-	err = pkg.GenerateInvoiceImage(id)
-	if err != nil {
-		return nil, err
-	}
-	if err != nil {
-		log.Fatalf("生成图片时出错: %v", err)
-	}
+
 	return &user_enter.ProcessInvoiceResponse{Greet: true}, nil
 }
 
@@ -241,7 +232,123 @@ func Login(in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResp
 	return &user_enter.UserEnterLoginResponse{Greet: token}, nil
 }
 
-// 商品批量发布
+// AddSeckillProduct  TODO: 添加秒杀商品
+func AddSeckillProduct(in *user_enter.AddSeckillProductRequest) (*user_enter.AddSeckillProductResponse, error) {
+	//查询商品是否存在
+	p := &model.Product{}
+	err := p.GetProductIdBy(in.ProductId)
+	if err != nil {
+		return nil, err
+	}
+	if p.Id == 0 {
+		return nil, errors.New("商品不存在")
+	}
+	// 判断该商品是否是该商户的
+	if p.MerId != in.UserEnterId {
+		return nil, errors.New("该商品不是你的")
+	}
+	//判断商品库存不能小于秒杀库存
+	if p.Stock < in.Num {
+		return nil, errors.New("判断商品库存小于秒杀库存")
+	}
+	//开启事务
+	tx := global.DB.Begin()
+	//扣mysql商品表总库存
+	err = p.UpdateProductStock(in.ProductId, in.Num)
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("扣mysql商品表总库存失败")
+	}
+	seckill := &model.Seckill{
+		MerId:       p.MerId,
+		ProductId:   in.ProductId,
+		Image:       p.Image,
+		Images:      p.SliderImage,
+		Name:        p.StoreName,
+		Info:        p.StoreInfo,
+		Price:       float64(in.Price),
+		Cost:        p.Cost,
+		OtPrice:     p.Price,
+		Stock:       in.Num,
+		Postage:     p.Postage,
+		Description: in.Description,
+		StartTime:   in.StartTime,
+		StopTime:    in.StopTime,
+		AddTime:     time.Now().Format(time.DateTime),
+		Status:      p.IsShow,
+		IsPostage:   p.IsPostage,
+		Num:         in.Num,
+		Quota:       in.Num,
+		QuotaShow:   in.Num,
+	}
+	err = seckill.AddSeckillProduct()
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+	if seckill.Id == 0 {
+		tx.Rollback()
+		return nil, errors.New("添加秒杀商品失败")
+	}
+	//将秒杀商品添加redis的list中
+	utlis.SeckillCreateRedis(int(seckill.Stock), int(seckill.Id))
+	//判断redis库存是否添加成功
+	val := utlis.GetSeckillRedis(int(seckill.Id))
+	if val != seckill.Stock {
+		tx.Rollback()
+		return nil, errors.New("redis库存是否添加失败")
+	}
+	if err = tx.Commit().Error; err != nil {
+		return nil, err
+	}
+	return &user_enter.AddSeckillProductResponse{SeckillId: seckill.Id}, nil
+}
+
+// ReverseStock  TODO: 秒杀后反还剩余的商品
+func ReverseStock(in *user_enter.ReverseStockRequest) (*user_enter.ReverseStockResponse, error) {
+	// 查询秒杀商品是否存在
+	s := &model.Seckill{}
+	err := s.GetSeckillIdBY(in.SeckillId)
+	if err != nil {
+		return nil, err
+	}
+	if s.Id == 0 {
+		return nil, errors.New("秒杀商品不存在")
+	}
+	// 判断该商品是否是该商户的
+	if s.MerId != in.UserEnterId {
+		return nil, errors.New("该商品不是你的")
+	}
+	//开启事务
+	tx := global.DB.Begin()
+	//反还剩余的商品
+	g := &model.Product{}
+	err = g.ReverseProductStock(s.ProductId, s.Stock)
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("秒杀商品不存在")
+	}
+	//清除秒杀表里的数据
+	err = s.DelSeckill(in.SeckillId)
+	if err != nil {
+		tx.Rollback()
+		return nil, errors.New("清除秒杀表里的数据失败")
+	}
+	//清除redis列表库存
+	utlis.DelSeckillRedis(int(s.Id))
+	//判断redis列表库存是否被清除
+	val := utlis.GetSeckillRedis(int(s.Id))
+	if val > 0 {
+		tx.Rollback()
+		return nil, errors.New("清除redis列表库存失败")
+	}
+	if err = tx.Commit().Error; err != nil {
+		return nil, err
+	}
+	return &user_enter.ReverseStockResponse{Success: true}, nil
+}
+
+// BatchPublishProducts TODO:商品批量发布
 func BatchPublishProducts(in *user_enter.BatchPublishProductsRequest) (*user_enter.BatchPublishProductsResponse, error) {
 	// 开启事务
 	transaction := global.DB.Begin()
@@ -279,14 +386,7 @@ func BatchPublishProducts(in *user_enter.BatchPublishProductsRequest) (*user_ent
 	return &user_enter.BatchPublishProductsResponse{Success: true}, nil
 }
 
-type OrderSyn struct {
-	ID      int64  `json:"id"`
-	OrderSn string `json:"orderSn"`
-	Status  int64  `json:"status"`
-	Paid    int64  `json:"paid"`
-}
-
-// 店家确认核销
+// MerchantVerification  TODO:店家确认核销
 func MerchantVerification(in *user_enter.MerchantVerificationRequest) (*user_enter.MerchantVerificationResponse, error) {
 
 	o := model.Order{}
@@ -303,6 +403,7 @@ func MerchantVerification(in *user_enter.MerchantVerificationRequest) (*user_ent
 
 }
 
+// CalculateOrderSummary TODO:商家统计
 func CalculateOrderSummary(in *user_enter.CalculateOrderSummaryRequest) (*user_enter.CalculateOrderSummaryResponse, error) {
 	orders := &model.Order{}
 	products := &model.Product{}
