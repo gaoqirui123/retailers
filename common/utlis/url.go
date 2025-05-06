@@ -9,25 +9,6 @@ import (
 	"os"
 )
 
-/*
-// GenerateQRCode 生成指定内容的二维码并保存为文件
-
-	func GenerateQRCode(content string, filePath string) error {
-		// 创建二维码
-		png, err := qrcode.Encode(content, qrcode.Medium, 256)
-		if err != nil {
-			return err
-		}
-
-		// 将二维码保存到文件
-		err = os.WriteFile(filePath, png, 0644)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	}
-*/
 func GenerateQRCodeWithLogo(orderID string, logoPath string, outputPath string) error {
 	// 生成基础二维码
 	err := qrcode.WriteFile(orderID, qrcode.Medium, 256, outputPath)
@@ -94,12 +75,6 @@ func GenerateQRCodeWithLogo(orderID string, logoPath string, outputPath string) 
 	if err != nil {
 		return err
 	}
-
-	// 删除临时的基础二维码图片，这里其实不需要删除，因为已经被覆盖
-	// err = os.Remove(outputPath)
-	// if err != nil {
-	// 	log.Println("删除临时文件失败:", err)
-	// }
 
 	return nil
 }

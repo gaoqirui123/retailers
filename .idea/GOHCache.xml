@@ -353,6 +353,20 @@
             </set>
           </value>
         </entry>
+        <entry key="BatchPublishProductsRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="BatchPublishProductsResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="BatchReleaseOfProducts">
           <value>
             <set>
@@ -1103,6 +1117,7 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/api/request/user_enter_request.go" />
+              <option value="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go" />
             </set>
           </value>
         </entry>
@@ -1780,6 +1795,20 @@
             </set>
           </value>
         </entry>
+        <entry key="UserWithdrawRequest">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="UserWithdrawResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/common/proto/user/user.pb.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="VisitorCount">
           <value>
             <set>
@@ -1955,14 +1984,14 @@
         <entry key="file://$PROJECT_DIR$/api/handler/distribution_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746169326039" />
+              <option name="lastModified" value="1746521815933" />
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/handler/order_handler.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746278339480" />
+              <option name="lastModified" value="1746525233022" />
             </ScannedPath>
           </value>
         </entry>
@@ -2366,7 +2395,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/commission.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746151029840" />
+              <option name="lastModified" value="1746521421681" />
               <option name="schema">
                 <list>
                   <option value="Commission" />
@@ -2851,7 +2880,7 @@
         <entry key="file://$PROJECT_DIR$/common/pkg/weeklyCommission.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746151012321" />
+              <option name="lastModified" value="1746455472810" />
             </ScannedPath>
           </value>
         </entry>
@@ -2972,7 +3001,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/distribution/distribution.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746166418650" />
+              <option name="lastModified" value="1746522319494" />
               <option name="schema">
                 <list>
                   <option value="LookDoneOrUpReq" />
@@ -2996,7 +3025,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/distribution/distribution_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746166418650" />
+              <option name="lastModified" value="1746522319494" />
               <option name="schema">
                 <list>
                   <option value="distributionClient" />
@@ -3081,9 +3110,11 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746176972727" />
+              <option name="lastModified" value="1746362467304" />
               <option name="schema">
                 <list>
+                  <option value="UserWithdrawRequest" />
+                  <option value="UserWithdrawResponse" />
                   <option value="UserReceiveCouponRequest" />
                   <option value="UserReceiveCouponResponse" />
                   <option value="UserApplicationRequest" />
@@ -3131,7 +3162,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user/user_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746176972728" />
+              <option name="lastModified" value="1746362467304" />
               <option name="schema">
                 <list>
                   <option value="userClient" />
@@ -3144,7 +3175,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746271233121" />
+              <option name="lastModified" value="1746357369854" />
               <option name="schema">
                 <list>
                   <option value="UserEnterApplyRequest" />
@@ -3171,6 +3202,9 @@
                   <option value="MerchantVerificationResponse" />
                   <option value="CalculateOrderSummaryRequest" />
                   <option value="CalculateOrderSummaryResponse" />
+                  <option value="BatchPublishProductsRequest" />
+                  <option value="ProductInfo" />
+                  <option value="BatchPublishProductsResponse" />
                   <option value="x" />
                 </list>
               </option>
@@ -3180,7 +3214,7 @@
         <entry key="file://$PROJECT_DIR$/common/proto/user_enter/user_enter_grpc.pb.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746271233121" />
+              <option name="lastModified" value="1746357369854" />
               <option name="schema">
                 <list>
                   <option value="userEnterClient" />
@@ -3228,7 +3262,7 @@
         <entry key="file://$PROJECT_DIR$/common/utlis/url.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746277482256" />
+              <option name="lastModified" value="1746534809780" />
             </ScannedPath>
           </value>
         </entry>
@@ -3334,7 +3368,7 @@
         <entry key="file://$PROJECT_DIR$/srv/distribution_srv/internal/handler/distribution.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746172754555" />
+              <option name="lastModified" value="1746525576136" />
             </ScannedPath>
           </value>
         </entry>
@@ -3367,7 +3401,7 @@
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746363861692" />
+              <option name="lastModified" value="1746537504605" />
             </ScannedPath>
           </value>
         </entry>
@@ -3471,7 +3505,7 @@
         <entry key="file://$PROJECT_DIR$/srv/user_srv/internal/handler/user.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746362830496" />
+              <option name="lastModified" value="1746520280089" />
             </ScannedPath>
           </value>
         </entry>
@@ -3557,6 +3591,8 @@
         <entry key="article_thumbs_up_response" value="ArticleThumbsUpResponse" />
         <entry key="article_user_comment" value="ArticleUserComment" />
         <entry key="article_user_comment_like_count" value="ArticleUserCommentLikeCount" />
+        <entry key="batch_publish_products_request" value="BatchPublishProductsRequest" />
+        <entry key="batch_publish_products_response" value="BatchPublishProductsResponse" />
         <entry key="batch_release_of_products" value="BatchReleaseOfProducts" />
         <entry key="batch_release_of_products_request" value="BatchReleaseOfProductsRequest" />
         <entry key="batch_release_of_products_response" value="BatchReleaseOfProductsResponse" />
@@ -3766,10 +3802,12 @@
         <entry key="user_srv" value="UserSrv" />
         <entry key="user_up_or_done" value="UserUpOrDone" />
         <entry key="user_withdraw" value="UserWithdraw" />
+        <entry key="user_withdraw_request" value="UserWithdrawRequest" />
+        <entry key="user_withdraw_response" value="UserWithdrawResponse" />
         <entry key="visitor_count" value="VisitorCount" />
         <entry key="x" value="x" />
       </map>
     </option>
-    <option name="lastTimeChecked" value="1746270095252" />
+    <option name="lastTimeChecked" value="1746455402737" />
   </component>
 </project>

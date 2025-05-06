@@ -7,6 +7,7 @@ import (
 	"common/proto/distribution"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func GenerateInvitationCode(c *gin.Context) {
@@ -74,6 +75,8 @@ func DistributionLevelSetting(c *gin.Context) {
 func TheCharts(c *gin.Context) {
 	release, err := client.TheCharts(c, &distribution.TheChartsRequest{})
 	if err != nil {
+		// 添加日志记录
+		log.Printf("调用 client.TheCharts 出错: %v", err)
 		response.RespError(c, err.Error())
 		return
 	}
