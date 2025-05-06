@@ -12,7 +12,7 @@ const (
 	smtpServer   = "smtp.qq.com"       //SMTP 服务器的地址
 	smtpPort     = "587"               //SMTP 服务器的地址和端口
 	smtpUsername = "2474179612@qq.com" //SMTP 用户名，是发件人邮箱地址
-	smtpPassword = "dbixjeejnyvhdjaj"  // SMTP 密码
+	smtpPassword = "dbixyvhdjaj"       // SMTP 密码
 	recipient    = "2159685130@qq.com" //是收件人邮箱地址列表
 )
 

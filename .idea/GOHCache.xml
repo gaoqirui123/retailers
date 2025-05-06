@@ -3020,7 +3020,7 @@
         <entry key="file://$PROJECT_DIR$/common/model/user_address.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746534258126" />
+              <option name="lastModified" value="1746534907545" />
               <option name="schema">
                 <list>
                   <option value="UserAddress" />
@@ -3195,7 +3195,7 @@
         <entry key="file://$PROJECT_DIR$/common/pkg/email.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746515218124" />
+              <option name="lastModified" value="1746534907503" />
             </ScannedPath>
           </value>
         </entry>
