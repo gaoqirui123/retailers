@@ -9,7 +9,7 @@ message AdminLoginReq {
 }
 
 message AdminLoginResp {
-  string greet = 1;
+  int64 AdminId = 1;
 }
 
 message ProcessEnterReq {
@@ -19,7 +19,7 @@ message ProcessEnterReq {
 }
 
 message ProcessEnterResp {
-  string greet = 1;
+  bool greet = 1;
 }
 
 service Administrators {

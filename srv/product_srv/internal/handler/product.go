@@ -54,7 +54,6 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 		tx.Rollback()
 		return nil, fmt.Errorf("库存不足，当前库存: %d，需要数量: %d", combination.Stock, in.Num)
 	}
-
 	//生成订单id
 	orderId := uuid.New().String()
 	// 生成唯一的拼团 ID
@@ -134,9 +133,9 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	fmt.Println(s)
 	//生成拼团链接
 	// 链接的基础部分
-	baseURL := "https://314b3024.r39.cpolar.top/join_group"
+	baseURL := "https://127.0.0.1:8080/combination/info"
 	// 将拼团 ID 嵌入到链接中
-	link := fmt.Sprintf("%s?id=%d", baseURL, pinkId)
+	link := fmt.Sprintf("%s?id=%d", baseURL, in.Pid)
 	tx.Commit()
 	return &product.GroupBuyingResponse{Success: link}, nil
 }
@@ -236,4 +235,24 @@ func JoinGroupBuying(in *product.JoinGroupBuyingRequest) (*product.JoinGroupBuyi
 	sprintf := fmt.Sprintf("%.2f", pink.Price)
 	s := pay.Pay(pink.OrderIdKey, pink.OrderId, sprintf)
 	return &product.JoinGroupBuyingResponse{Success: s}, nil
+}
+
+func GetCombinationInfo(in *product.GetCombinationInfoRequest) (*product.GetCombinationInfoResponse, error) {
+	c := model.Combination{}
+	list, err := c.GetCombinationById(in.Cid)
+	if err != nil {
+		return nil, err
+	}
+	var lists []*product.CombinationList
+	l := product.CombinationList{
+		Image:  list.Images,
+		Title:  list.Title,
+		People: int64(list.People),
+		Price:  float32(list.Price),
+		Stock:  int64(list.Stock),
+	}
+	lists = append(lists, &l)
+	return &product.GetCombinationInfoResponse{
+		List: lists,
+	}, nil
 }

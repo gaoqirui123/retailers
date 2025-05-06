@@ -17,6 +17,15 @@ service Product {
   rpc BargainUserHelpShow(BargainUserHelpShowRequest) returns (BargainUserHelpShowResponse);//TODO:砍价帮助记录详情
   rpc BargainUserList(BargainUserListRequest) returns (BargainUserListResponse);//TODO:用户参与砍价信息列表
   rpc BargainUserHelpList(BargainUserHelpListRequest) returns (BargainUserHelpListResponse);//TODO:砍价帮助记录列表
+  rpc GetCombinationInfo(GetCombinationInfoRequest) returns (GetCombinationInfoResponse);//TODO:拼团详情
+}
+
+message GetCombinationInfoRequest {
+  int64 Cid =1;
+}
+
+message GetCombinationInfoResponse {
+  repeated CombinationList list =1;
 }
 
 message BargainUserCreateRequest {

@@ -32,6 +32,7 @@ const (
 	Product_BargainUserHelpShow_FullMethodName = "/product.Product/BargainUserHelpShow"
 	Product_BargainUserList_FullMethodName     = "/product.Product/BargainUserList"
 	Product_BargainUserHelpList_FullMethodName = "/product.Product/BargainUserHelpList"
+	Product_GetCombinationInfo_FullMethodName  = "/product.Product/GetCombinationInfo"
 )
 
 // ProductClient is the client API for Product service.
@@ -51,6 +52,7 @@ type ProductClient interface {
 	BargainUserHelpShow(ctx context.Context, in *BargainUserHelpShowRequest, opts ...grpc.CallOption) (*BargainUserHelpShowResponse, error)
 	BargainUserList(ctx context.Context, in *BargainUserListRequest, opts ...grpc.CallOption) (*BargainUserListResponse, error)
 	BargainUserHelpList(ctx context.Context, in *BargainUserHelpListRequest, opts ...grpc.CallOption) (*BargainUserHelpListResponse, error)
+	GetCombinationInfo(ctx context.Context, in *GetCombinationInfoRequest, opts ...grpc.CallOption) (*GetCombinationInfoResponse, error)
 }
 
 type productClient struct {
@@ -191,6 +193,16 @@ func (c *productClient) BargainUserHelpList(ctx context.Context, in *BargainUser
 	return out, nil
 }
 
+func (c *productClient) GetCombinationInfo(ctx context.Context, in *GetCombinationInfoRequest, opts ...grpc.CallOption) (*GetCombinationInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCombinationInfoResponse)
+	err := c.cc.Invoke(ctx, Product_GetCombinationInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
@@ -208,6 +220,7 @@ type ProductServer interface {
 	BargainUserHelpShow(context.Context, *BargainUserHelpShowRequest) (*BargainUserHelpShowResponse, error)
 	BargainUserList(context.Context, *BargainUserListRequest) (*BargainUserListResponse, error)
 	BargainUserHelpList(context.Context, *BargainUserHelpListRequest) (*BargainUserHelpListResponse, error)
+	GetCombinationInfo(context.Context, *GetCombinationInfoRequest) (*GetCombinationInfoResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -253,6 +266,9 @@ func (UnimplementedProductServer) BargainUserList(context.Context, *BargainUserL
 }
 func (UnimplementedProductServer) BargainUserHelpList(context.Context, *BargainUserHelpListRequest) (*BargainUserHelpListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BargainUserHelpList not implemented")
+}
+func (UnimplementedProductServer) GetCombinationInfo(context.Context, *GetCombinationInfoRequest) (*GetCombinationInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCombinationInfo not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -501,6 +517,24 @@ func _Product_BargainUserHelpList_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_GetCombinationInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCombinationInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).GetCombinationInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_GetCombinationInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).GetCombinationInfo(ctx, req.(*GetCombinationInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -559,6 +593,10 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BargainUserHelpList",
 			Handler:    _Product_BargainUserHelpList_Handler,
+		},
+		{
+			MethodName: "GetCombinationInfo",
+			Handler:    _Product_GetCombinationInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

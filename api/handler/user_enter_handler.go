@@ -4,6 +4,7 @@ import (
 	"api/client"
 	"api/request"
 	"api/response"
+	"common/pkg"
 	"common/proto/user_enter"
 	"github.com/gin-gonic/gin"
 )
@@ -57,7 +58,7 @@ func Login(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
-	register, err := client.Login(c, &user_enter.UserEnterLoginRequest{
+	login, err := client.Login(c, &user_enter.UserEnterLoginRequest{
 		Account:  data.Account,
 		Password: data.Password,
 	})
@@ -65,7 +66,14 @@ func Login(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
-	response.RespSuccess(c, "登录成功", register)
+	claims := pkg.CustomClaims{
+		ID: uint(login.UserEnterId),
+	}
+	token, err := pkg.NewJWT("merchant").CreateToken(claims)
+	if err != nil {
+		return
+	}
+	response.RespSuccess(c, "登录成功", token)
 }
 func AddProduct(c *gin.Context) {
 	var data request.AddProduct
@@ -144,6 +152,9 @@ func ProcessInvoice(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
+	if invoice.Greet == false {
+		response.RespError(c, "审核失败")
+	}
 	response.RespSuccess(c, "审核完成", invoice)
 }
 
@@ -164,6 +175,9 @@ func UpdateStatus(c *gin.Context) {
 	if err != nil {
 		response.RespError(c, err.Error())
 		return
+	}
+	if product.Greet == false {
+		response.RespError(c, "下架商品失败")
 	}
 	response.RespSuccess(c, "下架商品成功", product)
 }

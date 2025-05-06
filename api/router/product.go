@@ -10,6 +10,7 @@ func ProductRouter(r *gin.RouterGroup) {
 	p := r.Group("/product")
 	{
 		p.GET("/combination/list", handler.CombinationList)         //todo:拼团商品列表展示
+		p.GET("/combination/info", handler.GetCombinationInfo)      //todo:拼团商品详情
 		p.POST("/bargainShow", handler.BargainShow)                 //todo: 砍价商品表详情
 		p.POST("/bargainList", handler.BargainList)                 //todo: 砍价商品表列表
 		p.POST("/bargainUserHelpShow", handler.BargainUserHelpShow) //todo: 砍价帮助记录详情

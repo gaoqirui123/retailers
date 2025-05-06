@@ -19,7 +19,7 @@ func (as AdministratorsServer) AdminLogin(ctx context.Context, in *administrator
 	return login, nil
 }
 
-// ProcessProduct  TODO:管理员审核商家申请
+// ProcessEnter  TODO:管理员审核商家申请
 func (as AdministratorsServer) ProcessEnter(ctx context.Context, in *administrators.ProcessEnterReq) (*administrators.ProcessEnterResp, error) {
 	login, err := handler.ProcessEnter(in)
 	if err != nil {

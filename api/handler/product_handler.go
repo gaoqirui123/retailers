@@ -18,7 +18,19 @@ func CombinationList(c *gin.Context) {
 	}
 	response.RespSuccess(c, "拼团商品展示成功", list)
 }
-
+func GetCombinationInfo(c *gin.Context) {
+	var data request.CombinationInfo
+	err := c.ShouldBind(&data)
+	if err != nil {
+		return
+	}
+	list, err := client.GetCombinationInfo(c, &product.GetCombinationInfoRequest{Cid: data.Cid})
+	if err != nil {
+		response.RespError(c, err.Error())
+		return
+	}
+	response.RespSuccess(c, "拼团商品展示成功", list)
+}
 func GroupBuying(c *gin.Context) {
 	userId := c.GetUint("userId")
 	var data request.GroupBuy

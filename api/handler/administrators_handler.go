@@ -4,6 +4,7 @@ import (
 	"api/client"
 	"api/request"
 	"api/response"
+	"common/pkg"
 	administrators "common/proto/admin"
 	"github.com/gin-gonic/gin"
 )
@@ -24,7 +25,14 @@ func AdminLogin(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
-	response.RespSuccess(c, "登录成功", login)
+	claims := pkg.CustomClaims{
+		ID: uint(login.AdminId),
+	}
+	token, err := pkg.NewJWT("2209A").CreateToken(claims)
+	if err != nil {
+		return
+	}
+	response.RespSuccess(c, "登录成功", token)
 }
 
 // ProcessEnter TODO:审核商家
@@ -45,5 +53,9 @@ func ProcessEnter(c *gin.Context) {
 		response.RespError(c, err.Error())
 		return
 	}
-	response.RespSuccess(c, "审批成功", login)
+	if login.Greet == false {
+		response.RespSuccess(c, "申请不合格，请重新申请", login)
+	} else {
+		response.RespSuccess(c, "审批成功", login)
+	}
 }

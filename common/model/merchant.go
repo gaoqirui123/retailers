@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// 商户列表
+// Merchant 商户列表
 type Merchant struct {
 	MerchantId       int64     `gorm:"column:merchant_id;type:int;primaryKey;not null;" json:"merchant_id"`
 	MerchantAccount  string    `gorm:"column:merchant_account;type:varchar(20);not null;" json:"merchant_account"`

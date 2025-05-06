@@ -3,7 +3,6 @@ package handler
 import (
 	"common/global"
 	"common/model"
-	"common/pkg"
 	"common/proto/user_enter"
 	"common/utlis"
 	"errors"
@@ -110,7 +109,6 @@ func ProcessInvoice(in *user_enter.ProcessInvoiceRequest) (*user_enter.ProcessIn
 	if err != nil {
 		return nil, err
 	}
-
 	// 更新发票申请状态
 	i = model.InvoiceApplication{}
 	if in.Dis == "" {
@@ -150,10 +148,15 @@ func InvoiceList(in *user_enter.InvoiceListRequest) (*user_enter.InvoiceListResp
 		list := ue.ConvertToInvoiceList(application)
 		lists = append(lists, &list)
 	}
-
-	return &user_enter.InvoiceListResponse{
-		List: lists,
-	}, nil
+	if lists == nil {
+		return &user_enter.InvoiceListResponse{
+			List: nil,
+		}, nil
+	} else {
+		return &user_enter.InvoiceListResponse{
+			List: lists,
+		}, nil
+	}
 }
 
 // DelProduct TODO:下架商品
@@ -222,14 +225,10 @@ func Login(in *user_enter.UserEnterLoginRequest) (*user_enter.UserEnterLoginResp
 	if in.Password != merchant.MerchantPassword {
 		return nil, errors.New("密码错误，请重新输入")
 	}
-	claims := pkg.CustomClaims{
-		ID: uint(merchant.MerchantId),
-	}
-	token, err := pkg.NewJWT("merchant").CreateToken(claims)
-	if err != nil {
-		return nil, err
-	}
-	return &user_enter.UserEnterLoginResponse{Greet: token}, nil
+
+	return &user_enter.UserEnterLoginResponse{
+		UserEnterId: merchant.MerchantId,
+	}, nil
 }
 
 // AddSeckillProduct  TODO: 添加秒杀商品

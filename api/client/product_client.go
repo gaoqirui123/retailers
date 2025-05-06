@@ -23,6 +23,13 @@ func CombinationList(ctx context.Context, in *product.CombinationListRequest) (*
 	})
 }
 
+// GetCombinationInfo 拼团商品列表展示
+func GetCombinationInfo(ctx context.Context, in *product.GetCombinationInfoRequest) (*product.GetCombinationInfoResponse, error) {
+	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, in *product.GetCombinationInfoRequest) (*product.GetCombinationInfoResponse, error) {
+		return client.GetCombinationInfo(ctx, in)
+	})
+}
+
 // GroupBuying 发起拼团
 func GroupBuying(ctx context.Context, in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, error) {
 	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, error) {
@@ -37,35 +44,35 @@ func JoinGroupBuying(ctx context.Context, in *product.JoinGroupBuyingRequest) (*
 	})
 }
 
-// 修改商品表是否砍价状态
+// ProductUpdate 修改商品表是否砍价状态
 func ProductUpdate(ctx context.Context, in *product.ProductUpdateRequest) (*product.ProductUpdateResponse, error) {
 	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, in *product.ProductUpdateRequest) (*product.ProductUpdateResponse, error) {
 		return client.ProductUpdate(ctx, in)
 	})
 }
 
-// 创建砍价商品表
+// BargainCreate 创建砍价商品表
 func BargainCreate(ctx context.Context, in *product.BargainCreateRequest) (*product.BargainCreateResponse, error) {
 	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainCreateRequest) (*product.BargainCreateResponse, error) {
 		return client.BargainCreate(ctx, in)
 	})
 }
 
-// 修改砍价商品表是否删除
+// BargainUpdate 修改砍价商品表是否删除
 func BargainUpdate(ctx context.Context, in *product.BargainUpdateRequest) (*product.BargainUpdateResponse, error) {
 	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainUpdateRequest) (*product.BargainUpdateResponse, error) {
 		return client.BargainUpdate(ctx, in)
 	})
 }
 
-// 砍价商品表详情
+// BargainShow 砍价商品表详情
 func BargainShow(ctx context.Context, in *product.BargainShowRequest) (*product.BargainShowResponse, error) {
 	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainShowRequest) (*product.BargainShowResponse, error) {
 		return client.BargainShow(ctx, in)
 	})
 }
 
-// 砍价商品表列表
+// BargainList 砍价商品表列表
 func BargainList(ctx context.Context, in *product.BargainListRequest) (*product.BargainListResponse, error) {
 	return ProductClients(ctx, in, func(ctx context.Context, client product.ProductClient, req *product.BargainListRequest) (*product.BargainListResponse, error) {
 		return client.BargainList(ctx, in)
