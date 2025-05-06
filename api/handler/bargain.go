@@ -12,7 +12,7 @@ import (
 func ProductUpdate(c *gin.Context) {
 	var f request.ProductUpdate
 	if err := c.ShouldBind(&f); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	userId := c.GetUint("userId")
@@ -23,17 +23,17 @@ func ProductUpdate(c *gin.Context) {
 	})
 
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", productUpdate)
+	response.RespSuccess(c, 200, "成功", productUpdate)
 }
 
 // 创建砍价表
 func BargainCreate(c *gin.Context) {
 	var f request.BargainCreate
 	if err := c.ShouldBind(&f); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	userId := c.GetUint("userId")
@@ -63,35 +63,35 @@ func BargainCreate(c *gin.Context) {
 	})
 
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", create)
+	response.RespSuccess(c, 200, "成功", create)
 }
 
 // 砍价商品表详情
 func BargainShow(c *gin.Context) {
 	var f request.BargainShow
 	if err := c.ShouldBind(&f); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	show, err := client.BargainShow(c, &product.BargainShowRequest{ProductId: f.ProductId})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", show)
+	response.RespSuccess(c, 200, "成功", show)
 }
 
 // 砍价商品表列表
 func BargainList(c *gin.Context) {
 	list, err := client.BargainList(c, &product.BargainListRequest{})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", list.BargainList)
+	response.RespSuccess(c, 200, "成功", list.BargainList)
 
 }
 
@@ -99,7 +99,7 @@ func BargainList(c *gin.Context) {
 func BargainUpdate(c *gin.Context) {
 	var f request.BargainUpdate
 	if err := c.ShouldBind(&f); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	userId := c.GetUint("userId")
@@ -109,16 +109,16 @@ func BargainUpdate(c *gin.Context) {
 		UserID:    uint32(userId),
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", update)
+	response.RespSuccess(c, 200, "成功", update)
 }
 
 func BargainUserCreate(c *gin.Context) {
 	var f request.BargainUserCreate
 	if err := c.ShouldBind(&f); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	userId := c.GetUint("userId")
@@ -128,16 +128,16 @@ func BargainUserCreate(c *gin.Context) {
 		BargainPriceMin: f.BargainPriceMin,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", create)
+	response.RespSuccess(c, 200, "成功", create)
 }
 
 func BargainUserShow(c *gin.Context) {
 	var f request.BargainUserShow
 	if err := c.ShouldBind(&f); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	userId := c.GetUint("userId")
@@ -147,40 +147,40 @@ func BargainUserShow(c *gin.Context) {
 		BargainId: f.BargainId,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", show)
+	response.RespSuccess(c, 200, "成功", show)
 }
 
 func BargainUserHelpShow(c *gin.Context) {
 	var f request.BargainUserHelpShow
 	if err := c.ShouldBind(&f); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	show, err := client.BargainUserHelpShow(c, &product.BargainUserHelpShowRequest{Id: f.Id})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", show)
+	response.RespSuccess(c, 200, "成功", show)
 }
 
 func BargainUserList(c *gin.Context) {
 	list, err := client.BargainUserList(c, &product.BargainUserListRequest{})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", list.BargainUserList)
+	response.RespSuccess(c, 200, "成功", list.BargainUserList)
 }
 
 func BargainUserHelpList(c *gin.Context) {
 	list, err := client.BargainUserHelpList(c, &product.BargainUserHelpListRequest{})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", list.BargainUserHelpList)
+	response.RespSuccess(c, 200, "成功", list.BargainUserHelpList)
 }
