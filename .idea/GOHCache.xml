@@ -1377,6 +1377,7 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/rabbitMq/simple/rabbitmq.go" />
+              <option value="file://$PROJECT_DIR$/../../retailers/common/rabbitMq/simple/rabbitmq.go" />
             </set>
           </value>
         </entry>
@@ -1468,6 +1469,13 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/common/model/store_staff.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SysUser">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/../../../../../GoWork/gin-vue-admin-main/server/model/system/sys_user.go" />
             </set>
           </value>
         </entry>
@@ -2121,6 +2129,25 @@
     </option>
     <option name="scannedPathMapping">
       <map>
+        <entry key="file://$PROJECT_DIR$/../../../../../GoWork/gin-vue-admin-main/server/global/global.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746439172117" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../../../../GoWork/gin-vue-admin-main/server/model/system/sys_user.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746438563405" />
+              <option name="schema">
+                <list>
+                  <option value="SysUser" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/api/client/admin_client.go">
           <value>
             <ScannedPath>
@@ -3778,7 +3805,7 @@
         <entry key="file://$PROJECT_DIR$/srv/order_srv/internal/handler/order.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1746405153852" />
+              <option name="lastModified" value="1746435967948" />
             </ScannedPath>
           </value>
         </entry>
@@ -3911,6 +3938,39 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746405153859" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../retailers/common/initialize/init.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746436718854" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../retailers/common/rabbitMq/simple/SimlpePublish.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746437135291" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../retailers/common/rabbitMq/simple/SimpleRecieve.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746437541803" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/../../retailers/common/rabbitMq/simple/rabbitmq.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746437541806" />
+              <option name="schema">
+                <list>
+                  <option value="RabbitMQ" />
+                </list>
+              </option>
             </ScannedPath>
           </value>
         </entry>
@@ -4133,6 +4193,7 @@
         <entry key="sign" value="Sign" />
         <entry key="store" value="Store" />
         <entry key="store_staff" value="StoreStaff" />
+        <entry key="sys_user" value="SysUser" />
         <entry key="t" value="T" />
         <entry key="the_charts_request" value="TheChartsRequest" />
         <entry key="the_charts_response" value="TheChartsResponse" />
