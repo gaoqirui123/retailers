@@ -179,6 +179,7 @@ func checkUserStatus(uid int64) (*model.User, error) {
 func checkProductStatus(in *order.AddOrderRequest) (*model.Product, *model.Seckill, error) {
 	pro := &model.Product{}
 	seckill := &model.Seckill{}
+	c := &model.Combination{}
 	switch in.Source {
 	case 1:
 		err := pro.GetProductIdBy(in.ProductId)
@@ -188,9 +189,6 @@ func checkProductStatus(in *order.AddOrderRequest) (*model.Product, *model.Secki
 		if pro.Id == 0 {
 			return nil, nil, errors.New("商品不存在")
 		}
-		//if pro.IsShow == 0 {
-		//	return nil, nil, errors.New("商品下架")
-		//}
 		if pro.Stock < in.Num {
 			return nil, nil, errors.New("商品库存不足")
 		}
@@ -211,6 +209,38 @@ func checkProductStatus(in *order.AddOrderRequest) (*model.Product, *model.Secki
 		if get != seckill.Stock {
 			return nil, nil, errors.New("redis库存添加失败")
 		}
+		// 判断库存
+		if get < in.Num {
+			return nil, nil, errors.New("秒杀商品库存不足")
+		}
+	case 3:
+		// 判断拼团商品是否存在
+		com, err := c.GetCombinationById(in.ProductId)
+		if err != nil {
+			return nil, nil, err
+		}
+		if com.Id == 0 {
+			return nil, nil, errors.New("拼团商品不存在")
+		}
+		// 判断库存
+		if com.Stock < int(in.Num) {
+			return nil, nil, errors.New("商品库存不足")
+		}
+	case 4:
+		// 判断砍价商品是否存在
+		bar := &model.Bargain{}
+		err := bar.GetBargainIdBy(in.ProductId)
+		if err != nil {
+			return nil, nil, err
+		}
+		if bar.Id == 0 {
+			return nil, nil, errors.New("砍价商品不存在")
+		}
+		// 判断库存
+		if bar.Stock < int(in.Num) {
+			return nil, nil, errors.New("砍价商品库存不足")
+		}
+
 	// 可以为其他 case 添加处理逻辑
 	default:
 		return nil, nil, errors.New("无效的商品来源")

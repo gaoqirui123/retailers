@@ -43,7 +43,7 @@ type Bargain struct {
 	QuotaShow       int32   `gorm:"column:quota_show;type:int;comment:限量总数显示;not null;default:0;" json:"quota_show"`                         // 限量总数显示
 }
 
-func (Bargain) TableName() string {
+func (m *Bargain) TableName() string {
 	return "bargain"
 }
 
@@ -74,4 +74,8 @@ func (m *Bargain) BargainList() (b []*Bargain, err error) {
 // 修改砍价商品表是否删除
 func (m *Bargain) BargainUpdate() error {
 	return global.DB.Model(&m).Where("product_id = ?", m.ProductId).Update("is_del", m.IsDel).Error
+}
+
+func (m *Bargain) GetBargainIdBy(id int64) error {
+	return global.DB.Where("product_id = ? and is_del = 0", id).Limit(1).Find(&m).Error
 }

@@ -14,7 +14,7 @@ func AdminLogin(c *gin.Context) {
 	var data request.AdminLogin
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	login, err := client.AdminLogin(c, &administrators.AdminLoginReq{
@@ -22,7 +22,7 @@ func AdminLogin(c *gin.Context) {
 		Password: data.Pwd,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	claims := pkg.CustomClaims{
@@ -32,7 +32,8 @@ func AdminLogin(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	response.RespSuccess(c, "登录成功", token)
+	response.RespSuccess(c, 200, "登录成功", token)
+
 }
 
 // ProcessEnter TODO:审核商家
@@ -40,7 +41,7 @@ func ProcessEnter(c *gin.Context) {
 	var data request.ProcessEnter
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	ui := c.GetUint("userId")
@@ -50,12 +51,13 @@ func ProcessEnter(c *gin.Context) {
 		Status:     data.Status,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if login.Greet == false {
-		response.RespSuccess(c, "申请不合格，请重新申请", login)
+		response.RespSuccess(c, 200, "申请不合格，请重新申请", login)
 	} else {
-		response.RespSuccess(c, "审批成功", login)
+		response.RespSuccess(c, 200, "审批成功", login)
 	}
+
 }

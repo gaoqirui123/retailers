@@ -13,7 +13,7 @@ func Apply(c *gin.Context) {
 	var data request.Apply
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
@@ -27,16 +27,16 @@ func Apply(c *gin.Context) {
 		Charter:      data.Charter,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "申请成功，等待平台审核", register)
+	response.RespSuccess(c, 200, "申请成功，等待平台审核", register)
 }
 func Register(c *gin.Context) {
 	var data request.Register
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	register, err := client.Register(c, &user_enter.UserEnterRegisterRequest{
@@ -46,16 +46,16 @@ func Register(c *gin.Context) {
 		Email:    data.Email,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "注册成功", register)
+	response.RespSuccess(c, 200, "注册成功", register)
 }
 func Login(c *gin.Context) {
 	var data request.Login
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	login, err := client.Login(c, &user_enter.UserEnterLoginRequest{
@@ -63,7 +63,7 @@ func Login(c *gin.Context) {
 		Password: data.Password,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	claims := pkg.CustomClaims{
@@ -73,13 +73,15 @@ func Login(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	response.RespSuccess(c, "登录成功", token)
+
+	response.RespSuccess(c, 200, "登录成功", token)
+
 }
 func AddProduct(c *gin.Context) {
 	var data request.AddProduct
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
@@ -96,16 +98,16 @@ func AddProduct(c *gin.Context) {
 		Activity:  data.Activity,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "发布商品成功", register)
+	response.RespSuccess(c, 200, "发布商品成功", register)
 }
 func AddCombinationProduct(c *gin.Context) {
 	var data request.AddCombinationProduct
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
@@ -127,9 +129,10 @@ func AddCombinationProduct(c *gin.Context) {
 		QuotaShow:     data.QuotaShow,
 	})
 	if err != nil {
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "发布拼团商品成功", product)
+	response.RespSuccess(c, 200, "发布拼团商品成功", product)
 }
 
 // ProcessInvoice TODO:审核发票申请
@@ -137,7 +140,7 @@ func ProcessInvoice(c *gin.Context) {
 	var data request.ProcessInvoice
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
@@ -149,13 +152,16 @@ func ProcessInvoice(c *gin.Context) {
 		OrderId: data.OrderId,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
+
 	if invoice.Greet == false {
-		response.RespError(c, "审核失败")
+		response.RespError(c, 201, "审核失败")
 	}
-	response.RespSuccess(c, "审核完成", invoice)
+
+	response.RespSuccess(c, 200, "审核完成", invoice)
+
 }
 
 // UpdateStatus TODO: 下架商品
@@ -163,7 +169,7 @@ func UpdateStatus(c *gin.Context) {
 	var data request.DelProduct
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
@@ -173,13 +179,14 @@ func UpdateStatus(c *gin.Context) {
 		Status: data.Status,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if product.Greet == false {
-		response.RespError(c, "下架商品失败")
+		response.RespError(c, 201, "下架商品失败")
 	}
-	response.RespSuccess(c, "下架商品成功", product)
+	response.RespSuccess(c, 200, "下架商品成功", product)
+
 }
 
 // InvoiceList TODO:发票列表展示
@@ -187,7 +194,7 @@ func InvoiceList(c *gin.Context) {
 	var data request.InvoiceList
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
@@ -196,10 +203,10 @@ func InvoiceList(c *gin.Context) {
 		Status: data.Status,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "展示成功", list)
+	response.RespSuccess(c, 200, "展示成功", list)
 }
 
 // BatchPublishProducts TODO: 商品批量发布
@@ -207,7 +214,7 @@ func BatchPublishProducts(c *gin.Context) {
 	var data request.BatchPublishProducts
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	uid := c.GetUint("userId")
@@ -230,17 +237,17 @@ func BatchPublishProducts(c *gin.Context) {
 		Products: productRequests,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "批量发布成功", list)
+	response.RespSuccess(c, 200, "批量发布成功", list)
 }
 
 func MerchantVerification(c *gin.Context) {
 	var data request.MerchantVerification
 	err := c.ShouldBind(&data)
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	ar, err := client.MerchantVerification(c, &user_enter.MerchantVerificationRequest{
@@ -249,20 +256,20 @@ func MerchantVerification(c *gin.Context) {
 	})
 
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "商家核销成功", ar)
+	response.RespSuccess(c, 200, "商家核销成功", ar)
 }
 
 func CalculateOrderSummary(c *gin.Context) {
 	ar, err := client.CalculateOrderSummary(c, &user_enter.CalculateOrderSummaryRequest{})
 
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 201, err.Error())
 		return
 	}
-	response.RespSuccess(c, "商家统计成功", ar)
+	response.RespSuccess(c, 200, "商家统计成功", ar)
 }
 
 // AddSeckillProduct TODO: 添加秒杀商品
@@ -270,7 +277,7 @@ func AddSeckillProduct(c *gin.Context) {
 	userEnterId := c.GetUint("userId")
 	var data request.AddSeckillProduct
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	seckill, err := client.AddSeckillProduct(c, &user_enter.AddSeckillProductRequest{
@@ -283,14 +290,14 @@ func AddSeckillProduct(c *gin.Context) {
 		StopTime:    data.StopTime,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if seckill.SeckillId == 0 {
-		response.RespError(c, "添加秒杀商品成功")
+		response.RespError(c, 500, "添加秒杀商品成功")
 		return
 	}
-	response.RespSuccess(c, "添加秒杀商品成功", seckill)
+	response.RespSuccess(c, 200, "添加秒杀商品成功", seckill)
 }
 
 // ReverseStock TODO: 秒杀后反还剩余的商品
@@ -298,7 +305,7 @@ func ReverseStock(c *gin.Context) {
 	userEnterId := c.GetUint("userId")
 	var data request.ReverseStock
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	reverse, err := client.ReverseStock(c, &user_enter.ReverseStockRequest{
@@ -306,12 +313,12 @@ func ReverseStock(c *gin.Context) {
 		SeckillId:   data.ProductId,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if reverse.Success == false {
-		response.RespError(c, "秒杀后反还剩余的商品失败")
+		response.RespError(c, 500, "秒杀后反还剩余的商品失败")
 		return
 	}
-	response.RespSuccess(c, "秒杀后反还剩余的商品成功", reverse)
+	response.RespSuccess(c, 200, "秒杀后反还剩余的商品成功", reverse)
 }
