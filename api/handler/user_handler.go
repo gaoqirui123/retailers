@@ -177,11 +177,12 @@ func AddUserAddress(c *gin.Context) {
 		return
 	}
 	address, err := client.AddUserAddress(c, &user.AddUserAddressRequest{
-		Uid:      int64(userId),
-		Province: data.Province,
-		City:     data.City,
-		District: data.District,
-		Detail:   data.Detail,
+		Uid:       int64(userId),
+		Province:  data.Province,
+		City:      data.City,
+		District:  data.District,
+		Detail:    data.Detail,
+		IsDefault: 0,
 	})
 	if err != nil {
 		response.RespError(c, "用户地址添加失败")
@@ -238,12 +239,12 @@ func UserApplication(c *gin.Context) {
 	}
 
 	application, err := client.UserApplication(c, &user.UserApplicationRequest{
-		UserId:        int64(userId),
-		OrderId:       data.OrderId,
-		InvoiceType:   data.InvoiceType,
-		InvoiceTitle:  data.InvoiceTitle,
-		InvoiceAmount: float32(data.InvoiceAmount),
-		Type:          data.Type,
+		UserId:                       int64(userId),
+		OrderId:                      data.OrderId,
+		InvoiceType:                  data.InvoiceType,
+		InvoiceTitle:                 data.InvoiceTitle,
+		Type:                         data.Type,
+		TaxpayerIdentificationNumber: data.TaxpayerIdentificationNumber,
 	})
 	if err != nil {
 		response.RespError(c, "用户申请发票失败")
@@ -262,13 +263,14 @@ func UpdatedAddress(c *gin.Context) {
 	}
 
 	updatedAddress, err := client.UpdatedAddress(c, &user.UpdatedAddressRequest{
-		Uid:      int64(userId),
-		RealName: data.RealName,
-		Phone:    data.Phone,
-		Province: data.Province,
-		City:     data.City,
-		District: data.District,
-		Detail:   data.Detail,
+		Uid:           int64(userId),
+		RealName:      data.RealName,
+		Phone:         data.Phone,
+		Province:      data.Province,
+		City:          data.City,
+		District:      data.District,
+		Detail:        data.Detail,
+		UserAddressId: data.UserAddressId,
 	})
 	if err != nil {
 		response.RespError(c, "用户修改地址失败")
@@ -317,4 +319,32 @@ func UserWithdraw(c *gin.Context) {
 		return
 	}
 	response.RespSuccess(c, "用户提现成功", userWithdraw)
+}
+
+// 邮箱订阅
+func EmailSubscribe(c *gin.Context) {
+	var data request.SubscriptionRequest
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, "参数错误")
+		return
+	}
+
+	// 发送订阅信息到指定邮箱
+	email, err := pkg.SendEmail(data.Context)
+	if err != nil {
+		response.RespError(c, "发送订阅信息到指定邮箱 失败")
+		return
+	}
+	response.RespSuccess(c, "邮箱订阅发送成功", email)
+}
+
+// 用户地址列表
+func UserAddressList(c *gin.Context) {
+	userId := c.GetUint("userId")
+	list, err := client.UserAddressList(c, &user.UserAddressListRequest{Uid: int64(userId)})
+	if err != nil {
+		response.RespError(c, "用户地址列表 展示失败")
+		return
+	}
+	response.RespSuccess(c, "用户地址列表 展示成功", list)
 }

@@ -133,3 +133,10 @@ func UserWithdraw(ctx context.Context, req *user.UserWithdrawRequest) (*user.Use
 		return client.UserWithdraw(ctx, req)
 	})
 }
+
+// UserAddressList 用户地址列表
+func UserAddressList(ctx context.Context, req *user.UserAddressListRequest) (*user.UserAddressListResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserAddressListRequest) (*user.UserAddressListResponse, error) {
+		return client.UserAddressList(ctx, req)
+	})
+}

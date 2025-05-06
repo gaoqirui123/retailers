@@ -106,14 +106,30 @@ func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicatio
 	}
 	return userApplication, nil
 }
-<<<<<<< HEAD
+
+func (u UserServer) AddText(ctx context.Context, in *user.AddTextRequest) (*user.AddTextResponse, error) {
+	addText, err := handler.AddText(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return addText, nil
+}
+
+func (u UserServer) AddUserAddress(ctx context.Context, in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+	addUserAddress, err := handler.AddUserAddress(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return addUserAddress, nil
+}
+
 func (u UserServer) UpdatedAddress(ctx context.Context, in *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
 	updatedAddress, err := handler.UpdatedAddress(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}
 	return updatedAddress, nil
-=======
+}
 
 func (u UserServer) UserReceiveCoupon(ctx context.Context, in *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
 	receive, err := handler.UserReceiveCoupon(in)
@@ -128,5 +144,11 @@ func (u UserServer) UserWithdraw(ctx context.Context, in *user.UserWithdrawReque
 		return nil, errors.New(err.Error())
 	}
 	return receive, nil
->>>>>>> 9d8aefe8fd97695cf5bb389ba8ce8b1bed1b904b
+}
+func (u UserServer) UserAddressList(ctx context.Context, in *user.UserAddressListRequest) (*user.UserAddressListResponse, error) {
+	receive, err := handler.UserAddressList(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return receive, nil
 }
