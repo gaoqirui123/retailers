@@ -114,4 +114,5 @@ func QrCodeVerification(c *gin.Context) {
 	}
 
 	response.RespSuccess(c, 200, "二维码已生成欢迎到点核销", list)
+
 }

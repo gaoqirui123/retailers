@@ -3,6 +3,7 @@ package handler
 import (
 	"common/global"
 	"common/model"
+	"common/pkg"
 	"common/proto/distribution"
 	"common/utlis"
 	"errors"
@@ -162,15 +163,19 @@ func DistributionLevelSetting(in *distribution.DistributionLevelSettingRequest) 
 func TheCharts(in *distribution.TheChartsRequest) (*distribution.TheChartsResponse, error) {
 	n := model.Commission{}
 	list := n.CalculateAndRankTotalCommission()
-
+	pkg.StartWeeklyUpdate()
 	var sli []*distribution.ListRank
 	for _, c := range list {
 		sli = append(sli, &distribution.ListRank{
-			ToUserId: int64(c.ToUserId),
+			UserName: c.Account,
 			Amount:   float32(c.TotalAmount),
+			Img:      c.Avatar,
 		})
 	}
-	return &distribution.TheChartsResponse{List: sli}, nil
+
+	response := &distribution.TheChartsResponse{List: sli}
+
+	return response, nil
 }
 
 // 查看下级用户
@@ -188,11 +193,9 @@ func LookDoneUp(in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpRes
 	var doneList []*distribution.UserList
 	for _, eb := range d {
 		doneList = append(doneList, &distribution.UserList{
-			Uid:        uint32(eb.Uid),
-			Account:    eb.Account,
-			SpreadUid:  uint32(eb.SpreadUid),
-			UserType:   eb.UserType,
-			IsPromoter: eb.IsPromoter,
+			Img:       eb.Avatar,
+			Account:   eb.Account,
+			SpreadUid: uint32(eb.SpreadUid),
 		})
 	}
 	return &distribution.LookDoneOrUpResp{List: doneList}, nil
@@ -212,11 +215,9 @@ func LookUp(in *distribution.LookDoneOrUpReq) (*distribution.LookDoneOrUpResp, e
 	var UpList []*distribution.UserList
 	for _, eb := range uu {
 		UpList = append(UpList, &distribution.UserList{
-			Uid:        uint32(eb.Uid),
-			Account:    eb.Account,
-			SpreadUid:  uint32(eb.SpreadUid),
-			UserType:   eb.UserType,
-			IsPromoter: eb.IsPromoter,
+			Img:       eb.Avatar,
+			Account:   eb.Account,
+			SpreadUid: uint32(eb.SpreadUid),
 		})
 	}
 	return &distribution.LookDoneOrUpResp{List: UpList}, nil

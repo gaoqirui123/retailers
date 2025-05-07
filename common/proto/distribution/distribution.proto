@@ -22,11 +22,10 @@ message LookDoneOrUpResp{
 }
 
 message UserList{
-  uint32 Uid=1;//用户id
+  string  Img =1;
   string   Account=2;//用户账号
   uint32 SpreadUid=3;//推广元id
-  string UserType=4;//用户类型
-  int64  IsPromoter=5;//是否为推广员
+
 }
 
 
@@ -43,8 +42,9 @@ message TheChartsResponse{
 }
 
 message ListRank{
-int64  ToUserId =1;
-float Amount=2;
+  string  UserName =1;
+  float Amount=2;
+  string  Img =3;
 }
 
 //分销等级设置

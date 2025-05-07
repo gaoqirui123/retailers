@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="GoORMHelperCache">
+<<<<<<< HEAD
     <option name="schemaMapping">
       <map>
         <entry key="AddCart">
@@ -2251,12 +2252,21 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1746540610539" />
+=======
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$PROJECT_DIR$/api/handler/distribution_handler.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1746540230273" />
+>>>>>>> origin/cm
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/api/handler/order_handler.go">
           <value>
             <ScannedPath>
+<<<<<<< HEAD
               <option name="lastModified" value="1746540610539" />
             </ScannedPath>
           </value>
@@ -3954,11 +3964,15 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1745636418522" />
+=======
+              <option name="lastModified" value="1746540230382" />
+>>>>>>> origin/cm
             </ScannedPath>
           </value>
         </entry>
       </map>
     </option>
+<<<<<<< HEAD
     <option name="tableStructMapping">
       <map>
         <entry key="add_cart" value="AddCart" />
@@ -4268,5 +4282,7 @@
       </map>
     </option>
     <option name="lastTimeChecked" value="1746540640640" />
+=======
+>>>>>>> origin/cm
   </component>
 </project>
