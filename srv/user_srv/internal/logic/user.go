@@ -107,6 +107,30 @@ func (u UserServer) UserApplication(ctx context.Context, in *user.UserApplicatio
 	return userApplication, nil
 }
 
+func (u UserServer) AddText(ctx context.Context, in *user.AddTextRequest) (*user.AddTextResponse, error) {
+	addText, err := handler.AddText(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return addText, nil
+}
+
+func (u UserServer) AddUserAddress(ctx context.Context, in *user.AddUserAddressRequest) (*user.AddUserAddressResponse, error) {
+	addUserAddress, err := handler.AddUserAddress(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return addUserAddress, nil
+}
+
+func (u UserServer) UpdatedAddress(ctx context.Context, in *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+	updatedAddress, err := handler.UpdatedAddress(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return updatedAddress, nil
+}
+
 func (u UserServer) UserReceiveCoupon(ctx context.Context, in *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
 	receive, err := handler.UserReceiveCoupon(in)
 	if err != nil {
@@ -116,6 +140,13 @@ func (u UserServer) UserReceiveCoupon(ctx context.Context, in *user.UserReceiveC
 }
 func (u UserServer) UserWithdraw(ctx context.Context, in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
 	receive, err := handler.UserWithdraw(in)
+	if err != nil {
+		return nil, errors.New(err.Error())
+	}
+	return receive, nil
+}
+func (u UserServer) UserAddressList(ctx context.Context, in *user.UserAddressListRequest) (*user.UserAddressListResponse, error) {
+	receive, err := handler.UserAddressList(in)
 	if err != nil {
 		return nil, errors.New(err.Error())
 	}

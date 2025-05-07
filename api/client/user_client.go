@@ -113,6 +113,13 @@ func UserApplication(ctx context.Context, req *user.UserApplicationRequest) (*us
 	})
 }
 
+// UpdatedAddress 用户修改地址
+func UpdatedAddress(ctx context.Context, req *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+		return client.UpdatedAddress(ctx, req)
+	})
+}
+
 // UserReceiveCoupon 用户申请发票
 func UserReceiveCoupon(ctx context.Context, req *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
 	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserReceiveCouponRequest) (*user.UserReceiveCouponResponse, error) {
@@ -124,5 +131,12 @@ func UserReceiveCoupon(ctx context.Context, req *user.UserReceiveCouponRequest) 
 func UserWithdraw(ctx context.Context, req *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
 	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
 		return client.UserWithdraw(ctx, req)
+	})
+}
+
+// UserAddressList 用户地址列表
+func UserAddressList(ctx context.Context, req *user.UserAddressListRequest) (*user.UserAddressListResponse, error) {
+	return UserClients(ctx, req, func(ctx context.Context, client user.UserClient, req *user.UserAddressListRequest) (*user.UserAddressListResponse, error) {
+		return client.UserAddressList(ctx, req)
 	})
 }

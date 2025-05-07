@@ -19,8 +19,43 @@ service User {
   rpc AddText(AddTextRequest) returns (AddTextResponse);//TODO:会员分添加记录
   rpc AddUserAddress(AddUserAddressRequest) returns (AddUserAddressResponse);//TODO:用户添加地址
   rpc UserApplication(UserApplicationRequest) returns (UserApplicationResponse);//TODO:用户申请发票
+  rpc UpdatedAddress(UpdatedAddressRequest) returns (UpdatedAddressResponse);//TODO:用户修改地址
   rpc UserReceiveCoupon(UserReceiveCouponRequest) returns (UserReceiveCouponResponse); // TODO: 用户领取优惠券
   rpc UserWithdraw(UserWithdrawRequest) returns (UserWithdrawResponse); // TODO: 用户提现
+  rpc UserAddressList(UserAddressListRequest) returns (UserAddressListResponse); // TODO: 用户地址列表
+}
+
+//TODO:用户地址列表
+message UserAddressListRequest {
+  int64 Uid = 1;//用户id
+}
+message UserAddressListResponse {
+  repeated UserAddressList list = 1;
+}
+message UserAddressList {
+  int64 UserAddressId = 1;//用户地址id
+  string RealName = 2;//收货人姓名
+  string Phone = 3;//收货人电话
+  string Province = 4;//收货人所在省
+  string City = 5;//收货人所在市
+  string District = 6;//收货人所在区
+  string Detail = 7;//收货人详细地址
+  int64 IsDefault = 8;//是否默认：0-默认，1-不默认的
+}
+
+//TODO:用户修改地址
+message UpdatedAddressRequest {
+  int64 Uid = 1;//用户id
+  string RealName = 2;//收货人姓名
+  string Phone = 3;//收货人电话
+  string Province = 4;//收货人所在省
+  string City = 5;//收货人所在市
+  string District = 6;//收货人所在区
+  string Detail = 7;//收货人详细地址
+  int64 UserAddressId = 8;//用户地址id
+}
+message UpdatedAddressResponse {
+  string Success = 1;
 }
 
 // TODO: 用户提现请求
@@ -53,8 +88,8 @@ message UserApplicationRequest {
   int64 OrderId = 2;//订单id
   string InvoiceType = 3;//发票类型：普通发票、增值税专用发票
   string InvoiceTitle = 4;//发票抬头
-  float InvoiceAmount = 5;//发票金额
-  string Type = 6;//发票材质：纸质、电子
+  string Type = 5;//发票材质：纸质、电子
+  string TaxpayerIdentificationNumber = 6;//纳税人识别号
 }
 message UserApplicationResponse {
   string Success = 1;
@@ -67,6 +102,7 @@ message AddUserAddressRequest {
   string City = 3;//收货人所在市
   string District = 4;//收货人所在区
   string Detail = 5;//收货人详细地址
+  int64 IsDefault = 6;//是否默认：0-默认，1-不默认的
 }
 message AddUserAddressResponse {
   string Success = 1;
