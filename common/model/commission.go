@@ -32,20 +32,29 @@ func (n *Commission) CreateCommission() bool {
 
 // 计算用户总佣金并按佣金从高到低排序
 func (n *Commission) CalculateAndRankTotalCommission() []struct {
-	ToUserId    uint32  `json:"to_user_id"`
 	TotalAmount float64 `json:"total_amount"`
+	Account     string  `json:"account"` // 用户名字段
+	Avatar      string  `json:"avatar"`
 } {
 	var result []struct {
-		ToUserId    uint32  `json:"to_user_id"`
 		TotalAmount float64 `json:"total_amount"`
+		Account     string  `json:"account"` // 用户名字段
+		Avatar      string  `json:"avatar"`
 	}
-	// 使用更高效的查询方式，移除 Debug 模式
-	query := global.DB.Table("commission").Select("to_user_id", "SUM(amount) as total_amount").Where("status = 'normal'").Group("to_user_id").Order("total_amount DESC")
+	// 使用更高效的查询方式，移除 Debug 模式，并关联 user 表
+	query := global.DB.Table("commission").
+		Select("commission.to_user_id, SUM(commission.amount) as total_amount, user.account,user.avatar").
+		Joins("JOIN user ON commission.to_user_id = user.uid").
+		Where("commission.status = 'normal'").
+		Group("commission.to_user_id").
+		Order("total_amount DESC")
 	err := query.Find(&result).Error
 	if err != nil {
-		// 记录错误日志，方便后续排查问题
+
 		log.Printf("Failed to calculate and rank total commission: %v", err)
 	}
+	// 打印完整结果
+	//	log.Printf("Query result: %+v", result)
 	return result
 }
 

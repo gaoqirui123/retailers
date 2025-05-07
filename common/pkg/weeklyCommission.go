@@ -2,9 +2,8 @@ package pkg
 
 import (
 	"common/model"
-	"log"
-
 	"github.com/robfig/cron/v3"
+	"log"
 )
 
 func StartWeeklyUpdate() {

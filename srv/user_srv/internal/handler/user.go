@@ -623,7 +623,7 @@ func UserReceiveCoupon(in *user.UserReceiveCouponRequest) (*user.UserReceiveCoup
 
 // 用户提现
 func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
-	// 1. 检查用户是否存在
+	//检查用户是否存在
 	u := model.User{}
 	userInfo, err := u.FindId(int(in.UserId))
 	if err != nil {
@@ -633,12 +633,12 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		return nil, errors.New("用户不存在")
 	}
 
-	// 2. 检查用户余额是否足够
+	//检查用户余额是否足够
 	if userInfo.NowMoney < float64(in.Amount) {
 		return nil, errors.New("余额不足")
 	}
 
-	// 3. 开启事务处理
+	//开启事务处理
 	tx := global.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -646,7 +646,7 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		}
 	}()
 
-	// 4. 扣除用户余额
+	// 扣除用户余额
 	newBalance := userInfo.NowMoney - float64(in.Amount)
 	err = u.UpdateBalance(in.UserId, newBalance)
 	if err != nil {
@@ -654,7 +654,7 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		return nil, err
 	}
 
-	// 5. 记录提现记录
+	//记录提现记录
 	ue := &model.UserExtract{
 		Uid:          in.UserId,
 		RealName:     userInfo.RealName,
@@ -671,7 +671,7 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		return nil, err
 	}
 
-	// 6. 提交事务
+	// 提交事务
 	if err = tx.Commit().Error; err != nil {
 		return nil, err
 	}

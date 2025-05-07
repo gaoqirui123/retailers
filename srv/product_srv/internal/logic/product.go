@@ -126,3 +126,10 @@ func (p ProductServer) JoinGroupBuying(ctx context.Context, in *product.JoinGrou
 	}
 	return userLevelPowerList, nil
 }
+func (p ProductServer) GetCombinationInfo(ctx context.Context, in *product.GetCombinationInfoRequest) (*product.GetCombinationInfoResponse, error) {
+	userLevelPowerList, err := handler.GetCombinationInfo(in)
+	if err != nil {
+		return nil, err
+	}
+	return userLevelPowerList, nil
+}

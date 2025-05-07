@@ -75,6 +75,9 @@ func (a *InvoiceApplication) UpdateStatusDis(ueId int64, uid int64, status int64
 func (a *InvoiceApplication) ConvertToInvoiceList(application *InvoiceApplication) user_enter.InvoiceList {
 	applicationTime := application.ApplicationTime.Format("20060102150405") // 申请时间
 	reviewTime := application.ReviewTime.Format("20060102150405")           // 审核时间
+	m := UserEnter{}
+	merchant, _ := m.GetStatusById(application.MerId)
+
 	return user_enter.InvoiceList{
 		UserId:                       application.UserId,
 		OrderId:                      application.OrderId,
@@ -86,5 +89,6 @@ func (a *InvoiceApplication) ConvertToInvoiceList(application *InvoiceApplicatio
 		ApplicationStatus:            int64(application.ApplicationStatus),
 		ReviewTime:                   reviewTime,
 		Type:                         application.Type,
+		MerName:                      merchant.MerchantName,
 	}
 }

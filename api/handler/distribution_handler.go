@@ -5,15 +5,15 @@ import (
 	"api/request"
 	"api/response"
 	"common/proto/distribution"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func GenerateInvitationCode(c *gin.Context) {
 
 	var data request.GenerateInvitationCode
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	userId := c.GetUint("userId")
@@ -23,16 +23,16 @@ func GenerateInvitationCode(c *gin.Context) {
 	})
 
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", release)
+	response.RespSuccess(c, 200, "成功", release)
 }
 
 func UserFillsInInvitationCode(c *gin.Context) {
 	var data request.UserFillsInInvitationCode
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	userId := c.GetUint("userId")
@@ -42,21 +42,19 @@ func UserFillsInInvitationCode(c *gin.Context) {
 	})
 
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", release)
+	response.RespSuccess(c, 200, "成功", release)
 }
 
-// 分销等级设置
+// DistributionLevelSetting 分销等级设置
 func DistributionLevelSetting(c *gin.Context) {
-
 	var data request.DistributionLevelSetting
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, fmt.Sprintf("参数错误%v", err))
+		response.RespError(c, 201, err.Error())
 		return
 	}
-
 	release, err := client.DistributionLevelSetting(c, &distribution.DistributionLevelSettingRequest{
 		Img:       data.Img,
 		LevelName: data.LevelName,
@@ -65,38 +63,48 @@ func DistributionLevelSetting(c *gin.Context) {
 		Two:       float32(data.Two),
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "成功", release)
+	response.RespSuccess(c, 200, "成功", release)
 }
 
 func TheCharts(c *gin.Context) {
 	release, err := client.TheCharts(c, &distribution.TheChartsRequest{})
 	if err != nil {
-		response.RespError(c, err.Error())
+
+		// 添加日志记录
+		log.Printf("调用 client.TheCharts 出错: %v", err)
+
+		response.RespError(c, 500, err.Error())
+
 		return
 	}
-	response.RespSuccess(c, "成功", release)
+	response.RespSuccess(c, 200, "成功", release)
 }
 
 func LookDoneUp(c *gin.Context) {
 	var data request.UserUpOrDone
-	userId := c.GetUint("userId")
-	err := c.ShouldBind(&data)
-	if err != nil {
-		response.RespError(c, err.Error())
+	if err := c.ShouldBind(&data); err != nil {
+		response.RespError(c, 201, err.Error())
 		return
 	}
-
+	userId := c.GetUint("userId")
 	if data.Button == 1 {
 
-		up, _ := client.LookDoneUp(c, &distribution.LookDoneOrUpReq{Id: int64(userId)})
-
-		response.RespSuccess(c, "成功", up)
+		up, err := client.LookDoneUp(c, &distribution.LookDoneOrUpReq{Id: int64(userId)})
+		if err != nil {
+			response.RespError(c, 500, err.Error())
+			return
+		}
+		response.RespSuccess(c, 200, "成功", up)
 
 	} else if data.Button == 2 {
-		done, _ := client.LookUp(c, &distribution.LookDoneOrUpReq{Id: int64(userId)})
-		response.RespSuccess(c, "成功", done)
+		done, err := client.LookUp(c, &distribution.LookDoneOrUpReq{Id: int64(userId)})
+		if err != nil {
+			response.RespError(c, 500, err.Error())
+			return
+		}
+		response.RespSuccess(c, 200, "成功", done)
 	}
 }

@@ -11,7 +11,7 @@ import (
 func AddCart(c *gin.Context) {
 	var data request.AddCart
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	Uid := c.GetUint("userId")
@@ -28,14 +28,14 @@ func AddCart(c *gin.Context) {
 		BargainId:         data.BargainId,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if add.CartId == 0 {
-		response.RespError(c, "添加购物车失败")
+		response.RespError(c, 500, "添加购物车失败")
 		return
 	}
-	response.RespSuccess(c, "添加购物车成功", add.CartId)
+	response.RespSuccess(c, 200, "添加购物车成功", add.CartId)
 }
 
 func ClearCart(c *gin.Context) {
@@ -44,20 +44,20 @@ func ClearCart(c *gin.Context) {
 		Uid: uint64(Uid),
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if clears.Success == false {
-		response.RespError(c, "清空购物车失败")
+		response.RespError(c, 500, "清空购物车失败")
 		return
 	}
-	response.RespSuccess(c, "清空购物车成功", clears.Success)
+	response.RespSuccess(c, 200, "清空购物车成功", clears.Success)
 }
 
 func DeleteCart(c *gin.Context) {
 	var data request.DeleteCart
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	Uid := c.GetUint("userId")
@@ -66,14 +66,14 @@ func DeleteCart(c *gin.Context) {
 		ProductId: data.ProductId,
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if del.Success == false {
-		response.RespError(c, "删除购物车失败")
+		response.RespError(c, 500, "删除购物车失败")
 		return
 	}
-	response.RespSuccess(c, "删除购物车成功", del.Success)
+	response.RespSuccess(c, 200, "删除购物车成功", del.Success)
 }
 
 func GetCartList(c *gin.Context) {
@@ -82,12 +82,12 @@ func GetCartList(c *gin.Context) {
 		Uid: int64(Uid),
 	})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
 	if list.List == nil {
-		response.RespError(c, "购物车列表展示失败")
+		response.RespError(c, 500, "购物车列表展示失败")
 		return
 	}
-	response.RespSuccess(c, "购物车列表展示成功", list)
+	response.RespSuccess(c, 200, "购物车列表展示成功", list)
 }

@@ -72,7 +72,7 @@ message UserEnterLoginRequest {
 }
 
 message UserEnterLoginResponse {
-  string greet = 1;
+  int64 UserEnterId = 1;
 }
 message AddProductRequest {
   int64   MerId         =1; // 商户Id(0为总后台管理员创建,不为0的时候是商户后台创建)
@@ -135,24 +135,26 @@ message DelProductResponse {
 }
 //TODO:发票列表展示
 message InvoiceListRequest {
-  int64 UeId =1;
-  int64 Status =2;
+  int64 UeId =1;//商家id
+  int64 Status =2;//状态
+
 }
 
 message InvoiceListResponse {
   repeated InvoiceList list =1;
 }
 message InvoiceList{
-  int64 UserId =1;
-  int64 OrderId =2;
-  string InvoiceType =3;
-  string InvoiceTitle =4;
-  string TaxpayerIdentificationNumber=5;
-  float InvoiceAmount=6;
-  string ApplicationTime=7;
-  int64 ApplicationStatus =8;
-  string ReviewTime =9;
-  string Type =10;
+  int64 UserId =1;//用户id
+  int64 OrderId =2;//订单id
+  string InvoiceType =3;//发票类型
+  string InvoiceTitle =4;//发票抬头
+  string TaxpayerIdentificationNumber=5;//号码
+  float InvoiceAmount=6;//发票金额
+  string ApplicationTime=7;//申请时间
+  int64 ApplicationStatus =8;//申请状态
+  string ReviewTime =9;//审核时间
+  string Type =10;//发票材质
+  string MerName =11;//商家店铺名称
 }
 
 //TODO:商家核销

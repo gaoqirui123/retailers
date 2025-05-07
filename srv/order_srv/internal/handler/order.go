@@ -179,6 +179,7 @@ func checkUserStatus(uid int64) (*model.User, error) {
 func checkProductStatus(in *order.AddOrderRequest) (*model.Product, *model.Seckill, error) {
 	pro := &model.Product{}
 	seckill := &model.Seckill{}
+	c := &model.Combination{}
 	switch in.Source {
 	case 1:
 		err := pro.GetProductIdBy(in.ProductId)
@@ -188,9 +189,6 @@ func checkProductStatus(in *order.AddOrderRequest) (*model.Product, *model.Secki
 		if pro.Id == 0 {
 			return nil, nil, errors.New("商品不存在")
 		}
-		//if pro.IsShow == 0 {
-		//	return nil, nil, errors.New("商品下架")
-		//}
 		if pro.Stock < in.Num {
 			return nil, nil, errors.New("商品库存不足")
 		}
@@ -211,6 +209,38 @@ func checkProductStatus(in *order.AddOrderRequest) (*model.Product, *model.Secki
 		if get != seckill.Stock {
 			return nil, nil, errors.New("redis库存添加失败")
 		}
+		// 判断库存
+		if get < in.Num {
+			return nil, nil, errors.New("秒杀商品库存不足")
+		}
+	case 3:
+		// 判断拼团商品是否存在
+		com, err := c.GetCombinationById(in.ProductId)
+		if err != nil {
+			return nil, nil, err
+		}
+		if com.Id == 0 {
+			return nil, nil, errors.New("拼团商品不存在")
+		}
+		// 判断库存
+		if com.Stock < int(in.Num) {
+			return nil, nil, errors.New("商品库存不足")
+		}
+	case 4:
+		// 判断砍价商品是否存在
+		bar := &model.Bargain{}
+		err := bar.GetBargainIdBy(in.ProductId)
+		if err != nil {
+			return nil, nil, err
+		}
+		if bar.Id == 0 {
+			return nil, nil, errors.New("砍价商品不存在")
+		}
+		// 判断库存
+		if bar.Stock < int(in.Num) {
+			return nil, nil, errors.New("砍价商品库存不足")
+		}
+
 	// 可以为其他 case 添加处理逻辑
 	default:
 		return nil, nil, errors.New("无效的商品来源")
@@ -510,22 +540,84 @@ func OrderLists(list []*model.Order) ([]*order.OrderList, error) {
 	return orderList, nil
 }
 
+/*
+	func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerificationResponse, error) {
+		o := &model.Order{}
+		id, err := o.FindId(in.OrderId)
+		if err != nil {
+			return nil, err
+		}
+		//判断订单是否付款
+
+		if id.Paid != 3 {
+			return &order.QrCodeVerificationResponse{Success: "商品还没付钱呢，您付个钱试试呢"}, err
+		}
+		//判断订单状态
+
+		if id.Status != 5 {
+			return &order.QrCodeVerificationResponse{Success: "订单已经和核销过，请不要试咯~"}, err
+		}
+		// 将订单信息序列化为 JSON 字符串
+		Order := global.Order
+		Order.Id = id.Id
+		Order.OrderSn = id.OrderSn
+		Order.Uid = id.Uid
+		Order.Paid = id.Paid
+		Order.Status = id.Status
+
+		orderInfo, err := json.Marshal(Order)
+
+		if err != nil {
+			return &order.QrCodeVerificationResponse{Success: err.Error()}, err
+		}
+
+		// 指定具体的文件名
+		filePath := "../../common/img/" + fmt.Sprintf(global.IMGName, in.UserId, in.OrderId) + ".png"
+
+		// 确保目录存在
+		dir := "../../common/img"
+		if _, err = os.Stat(dir); os.IsNotExist(err) {
+			err = os.MkdirAll(dir, 0755)
+			if err != nil {
+				return nil, fmt.Errorf("failed to create directory: %w", err)
+			}
+		}
+		logoPath := "../../common/img/1234.png"
+		err = utlis.GenerateQRCodeWithLogo(string(orderInfo), logoPath, filePath)
+		if err != nil {
+			return &order.QrCodeVerificationResponse{Success: err.Error()}, err
+		}
+		code, err := utlis.DecodeQRCode(filePath)
+		if err != nil {
+			return nil, err
+		}
+
+		all := json.Unmarshal([]byte(code), &Order)
+		if all != nil {
+
+			return &order.QrCodeVerificationResponse{Success: fmt.Sprintf("JSON 反序列化失败: %v\n", all)}, all
+		}
+		staticFilePrefix := "http://your-static-server-url/common/img/"
+		keyall := fmt.Sprintf(global.IMGName, Order.Uid, Order.Id)
+		qrCodeUrl := staticFilePrefix + keyall
+		return &order.QrCodeVerificationResponse{Success: qrCodeUrl}, nil
+	}
+*/
 func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerificationResponse, error) {
 	o := &model.Order{}
 	id, err := o.FindId(in.OrderId)
 	if err != nil {
 		return nil, err
 	}
-	////判断订单是否付款
-	//
-	//if id.Paid != 3 {
-	//	return &order.QrCodeVerificationResponse{Success: false}, err
-	//}
-	////判断订单状态
-	//
-	//if id.Status != 5 {
-	//	return &order.QrCodeVerificationResponse{Success: false}, err
-	//}
+
+	//判断订单是否付款
+	if id.Paid != 3 {
+		return &order.QrCodeVerificationResponse{Success: "商品还没付钱呢，您付个钱试试呢"}, err
+	}
+	//判断订单状态
+	if id.Status != 5 {
+		return &order.QrCodeVerificationResponse{Success: "订单已经和核销过，请不要试咯~"}, err
+	}
 	// 将订单信息序列化为 JSON 字符串
 	Order := global.Order
 	Order.Id = id.Id
@@ -541,7 +633,9 @@ func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerif
 	}
 
 	// 指定具体的文件名
-	filePath := "../../common/img/" + fmt.Sprintf(global.IMGName, in.UserId, in.OrderId) + ".png"
+	fileName := fmt.Sprintf(global.IMGName, in.UserId, in.OrderId) + ".png"
+
+	filePath := "../../common/img/" + fileName
 
 	// 确保目录存在
 	dir := "../../common/img"
@@ -551,11 +645,14 @@ func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerif
 			return nil, fmt.Errorf("failed to create directory: %w", err)
 		}
 	}
-	logoPath := "../../common/img/1234.png" // 替换为你的 logo 图片路径
+	logoPath := "../../common/img/1234.png"
+	//反序列化
 	err = utlis.GenerateQRCodeWithLogo(string(orderInfo), logoPath, filePath)
+
 	if err != nil {
 		return &order.QrCodeVerificationResponse{Success: err.Error()}, err
 	}
+
 	code, err := utlis.DecodeQRCode(filePath)
 	if err != nil {
 		return nil, err
@@ -566,9 +663,14 @@ func QrCodeVerification(in *order.QrCodeVerificationRequest) (*order.QrCodeVerif
 
 		return &order.QrCodeVerificationResponse{Success: fmt.Sprintf("JSON 反序列化失败: %v\n", all)}, all
 	}
+	// 假设静态文件服务器的访问前缀，需要根据实际情况修改
+	url := GetUpload(fileName)
 
-	keyall := fmt.Sprintf(global.IMGName, Order.Uid, Order.Id)
-	return &order.QrCodeVerificationResponse{Success: keyall}, nil
+	return &order.QrCodeVerificationResponse{Success: url}, nil
+}
+func GetUpload(filename string) string {
+	return fmt.Sprintf("http://127.0.0.1:8083/%s", filename)
+
 }
 
 func Consumption(in *order.ConsumptionRequest) (*order.ConsumptionResponse, error) {

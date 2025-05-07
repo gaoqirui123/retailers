@@ -58,7 +58,7 @@ func (c *Combination) Add() error {
 }
 
 func (c *Combination) GetCombinationById(pid int64) (result *Combination, err error) {
-	err = global.DB.Table("combination").Where("id = ?", pid).Find(&result).Error
+	err = global.DB.Table("combination").Where("id = ? and is_del = 0", pid).Find(&result).Error
 	if err != nil {
 		return nil, err
 	}
