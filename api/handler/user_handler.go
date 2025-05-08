@@ -273,10 +273,10 @@ func UpdatedAddress(c *gin.Context) {
 		UserAddressId: data.UserAddressId,
 	})
 	if err != nil {
-		response.RespError(c, "用户修改地址失败")
+		response.RespError(c, 500, "用户修改地址失败")
 		return
 	}
-	response.RespSuccess(c, "用户修改地址成功", updatedAddress)
+	response.RespSuccess(c, 200, "用户修改地址成功", updatedAddress)
 }
 
 func UserReceiveCoupon(c *gin.Context) {
@@ -325,17 +325,17 @@ func UserWithdraw(c *gin.Context) {
 func EmailSubscribe(c *gin.Context) {
 	var data request.SubscriptionRequest
 	if err := c.ShouldBind(&data); err != nil {
-		response.RespError(c, "参数错误")
+		response.RespError(c, 201, err.Error())
 		return
 	}
 
 	// 发送订阅信息到指定邮箱
 	email, err := pkg.SendEmail(data.Context)
 	if err != nil {
-		response.RespError(c, "发送订阅信息到指定邮箱 失败")
+		response.RespError(c, 500, "发送订阅信息到指定邮箱 失败")
 		return
 	}
-	response.RespSuccess(c, "邮箱订阅发送成功", email)
+	response.RespSuccess(c, 200, "邮箱订阅发送成功", email)
 }
 
 // 用户地址列表
@@ -343,8 +343,8 @@ func UserAddressList(c *gin.Context) {
 	userId := c.GetUint("userId")
 	list, err := client.UserAddressList(c, &user.UserAddressListRequest{Uid: int64(userId)})
 	if err != nil {
-		response.RespError(c, "用户地址列表 展示失败")
+		response.RespError(c, 500, "用户地址列表 展示失败")
 		return
 	}
-	response.RespSuccess(c, "用户地址列表 展示成功", list)
+	response.RespSuccess(c, 200, "用户地址列表 展示成功", list)
 }

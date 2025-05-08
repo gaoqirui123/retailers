@@ -20,14 +20,15 @@ func GetCombinationInfo(c *gin.Context) {
 	var data request.CombinationInfo
 	err := c.ShouldBind(&data)
 	if err != nil {
+		response.RespError(c, 201, err.Error())
 		return
 	}
 	list, err := client.GetCombinationInfo(c, &product.GetCombinationInfoRequest{Cid: data.Cid})
 	if err != nil {
-		response.RespError(c, err.Error())
+		response.RespError(c, 500, err.Error())
 		return
 	}
-	response.RespSuccess(c, "拼团商品展示成功", list)
+	response.RespSuccess(c, 200, "拼团商品展示成功", list)
 }
 func GroupBuying(c *gin.Context) {
 	userId := c.GetUint("userId")
