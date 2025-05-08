@@ -263,13 +263,14 @@ func AddUserAddress(in *user.AddUserAddressRequest) (*user.AddUserAddressRespons
 		return nil, err
 	}
 	ua := model.UserAddress{
-		Uid:      FindUser.Uid,
-		RealName: FindUser.RealName,
-		Phone:    FindUser.Phone,
-		Province: in.Province, //收货人所在省
-		City:     in.City,     //收货人所在市
-		District: in.District, //收货人所在区
-		Detail:   in.Detail,   //收货人详细地址
+		Uid:       FindUser.Uid,
+		RealName:  FindUser.RealName,
+		Phone:     FindUser.Phone,
+		Province:  in.Province, //收货人所在省
+		City:      in.City,     //收货人所在市
+		District:  in.District, //收货人所在区
+		Detail:    in.Detail,   //收货人详细地址
+		IsDefault: in.IsDefault,
 	}
 	err = ua.Created()
 	if err != nil {
@@ -509,23 +510,80 @@ func UserApplication(in *user.UserApplicationRequest) (*user.UserApplicationResp
 	if err != nil {
 		return nil, errors.New("用户地址查询失败")
 	}
+
 	ia := model.InvoiceApplication{
-		UserId:        in.UserId,
-		OrderId:       in.OrderId,
-		InvoiceType:   in.InvoiceType,            //发票类型：普通发票、增值税专用发票
-		InvoiceTitle:  in.InvoiceTitle,           //发票抬头
-		InvoiceAmount: float64(in.InvoiceAmount), //发票金额
-		Email:         FindUser.Email,
-		Address:       FindUserAddress.Detail,
-		Phone:         FindUser.Phone,
-		Type:          in.Type, //发票材质：纸质、电子
-		MerId:         FindOrder.MerId,
+		UserId:                       in.UserId,
+		OrderId:                      in.OrderId,
+		InvoiceType:                  in.InvoiceType,                  //发票类型：普通发票、增值税专用发票
+		InvoiceTitle:                 in.InvoiceTitle,                 //发票抬头
+		TaxpayerIdentificationNumber: in.TaxpayerIdentificationNumber, //纳税人识别号
+		InvoiceAmount:                FindOrder.PayPrice,              //发票金额
+		Email:                        FindUser.Email,
+		Address:                      FindUserAddress.Detail,
+		Phone:                        FindUser.Phone,
+		Type:                         in.Type, //发票材质：纸质、电子
+		MerId:                        FindOrder.MerId,
 	}
 	err = ia.UserApplication()
 	if err != nil {
 		return nil, errors.New("用户发票申请失败")
 	}
 	return &user.UserApplicationResponse{Success: "用户成功申请发票"}, nil
+}
+
+// UpdatedAddress TODO:用户修改地址
+func UpdatedAddress(in *user.UpdatedAddressRequest) (*user.UpdatedAddressResponse, error) {
+	//查找用户
+	u := model.User{}
+	FindUser, err := u.FindId(int(in.Uid))
+	if err != nil {
+		return nil, err
+	}
+
+	//查找用户的所有地址，是否是默认的
+	ua := model.UserAddress{}
+	findDefault, err := ua.FindDefault(FindUser.Uid, in.UserAddressId)
+	if err != nil {
+		return nil, err
+	}
+
+	//  findDefault   该地址不是默认地址是，修改成默认地址，并把原先的修改成不默认
+	if findDefault == true {
+		err = ua.UpdatedAddressDefault(FindUser.Uid)
+		if err != nil {
+			return nil, errors.New("修改失败")
+		}
+
+		ua = model.UserAddress{
+			Uid:       FindUser.Uid,
+			RealName:  in.RealName,
+			Phone:     in.Phone,
+			Province:  in.Province, //收货人所在省
+			City:      in.City,     //收货人所在市
+			District:  in.District, //收货人所在区
+			Detail:    in.Detail,   //收货人详细地址
+			IsDefault: 1,
+		}
+		err = ua.UpdatedAddress(in.UserAddressId)
+		if err != nil {
+			return nil, errors.New("用户地址修改失败")
+		}
+	}
+	ua = model.UserAddress{
+		Uid:      FindUser.Uid,
+		RealName: in.RealName,
+		Phone:    in.Phone,
+		Province: in.Province, //收货人所在省
+		City:     in.City,     //收货人所在市
+		District: in.District, //收货人所在区
+		Detail:   in.Detail,   //收货人详细地址
+	}
+	err = ua.UpdatedAddress(in.UserAddressId)
+	if err != nil {
+		return nil, errors.New("用户地址修改失败")
+	}
+
+	return &user.UpdatedAddressResponse{Success: "用户地址修改成功"}, nil
 }
 
 // UserReceiveCoupon TODO:用户领取优惠券
@@ -563,9 +621,9 @@ func UserReceiveCoupon(in *user.UserReceiveCouponRequest) (*user.UserReceiveCoup
 	return &user.UserReceiveCouponResponse{Success: true}, nil
 }
 
-// 用户提现
+// UserWithdraw TODO: 用户提现
 func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, error) {
-	// 1. 检查用户是否存在
+	//检查用户是否存在
 	u := model.User{}
 	userInfo, err := u.FindId(int(in.UserId))
 	if err != nil {
@@ -575,12 +633,12 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		return nil, errors.New("用户不存在")
 	}
 
-	// 2. 检查用户余额是否足够
+	//检查用户余额是否足够
 	if userInfo.NowMoney < float64(in.Amount) {
 		return nil, errors.New("余额不足")
 	}
 
-	// 3. 开启事务处理
+	//开启事务处理
 	tx := global.DB.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -588,7 +646,7 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		}
 	}()
 
-	// 4. 扣除用户余额
+	// 扣除用户余额
 	newBalance := userInfo.NowMoney - float64(in.Amount)
 	err = u.UpdateBalance(in.UserId, newBalance)
 	if err != nil {
@@ -596,7 +654,7 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		return nil, err
 	}
 
-	// 5. 记录提现记录
+	//记录提现记录
 	ue := &model.UserExtract{
 		Uid:          in.UserId,
 		RealName:     userInfo.RealName,
@@ -613,13 +671,33 @@ func UserWithdraw(in *user.UserWithdrawRequest) (*user.UserWithdrawResponse, err
 		return nil, err
 	}
 
-	// 6. 提交事务
+	// 提交事务
 	if err = tx.Commit().Error; err != nil {
 		return nil, err
 	}
 
-	return &user.UserWithdrawResponse{
-		Success: true,
-	}, nil
+	return &user.UserWithdrawResponse{Success: true}, nil
+}
 
+// UserAddressList TODO: 用户地址列表
+func UserAddressList(in *user.UserAddressListRequest) (*user.UserAddressListResponse, error) {
+	ua := model.UserAddress{}
+	userAddress, err := ua.FindIds(in.Uid)
+	if err != nil {
+		return nil, err
+	}
+	var userAddressList []*user.UserAddressList
+	for _, i := range userAddress {
+		userAddressList = append(userAddressList, &user.UserAddressList{
+			UserAddressId: i.Id,
+			RealName:      i.RealName,
+			Phone:         i.Phone,
+			Province:      i.Province,
+			City:          i.City,
+			District:      i.District,
+			Detail:        i.Detail,
+			IsDefault:     i.IsDefault,
+		})
+	}
+	return &user.UserAddressListResponse{List: userAddressList}, nil
 }

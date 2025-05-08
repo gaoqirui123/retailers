@@ -34,8 +34,10 @@ const (
 	User_AddText_FullMethodName            = "/user.User/AddText"
 	User_AddUserAddress_FullMethodName     = "/user.User/AddUserAddress"
 	User_UserApplication_FullMethodName    = "/user.User/UserApplication"
+	User_UpdatedAddress_FullMethodName     = "/user.User/UpdatedAddress"
 	User_UserReceiveCoupon_FullMethodName  = "/user.User/UserReceiveCoupon"
 	User_UserWithdraw_FullMethodName       = "/user.User/UserWithdraw"
+	User_UserAddressList_FullMethodName    = "/user.User/UserAddressList"
 )
 
 // UserClient is the client API for User service.
@@ -57,8 +59,10 @@ type UserClient interface {
 	AddText(ctx context.Context, in *AddTextRequest, opts ...grpc.CallOption) (*AddTextResponse, error)
 	AddUserAddress(ctx context.Context, in *AddUserAddressRequest, opts ...grpc.CallOption) (*AddUserAddressResponse, error)
 	UserApplication(ctx context.Context, in *UserApplicationRequest, opts ...grpc.CallOption) (*UserApplicationResponse, error)
+	UpdatedAddress(ctx context.Context, in *UpdatedAddressRequest, opts ...grpc.CallOption) (*UpdatedAddressResponse, error)
 	UserReceiveCoupon(ctx context.Context, in *UserReceiveCouponRequest, opts ...grpc.CallOption) (*UserReceiveCouponResponse, error)
 	UserWithdraw(ctx context.Context, in *UserWithdrawRequest, opts ...grpc.CallOption) (*UserWithdrawResponse, error)
+	UserAddressList(ctx context.Context, in *UserAddressListRequest, opts ...grpc.CallOption) (*UserAddressListResponse, error)
 }
 
 type userClient struct {
@@ -219,6 +223,16 @@ func (c *userClient) UserApplication(ctx context.Context, in *UserApplicationReq
 	return out, nil
 }
 
+func (c *userClient) UpdatedAddress(ctx context.Context, in *UpdatedAddressRequest, opts ...grpc.CallOption) (*UpdatedAddressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdatedAddressResponse)
+	err := c.cc.Invoke(ctx, User_UpdatedAddress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userClient) UserReceiveCoupon(ctx context.Context, in *UserReceiveCouponRequest, opts ...grpc.CallOption) (*UserReceiveCouponResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserReceiveCouponResponse)
@@ -233,6 +247,16 @@ func (c *userClient) UserWithdraw(ctx context.Context, in *UserWithdrawRequest, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserWithdrawResponse)
 	err := c.cc.Invoke(ctx, User_UserWithdraw_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) UserAddressList(ctx context.Context, in *UserAddressListRequest, opts ...grpc.CallOption) (*UserAddressListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserAddressListResponse)
+	err := c.cc.Invoke(ctx, User_UserAddressList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -258,8 +282,10 @@ type UserServer interface {
 	AddText(context.Context, *AddTextRequest) (*AddTextResponse, error)
 	AddUserAddress(context.Context, *AddUserAddressRequest) (*AddUserAddressResponse, error)
 	UserApplication(context.Context, *UserApplicationRequest) (*UserApplicationResponse, error)
+	UpdatedAddress(context.Context, *UpdatedAddressRequest) (*UpdatedAddressResponse, error)
 	UserReceiveCoupon(context.Context, *UserReceiveCouponRequest) (*UserReceiveCouponResponse, error)
 	UserWithdraw(context.Context, *UserWithdrawRequest) (*UserWithdrawResponse, error)
+	UserAddressList(context.Context, *UserAddressListRequest) (*UserAddressListResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -312,11 +338,17 @@ func (UnimplementedUserServer) AddUserAddress(context.Context, *AddUserAddressRe
 func (UnimplementedUserServer) UserApplication(context.Context, *UserApplicationRequest) (*UserApplicationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserApplication not implemented")
 }
+func (UnimplementedUserServer) UpdatedAddress(context.Context, *UpdatedAddressRequest) (*UpdatedAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatedAddress not implemented")
+}
 func (UnimplementedUserServer) UserReceiveCoupon(context.Context, *UserReceiveCouponRequest) (*UserReceiveCouponResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserReceiveCoupon not implemented")
 }
 func (UnimplementedUserServer) UserWithdraw(context.Context, *UserWithdrawRequest) (*UserWithdrawResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserWithdraw not implemented")
+}
+func (UnimplementedUserServer) UserAddressList(context.Context, *UserAddressListRequest) (*UserAddressListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserAddressList not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -601,6 +633,24 @@ func _User_UserApplication_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_UpdatedAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatedAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UpdatedAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UpdatedAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UpdatedAddress(ctx, req.(*UpdatedAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _User_UserReceiveCoupon_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserReceiveCouponRequest)
 	if err := dec(in); err != nil {
@@ -633,6 +683,24 @@ func _User_UserWithdraw_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).UserWithdraw(ctx, req.(*UserWithdrawRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_UserAddressList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserAddressListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserAddressList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserAddressList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserAddressList(ctx, req.(*UserAddressListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -705,12 +773,20 @@ var User_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _User_UserApplication_Handler,
 		},
 		{
+			MethodName: "UpdatedAddress",
+			Handler:    _User_UpdatedAddress_Handler,
+		},
+		{
 			MethodName: "UserReceiveCoupon",
 			Handler:    _User_UserReceiveCoupon_Handler,
 		},
 		{
 			MethodName: "UserWithdraw",
 			Handler:    _User_UserWithdraw_Handler,
+		},
+		{
+			MethodName: "UserAddressList",
+			Handler:    _User_UserAddressList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
