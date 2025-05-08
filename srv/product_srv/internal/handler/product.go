@@ -133,11 +133,9 @@ func GroupBuying(in *product.GroupBuyingRequest) (*product.GroupBuyingResponse, 
 	fmt.Println(s)
 	//生成拼团链接
 	// 链接的基础部分
-	baseURL := "https://127.0.0.1:8080/combination/info"
-	// 将拼团 ID 嵌入到链接中
-	link := fmt.Sprintf("%s?id=%d", baseURL, in.Pid)
+	baseURL := fmt.Sprintf("http://127.0.0.1:8080/api/c/product/combination/info?id=%d", in.Pid)
 	tx.Commit()
-	return &product.GroupBuyingResponse{Success: link}, nil
+	return &product.GroupBuyingResponse{Success: baseURL}, nil
 }
 
 // JoinGroupBuying TODO: 用户参与拼团
